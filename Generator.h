@@ -63,7 +63,7 @@ public:
    * This attribute is the list of the created instance of equipement.
    * 
    */
-  static vector<Equipement> listEquipement;
+  static vector<Equipement*> listEquipement;
  
   /**
    * \fn static void AddEquipement(string type);

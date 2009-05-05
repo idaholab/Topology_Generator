@@ -25,7 +25,7 @@
 int Generator::indiceEquipement = 0;
 int Generator::indiceApplication = 0;
 int Generator::indiceLink = 0;
-vector<Equipement> Generator::listEquipement;
+vector<Equipement*> Generator::listEquipement;
 //~ vector<Application> Generator::listApplication;
 //~ vector<Link> Generator::listLink;
 
@@ -42,7 +42,7 @@ Generator::Generator(){
 void Generator::AddEquipement(string type) {
   // call to the right type constructor. 
   if(type.compare("Pc") == 0){
-  	Pc equi;
+  	Pc *equi = new Pc();
   	Generator::listEquipement.push_back(equi);
   } else if(type.compare("Router") == 0){
   	//~ Router equi;
@@ -138,7 +138,7 @@ int Generator::getIndiceLink() {
 void Generator::GenerateCode() {
 	
 cout << "GenerateCode" << endl;
-vector<string> liste(GenerateHeader());
+GenerateHeader();
 cout << "out" << endl;
 //~ GenerateCmdLine() 
 //~ GenerateConfig() 
@@ -151,42 +151,47 @@ cout << "out" << endl;
 //~ GenerateApplications() 
 }
 
-vector<string> Generator::GenerateHeader() {
-cout << "test" << endl;
+vector<string> Generator::GenerateHeader() 
+{
   vector<string> allHeaders;
-cout << "test" << endl;
   /* get all headers. */
-  for(int i = 0; i < Generator::getIndiceEquipement(); i++){
-  	cout << "iter" << endl;
-  	cout << Generator::listEquipement.at(i).GenerateHeader() << endl;
-  	//allHeaders.push_back(Generator::listEquipement.at(i).GenerateHeader());
+  for(int i = 0; i < Generator::getIndiceEquipement(); i++)
+  {
+  	allHeaders.push_back((Generator::listEquipement.at(i))->GenerateHeader());
   }
-cout << "bloup" << endl;
+
   /* check for duplicate */
-  vector<string> headersWhitoutDuplicateElem;
+  vector<string> headersWithoutDuplicateElem;
   bool isDuplicate = false;
   /* iterate all headers string */
-  for(int i = 0; i < allHeaders.size(); i++){
+  for(int i = 0; i < allHeaders.size(); i++)
+  {
   	isDuplicate = false;
   	/* iterate the vector whith no duplicate */
-  	for(int j = 0; j < headersWhitoutDuplicateElem.size(); j++){
+  	for(int j = 0; j < headersWithoutDuplicateElem.size(); j++)
+  	{
   	  /* check if the string into the allHeaders vector is also in the vector without duplicate */
-  	  if( allHeaders.at(i).compare(headersWhitoutDuplicateElem.at(j)) ){
+  	  if( allHeaders.at(i).compare(headersWithoutDuplicateElem.at(j)) == 0 )
+  	  {
   	  	/* it's an duplicate. */
   	  	isDuplicate = true;
   	  	break;
 	  }	
   	}
   	/* add the string from allHeaders if no duplicate have been detected. */
-  	if(!isDuplicate){
-  	  headersWhitoutDuplicateElem.push_back(allHeaders.at(i));
+  	if(!isDuplicate)
+  	{
+  	  headersWithoutDuplicateElem.push_back(allHeaders.at(i));
   	}
   }
   
   /* print the res to see.*/
-  for(int i = 0; i < headersWhitoutDuplicateElem.size(); i++){
-  	cout << headersWhitoutDuplicateElem.at(i) << endl;
+  for(int i = 0; i < headersWithoutDuplicateElem.size(); i++)
+  {
+  	cout << "Num :" << i << " - " << headersWithoutDuplicateElem.at(i) << endl;
   }
+  
+  return headersWithoutDuplicateElem;
   
 }
 

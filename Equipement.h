@@ -66,7 +66,7 @@ public:
    * 
    * \return header.
    */
-  virtual string GenerateHeader(){cout << "generate header" << endl;};
+  virtual string GenerateHeader() = 0;
 
   /**
    * \fn virtual string GenerateNode(){};
@@ -77,7 +77,7 @@ public:
    * 
    * \return node.
    */
-  virtual string GenerateNode(){};
+  virtual string GenerateNode() = 0;
 
   /**
    * \fn virtual string GenerateIpStack(){};
@@ -88,7 +88,7 @@ public:
    * 
    * \return ipStack.
    */
-  virtual string GenerateIpStack(){};
+  virtual string GenerateIpStack() = 0;
   
   /**
    * \fn virtual string GenerateIpAssign(){};
@@ -99,7 +99,7 @@ public:
    * 
    * \return IpAssign.
    */
-  virtual string GenerateIpAssign(){};
+  virtual string GenerateIpAssign() = 0;
   
   /**
    * \fn virtual void setHeader(string _header){};
@@ -110,7 +110,7 @@ public:
    *
    * \param _header the header which have to be set.
    */
-  virtual void setHeader(string _header){};
+  virtual void setHeader(string _header) = 0;
   
   /**
    * \fn void setNodeName(string _nodeName);

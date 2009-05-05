@@ -49,7 +49,7 @@ public:
    * 
    */
   Pc();
-  ~Pc();
+  virtual ~Pc();
   
   /**
    * \fn string GenerateHeader();
@@ -59,7 +59,7 @@ public:
    * 
    * \return header.
    */
-  string GenerateHeader();
+  virtual string GenerateHeader();
   
   /**
    * \fn string GenerateNode();
@@ -69,7 +69,7 @@ public:
    * 
    * \return node.
    */
-  string GenerateNode();
+  virtual string GenerateNode();
   
   /**
    * \fn string GenerateIpStack();
@@ -79,7 +79,7 @@ public:
    * 
    * \return ip stack.
    */
-  string GenerateIpStack();
+  virtual string GenerateIpStack();
   
   /**
    * \fn string GenerateIpAssign();
@@ -89,7 +89,7 @@ public:
    * 
    * \return ip assign.
    */
-  string GenerateIpAssign();
+  virtual string GenerateIpAssign();
   
   /**
    * \fn void setHeader(string _header);
@@ -99,7 +99,7 @@ public:
    * 
    * \param _header, the new header string.
    */
-  void setHeader(string _header);
+  virtual void setHeader(string _header);
 
 };
 

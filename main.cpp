@@ -34,13 +34,13 @@ void ListAllEquipement()
   for(int i = 0; i < Generator::getIndiceEquipement(); i++){
   	//~ cout << "#################" << endl;	
     cout << "Numéro :" << i << endl;
-	cout << "nodeName :"<< Generator::listEquipement.at(i).getNodeName() << endl;
-	cout << "ip :"<< Generator::listEquipement.at(i).getIp() << endl;
-	cout << "mask :" << Generator::listEquipement.at(i).getMask() << endl;
-	cout << "ipInterfaceName :" << Generator::listEquipement.at(i).getIpInterfaceName() << endl;
-	cout << "header :" << Generator::listEquipement.at(i).getHeader() << endl;
-	cout << "x :" << Generator::listEquipement.at(i).getX() << endl;
-	cout << "y :" << Generator::listEquipement.at(i).getY() << endl;
+	cout << "nodeName :"<< Generator::listEquipement.at(i)->getNodeName() << endl;
+	cout << "ip :"<< Generator::listEquipement.at(i)->getIp() << endl;
+	cout << "mask :" << Generator::listEquipement.at(i)->getMask() << endl;
+	cout << "ipInterfaceName :" << Generator::listEquipement.at(i)->getIpInterfaceName() << endl;
+	cout << "header :" << Generator::listEquipement.at(i)->getHeader() << endl;
+	cout << "x :" << Generator::listEquipement.at(i)->getX() << endl;
+	cout << "y :" << Generator::listEquipement.at(i)->getY() << endl;
 	cout << "#################" << endl;	
   }	
 		
@@ -72,10 +72,10 @@ int main()
   	gen.AddEquipement("Pc");
   	i += 1;
   }	
-  
-  cout << Generator::listEquipement.at(0).GenerateHeader() << endl;
+  cout<< "Main" << endl;
+  //cout << (Generator::listEquipement.at(0))->GenerateHeader() << endl;
 	
-  //gen.GenerateCode();
+  gen.GenerateCode();
 	
 	
   /* manual operations. */	
