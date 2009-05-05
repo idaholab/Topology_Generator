@@ -72,9 +72,14 @@ int main()
   	gen.AddEquipement("Pc");
   	i += 1;
   }	
+  
+  cout << Generator::listEquipement.at(0).GenerateHeader() << endl;
+	
+  //gen.GenerateCode();
+	
 	
   /* manual operations. */	
-  while(1){
+  /*while(1){
   	Usage();
     cin >> nbrChoose;
     if(nbrChoose == 0){
@@ -84,5 +89,5 @@ int main()
     } else if(nbrChoose == 2){
       gen.AddEquipement("Pc");
     }
-  }
+  }*/
 }

@@ -41,6 +41,8 @@ string Pc::GenerateIpStack(){
 }
 
 string Pc::GenerateIpAssign(){ 
+  // need to think about the third argument from the SetBase method.	
+	
   return "Ipv4AddressHelper ipv4_"+this->getNodeName()+";\n"
   		 +"ipv4.SetBase (\""+this->getIp()+"\", \""+this->getMask()+"\", \"0.0.0."+this->getIndice()+"\");"
   		 +"Ipv4InterfaceContainer "+this->getIpInterfaceName()+" = ipv4.Assign(netDeviceCont_"+this->getNodeName()+");\n";

@@ -66,7 +66,7 @@ public:
    * 
    * \return header.
    */
-  virtual string GenerateHeader(){};
+  virtual string GenerateHeader(){cout << "generate header" << endl;};
 
   /**
    * \fn virtual string GenerateNode(){};

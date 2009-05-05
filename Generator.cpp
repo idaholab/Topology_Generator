@@ -136,11 +136,58 @@ int Generator::getIndiceLink() {
 
 
 void Generator::GenerateCode() {
-
+	
+cout << "GenerateCode" << endl;
+vector<string> liste(GenerateHeader());
+cout << "out" << endl;
+//~ GenerateCmdLine() 
+//~ GenerateConfig() 
+//~ GenerateNode() 
+//~ GenerateLink() 
+//~ GenerateNetDevice() 
+//~ GenerateIpStack() 
+//~ GenerateIpAssign() 
+//~ GenerateRoute() 
+//~ GenerateApplications() 
 }
 
-string Generator::GenerateHeader() {
-
+vector<string> Generator::GenerateHeader() {
+cout << "test" << endl;
+  vector<string> allHeaders;
+cout << "test" << endl;
+  /* get all headers. */
+  for(int i = 0; i < Generator::getIndiceEquipement(); i++){
+  	cout << "iter" << endl;
+  	cout << Generator::listEquipement.at(i).GenerateHeader() << endl;
+  	//allHeaders.push_back(Generator::listEquipement.at(i).GenerateHeader());
+  }
+cout << "bloup" << endl;
+  /* check for duplicate */
+  vector<string> headersWhitoutDuplicateElem;
+  bool isDuplicate = false;
+  /* iterate all headers string */
+  for(int i = 0; i < allHeaders.size(); i++){
+  	isDuplicate = false;
+  	/* iterate the vector whith no duplicate */
+  	for(int j = 0; j < headersWhitoutDuplicateElem.size(); j++){
+  	  /* check if the string into the allHeaders vector is also in the vector without duplicate */
+  	  if( allHeaders.at(i).compare(headersWhitoutDuplicateElem.at(j)) ){
+  	  	/* it's an duplicate. */
+  	  	isDuplicate = true;
+  	  	break;
+	  }	
+  	}
+  	/* add the string from allHeaders if no duplicate have been detected. */
+  	if(!isDuplicate){
+  	  headersWhitoutDuplicateElem.push_back(allHeaders.at(i));
+  	}
+  }
+  
+  /* print the res to see.*/
+  for(int i = 0; i < headersWhitoutDuplicateElem.size(); i++){
+  	cout << headersWhitoutDuplicateElem.at(i) << endl;
+  }
+  
 }
 
 string Generator::GenerateCmdLine() {

@@ -182,8 +182,7 @@ public:
   // Part around the code Generation.
   // This part is looking about the code to write.
   // 
-private:
-
+public:
   /**
    * \fn void GenerateCode();
    * \brief Procedure wich are the main code generator.
@@ -194,16 +193,16 @@ private:
    */
   void GenerateCode();
 
-
+private:
   /**
-   * \fn string GenerateHeader();
+   * \fn vector<string> GenerateHeader();
    * \brief Function which return all headers to use.
    * 
-   * This function return a string wich contain all c++ header without diplicate.
+   * This function return a string wich contain all c++ header without duplicate.
    * 
    * \return header 
    */
-  string GenerateHeader();
+  vector<string> GenerateHeader();
 
 
   /**
