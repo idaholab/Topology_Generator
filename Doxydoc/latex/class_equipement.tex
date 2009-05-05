@@ -20,16 +20,14 @@ Inheritance diagram for Equipement::\begin{figure}[H]
 \begin{CompactList}\small\item\em Constructor which set default value. \item\end{CompactList}\item 
 virtual \hyperlink{class_equipement_e7751a52f2665d9e4b3e2cd6929bd986}{$\sim$Equipement} ()
 \begin{CompactList}\small\item\em Destructor from the class \hyperlink{class_equipement}{Equipement}. \item\end{CompactList}\item 
-virtual std::string \hyperlink{class_equipement_136cc8d242b48a665691f8edafa48210}{GenerateHeader} ()=0
+virtual std::vector$<$ std::string $>$ \hyperlink{class_equipement_32d6f8201afca95d27be3f498cd7d312}{GenerateHeader} ()=0
 \begin{CompactList}\small\item\em Function wich return the c++ header code from node. \item\end{CompactList}\item 
-virtual std::string \hyperlink{class_equipement_e03cafed5e059dfe332643719c8d8dd4}{GenerateNode} ()=0
+virtual std::vector$<$ std::string $>$ \hyperlink{class_equipement_df32ce167d648ff92a6420dea4e6f06e}{GenerateNode} ()=0
 \begin{CompactList}\small\item\em Function wich return the c++ code from node. \item\end{CompactList}\item 
-virtual std::string \hyperlink{class_equipement_98eda1e24e07c343712dcd35eba6bd18}{GenerateIpStack} ()=0
+virtual std::vector$<$ std::string $>$ \hyperlink{class_equipement_6d7c3d74a18a723f35f274fb5aa5f06b}{GenerateIpStack} ()=0
 \begin{CompactList}\small\item\em Function wich return the c++ code from IpStack. \item\end{CompactList}\item 
-virtual std::string \hyperlink{class_equipement_74f771f93374710e8aa42ae17e6b54b4}{GenerateIpAssign} ()=0
+virtual std::vector$<$ std::string $>$ \hyperlink{class_equipement_643c6d9c56ed25c0319bfc84a6e064f5}{GenerateIpAssign} ()=0
 \begin{CompactList}\small\item\em Function wich return the c++ code from the ip asssign part. \item\end{CompactList}\item 
-virtual void \hyperlink{class_equipement_9068d14ff2c67d06be75a21ebc9fbcd7}{setHeader} (std::string \_\-header)=0
-\begin{CompactList}\small\item\em Procedure used to the the c++ header code. \item\end{CompactList}\item 
 void \hyperlink{class_equipement_a3d502e4f5b4292e87ff33ca15801897}{setNodeName} (std::string \_\-nodeName)
 \begin{CompactList}\small\item\em Procedure to set the node name. \item\end{CompactList}\item 
 void \hyperlink{class_equipement_ff68b70ae1942fca75462d78194cd443}{setIpv4Address} (std::string \_\-ip, std::string \_\-mask)
@@ -42,8 +40,6 @@ std::string \hyperlink{class_equipement_4ab70e59e11de8b7f8af99d06409b032}{getNod
 \begin{CompactList}\small\item\em Function wich return the node name. \item\end{CompactList}\item 
 std::string \hyperlink{class_equipement_a603e0547ea7c1b7f10757226100e1cc}{getIpInterfaceName} ()
 \begin{CompactList}\small\item\em Function wich return the name of the Ip interface. \item\end{CompactList}\item 
-std::string \hyperlink{class_equipement_c4aa745380e69d02a91f1e601430a545}{getHeader} ()
-\begin{CompactList}\small\item\em Function wich return the c++ header code. \item\end{CompactList}\item 
 std::string \hyperlink{class_equipement_4a0b3805228532e39dcb5f83bb2d6eac}{getIp} ()
 \begin{CompactList}\small\item\em Function wich return the ip address. \item\end{CompactList}\item 
 std::string \hyperlink{class_equipement_fd9a9ce18e78c3540a0cb6d633def3d3}{getMask} ()
@@ -69,8 +65,6 @@ std::string \hyperlink{class_equipement_bc9e4c10eacad003427f4812890c7d52}{mask}
 \begin{CompactList}\small\item\em attribute which represent the mask. \item\end{CompactList}\item 
 std::string \hyperlink{class_equipement_3e3703936280f99d55619e7b86810f3b}{ipInterfaceName}
 \begin{CompactList}\small\item\em attribute which represent the ip interface name. \item\end{CompactList}\item 
-std::string \hyperlink{class_equipement_1c7ae76643400f1402231514c2a21ae2}{header}
-\begin{CompactList}\small\item\em attribute which represent the header. \item\end{CompactList}\item 
 int \hyperlink{class_equipement_45ae2acbe57b1a47e7e9eeed67738109}{x}
 \begin{CompactList}\small\item\em attribute which represent the x position of the object. \item\end{CompactList}\item 
 int \hyperlink{class_equipement_de92f12b5da5dde6f2b43921789cf676}{y}
@@ -104,11 +98,11 @@ Destructor from the class \hyperlink{class_equipement}{Equipement}.
 Destructor from the class 
 
 \subsection{Member Function Documentation}
-\hypertarget{class_equipement_136cc8d242b48a665691f8edafa48210}{
+\hypertarget{class_equipement_32d6f8201afca95d27be3f498cd7d312}{
 \index{Equipement@{Equipement}!GenerateHeader@{GenerateHeader}}
 \index{GenerateHeader@{GenerateHeader}!Equipement@{Equipement}}
-\subsubsection[{GenerateHeader}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string Equipement::GenerateHeader ()\hspace{0.3cm}{\tt  \mbox{[}pure virtual\mbox{]}}}}
-\label{class_equipement_136cc8d242b48a665691f8edafa48210}
+\subsubsection[{GenerateHeader}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::vector$<$std::string$>$ Equipement::GenerateHeader ()\hspace{0.3cm}{\tt  \mbox{[}pure virtual\mbox{]}}}}
+\label{class_equipement_32d6f8201afca95d27be3f498cd7d312}
 
 
 Function wich return the c++ header code from node. 
@@ -119,11 +113,11 @@ This function return a string which contain the header lines from the specified 
 \item[Returns:]header. \end{Desc}
 
 
-Implemented in \hyperlink{class_pc_0b152acc530cc73f502f046e19f9344f}{Pc}.\hypertarget{class_equipement_74f771f93374710e8aa42ae17e6b54b4}{
+Implemented in \hyperlink{class_pc_ca543f3f579e2531dfbe70a8ae419915}{Pc}.\hypertarget{class_equipement_643c6d9c56ed25c0319bfc84a6e064f5}{
 \index{Equipement@{Equipement}!GenerateIpAssign@{GenerateIpAssign}}
 \index{GenerateIpAssign@{GenerateIpAssign}!Equipement@{Equipement}}
-\subsubsection[{GenerateIpAssign}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string Equipement::GenerateIpAssign ()\hspace{0.3cm}{\tt  \mbox{[}pure virtual\mbox{]}}}}
-\label{class_equipement_74f771f93374710e8aa42ae17e6b54b4}
+\subsubsection[{GenerateIpAssign}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::vector$<$std::string$>$ Equipement::GenerateIpAssign ()\hspace{0.3cm}{\tt  \mbox{[}pure virtual\mbox{]}}}}
+\label{class_equipement_643c6d9c56ed25c0319bfc84a6e064f5}
 
 
 Function wich return the c++ code from the ip asssign part. 
@@ -134,11 +128,11 @@ This function return a string wich contain the c++ code from the Ipv4 Assign par
 \item[Returns:]IpAssign. \end{Desc}
 
 
-Implemented in \hyperlink{class_pc_85794eaecd61612d44e1c68746e1c156}{Pc}.\hypertarget{class_equipement_98eda1e24e07c343712dcd35eba6bd18}{
+Implemented in \hyperlink{class_pc_3f50cc66c3e268c95b2d2b4b7f8c1246}{Pc}.\hypertarget{class_equipement_6d7c3d74a18a723f35f274fb5aa5f06b}{
 \index{Equipement@{Equipement}!GenerateIpStack@{GenerateIpStack}}
 \index{GenerateIpStack@{GenerateIpStack}!Equipement@{Equipement}}
-\subsubsection[{GenerateIpStack}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string Equipement::GenerateIpStack ()\hspace{0.3cm}{\tt  \mbox{[}pure virtual\mbox{]}}}}
-\label{class_equipement_98eda1e24e07c343712dcd35eba6bd18}
+\subsubsection[{GenerateIpStack}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::vector$<$std::string$>$ Equipement::GenerateIpStack ()\hspace{0.3cm}{\tt  \mbox{[}pure virtual\mbox{]}}}}
+\label{class_equipement_6d7c3d74a18a723f35f274fb5aa5f06b}
 
 
 Function wich return the c++ code from IpStack. 
@@ -149,11 +143,11 @@ This function return a string which contain the c++ code from the Ipv4 stack dec
 \item[Returns:]ipStack. \end{Desc}
 
 
-Implemented in \hyperlink{class_pc_6b81e7a8e167ed51f92ce55c0447fefe}{Pc}.\hypertarget{class_equipement_e03cafed5e059dfe332643719c8d8dd4}{
+Implemented in \hyperlink{class_pc_1457375fb9f19d9a0270a26a8ec7b7b6}{Pc}.\hypertarget{class_equipement_df32ce167d648ff92a6420dea4e6f06e}{
 \index{Equipement@{Equipement}!GenerateNode@{GenerateNode}}
 \index{GenerateNode@{GenerateNode}!Equipement@{Equipement}}
-\subsubsection[{GenerateNode}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string Equipement::GenerateNode ()\hspace{0.3cm}{\tt  \mbox{[}pure virtual\mbox{]}}}}
-\label{class_equipement_e03cafed5e059dfe332643719c8d8dd4}
+\subsubsection[{GenerateNode}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::vector$<$std::string$>$ Equipement::GenerateNode ()\hspace{0.3cm}{\tt  \mbox{[}pure virtual\mbox{]}}}}
+\label{class_equipement_df32ce167d648ff92a6420dea4e6f06e}
 
 
 Function wich return the c++ code from node. 
@@ -164,20 +158,7 @@ This function return a string which contain the declaration and instanciation of
 \item[Returns:]node. \end{Desc}
 
 
-Implemented in \hyperlink{class_pc_36ace04642cd481b39d312b51c37c114}{Pc}.\hypertarget{class_equipement_c4aa745380e69d02a91f1e601430a545}{
-\index{Equipement@{Equipement}!getHeader@{getHeader}}
-\index{getHeader@{getHeader}!Equipement@{Equipement}}
-\subsubsection[{getHeader}]{\setlength{\rightskip}{0pt plus 5cm}std::string Equipement::getHeader ()}}
-\label{class_equipement_c4aa745380e69d02a91f1e601430a545}
-
-
-Function wich return the c++ header code. 
-
-Function which return the c++ code from the equipement
-
-\begin{Desc}
-\item[Returns:]header c++ code. \end{Desc}
-\hypertarget{class_equipement_6074ba51d63aaeebe8293a9ba9fde31f}{
+Implemented in \hyperlink{class_pc_27e33b70f680c5fa0c947415c6d0a77f}{Pc}.\hypertarget{class_equipement_6074ba51d63aaeebe8293a9ba9fde31f}{
 \index{Equipement@{Equipement}!getIndice@{getIndice}}
 \index{getIndice@{getIndice}!Equipement@{Equipement}}
 \subsubsection[{getIndice}]{\setlength{\rightskip}{0pt plus 5cm}std::string Equipement::getIndice ()}}
@@ -268,25 +249,7 @@ Function wich return the graphical y position of the object.
 
 \begin{Desc}
 \item[Returns:]y position. \end{Desc}
-\hypertarget{class_equipement_9068d14ff2c67d06be75a21ebc9fbcd7}{
-\index{Equipement@{Equipement}!setHeader@{setHeader}}
-\index{setHeader@{setHeader}!Equipement@{Equipement}}
-\subsubsection[{setHeader}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Equipement::setHeader (std::string {\em \_\-header})\hspace{0.3cm}{\tt  \mbox{[}pure virtual\mbox{]}}}}
-\label{class_equipement_9068d14ff2c67d06be75a21ebc9fbcd7}
-
-
-Procedure used to the the c++ header code. 
-
-This procedure is used to set the header c++ code as a string. It's used to generate the code. This procedure have to be rewritted un all subclasses.
-
-\begin{Desc}
-\item[Parameters:]
-\begin{description}
-\item[{\em \_\-header}]the header which have to be set. \end{description}
-\end{Desc}
-
-
-Implemented in \hyperlink{class_pc_8049628cd139b39cbae2327e70ca0eb7}{Pc}.\hypertarget{class_equipement_cea2da7dead8d0b74c90933c422211c4}{
+\hypertarget{class_equipement_cea2da7dead8d0b74c90933c422211c4}{
 \index{Equipement@{Equipement}!setIpInterfaceName@{setIpInterfaceName}}
 \index{setIpInterfaceName@{setIpInterfaceName}!Equipement@{Equipement}}
 \subsubsection[{setIpInterfaceName}]{\setlength{\rightskip}{0pt plus 5cm}void Equipement::setIpInterfaceName (std::string {\em \_\-ipInterfaceName})}}
@@ -371,16 +334,7 @@ Function wich convert in to string.
 
 
 \subsection{Member Data Documentation}
-\hypertarget{class_equipement_1c7ae76643400f1402231514c2a21ae2}{
-\index{Equipement@{Equipement}!header@{header}}
-\index{header@{header}!Equipement@{Equipement}}
-\subsubsection[{header}]{\setlength{\rightskip}{0pt plus 5cm}std::string {\bf Equipement::header}\hspace{0.3cm}{\tt  \mbox{[}protected\mbox{]}}}}
-\label{class_equipement_1c7ae76643400f1402231514c2a21ae2}
-
-
-attribute which represent the header. 
-
-This attribute reprensent the differents files to be included for the node. \hypertarget{class_equipement_d5124abeb4730c781cf45e7d538ebbc2}{
+\hypertarget{class_equipement_d5124abeb4730c781cf45e7d538ebbc2}{
 \index{Equipement@{Equipement}!indice@{indice}}
 \index{indice@{indice}!Equipement@{Equipement}}
 \subsubsection[{indice}]{\setlength{\rightskip}{0pt plus 5cm}std::string {\bf Equipement::indice}\hspace{0.3cm}{\tt  \mbox{[}protected\mbox{]}}}}

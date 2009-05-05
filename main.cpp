@@ -32,17 +32,16 @@ using namespace std;
 /* this procedure list all Equipement created by the generator and print it. */
 void ListAllEquipement()
 {
-  for(int i = 0; i < Generator::getIndiceEquipement(); i++){
-  	//~ std::cout << "#################" << std::endl;	
+  for(int i = 0; i < Generator::getIndiceEquipement(); i++)
+  {
     std::cout << "Numéro :" << i << std::endl;
-	std::cout << "nodeName :"<< Generator::listEquipement.at(i)->getNodeName() << std::endl;
-	std::cout << "ip :"<< Generator::listEquipement.at(i)->getIp() << std::endl;
-	std::cout << "mask :" << Generator::listEquipement.at(i)->getMask() << std::endl;
-	std::cout << "ipInterfaceName :" << Generator::listEquipement.at(i)->getIpInterfaceName() << std::endl;
-	std::cout << "header :" << Generator::listEquipement.at(i)->getHeader() << std::endl;
-	std::cout << "x :" << Generator::listEquipement.at(i)->getX() << std::endl;
-	std::cout << "y :" << Generator::listEquipement.at(i)->getY() << std::endl;
-	std::cout << "#################" << std::endl;	
+	  std::cout << "nodeName :"<< Generator::listEquipement.at(i)->getNodeName() << std::endl;
+	  std::cout << "ip :"<< Generator::listEquipement.at(i)->getIp() << std::endl;
+	  std::cout << "mask :" << Generator::listEquipement.at(i)->getMask() << std::endl;
+	  std::cout << "ipInterfaceName :" << Generator::listEquipement.at(i)->getIpInterfaceName() << std::endl;
+	  std::cout << "x :" << Generator::listEquipement.at(i)->getX() << std::endl;
+	  std::cout << "y :" << Generator::listEquipement.at(i)->getY() << std::endl;
+	  std::cout << "#################" << std::endl;	
   }	
 		
 }
@@ -65,7 +64,7 @@ void Usage()
 
 int main()
 {
-  int nbrChoose = 0;
+  //int nbrChoose = 0;
   Generator gen;
   
   /* add 10 pc. */
@@ -79,9 +78,10 @@ int main()
   //std::cout << (Generator::listEquipement.at(0))->GenerateHeader() << std::endl;
 	
   gen.GenerateCode();
-	
-	
-  /* manual operations. */	
+  
+
+  /* manual operations. */
+  /*	
   while(1)
   {
   	Usage();
@@ -105,6 +105,7 @@ int main()
       gen.AddEquipement("Pc");
     }
   }
+  */
 }
 
 

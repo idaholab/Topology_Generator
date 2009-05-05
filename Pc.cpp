@@ -27,41 +27,47 @@
 
 Pc::Pc() : Equipement()
 {
-  this->header = "#include \"ns3/node-module.h\"";
 }
 
 Pc::~Pc()
 {	
 }
 
-std::string Pc::GenerateHeader()
+std::vector<std::string> Pc::GenerateHeader()
 {
-  return this->header;
+  std::vector<std::string> headers;
+  headers.push_back("#include \"ns3/helper-module.h\"");
+  
+  return headers;
 }
 
-std::string Pc::GenerateNode()
+std::vector<std::string> Pc::GenerateNode()
 {
-  return "NodeContainer "+this->getNodeName()+"\n"
-         +this->getNodeName()+".Create(1);";
+  std::vector<std::string> nodes;
+  nodes.push_back("NodeContainer "+this->getNodeName()+";");
+  nodes.push_back(this->getNodeName()+".Create(1);");
+ 
+  return nodes;
 }
 
-std::string Pc::GenerateIpStack()
+std::vector<std::string> Pc::GenerateIpStack()
 {
-  return "InternetStackHelper net_"+this->getNodeName()+"; \n"
-  	     +"net_"+this->getNodeName()+".Install ("+this->getNodeName()+");";
+  std::vector<std::string> stack;
+  stack.push_back("InternetStackHelper net_"+this->getNodeName()+";");
+  stack.push_back("net_"+this->getNodeName()+".Install ("+this->getNodeName()+");");
+  
+  return stack; 
 }
 
-std::string Pc::GenerateIpAssign()
+std::vector<std::string> Pc::GenerateIpAssign()
 { 
-  // need to think about the third argument from the SetBase method.	
-	
-  return "Ipv4AddressHelper ipv4_"+this->getNodeName()+";\n"
-  		 +"ipv4.SetBase (\""+this->getIp()+"\", \""+this->getMask()+"\", \"0.0.0."+this->getIndice()+"\");"
-  		 +"Ipv4InterfaceContainer "+this->getIpInterfaceName()+" = ipv4.Assign(netDeviceCont_"+this->getNodeName()+");";
+  // need to think about the third argument from the SetBase method.
+  std::vector<std::string> ipAssign;
+  ipAssign.push_back("Ipv4AddressHelper ipv4_"+this->getNodeName()+";");
+	ipAssign.push_back("ipv4.SetBase (\""+this->getIp()+"\", \""+this->getMask()+"\", \"0.0.0."+this->getIndice()+"\");");
+  ipAssign.push_back("Ipv4InterfaceContainer "+this->getIpInterfaceName()+" = ipv4.Assign(netDeviceCont_"+this->getNodeName()+");");
+  
+  return ipAssign;
 }
  
-void Pc::setHeader(std::string _header)
-{
-  this->header = _header;
-}
 

@@ -47,21 +47,18 @@ Inheritance diagram for Equipement:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_equipement.html#e7751a52f2665d9e4b3e2cd6929bd986">~Equipement</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor from the class <a class="el" href="class_equipement.html" title="Abstract Equipement Base Class.">Equipement</a>.  <a href="#e7751a52f2665d9e4b3e2cd6929bd986"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_equipement.html#136cc8d242b48a665691f8edafa48210">GenerateHeader</a> ()=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual std::vector&lt; std::string &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_equipement.html#32d6f8201afca95d27be3f498cd7d312">GenerateHeader</a> ()=0</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function wich return the c++ header code from node.  <a href="#136cc8d242b48a665691f8edafa48210"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_equipement.html#e03cafed5e059dfe332643719c8d8dd4">GenerateNode</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function wich return the c++ header code from node.  <a href="#32d6f8201afca95d27be3f498cd7d312"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual std::vector&lt; std::string &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_equipement.html#df32ce167d648ff92a6420dea4e6f06e">GenerateNode</a> ()=0</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function wich return the c++ code from node.  <a href="#e03cafed5e059dfe332643719c8d8dd4"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_equipement.html#98eda1e24e07c343712dcd35eba6bd18">GenerateIpStack</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function wich return the c++ code from node.  <a href="#df32ce167d648ff92a6420dea4e6f06e"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual std::vector&lt; std::string &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_equipement.html#6d7c3d74a18a723f35f274fb5aa5f06b">GenerateIpStack</a> ()=0</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function wich return the c++ code from IpStack.  <a href="#98eda1e24e07c343712dcd35eba6bd18"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_equipement.html#74f771f93374710e8aa42ae17e6b54b4">GenerateIpAssign</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function wich return the c++ code from IpStack.  <a href="#6d7c3d74a18a723f35f274fb5aa5f06b"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual std::vector&lt; std::string &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_equipement.html#643c6d9c56ed25c0319bfc84a6e064f5">GenerateIpAssign</a> ()=0</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function wich return the c++ code from the ip asssign part.  <a href="#74f771f93374710e8aa42ae17e6b54b4"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_equipement.html#9068d14ff2c67d06be75a21ebc9fbcd7">setHeader</a> (std::string _header)=0</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Procedure used to the the c++ header code.  <a href="#9068d14ff2c67d06be75a21ebc9fbcd7"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function wich return the c++ code from the ip asssign part.  <a href="#643c6d9c56ed25c0319bfc84a6e064f5"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_equipement.html#a3d502e4f5b4292e87ff33ca15801897">setNodeName</a> (std::string _nodeName)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Procedure to set the node name.  <a href="#a3d502e4f5b4292e87ff33ca15801897"></a><br></td></tr>
@@ -80,9 +77,6 @@ Inheritance diagram for Equipement:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_equipement.html#a603e0547ea7c1b7f10757226100e1cc">getIpInterfaceName</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function wich return the name of the Ip interface.  <a href="#a603e0547ea7c1b7f10757226100e1cc"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_equipement.html#c4aa745380e69d02a91f1e601430a545">getHeader</a> ()</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function wich return the c++ header code.  <a href="#c4aa745380e69d02a91f1e601430a545"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_equipement.html#4a0b3805228532e39dcb5f83bb2d6eac">getIp</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function wich return the ip address.  <a href="#4a0b3805228532e39dcb5f83bb2d6eac"></a><br></td></tr>
@@ -117,9 +111,6 @@ Inheritance diagram for Equipement:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_equipement.html#3e3703936280f99d55619e7b86810f3b">ipInterfaceName</a></td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">attribute which represent the ip interface name.  <a href="#3e3703936280f99d55619e7b86810f3b"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_equipement.html#1c7ae76643400f1402231514c2a21ae2">header</a></td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">attribute which represent the header.  <a href="#1c7ae76643400f1402231514c2a21ae2"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_equipement.html#45ae2acbe57b1a47e7e9eeed67738109">x</a></td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">attribute which represent the x position of the object.  <a href="#45ae2acbe57b1a47e7e9eeed67738109"></a><br></td></tr>
@@ -174,12 +165,12 @@ Destructor from the class
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="136cc8d242b48a665691f8edafa48210"></a><!-- doxytag: member="Equipement::GenerateHeader" ref="136cc8d242b48a665691f8edafa48210" args="()=0" -->
+<a class="anchor" name="32d6f8201afca95d27be3f498cd7d312"></a><!-- doxytag: member="Equipement::GenerateHeader" ref="32d6f8201afca95d27be3f498cd7d312" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::string Equipement::GenerateHeader           </td>
+          <td class="memname">virtual std::vector&lt;std::string&gt; Equipement::GenerateHeader           </td>
           <td>(</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
@@ -195,16 +186,16 @@ Function wich return the c++ header code from node.
 This function return a string which contain the header lines from the specified object. This function have to be rewritten in all subclasses.<p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>header. </dd></dl>
 
-<p>Implemented in <a class="el" href="class_pc.html#0b152acc530cc73f502f046e19f9344f">Pc</a>.</p>
+<p>Implemented in <a class="el" href="class_pc.html#ca543f3f579e2531dfbe70a8ae419915">Pc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="74f771f93374710e8aa42ae17e6b54b4"></a><!-- doxytag: member="Equipement::GenerateIpAssign" ref="74f771f93374710e8aa42ae17e6b54b4" args="()=0" -->
+<a class="anchor" name="643c6d9c56ed25c0319bfc84a6e064f5"></a><!-- doxytag: member="Equipement::GenerateIpAssign" ref="643c6d9c56ed25c0319bfc84a6e064f5" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::string Equipement::GenerateIpAssign           </td>
+          <td class="memname">virtual std::vector&lt;std::string&gt; Equipement::GenerateIpAssign           </td>
           <td>(</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
@@ -220,16 +211,16 @@ Function wich return the c++ code from the ip asssign part.
 This function return a string wich contain the c++ code from the Ipv4 Assign part. It's about ip and mask assign. This function have to be rewritten in all subclasses;<p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>IpAssign. </dd></dl>
 
-<p>Implemented in <a class="el" href="class_pc.html#85794eaecd61612d44e1c68746e1c156">Pc</a>.</p>
+<p>Implemented in <a class="el" href="class_pc.html#3f50cc66c3e268c95b2d2b4b7f8c1246">Pc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="98eda1e24e07c343712dcd35eba6bd18"></a><!-- doxytag: member="Equipement::GenerateIpStack" ref="98eda1e24e07c343712dcd35eba6bd18" args="()=0" -->
+<a class="anchor" name="6d7c3d74a18a723f35f274fb5aa5f06b"></a><!-- doxytag: member="Equipement::GenerateIpStack" ref="6d7c3d74a18a723f35f274fb5aa5f06b" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::string Equipement::GenerateIpStack           </td>
+          <td class="memname">virtual std::vector&lt;std::string&gt; Equipement::GenerateIpStack           </td>
           <td>(</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
@@ -245,16 +236,16 @@ Function wich return the c++ code from IpStack.
 This function return a string which contain the c++ code from the Ipv4 stack declaration and instanciation. This function have to be rewritten in all subclasses.<p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>ipStack. </dd></dl>
 
-<p>Implemented in <a class="el" href="class_pc.html#6b81e7a8e167ed51f92ce55c0447fefe">Pc</a>.</p>
+<p>Implemented in <a class="el" href="class_pc.html#1457375fb9f19d9a0270a26a8ec7b7b6">Pc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="e03cafed5e059dfe332643719c8d8dd4"></a><!-- doxytag: member="Equipement::GenerateNode" ref="e03cafed5e059dfe332643719c8d8dd4" args="()=0" -->
+<a class="anchor" name="df32ce167d648ff92a6420dea4e6f06e"></a><!-- doxytag: member="Equipement::GenerateNode" ref="df32ce167d648ff92a6420dea4e6f06e" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::string Equipement::GenerateNode           </td>
+          <td class="memname">virtual std::vector&lt;std::string&gt; Equipement::GenerateNode           </td>
           <td>(</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
@@ -270,30 +261,7 @@ Function wich return the c++ code from node.
 This function return a string which contain the declaration and instanciation of the node. This function have to be rewritten in all subclasses.<p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>node. </dd></dl>
 
-<p>Implemented in <a class="el" href="class_pc.html#36ace04642cd481b39d312b51c37c114">Pc</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="c4aa745380e69d02a91f1e601430a545"></a><!-- doxytag: member="Equipement::getHeader" ref="c4aa745380e69d02a91f1e601430a545" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string Equipement::getHeader           </td>
-          <td>(</td>
-          <td class="paramname">          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Function wich return the c++ header code. 
-<p>
-Function which return the c++ code from the equipement<p>
-<dl class="return" compact><dt><b>Returns:</b></dt><dd>header c++ code. </dd></dl>
+<p>Implemented in <a class="el" href="class_pc.html#27e33b70f680c5fa0c947415c6d0a77f">Pc</a>.</p>
 
 </div>
 </div><p>
@@ -455,36 +423,6 @@ Function which return the y position.
 <p>
 Function wich return the graphical y position of the object.<p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>y position. </dd></dl>
-
-</div>
-</div><p>
-<a class="anchor" name="9068d14ff2c67d06be75a21ebc9fbcd7"></a><!-- doxytag: member="Equipement::setHeader" ref="9068d14ff2c67d06be75a21ebc9fbcd7" args="(std::string _header)=0" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void Equipement::setHeader           </td>
-          <td>(</td>
-          <td class="paramtype">std::string&nbsp;</td>
-          <td class="paramname"> <em>_header</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td><code> [pure virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Procedure used to the the c++ header code. 
-<p>
-This procedure is used to set the header c++ code as a string. It's used to generate the code. This procedure have to be rewritted un all subclasses.<p>
-<dl compact><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>_header</em>&nbsp;</td><td>the header which have to be set. </td></tr>
-  </table>
-</dl>
-
-<p>Implemented in <a class="el" href="class_pc.html#8049628cd139b39cbae2327e70ca0eb7">Pc</a>.</p>
 
 </div>
 </div><p>
@@ -650,23 +588,6 @@ Function wich convert in to string.<p>
 </div>
 </div><p>
 <hr><h2>Member Data Documentation</h2>
-<a class="anchor" name="1c7ae76643400f1402231514c2a21ae2"></a><!-- doxytag: member="Equipement::header" ref="1c7ae76643400f1402231514c2a21ae2" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string <a class="el" href="class_equipement.html#1c7ae76643400f1402231514c2a21ae2">Equipement::header</a><code> [protected]</code>          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-attribute which represent the header. 
-<p>
-This attribute reprensent the differents files to be included for the node. 
-</div>
-</div><p>
 <a class="anchor" name="d5124abeb4730c781cf45e7d538ebbc2"></a><!-- doxytag: member="Equipement::indice" ref="d5124abeb4730c781cf45e7d538ebbc2" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -789,7 +710,7 @@ The y graphical position.
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/home/elz/workspace/ns-3-generator/<a class="el" href="_equipement_8h-source.html">Equipement.h</a><li>/home/elz/workspace/ns-3-generator/<a class="el" href="_equipement_8cpp.html">Equipement.cpp</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue May 5 13:24:31 2009 for Generator Doc by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue May 5 15:53:32 2009 for Generator Doc by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

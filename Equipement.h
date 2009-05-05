@@ -78,13 +78,6 @@ protected:
   std::string ipInterfaceName;
   
   /**
-   * \brief attribute which represent the header.
-   * 
-   * This attribute reprensent the differents files to be included for the node.
-   */
-  std::string header;
-  
-  /**
    * \brief attribute which represent the x position of the object.
    * 
    * The x graphical position.
@@ -122,7 +115,7 @@ public:
    * 
    * \return header.
    */
-  virtual std::string GenerateHeader() = 0;
+  virtual std::vector<std::string> GenerateHeader() = 0;
 
   /**
    * \brief Function wich return the c++ code from node.
@@ -132,7 +125,7 @@ public:
    * 
    * \return node.
    */
-  virtual std::string GenerateNode() = 0;
+  virtual std::vector<std::string> GenerateNode() = 0;
 
   /**
    * \brief Function wich return the c++ code from IpStack.
@@ -142,7 +135,7 @@ public:
    * 
    * \return ipStack.
    */
-  virtual std::string GenerateIpStack() = 0;
+  virtual std::vector<std::string> GenerateIpStack() = 0;
   
   /**
    * \brief Function wich return the c++ code from the ip asssign part.
@@ -152,17 +145,7 @@ public:
    * 
    * \return IpAssign.
    */
-  virtual std::string GenerateIpAssign() = 0;
-  
-  /**
-   * \brief Procedure used to the the c++ header code.
-   * 
-   * This procedure is used to set the header c++ code as a string. It's used to generate the code.
-   * This procedure have to be rewritted un all subclasses.
-   *
-   * \param _header the header which have to be set.
-   */
-  virtual void setHeader(std::string _header) = 0;
+  virtual std::vector<std::string> GenerateIpAssign() = 0;
   
   /**
    * \brief Procedure to set the node name.
@@ -223,15 +206,6 @@ public:
    */
   std::string getIpInterfaceName();
 
-  /**
-   * \brief Function wich return the c++ header code.
-   *
-   * Function which return the c++ code from the equipement
-   * 
-   * \return header c++ code.
-   */
-  std::string getHeader();
-  
   /**
    * \brief Function wich return the ip address.
    *

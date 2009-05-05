@@ -68,7 +68,7 @@ public:
    * 
    * \return header.
    */
-  virtual std::string GenerateHeader();
+  virtual std::vector<std::string> GenerateHeader();
   
   /**
    * \brief Function witch return the node c++ code.
@@ -77,7 +77,7 @@ public:
    * 
    * \return node.
    */
-  virtual std::string GenerateNode();
+  virtual std::vector<std::string> GenerateNode();
   
   /**
    * \brief Function witch return the ip stack c++ code.
@@ -86,7 +86,7 @@ public:
    * 
    * \return ip stack.
    */
-  virtual std::string GenerateIpStack();
+  virtual std::vector<std::string> GenerateIpStack();
   
   /**
    * \brief Function witch return the ip assign c++ code.
@@ -95,17 +95,8 @@ public:
    * 
    * \return ip assign.
    */
-  virtual std::string GenerateIpAssign();
+  virtual std::vector<std::string> GenerateIpAssign();
   
-  /**
-   * \brief Function witch set the header c++ code.
-   *
-   * Function wich set the c++ code from the Pc.
-   * 
-   * \param _header the new header string.
-   */
-  virtual void setHeader(std::string _header);
-
 };
 
 #endif /* PC_H */

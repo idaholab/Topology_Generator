@@ -47,21 +47,18 @@ Inheritance diagram for Pc:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pc.html#b15cb9b9bfb8a9d9ff964091e1a63cec">~Pc</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">the destructor of the class.  <a href="#b15cb9b9bfb8a9d9ff964091e1a63cec"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pc.html#0b152acc530cc73f502f046e19f9344f">GenerateHeader</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual std::vector&lt; std::string &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pc.html#ca543f3f579e2531dfbe70a8ae419915">GenerateHeader</a> ()</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function witch return the header c++ code.  <a href="#0b152acc530cc73f502f046e19f9344f"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pc.html#36ace04642cd481b39d312b51c37c114">GenerateNode</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function witch return the header c++ code.  <a href="#ca543f3f579e2531dfbe70a8ae419915"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual std::vector&lt; std::string &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pc.html#27e33b70f680c5fa0c947415c6d0a77f">GenerateNode</a> ()</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function witch return the node c++ code.  <a href="#36ace04642cd481b39d312b51c37c114"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pc.html#6b81e7a8e167ed51f92ce55c0447fefe">GenerateIpStack</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function witch return the node c++ code.  <a href="#27e33b70f680c5fa0c947415c6d0a77f"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual std::vector&lt; std::string &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pc.html#1457375fb9f19d9a0270a26a8ec7b7b6">GenerateIpStack</a> ()</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function witch return the ip stack c++ code.  <a href="#6b81e7a8e167ed51f92ce55c0447fefe"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pc.html#85794eaecd61612d44e1c68746e1c156">GenerateIpAssign</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function witch return the ip stack c++ code.  <a href="#1457375fb9f19d9a0270a26a8ec7b7b6"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual std::vector&lt; std::string &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pc.html#3f50cc66c3e268c95b2d2b4b7f8c1246">GenerateIpAssign</a> ()</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function witch return the ip assign c++ code.  <a href="#85794eaecd61612d44e1c68746e1c156"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pc.html#8049628cd139b39cbae2327e70ca0eb7">setHeader</a> (std::string _header)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function witch set the header c++ code.  <a href="#8049628cd139b39cbae2327e70ca0eb7"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function witch return the ip assign c++ code.  <a href="#3f50cc66c3e268c95b2d2b4b7f8c1246"></a><br></td></tr>
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 Subclasse from <a class="el" href="class_equipement.html" title="Abstract Equipement Base Class.">Equipement</a>. 
@@ -110,12 +107,12 @@ The class destructor.
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="0b152acc530cc73f502f046e19f9344f"></a><!-- doxytag: member="Pc::GenerateHeader" ref="0b152acc530cc73f502f046e19f9344f" args="()" -->
+<a class="anchor" name="ca543f3f579e2531dfbe70a8ae419915"></a><!-- doxytag: member="Pc::GenerateHeader" ref="ca543f3f579e2531dfbe70a8ae419915" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string Pc::GenerateHeader           </td>
+          <td class="memname">std::vector&lt; std::string &gt; Pc::GenerateHeader           </td>
           <td>(</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
@@ -131,16 +128,16 @@ Function witch return the header c++ code.
 Function wich return a string with the header c++ code from a <a class="el" href="class_pc.html" title="Subclasse from Equipement.">Pc</a>.<p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>header. </dd></dl>
 
-<p>Implements <a class="el" href="class_equipement.html#136cc8d242b48a665691f8edafa48210">Equipement</a>.</p>
+<p>Implements <a class="el" href="class_equipement.html#32d6f8201afca95d27be3f498cd7d312">Equipement</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="85794eaecd61612d44e1c68746e1c156"></a><!-- doxytag: member="Pc::GenerateIpAssign" ref="85794eaecd61612d44e1c68746e1c156" args="()" -->
+<a class="anchor" name="3f50cc66c3e268c95b2d2b4b7f8c1246"></a><!-- doxytag: member="Pc::GenerateIpAssign" ref="3f50cc66c3e268c95b2d2b4b7f8c1246" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string Pc::GenerateIpAssign           </td>
+          <td class="memname">std::vector&lt; std::string &gt; Pc::GenerateIpAssign           </td>
           <td>(</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
@@ -156,16 +153,16 @@ Function witch return the ip assign c++ code.
 Function wich return a string with the ip assign c++ code from a <a class="el" href="class_pc.html" title="Subclasse from Equipement.">Pc</a>.<p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>ip assign. </dd></dl>
 
-<p>Implements <a class="el" href="class_equipement.html#74f771f93374710e8aa42ae17e6b54b4">Equipement</a>.</p>
+<p>Implements <a class="el" href="class_equipement.html#643c6d9c56ed25c0319bfc84a6e064f5">Equipement</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="6b81e7a8e167ed51f92ce55c0447fefe"></a><!-- doxytag: member="Pc::GenerateIpStack" ref="6b81e7a8e167ed51f92ce55c0447fefe" args="()" -->
+<a class="anchor" name="1457375fb9f19d9a0270a26a8ec7b7b6"></a><!-- doxytag: member="Pc::GenerateIpStack" ref="1457375fb9f19d9a0270a26a8ec7b7b6" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string Pc::GenerateIpStack           </td>
+          <td class="memname">std::vector&lt; std::string &gt; Pc::GenerateIpStack           </td>
           <td>(</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
@@ -181,16 +178,16 @@ Function witch return the ip stack c++ code.
 Function wich return a string with the ip stack c++ code from a <a class="el" href="class_pc.html" title="Subclasse from Equipement.">Pc</a>.<p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>ip stack. </dd></dl>
 
-<p>Implements <a class="el" href="class_equipement.html#98eda1e24e07c343712dcd35eba6bd18">Equipement</a>.</p>
+<p>Implements <a class="el" href="class_equipement.html#6d7c3d74a18a723f35f274fb5aa5f06b">Equipement</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="36ace04642cd481b39d312b51c37c114"></a><!-- doxytag: member="Pc::GenerateNode" ref="36ace04642cd481b39d312b51c37c114" args="()" -->
+<a class="anchor" name="27e33b70f680c5fa0c947415c6d0a77f"></a><!-- doxytag: member="Pc::GenerateNode" ref="27e33b70f680c5fa0c947415c6d0a77f" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string Pc::GenerateNode           </td>
+          <td class="memname">std::vector&lt; std::string &gt; Pc::GenerateNode           </td>
           <td>(</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
@@ -206,44 +203,14 @@ Function witch return the node c++ code.
 Function wich return a string with the node c++ code from a <a class="el" href="class_pc.html" title="Subclasse from Equipement.">Pc</a>.<p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>node. </dd></dl>
 
-<p>Implements <a class="el" href="class_equipement.html#e03cafed5e059dfe332643719c8d8dd4">Equipement</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="8049628cd139b39cbae2327e70ca0eb7"></a><!-- doxytag: member="Pc::setHeader" ref="8049628cd139b39cbae2327e70ca0eb7" args="(std::string _header)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Pc::setHeader           </td>
-          <td>(</td>
-          <td class="paramtype">std::string&nbsp;</td>
-          <td class="paramname"> <em>_header</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Function witch set the header c++ code. 
-<p>
-Function wich set the c++ code from the <a class="el" href="class_pc.html" title="Subclasse from Equipement.">Pc</a>.<p>
-<dl compact><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>_header</em>&nbsp;</td><td>the new header string. </td></tr>
-  </table>
-</dl>
-
-<p>Implements <a class="el" href="class_equipement.html#9068d14ff2c67d06be75a21ebc9fbcd7">Equipement</a>.</p>
+<p>Implements <a class="el" href="class_equipement.html#df32ce167d648ff92a6420dea4e6f06e">Equipement</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/home/elz/workspace/ns-3-generator/<a class="el" href="_pc_8h-source.html">Pc.h</a><li>/home/elz/workspace/ns-3-generator/<a class="el" href="_pc_8cpp.html">Pc.cpp</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue May 5 13:24:31 2009 for Generator Doc by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue May 5 15:53:32 2009 for Generator Doc by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

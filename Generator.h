@@ -229,7 +229,7 @@ private:
    * 
    * \return generated node
    */
-  std::string GenerateNode();
+  std::vector<std::string> GenerateNode();
 
 
   /**
@@ -259,7 +259,7 @@ private:
    * 
    * \return generated ip stack 
    */
-  std::string GenerateIpStack();
+  std::vector<std::string> GenerateIpStack();
 
 
   /**
@@ -269,7 +269,7 @@ private:
    * 
    * \return generated ip assign
    */
-  std::string GenerateIpAssign();
+  std::vector<std::string> GenerateIpAssign();
 
 
   /**

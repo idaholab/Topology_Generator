@@ -33,7 +33,7 @@ Equipement::Equipement()
   this->indice = toString(Generator::getIndiceEquipement());
   this->nodeName = "node_"+toString(Generator::getIndiceEquipement());
   this->ip = "0.0.0.0";
-  this->mask = "255.255.255.0";
+  this->mask = "0.0.0.0";
   this->ipInterfaceName = "iface_"+this->nodeName;
   this->x = 0;
   this->y = 0;	
@@ -77,11 +77,6 @@ std::string Equipement::getIpInterfaceName()
   return this->ipInterfaceName;
 }
  
-std::string Equipement::getHeader()
-{
-  return this->header;
-}
-
 void Equipement::setPosition(int _x, int _y)
 {
   this->x = _x;

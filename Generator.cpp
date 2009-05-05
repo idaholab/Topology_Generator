@@ -163,26 +163,107 @@ int Generator::getIndiceLink()
 
 void Generator::GenerateCode() 
 {	
-  std::cout << "GenerateCode" << std::endl;
-  GenerateHeader();
+  /* In first time we just print it to stdout, at the end, we will use the write cpp function */
+  std::cout << "Code Generation :" << std::endl;
+  
+  //
+  // Generate headers 
+  //
+  
+  std::cout << "#include \"ns3/simulator-module.h\"" << std::endl;
+  std::cout << "#include \"ns3/node-module.h\"" << std::endl;
+  std::cout << "#include \"ns3/core-module.h\"" << std::endl;
+
+  std::vector<std::string> allHeaders = GenerateHeader();
+  for(int i = 0; i < (int) allHeaders.size(); i++)
+  {
+  	std::cout << "" << allHeaders.at(i) << std::endl;
+  }
+  
+  std::cout << "" << std::endl;
+  std::cout << "using namespace ns3;" << std::endl;
+  std::cout << "" << std::endl;
+  
+  std::cout << "int main(int argc, char[] *argv)" << std::endl;
+  std::cout << "{" << std::endl;
+  std::cout << "" << std::endl;
+              
+  //
+  // Generate Command Line 
+  //
+  std::cout << "  CommandLine cmd;" << std::endl;
+           
   //~ GenerateCmdLine() 
+  
+  std::cout << "  cmd.Parse (argc, argv);" << std::endl;
+  
+  //
+  // Generate Optional configuration
+  // 
   //~ GenerateConfig() 
-  GenerateNode(); 
+  
+  //
+  // Generate Nodes. 
+  //
+  
+  std::cout << "" << std::endl;
+  std::cout << "  /* Build nodes. */" << std::endl;
+  std::vector<std::string> nodeBuild = GenerateNode();
+  for(int i = 0; i < (int) nodeBuild.size(); i++)
+  {
+  	std::cout << "  " << nodeBuild.at(i) << std::endl;
+  }
+  
   //~ GenerateLink() 
   //~ GenerateNetDevice() 
-  //~ GenerateIpStack() 
-  //~ GenerateIpAssign() 
+  
+  //
+  // Generate Ip Stack. 
+  //
+  std::cout << "" << std::endl;
+  std::cout << "  /* Install the IP stack */" << std::endl;
+  std::vector<std::string> allStacks = GenerateIpStack();
+  for(int i = 0; i < (int) allStacks.size(); i++)
+  {
+  	std::cout << "  " << allStacks.at(i) << std::endl;
+  }
+  
+  //
+  // Generate Ip Assign.
+  // 
+  std::cout << "" << std::endl;
+  std::cout << "  /* IP assign */" << std::endl;
+  std::vector<std::string> allAssign = GenerateIpAssign();
+  for(int i = 0; i < (int) allAssign.size(); i++)
+  {
+  	std::cout << "  " << allAssign.at(i) << std::endl;
+  } 
+  
+  //
+  // Generate Route.
+  //
+  std::cout << "  /* Generate Route. */" << std::endl;
+  std::cout << "  GlobalRouteManager::PopulateRoutingTables ();" << std::endl;
   //~ GenerateRoute() 
-  //~ GenerateApplications() 
+  
+  
+  //~ GenerateApplications()
+  
+  std::cout << "}" << std::endl; 
 }
 
 std::vector<std::string> Generator::GenerateHeader() 
 {
+  /* still in developpement, must be add the link and the applications headers! */
   std::vector<std::string> allHeaders;
   /* get all headers. */
   for(int i = 0; i < Generator::getIndiceEquipement(); i++)
   {
-  	allHeaders.push_back((Generator::listEquipement.at(i))->GenerateHeader());
+    std::vector<std::string> trans = (Generator::listEquipement.at(i))->GenerateHeader();
+    for(int j = 0; j < (int) trans.size(); j++)
+    {
+  	  allHeaders.push_back(trans.at(j));
+    }
   }
 
   /* check for duplicate */
@@ -209,15 +290,7 @@ std::vector<std::string> Generator::GenerateHeader()
   	  headersWithoutDuplicateElem.push_back(allHeaders.at(i));
   	}
   }
-  
-  /* print the res to see.*/
-  for(int i = 0; i < (int) headersWithoutDuplicateElem.size(); i++)
-  {
-  	std::cout << "Num :" << i << " - " << headersWithoutDuplicateElem.at(i) << std::endl;
-  }
-  
   return headersWithoutDuplicateElem;
-  
 }
 
 std::string Generator::GenerateCmdLine() 
@@ -230,9 +303,19 @@ std::string Generator::GenerateConfig()
   return "";
 }
 
-std::string Generator::GenerateNode() 
+std::vector<std::string> Generator::GenerateNode() 
 {
-  return "";
+  std::vector<std::string> allNodes;
+  /* get all the node code. */
+  for(int i = 0; i < Generator::getIndiceEquipement(); i++)
+  {
+    std::vector<std::string> trans = (Generator::listEquipement.at(i))->GenerateNode();
+    for(int j = 0; j < (int) trans.size(); j++)
+    {
+      allNodes.push_back(trans.at(j));
+    }
+  }
+  return allNodes;
 }
 
 std::string Generator::GenerateLink() 
@@ -244,14 +327,36 @@ std::string Generator::GenerateNetDevice()
   return "";
 }
 
-std::string Generator::GenerateIpStack() 
+std::vector<std::string> Generator::GenerateIpStack() 
 {
-  return "";
+  std::vector<std::string> allStack;
+  /* get all the node code. */
+  for(int i = 0; i < Generator::getIndiceEquipement(); i++)
+  {
+    std::vector<std::string> trans = (Generator::listEquipement.at(i)->GenerateIpStack());
+    for(int j = 0; j < (int) trans.size(); j++)
+    {
+      allStack.push_back(trans.at(j));
+    }
+  }
+
+  return allStack;
 }
 
-std::string Generator::GenerateIpAssign() 
+std::vector<std::string> Generator::GenerateIpAssign() 
 {
-  return "";
+  std::vector<std::string> allAssign;
+  /* get all the ip assign code. */
+  for(int i = 0; i < Generator::getIndiceEquipement(); i++)
+  {
+    std::vector<std::string> trans = (Generator::listEquipement.at(i)->GenerateIpAssign());
+    for(int j = 0; j < (int) trans.size(); j++)
+    {
+      allAssign.push_back(trans.at(j));
+    }
+  }
+
+  return allAssign;
 }
 
 std::string Generator::GenerateRoute() 
