@@ -17,11 +17,12 @@
  * 
  */
 
+using namespace std;
 
 #include "Generator.h"
 #include <iostream>
 #include <stdlib.h>
-using namespace std;
+#include <limits>
 
 //
 // This class is written to test all the implementation of the generator code.
@@ -32,16 +33,16 @@ using namespace std;
 void ListAllEquipement()
 {
   for(int i = 0; i < Generator::getIndiceEquipement(); i++){
-  	//~ cout << "#################" << endl;	
-    cout << "Numéro :" << i << endl;
-	cout << "nodeName :"<< Generator::listEquipement.at(i)->getNodeName() << endl;
-	cout << "ip :"<< Generator::listEquipement.at(i)->getIp() << endl;
-	cout << "mask :" << Generator::listEquipement.at(i)->getMask() << endl;
-	cout << "ipInterfaceName :" << Generator::listEquipement.at(i)->getIpInterfaceName() << endl;
-	cout << "header :" << Generator::listEquipement.at(i)->getHeader() << endl;
-	cout << "x :" << Generator::listEquipement.at(i)->getX() << endl;
-	cout << "y :" << Generator::listEquipement.at(i)->getY() << endl;
-	cout << "#################" << endl;	
+  	//~ std::cout << "#################" << std::endl;	
+    std::cout << "Numéro :" << i << std::endl;
+	std::cout << "nodeName :"<< Generator::listEquipement.at(i)->getNodeName() << std::endl;
+	std::cout << "ip :"<< Generator::listEquipement.at(i)->getIp() << std::endl;
+	std::cout << "mask :" << Generator::listEquipement.at(i)->getMask() << std::endl;
+	std::cout << "ipInterfaceName :" << Generator::listEquipement.at(i)->getIpInterfaceName() << std::endl;
+	std::cout << "header :" << Generator::listEquipement.at(i)->getHeader() << std::endl;
+	std::cout << "x :" << Generator::listEquipement.at(i)->getX() << std::endl;
+	std::cout << "y :" << Generator::listEquipement.at(i)->getY() << std::endl;
+	std::cout << "#################" << std::endl;	
   }	
 		
 }
@@ -54,11 +55,12 @@ void ListAllLink()
 {
 }
 
-void Usage(){
-  cout << "0 - exit." << endl;
-  cout << "1 - List all equipements." << endl;
-  cout << "2 - add a PC" << endl;
-  cout << "choose :";
+void Usage()
+{
+  std::cout << "0 - exit." << std::endl;
+  std::cout << "1 - List all equipements." << std::endl;
+  std::cout << "2 - add a PC" << std::endl;
+  std::cout << "choose :";
 }
 
 int main()
@@ -68,26 +70,41 @@ int main()
   
   /* add 10 pc. */
   int i = 0;	
-  while( i < 10 ){
+  while( i < 10 )
+  {
   	gen.AddEquipement("Pc");
   	i += 1;
   }	
-  cout<< "Main" << endl;
-  //cout << (Generator::listEquipement.at(0))->GenerateHeader() << endl;
+  std::cout<< "Main" << std::endl;
+  //std::cout << (Generator::listEquipement.at(0))->GenerateHeader() << std::endl;
 	
   gen.GenerateCode();
 	
 	
   /* manual operations. */	
-  /*while(1){
+  while(1)
+  {
   	Usage();
-    cin >> nbrChoose;
-    if(nbrChoose == 0){
+    std::cin >> nbrChoose;
+    if (std::cin.fail()) 
+    {
+      std::cin.clear(); 
+      std::cin.ignore( numeric_limits<streamsize>::max(), '\n' );
+    }
+
+    if(nbrChoose == 0)
+    {
       exit(EXIT_SUCCESS);
-    } else if(nbrChoose == 1){
+    } 
+    else if(nbrChoose == 1)
+    {
       ListAllEquipement(); 
-    } else if(nbrChoose == 2){
+    } 
+    else if(nbrChoose == 2)
+    {
       gen.AddEquipement("Pc");
     }
-  }*/
+  }
 }
+
+

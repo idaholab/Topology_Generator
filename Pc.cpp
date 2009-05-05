@@ -16,39 +16,52 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+/**
+* \file Pc.cpp
+* \brief Subclasse from Equipement.
+* \author Pierre Weiss
+* \date 2009
+*/
 
 #include "Pc.h"
 
-Pc::Pc() : Equipement(){
-  this->header = "#include \"ns3/node-module.h\"\n";
+Pc::Pc() : Equipement()
+{
+  this->header = "#include \"ns3/node-module.h\"";
 }
 
-Pc::~Pc(){	
+Pc::~Pc()
+{	
 }
 
-string Pc::GenerateHeader(){
+std::string Pc::GenerateHeader()
+{
   return this->header;
 }
 
-string Pc::GenerateNode(){
+std::string Pc::GenerateNode()
+{
   return "NodeContainer "+this->getNodeName()+"\n"
-         +this->getNodeName()+".Create(1);\n";
+         +this->getNodeName()+".Create(1);";
 }
 
-string Pc::GenerateIpStack(){
+std::string Pc::GenerateIpStack()
+{
   return "InternetStackHelper net_"+this->getNodeName()+"; \n"
-  	     +"net_"+this->getNodeName()+".Install ("+this->getNodeName()+");\n";
+  	     +"net_"+this->getNodeName()+".Install ("+this->getNodeName()+");";
 }
 
-string Pc::GenerateIpAssign(){ 
+std::string Pc::GenerateIpAssign()
+{ 
   // need to think about the third argument from the SetBase method.	
 	
   return "Ipv4AddressHelper ipv4_"+this->getNodeName()+";\n"
   		 +"ipv4.SetBase (\""+this->getIp()+"\", \""+this->getMask()+"\", \"0.0.0."+this->getIndice()+"\");"
-  		 +"Ipv4InterfaceContainer "+this->getIpInterfaceName()+" = ipv4.Assign(netDeviceCont_"+this->getNodeName()+");\n";
+  		 +"Ipv4InterfaceContainer "+this->getIpInterfaceName()+" = ipv4.Assign(netDeviceCont_"+this->getNodeName()+");";
 }
  
-void Pc::setHeader(string _header){
+void Pc::setHeader(std::string _header)
+{
   this->header = _header;
 }
 

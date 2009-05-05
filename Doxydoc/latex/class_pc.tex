@@ -18,15 +18,17 @@ Inheritance diagram for Pc::\begin{figure}[H]
 \item 
 \hyperlink{class_pc_ef7314496cee3c1bd2c329aac4dc4f21}{Pc} ()
 \begin{CompactList}\small\item\em Constructor used for a \hyperlink{class_pc}{Pc}. \item\end{CompactList}\item 
-string \hyperlink{class_pc_a84eb29bce881921ec8f591dfd5b8ba0}{GenerateHeader} ()
+virtual \hyperlink{class_pc_b15cb9b9bfb8a9d9ff964091e1a63cec}{$\sim$Pc} ()
+\begin{CompactList}\small\item\em the destructor of the class. \item\end{CompactList}\item 
+virtual std::string \hyperlink{class_pc_0b152acc530cc73f502f046e19f9344f}{GenerateHeader} ()
 \begin{CompactList}\small\item\em Function witch return the header c++ code. \item\end{CompactList}\item 
-string \hyperlink{class_pc_e72f59f25f046967f021e56a90281d77}{GenerateNode} ()
+virtual std::string \hyperlink{class_pc_36ace04642cd481b39d312b51c37c114}{GenerateNode} ()
 \begin{CompactList}\small\item\em Function witch return the node c++ code. \item\end{CompactList}\item 
-string \hyperlink{class_pc_205240ed7c68ad780ff4a669376c04eb}{GenerateIpStack} ()
+virtual std::string \hyperlink{class_pc_6b81e7a8e167ed51f92ce55c0447fefe}{GenerateIpStack} ()
 \begin{CompactList}\small\item\em Function witch return the ip stack c++ code. \item\end{CompactList}\item 
-string \hyperlink{class_pc_b743fd5f5d74f1d5db9549aa43fab9c5}{GenerateIpAssign} ()
+virtual std::string \hyperlink{class_pc_85794eaecd61612d44e1c68746e1c156}{GenerateIpAssign} ()
 \begin{CompactList}\small\item\em Function witch return the ip assign c++ code. \item\end{CompactList}\item 
-void \hyperlink{class_pc_45386d5f2837f3d2087fe62ca1692883}{setHeader} (string \_\-header)
+virtual void \hyperlink{class_pc_8049628cd139b39cbae2327e70ca0eb7}{setHeader} (std::string \_\-header)
 \begin{CompactList}\small\item\em Function witch set the header c++ code. \item\end{CompactList}\end{CompactItemize}
 
 
@@ -45,14 +47,23 @@ This class is a subclass from main class \hyperlink{class_equipement}{Equipement
 
 Constructor used for a \hyperlink{class_pc}{Pc}. 
 
-This is the constructor of the \hyperlink{class_pc}{Pc} class. This object rewrite the virtual method from main class. It also contain the c++ code specific from a \hyperlink{class_pc}{Pc}. 
+This is the constructor of the \hyperlink{class_pc}{Pc} class. This object rewrite the virtual method from main class. It also contain the c++ code specific from a \hyperlink{class_pc}{Pc}. \hypertarget{class_pc_b15cb9b9bfb8a9d9ff964091e1a63cec}{
+\index{Pc@{Pc}!$\sim$Pc@{$\sim$Pc}}
+\index{$\sim$Pc@{$\sim$Pc}!Pc@{Pc}}
+\subsubsection[{$\sim$Pc}]{\setlength{\rightskip}{0pt plus 5cm}Pc::$\sim$Pc ()\hspace{0.3cm}{\tt  \mbox{[}virtual\mbox{]}}}}
+\label{class_pc_b15cb9b9bfb8a9d9ff964091e1a63cec}
+
+
+the destructor of the class. 
+
+The class destructor. 
 
 \subsection{Member Function Documentation}
-\hypertarget{class_pc_a84eb29bce881921ec8f591dfd5b8ba0}{
+\hypertarget{class_pc_0b152acc530cc73f502f046e19f9344f}{
 \index{Pc@{Pc}!GenerateHeader@{GenerateHeader}}
 \index{GenerateHeader@{GenerateHeader}!Pc@{Pc}}
-\subsubsection[{GenerateHeader}]{\setlength{\rightskip}{0pt plus 5cm}string Pc::GenerateHeader ()\hspace{0.3cm}{\tt  \mbox{[}virtual\mbox{]}}}}
-\label{class_pc_a84eb29bce881921ec8f591dfd5b8ba0}
+\subsubsection[{GenerateHeader}]{\setlength{\rightskip}{0pt plus 5cm}std::string Pc::GenerateHeader ()\hspace{0.3cm}{\tt  \mbox{[}virtual\mbox{]}}}}
+\label{class_pc_0b152acc530cc73f502f046e19f9344f}
 
 
 Function witch return the header c++ code. 
@@ -63,11 +74,11 @@ Function wich return a string with the header c++ code from a \hyperlink{class_p
 \item[Returns:]header. \end{Desc}
 
 
-Reimplemented from \hyperlink{class_equipement_8d24220539ff36aeb021daaec32f729e}{Equipement}.\hypertarget{class_pc_b743fd5f5d74f1d5db9549aa43fab9c5}{
+Implements \hyperlink{class_equipement_136cc8d242b48a665691f8edafa48210}{Equipement}.\hypertarget{class_pc_85794eaecd61612d44e1c68746e1c156}{
 \index{Pc@{Pc}!GenerateIpAssign@{GenerateIpAssign}}
 \index{GenerateIpAssign@{GenerateIpAssign}!Pc@{Pc}}
-\subsubsection[{GenerateIpAssign}]{\setlength{\rightskip}{0pt plus 5cm}string Pc::GenerateIpAssign ()\hspace{0.3cm}{\tt  \mbox{[}virtual\mbox{]}}}}
-\label{class_pc_b743fd5f5d74f1d5db9549aa43fab9c5}
+\subsubsection[{GenerateIpAssign}]{\setlength{\rightskip}{0pt plus 5cm}std::string Pc::GenerateIpAssign ()\hspace{0.3cm}{\tt  \mbox{[}virtual\mbox{]}}}}
+\label{class_pc_85794eaecd61612d44e1c68746e1c156}
 
 
 Function witch return the ip assign c++ code. 
@@ -78,11 +89,11 @@ Function wich return a string with the ip assign c++ code from a \hyperlink{clas
 \item[Returns:]ip assign. \end{Desc}
 
 
-Reimplemented from \hyperlink{class_equipement_d1e684114ebf6746f77cc370cdb449e5}{Equipement}.\hypertarget{class_pc_205240ed7c68ad780ff4a669376c04eb}{
+Implements \hyperlink{class_equipement_74f771f93374710e8aa42ae17e6b54b4}{Equipement}.\hypertarget{class_pc_6b81e7a8e167ed51f92ce55c0447fefe}{
 \index{Pc@{Pc}!GenerateIpStack@{GenerateIpStack}}
 \index{GenerateIpStack@{GenerateIpStack}!Pc@{Pc}}
-\subsubsection[{GenerateIpStack}]{\setlength{\rightskip}{0pt plus 5cm}string Pc::GenerateIpStack ()\hspace{0.3cm}{\tt  \mbox{[}virtual\mbox{]}}}}
-\label{class_pc_205240ed7c68ad780ff4a669376c04eb}
+\subsubsection[{GenerateIpStack}]{\setlength{\rightskip}{0pt plus 5cm}std::string Pc::GenerateIpStack ()\hspace{0.3cm}{\tt  \mbox{[}virtual\mbox{]}}}}
+\label{class_pc_6b81e7a8e167ed51f92ce55c0447fefe}
 
 
 Function witch return the ip stack c++ code. 
@@ -93,11 +104,11 @@ Function wich return a string with the ip stack c++ code from a \hyperlink{class
 \item[Returns:]ip stack. \end{Desc}
 
 
-Reimplemented from \hyperlink{class_equipement_37fe31be30e3ea66fe6bdaab9d66bc15}{Equipement}.\hypertarget{class_pc_e72f59f25f046967f021e56a90281d77}{
+Implements \hyperlink{class_equipement_98eda1e24e07c343712dcd35eba6bd18}{Equipement}.\hypertarget{class_pc_36ace04642cd481b39d312b51c37c114}{
 \index{Pc@{Pc}!GenerateNode@{GenerateNode}}
 \index{GenerateNode@{GenerateNode}!Pc@{Pc}}
-\subsubsection[{GenerateNode}]{\setlength{\rightskip}{0pt plus 5cm}string Pc::GenerateNode ()\hspace{0.3cm}{\tt  \mbox{[}virtual\mbox{]}}}}
-\label{class_pc_e72f59f25f046967f021e56a90281d77}
+\subsubsection[{GenerateNode}]{\setlength{\rightskip}{0pt plus 5cm}std::string Pc::GenerateNode ()\hspace{0.3cm}{\tt  \mbox{[}virtual\mbox{]}}}}
+\label{class_pc_36ace04642cd481b39d312b51c37c114}
 
 
 Function witch return the node c++ code. 
@@ -108,11 +119,11 @@ Function wich return a string with the node c++ code from a \hyperlink{class_pc}
 \item[Returns:]node. \end{Desc}
 
 
-Reimplemented from \hyperlink{class_equipement_e51f720e7db340b33d7392eb78c9cea2}{Equipement}.\hypertarget{class_pc_45386d5f2837f3d2087fe62ca1692883}{
+Implements \hyperlink{class_equipement_e03cafed5e059dfe332643719c8d8dd4}{Equipement}.\hypertarget{class_pc_8049628cd139b39cbae2327e70ca0eb7}{
 \index{Pc@{Pc}!setHeader@{setHeader}}
 \index{setHeader@{setHeader}!Pc@{Pc}}
-\subsubsection[{setHeader}]{\setlength{\rightskip}{0pt plus 5cm}void Pc::setHeader (string {\em \_\-header})\hspace{0.3cm}{\tt  \mbox{[}virtual\mbox{]}}}}
-\label{class_pc_45386d5f2837f3d2087fe62ca1692883}
+\subsubsection[{setHeader}]{\setlength{\rightskip}{0pt plus 5cm}void Pc::setHeader (std::string {\em \_\-header})\hspace{0.3cm}{\tt  \mbox{[}virtual\mbox{]}}}}
+\label{class_pc_8049628cd139b39cbae2327e70ca0eb7}
 
 
 Function witch set the header c++ code. 
@@ -122,13 +133,13 @@ Function wich set the c++ code from the \hyperlink{class_pc}{Pc}.
 \begin{Desc}
 \item[Parameters:]
 \begin{description}
-\item[{\em \_\-header,the}]new header string. \end{description}
+\item[{\em \_\-header}]the new header string. \end{description}
 \end{Desc}
 
 
-Reimplemented from \hyperlink{class_equipement_95b372e1d9f733f4c8fde9b3a1cf8321}{Equipement}.
+Implements \hyperlink{class_equipement_9068d14ff2c67d06be75a21ebc9fbcd7}{Equipement}.
 
 The documentation for this class was generated from the following files:\begin{CompactItemize}
 \item 
-/home/elz/workspace/ns-3-generator/Pc.h\item 
-/home/elz/workspace/ns-3-generator/Pc.cpp\end{CompactItemize}
+/home/elz/workspace/ns-3-generator/\hyperlink{_pc_8h}{Pc.h}\item 
+/home/elz/workspace/ns-3-generator/\hyperlink{_pc_8cpp}{Pc.cpp}\end{CompactItemize}

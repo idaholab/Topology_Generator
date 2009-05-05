@@ -16,14 +16,20 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
-
+/**
+* \file Equipement.cpp
+* \brief Abstract Equipement Base Class.
+* \author Pierre Weiss
+* \date 2009
+*/
 
 #include "Equipement.h"
 #include "Generator.h"
 
 #include <sstream>
 
-Equipement::Equipement(){
+Equipement::Equipement()
+{
   this->indice = toString(Generator::getIndiceEquipement());
   this->nodeName = "node_"+toString(Generator::getIndiceEquipement());
   this->ip = "0.0.0.0";
@@ -34,61 +40,76 @@ Equipement::Equipement(){
 }
 
 //no pointer nothing to destroy
-Equipement::~Equipement(){
+Equipement::~Equipement()
+{
 }
 
-string Equipement::toString(int nbr){
+std::string Equipement::toString(int nbr)
+{
   std::ostringstream out;
   out << nbr;
 return out.str();
 }
 
-void Equipement::setNodeName(string _nodeName){
+void Equipement::setNodeName(std::string _nodeName)
+{
   this->nodeName = _nodeName;
 }
 
-void Equipement::setIpv4Address(string _ip, string _mask){
+void Equipement::setIpv4Address(std::string _ip, std::string _mask)
+{
   this->ip = _ip;
   this->mask = _mask;
 }
 
-void Equipement::setIpInterfaceName(string _ipInterfaceName){
+void Equipement::setIpInterfaceName(std::string _ipInterfaceName)
+{
   this->ipInterfaceName = _ipInterfaceName;
 }
 
-string Equipement::getNodeName(){
+std::string Equipement::getNodeName()
+{
   return this->nodeName;
 }
 
-string Equipement::getIpInterfaceName(){
+std::string Equipement::getIpInterfaceName()
+{
   return this->ipInterfaceName;
 }
  
-string Equipement::getHeader(){
+std::string Equipement::getHeader()
+{
   return this->header;
 }
 
-void Equipement::setPosition(int _x, int _y){
+void Equipement::setPosition(int _x, int _y)
+{
   this->x = _x;
   this->y = _y;
 }
 
-string Equipement::getIp(){
+std::string Equipement::getIp()
+{
   return this->ip;
 }
 
-string Equipement::getMask(){
+std::string Equipement::getMask()
+{
   return this->mask;
 }
 
-string Equipement::getX(){
+std::string Equipement::getX()
+{
   return toString(this->x);
 }
 
-string Equipement::getY(){
+std::string Equipement::getY()
+{
   return toString(this->y);
 }
 
-string Equipement::getIndice(){
+std::string Equipement::getIndice()
+{
   return this->indice;
 }
+

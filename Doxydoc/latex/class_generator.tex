@@ -7,25 +7,32 @@ The main class of the \hyperlink{class_generator}{Generator}.
 
 {\tt \#include $<$Generator.h$>$}
 
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+\hyperlink{class_generator_aaf1e5f3a47ede3ef8a96a301ee04a10}{Generator} ()
+\begin{CompactList}\small\item\em the generator of the class \hyperlink{class_generator}{Generator}. \item\end{CompactList}\item 
+void \hyperlink{class_generator_caee4fe4990cee0447f0cb27ef413c9b}{GenerateCode} ()
+\begin{CompactList}\small\item\em Procedure wich are the main code generator. \item\end{CompactList}\end{CompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{CompactItemize}
 \item 
-static void \hyperlink{class_generator_f330b00240a5de589a869d76ef88e12e}{AddEquipement} (string type)
+static void \hyperlink{class_generator_a8745946602d6e64e5b131d682737e77}{AddEquipement} (std::string type)
 \begin{CompactList}\small\item\em Procedure used to add an equipement. \item\end{CompactList}\item 
-static int \hyperlink{class_generator_2f74110fbe7f71d94a42414b1b937304}{getIndiceEquipement} ()
+static int \hyperlink{class_generator_714d17823705b75edfbb9bbe37d35c7a}{getIndiceEquipement} ()
 \begin{CompactList}\small\item\em Function wich return the number of equipement created. \item\end{CompactList}\item 
-static void \hyperlink{class_generator_a8025acf09f21f25e6d49c55b0321569}{AddApplication} (string type)
-\begin{CompactList}\small\item\em Procedure used to add an application. \item\end{CompactList}\item 
-static int \hyperlink{class_generator_c60abf6cfe238b3df6acd838b08ab1b4}{getIndiceApplication} ()
+static void \hyperlink{class_generator_bd0054d3e88aaeda093ac882861d6410}{AddApplication} (std::string type)
+\begin{CompactList}\small\item\em list of application created instace. \item\end{CompactList}\item 
+static int \hyperlink{class_generator_32a1fcc314ade484d84669ac7e510e68}{getIndiceApplication} ()
 \begin{CompactList}\small\item\em Function wich return the number of application created. \item\end{CompactList}\item 
-static void \hyperlink{class_generator_5868a217747ca891ca481d2b085b0839}{AddLink} (string type)
-\begin{CompactList}\small\item\em Procedure used to add an link. \item\end{CompactList}\item 
-static int \hyperlink{class_generator_91fabfa6a2d67ec6c502b2c1780dc23b}{getIndiceLink} ()
+static void \hyperlink{class_generator_3fe9d83270bd9d22b9307d3b0a26ea39}{AddLink} (std::string type)
+\begin{CompactList}\small\item\em list of link created instace. \item\end{CompactList}\item 
+static int \hyperlink{class_generator_05e1b6e209fb7730960de318fccaa86a}{getIndiceLink} ()
 \begin{CompactList}\small\item\em Function wich return the number of link created. \item\end{CompactList}\end{CompactItemize}
 \subsection*{Static Public Attributes}
 \begin{CompactItemize}
 \item 
-static vector$<$ \hyperlink{class_equipement}{Equipement} $>$ \hyperlink{class_generator_0dd96c3c4305399cefa743714a889972}{listEquipement}
+static std::vector$<$ \hyperlink{class_equipement}{Equipement} $\ast$ $>$ \hyperlink{class_generator_96d452a5ef951497a37baf86e35b50f6}{listEquipement}
 \begin{CompactList}\small\item\em list of equipement created instace. \item\end{CompactList}\end{CompactItemize}
 
 
@@ -34,28 +41,40 @@ The main class of the \hyperlink{class_generator}{Generator}.
 
 This class is the main class from the generation of simulation. It containt the main method to generate the code for the simulation. 
 
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_generator_aaf1e5f3a47ede3ef8a96a301ee04a10}{
+\index{Generator@{Generator}!Generator@{Generator}}
+\index{Generator@{Generator}!Generator@{Generator}}
+\subsubsection[{Generator}]{\setlength{\rightskip}{0pt plus 5cm}Generator::Generator ()}}
+\label{class_generator_aaf1e5f3a47ede3ef8a96a301ee04a10}
+
+
+the generator of the class \hyperlink{class_generator}{Generator}. 
+
+The generator from the class. 
+
 \subsection{Member Function Documentation}
-\hypertarget{class_generator_a8025acf09f21f25e6d49c55b0321569}{
+\hypertarget{class_generator_bd0054d3e88aaeda093ac882861d6410}{
 \index{Generator@{Generator}!AddApplication@{AddApplication}}
 \index{AddApplication@{AddApplication}!Generator@{Generator}}
-\subsubsection[{AddApplication}]{\setlength{\rightskip}{0pt plus 5cm}static void Generator::AddApplication (string {\em type})\hspace{0.3cm}{\tt  \mbox{[}static\mbox{]}}}}
-\label{class_generator_a8025acf09f21f25e6d49c55b0321569}
+\subsubsection[{AddApplication}]{\setlength{\rightskip}{0pt plus 5cm}void Generator::AddApplication (std::string {\em type})\hspace{0.3cm}{\tt  \mbox{[}static\mbox{]}}}}
+\label{class_generator_bd0054d3e88aaeda093ac882861d6410}
 
 
-Procedure used to add an application. 
+list of application created instace. 
 
-This procedure is used to add an application. It add the application to the vector listApplication and increment the number of application.
+This attribute is the list of the created application of equipement. Procedure used to add an application. This procedure is used to add an application. It add the application to the vector listApplication and increment the number of application.
 
 \begin{Desc}
 \item[Parameters:]
 \begin{description}
-\item[{\em type,the}]type of the application. (Ping, Udp\_\-Echo,...) \end{description}
+\item[{\em type}]the type of the application. (Ping, Udp\_\-Echo,...) \end{description}
 \end{Desc}
-\hypertarget{class_generator_f330b00240a5de589a869d76ef88e12e}{
+\hypertarget{class_generator_a8745946602d6e64e5b131d682737e77}{
 \index{Generator@{Generator}!AddEquipement@{AddEquipement}}
 \index{AddEquipement@{AddEquipement}!Generator@{Generator}}
-\subsubsection[{AddEquipement}]{\setlength{\rightskip}{0pt plus 5cm}static void Generator::AddEquipement (string {\em type})\hspace{0.3cm}{\tt  \mbox{[}static\mbox{]}}}}
-\label{class_generator_f330b00240a5de589a869d76ef88e12e}
+\subsubsection[{AddEquipement}]{\setlength{\rightskip}{0pt plus 5cm}void Generator::AddEquipement (std::string {\em type})\hspace{0.3cm}{\tt  \mbox{[}static\mbox{]}}}}
+\label{class_generator_a8745946602d6e64e5b131d682737e77}
 
 
 Procedure used to add an equipement. 
@@ -65,29 +84,38 @@ This procedure is used to add an equipement. It add the equipement to the vector
 \begin{Desc}
 \item[Parameters:]
 \begin{description}
-\item[{\em type,the}]type of the equipement. (\hyperlink{class_pc}{Pc}, Hub, Switch,...) \end{description}
+\item[{\em type}]the type of the equipement. (\hyperlink{class_pc}{Pc}, Hub, Switch,...) \end{description}
 \end{Desc}
-\hypertarget{class_generator_5868a217747ca891ca481d2b085b0839}{
+\hypertarget{class_generator_3fe9d83270bd9d22b9307d3b0a26ea39}{
 \index{Generator@{Generator}!AddLink@{AddLink}}
 \index{AddLink@{AddLink}!Generator@{Generator}}
-\subsubsection[{AddLink}]{\setlength{\rightskip}{0pt plus 5cm}static void Generator::AddLink (string {\em type})\hspace{0.3cm}{\tt  \mbox{[}static\mbox{]}}}}
-\label{class_generator_5868a217747ca891ca481d2b085b0839}
+\subsubsection[{AddLink}]{\setlength{\rightskip}{0pt plus 5cm}void Generator::AddLink (std::string {\em type})\hspace{0.3cm}{\tt  \mbox{[}static\mbox{]}}}}
+\label{class_generator_3fe9d83270bd9d22b9307d3b0a26ea39}
 
 
-Procedure used to add an link. 
+list of link created instace. 
 
-This procedure is used to add an link. It add the link to the vector listLink and increment the number of link.
+This attribute is the list of the created instance of link. Procedure used to add an link. This procedure is used to add an link. It add the link to the vector listLink and increment the number of link.
 
 \begin{Desc}
 \item[Parameters:]
 \begin{description}
-\item[{\em type,the}]type of the link. (PointToPoint, Csma,...) \end{description}
+\item[{\em type}]the type of the link. (PointToPoint, Csma,...) \end{description}
 \end{Desc}
-\hypertarget{class_generator_c60abf6cfe238b3df6acd838b08ab1b4}{
+\hypertarget{class_generator_caee4fe4990cee0447f0cb27ef413c9b}{
+\index{Generator@{Generator}!GenerateCode@{GenerateCode}}
+\index{GenerateCode@{GenerateCode}!Generator@{Generator}}
+\subsubsection[{GenerateCode}]{\setlength{\rightskip}{0pt plus 5cm}void Generator::GenerateCode ()}}
+\label{class_generator_caee4fe4990cee0447f0cb27ef413c9b}
+
+
+Procedure wich are the main code generator. 
+
+This procedure is the main procedure to generate the code from the simulation. It also go to use all the procedure on the bottom like generate all headers, ... \hypertarget{class_generator_32a1fcc314ade484d84669ac7e510e68}{
 \index{Generator@{Generator}!getIndiceApplication@{getIndiceApplication}}
 \index{getIndiceApplication@{getIndiceApplication}!Generator@{Generator}}
-\subsubsection[{getIndiceApplication}]{\setlength{\rightskip}{0pt plus 5cm}static int Generator::getIndiceApplication ()\hspace{0.3cm}{\tt  \mbox{[}static\mbox{]}}}}
-\label{class_generator_c60abf6cfe238b3df6acd838b08ab1b4}
+\subsubsection[{getIndiceApplication}]{\setlength{\rightskip}{0pt plus 5cm}int Generator::getIndiceApplication ()\hspace{0.3cm}{\tt  \mbox{[}static\mbox{]}}}}
+\label{class_generator_32a1fcc314ade484d84669ac7e510e68}
 
 
 Function wich return the number of application created. 
@@ -96,11 +124,11 @@ This function return the number of application created.
 
 \begin{Desc}
 \item[Returns:]number of application \end{Desc}
-\hypertarget{class_generator_2f74110fbe7f71d94a42414b1b937304}{
+\hypertarget{class_generator_714d17823705b75edfbb9bbe37d35c7a}{
 \index{Generator@{Generator}!getIndiceEquipement@{getIndiceEquipement}}
 \index{getIndiceEquipement@{getIndiceEquipement}!Generator@{Generator}}
-\subsubsection[{getIndiceEquipement}]{\setlength{\rightskip}{0pt plus 5cm}static int Generator::getIndiceEquipement ()\hspace{0.3cm}{\tt  \mbox{[}static\mbox{]}}}}
-\label{class_generator_2f74110fbe7f71d94a42414b1b937304}
+\subsubsection[{getIndiceEquipement}]{\setlength{\rightskip}{0pt plus 5cm}int Generator::getIndiceEquipement ()\hspace{0.3cm}{\tt  \mbox{[}static\mbox{]}}}}
+\label{class_generator_714d17823705b75edfbb9bbe37d35c7a}
 
 
 Function wich return the number of equipement created. 
@@ -109,11 +137,11 @@ This function return the number of equipement created in the application.
 
 \begin{Desc}
 \item[Returns:]number of equipement \end{Desc}
-\hypertarget{class_generator_91fabfa6a2d67ec6c502b2c1780dc23b}{
+\hypertarget{class_generator_05e1b6e209fb7730960de318fccaa86a}{
 \index{Generator@{Generator}!getIndiceLink@{getIndiceLink}}
 \index{getIndiceLink@{getIndiceLink}!Generator@{Generator}}
-\subsubsection[{getIndiceLink}]{\setlength{\rightskip}{0pt plus 5cm}static int Generator::getIndiceLink ()\hspace{0.3cm}{\tt  \mbox{[}static\mbox{]}}}}
-\label{class_generator_91fabfa6a2d67ec6c502b2c1780dc23b}
+\subsubsection[{getIndiceLink}]{\setlength{\rightskip}{0pt plus 5cm}int Generator::getIndiceLink ()\hspace{0.3cm}{\tt  \mbox{[}static\mbox{]}}}}
+\label{class_generator_05e1b6e209fb7730960de318fccaa86a}
 
 
 Function wich return the number of link created. 
@@ -125,11 +153,11 @@ This function return the number of link created in the application.
 
 
 \subsection{Member Data Documentation}
-\hypertarget{class_generator_0dd96c3c4305399cefa743714a889972}{
+\hypertarget{class_generator_96d452a5ef951497a37baf86e35b50f6}{
 \index{Generator@{Generator}!listEquipement@{listEquipement}}
 \index{listEquipement@{listEquipement}!Generator@{Generator}}
-\subsubsection[{listEquipement}]{\setlength{\rightskip}{0pt plus 5cm}static vector$<$ {\bf Equipement} $>$ {\bf Generator::listEquipement}\hspace{0.3cm}{\tt  \mbox{[}static\mbox{]}}}}
-\label{class_generator_0dd96c3c4305399cefa743714a889972}
+\subsubsection[{listEquipement}]{\setlength{\rightskip}{0pt plus 5cm}std::vector$<$ {\bf Equipement} $\ast$ $>$ {\bf Generator::listEquipement}\hspace{0.3cm}{\tt  \mbox{[}static\mbox{]}}}}
+\label{class_generator_96d452a5ef951497a37baf86e35b50f6}
 
 
 list of equipement created instace. 
@@ -138,5 +166,5 @@ This attribute is the list of the created instance of equipement.
 
 The documentation for this class was generated from the following files:\begin{CompactItemize}
 \item 
-/home/elz/workspace/ns-3-generator/Generator.h\item 
-/home/elz/workspace/ns-3-generator/Generator.cpp\end{CompactItemize}
+/home/elz/workspace/ns-3-generator/\hyperlink{_generator_8h}{Generator.h}\item 
+/home/elz/workspace/ns-3-generator/\hyperlink{_generator_8cpp}{Generator.cpp}\end{CompactItemize}

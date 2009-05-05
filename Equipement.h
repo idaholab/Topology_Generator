@@ -16,11 +16,16 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+/**
+* \file Equipement.h
+* \brief Abstract Equipement Base Class.
+* \author Pierre Weiss
+* \date 2009
+*/
 
 #ifndef EQUIPEMENT_H
 #define EQUIPEMENT_H
 
-using namespace std;
 #include <iostream>
 #include <string>
 #include <vector>
@@ -37,28 +42,79 @@ class Equipement
 {
 
 protected:
-  string indice;
-  string nodeName;
-  string ip;
-  string mask;
-  string ipInterfaceName;
-  string header;
+  /**
+   * \brief attribute which represent the node number.
+   * 
+   * This is an attribute which represent the number of the object creation.
+   */
+  std::string indice;
+  
+  /**
+   * \brief attribute which represent the node name.
+   * 
+   * The node name.
+   */
+  std::string nodeName;
+  
+  /**
+   * \brief attribute which represent the ip.
+   * 
+   * The ip attributed to the node.
+   */
+  std::string ip;
+  
+  /**
+   * \brief attribute which represent the mask.
+   * 
+   * The mask attributed to the node network.
+   */
+  std::string mask;
+  
+  /**
+   * \brief attribute which represent the ip interface name. 
+   * 
+   * The ip interface name is used to generate the code for the applications like an udp_echo.
+   */
+  std::string ipInterfaceName;
+  
+  /**
+   * \brief attribute which represent the header.
+   * 
+   * This attribute reprensent the differents files to be included for the node.
+   */
+  std::string header;
+  
+  /**
+   * \brief attribute which represent the x position of the object.
+   * 
+   * The x graphical position.
+   */
   int x;
+  
+  /**
+   * \brief attribute which represent the y position of the object.
+   * 
+   * The y graphical position.
+   */
   int y;
 
 public:
   /**
-   * \fn Equipement();
    * \brief Constructor which set default value.
    *
    * The constructor set the default common value at all subclasses. 
    * 
    */
   Equipement();
+  
+  /**
+   * \brief Destructor from the class Equipement.
+   * 
+   * Destructor from the class
+   */
   virtual ~Equipement();
 
   /**
-   * \fn virtual string GenerateHeader(){};
    * \brief Function wich return the c++ header code from node.
    *
    * This function return a string which contain the header lines from the specified object.
@@ -66,10 +122,9 @@ public:
    * 
    * \return header.
    */
-  virtual string GenerateHeader() = 0;
+  virtual std::string GenerateHeader() = 0;
 
   /**
-   * \fn virtual string GenerateNode(){};
    * \brief Function wich return the c++ code from node.
    *
    * This function return a string which contain the declaration and instanciation of the node.
@@ -77,10 +132,9 @@ public:
    * 
    * \return node.
    */
-  virtual string GenerateNode() = 0;
+  virtual std::string GenerateNode() = 0;
 
   /**
-   * \fn virtual string GenerateIpStack(){};
    * \brief Function wich return the c++ code from IpStack.
    *
    * This function return a string which contain the c++ code from the Ipv4 stack declaration and instanciation.
@@ -88,10 +142,9 @@ public:
    * 
    * \return ipStack.
    */
-  virtual string GenerateIpStack() = 0;
+  virtual std::string GenerateIpStack() = 0;
   
   /**
-   * \fn virtual string GenerateIpAssign(){};
    * \brief Function wich return the c++ code from the ip asssign part.
    *
    * This function return a string wich contain the c++ code from the Ipv4 Assign part. It's about ip and mask assign.
@@ -99,10 +152,9 @@ public:
    * 
    * \return IpAssign.
    */
-  virtual string GenerateIpAssign() = 0;
+  virtual std::string GenerateIpAssign() = 0;
   
   /**
-   * \fn virtual void setHeader(string _header){};
    * \brief Procedure used to the the c++ header code.
    * 
    * This procedure is used to set the header c++ code as a string. It's used to generate the code.
@@ -110,20 +162,18 @@ public:
    *
    * \param _header the header which have to be set.
    */
-  virtual void setHeader(string _header) = 0;
+  virtual void setHeader(std::string _header) = 0;
   
   /**
-   * \fn void setNodeName(string _nodeName);
    * \brief Procedure to set the node name.
    * 
    * The node name is use to declare and instace the node in the c++ generated code.
    *
-   * \param _nodename the string which containe the node name.
+   * \param _nodeName the string which containe the node name.
    */
-  void setNodeName(string _nodeName);
+  void setNodeName(std::string _nodeName);
 
   /**
-   * \fn void setIpv4Address(string _ip, string _mask);
    * \brief Procedure to set the ip and mask.
    *
    * The ip have to be inserted as an ipv4 address. Example :10.0.0.1
@@ -132,10 +182,9 @@ public:
    * \param _ip the ip.
    * \param _mask the mask.
    */
-  void setIpv4Address(string _ip, string _mask);
+  void setIpv4Address(std::string _ip, std::string _mask);
 
   /**
-   * \fn void setIpInterfaceName(string _ipInterfaceName);
    * \brief Procedure to set the Ip interface name.
    * 
    * This procedure is used to the the ipInterfaceName. 
@@ -143,10 +192,9 @@ public:
    *
    * \param _ipInterfaceName
    */
-  void setIpInterfaceName(string _ipInterfaceName);
+  void setIpInterfaceName(std::string _ipInterfaceName);
   
   /**
-   * \fn void setPosition(int _x, int _y);
    * \brief Procedure to set the graphical position of the equipement.
    *
    * This procedure is used to change the position of an equipement.
@@ -158,77 +206,69 @@ public:
    void setPosition(int _x, int _y);
 
   /**
-   * \fn string getNodeName();
    * \brief Function wich return the node name.
    *
    * function used to get the node name of the equipement.
    * 
    * \return node name.
    */
-  string getNodeName();
+  std::string getNodeName();
 
   /**
-   * \fn string getIpInterfaceName();
    * \brief Function wich return the name of the Ip interface.
    * 
    * Function wich return the ip interface name of the equipement.
    *
    * \return ip interface name.
    */
-  string getIpInterfaceName();
+  std::string getIpInterfaceName();
 
   /**
-   * \fn string getHeader();
    * \brief Function wich return the c++ header code.
    *
    * Function which return the c++ code from the equipement
    * 
    * \return header c++ code.
    */
-  string getHeader();
+  std::string getHeader();
   
   /**
-   * \fn string getIp();
    * \brief Function wich return the ip address.
    *
    * Function wich return a string with the ip address.
    * 
    * \return ip.
    */
-  string getIp();
+  std::string getIp();
   
   /**
-   * \fn string getMask();
    * \brief Function wich return a string with the mask.
    * 
    * Function wich return a string with the mask.
    *
    * \return mask.
    */
-  string getMask();
+  std::string getMask();
   
   /**
-   * \fn string getX();
    * \brief Function which return the x position.
    *
    * Function wich return the graphical x position of the object.
    * 
    * \return x position.
    */
-  string getX();
+  std::string getX();
   
   /**
-   * \fn string getY();
    * \brief Function which return the y position.
    *
    * Function wich return the graphical y position of the object.
    * 
    * \return y position.
    */
-  string getY();
+  std::string getY();
   
    /**
-    * \fn string toString(int nbr);
     * \brief Function wich convert int to string.
     *
     * Function wich convert in to string.
@@ -236,18 +276,18 @@ public:
     * \param nbr the number to convert.
     * \return nbr in type string.
     */
-   string toString(int nbr);
+   std::string toString(int nbr);
    
    /**
-    * \fn string getIndice();
     * \brief Function wich return the node number.
     *
     * Function wich return a string with the node number.
     * 
     * \return node number in type string.
     */
-   string getIndice();
+   std::string getIndice();
  
 };
 
-#endif 
+#endif /* EQUIPEMENT_H */
+

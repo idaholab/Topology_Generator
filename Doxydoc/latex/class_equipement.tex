@@ -18,85 +18,63 @@ Inheritance diagram for Equipement::\begin{figure}[H]
 \item 
 \hyperlink{class_equipement_9057a4777d006cbac4c72d09a8d09407}{Equipement} ()
 \begin{CompactList}\small\item\em Constructor which set default value. \item\end{CompactList}\item 
-virtual string \hyperlink{class_equipement_8d24220539ff36aeb021daaec32f729e}{GenerateHeader} ()
+virtual \hyperlink{class_equipement_e7751a52f2665d9e4b3e2cd6929bd986}{$\sim$Equipement} ()
+\begin{CompactList}\small\item\em Destructor from the class \hyperlink{class_equipement}{Equipement}. \item\end{CompactList}\item 
+virtual std::string \hyperlink{class_equipement_136cc8d242b48a665691f8edafa48210}{GenerateHeader} ()=0
 \begin{CompactList}\small\item\em Function wich return the c++ header code from node. \item\end{CompactList}\item 
-virtual string \hyperlink{class_equipement_e51f720e7db340b33d7392eb78c9cea2}{GenerateNode} ()
+virtual std::string \hyperlink{class_equipement_e03cafed5e059dfe332643719c8d8dd4}{GenerateNode} ()=0
 \begin{CompactList}\small\item\em Function wich return the c++ code from node. \item\end{CompactList}\item 
-virtual string \hyperlink{class_equipement_37fe31be30e3ea66fe6bdaab9d66bc15}{GenerateIpStack} ()
+virtual std::string \hyperlink{class_equipement_98eda1e24e07c343712dcd35eba6bd18}{GenerateIpStack} ()=0
 \begin{CompactList}\small\item\em Function wich return the c++ code from IpStack. \item\end{CompactList}\item 
-virtual string \hyperlink{class_equipement_d1e684114ebf6746f77cc370cdb449e5}{GenerateIpAssign} ()
+virtual std::string \hyperlink{class_equipement_74f771f93374710e8aa42ae17e6b54b4}{GenerateIpAssign} ()=0
 \begin{CompactList}\small\item\em Function wich return the c++ code from the ip asssign part. \item\end{CompactList}\item 
-virtual void \hyperlink{class_equipement_95b372e1d9f733f4c8fde9b3a1cf8321}{setHeader} (string \_\-header)
+virtual void \hyperlink{class_equipement_9068d14ff2c67d06be75a21ebc9fbcd7}{setHeader} (std::string \_\-header)=0
 \begin{CompactList}\small\item\em Procedure used to the the c++ header code. \item\end{CompactList}\item 
-void \hyperlink{class_equipement_8f83b540ca8ad94b6c70a1d135e66ba6}{setNodeName} (string \_\-nodeName)
+void \hyperlink{class_equipement_a3d502e4f5b4292e87ff33ca15801897}{setNodeName} (std::string \_\-nodeName)
 \begin{CompactList}\small\item\em Procedure to set the node name. \item\end{CompactList}\item 
-void \hyperlink{class_equipement_8ad1b79f648fa6917cff0df9ab8d9240}{setIpv4Address} (string \_\-ip, string \_\-mask)
+void \hyperlink{class_equipement_ff68b70ae1942fca75462d78194cd443}{setIpv4Address} (std::string \_\-ip, std::string \_\-mask)
 \begin{CompactList}\small\item\em Procedure to set the ip and mask. \item\end{CompactList}\item 
-void \hyperlink{class_equipement_a73b74eda1a7305f94a66611e2b50866}{setIpInterfaceName} (string \_\-ipInterfaceName)
+void \hyperlink{class_equipement_cea2da7dead8d0b74c90933c422211c4}{setIpInterfaceName} (std::string \_\-ipInterfaceName)
 \begin{CompactList}\small\item\em Procedure to set the Ip interface name. \item\end{CompactList}\item 
 void \hyperlink{class_equipement_70bc8e8f1b9527a9c54f4ac6bd93a2c7}{setPosition} (int \_\-x, int \_\-y)
 \begin{CompactList}\small\item\em Procedure to set the graphical position of the equipement. \item\end{CompactList}\item 
-string \hyperlink{class_equipement_b8f87002fae848cffc5761f627a5af45}{getNodeName} ()
+std::string \hyperlink{class_equipement_4ab70e59e11de8b7f8af99d06409b032}{getNodeName} ()
 \begin{CompactList}\small\item\em Function wich return the node name. \item\end{CompactList}\item 
-string \hyperlink{class_equipement_c1bc0f20388d78e67e4d808548ec0e7e}{getIpInterfaceName} ()
+std::string \hyperlink{class_equipement_a603e0547ea7c1b7f10757226100e1cc}{getIpInterfaceName} ()
 \begin{CompactList}\small\item\em Function wich return the name of the Ip interface. \item\end{CompactList}\item 
-string \hyperlink{class_equipement_46225506a8202eab2f688ce23e14ce97}{getHeader} ()
+std::string \hyperlink{class_equipement_c4aa745380e69d02a91f1e601430a545}{getHeader} ()
 \begin{CompactList}\small\item\em Function wich return the c++ header code. \item\end{CompactList}\item 
-string \hyperlink{class_equipement_1b589d4b1c6580ceeb3f8ce9c6e8d579}{getIp} ()
+std::string \hyperlink{class_equipement_4a0b3805228532e39dcb5f83bb2d6eac}{getIp} ()
 \begin{CompactList}\small\item\em Function wich return the ip address. \item\end{CompactList}\item 
-string \hyperlink{class_equipement_02fa3326bab78a49535be1cbd2bd8078}{getMask} ()
+std::string \hyperlink{class_equipement_fd9a9ce18e78c3540a0cb6d633def3d3}{getMask} ()
 \begin{CompactList}\small\item\em Function wich return a string with the mask. \item\end{CompactList}\item 
-string \hyperlink{class_equipement_0899c6ce57408519616fc3c237ca0c83}{getX} ()
+std::string \hyperlink{class_equipement_a5f9ea9a69609f65b8c64cda70446b02}{getX} ()
 \begin{CompactList}\small\item\em Function which return the x position. \item\end{CompactList}\item 
-string \hyperlink{class_equipement_daa17552b40be78e18b1cb03087a2a27}{getY} ()
+std::string \hyperlink{class_equipement_a3b627e52bd5bfddadd665ffbf88cbd4}{getY} ()
 \begin{CompactList}\small\item\em Function which return the y position. \item\end{CompactList}\item 
-string \hyperlink{class_equipement_33973a0f392135d7c50b8ce59fa60941}{toString} (int nbr)
+std::string \hyperlink{class_equipement_e6b65817f2f2d1f93669475530d849ca}{toString} (int nbr)
 \begin{CompactList}\small\item\em Function wich convert int to string. \item\end{CompactList}\item 
-string \hyperlink{class_equipement_59cfa2b20bf9b66d150f353a0316eeae}{getIndice} ()
+std::string \hyperlink{class_equipement_6074ba51d63aaeebe8293a9ba9fde31f}{getIndice} ()
 \begin{CompactList}\small\item\em Function wich return the node number. \item\end{CompactList}\end{CompactItemize}
 \subsection*{Protected Attributes}
 \begin{CompactItemize}
 \item 
-\hypertarget{class_equipement_ec95b838f91d98d398dde98accf4497d}{
-string \textbf{indice}}
-\label{class_equipement_ec95b838f91d98d398dde98accf4497d}
-
-\item 
-\hypertarget{class_equipement_5d2cf4f72cf7bd3a198077f415a3e68c}{
-string \textbf{nodeName}}
-\label{class_equipement_5d2cf4f72cf7bd3a198077f415a3e68c}
-
-\item 
-\hypertarget{class_equipement_37cc4e52331e4dba94a2548d821de8ac}{
-string \textbf{ip}}
-\label{class_equipement_37cc4e52331e4dba94a2548d821de8ac}
-
-\item 
-\hypertarget{class_equipement_d745163018b1455f5864b0cf117b12ec}{
-string \textbf{mask}}
-\label{class_equipement_d745163018b1455f5864b0cf117b12ec}
-
-\item 
-\hypertarget{class_equipement_61f3305527e060ba78a24a54a103d0a5}{
-string \textbf{ipInterfaceName}}
-\label{class_equipement_61f3305527e060ba78a24a54a103d0a5}
-
-\item 
-\hypertarget{class_equipement_7fb3c47443ad0a0d58ba7965691db73f}{
-string \textbf{header}}
-\label{class_equipement_7fb3c47443ad0a0d58ba7965691db73f}
-
-\item 
-\hypertarget{class_equipement_45ae2acbe57b1a47e7e9eeed67738109}{
-int \textbf{x}}
-\label{class_equipement_45ae2acbe57b1a47e7e9eeed67738109}
-
-\item 
-\hypertarget{class_equipement_de92f12b5da5dde6f2b43921789cf676}{
-int \textbf{y}}
-\label{class_equipement_de92f12b5da5dde6f2b43921789cf676}
-
-\end{CompactItemize}
+std::string \hyperlink{class_equipement_d5124abeb4730c781cf45e7d538ebbc2}{indice}
+\begin{CompactList}\small\item\em attribute which represent the node number. \item\end{CompactList}\item 
+std::string \hyperlink{class_equipement_c83d966d9331f8b92ffa09b5eaf05816}{nodeName}
+\begin{CompactList}\small\item\em attribute which represent the node name. \item\end{CompactList}\item 
+std::string \hyperlink{class_equipement_0b1a1b3183ff2e26d5e86adcaa1a151d}{ip}
+\begin{CompactList}\small\item\em attribute which represent the ip. \item\end{CompactList}\item 
+std::string \hyperlink{class_equipement_bc9e4c10eacad003427f4812890c7d52}{mask}
+\begin{CompactList}\small\item\em attribute which represent the mask. \item\end{CompactList}\item 
+std::string \hyperlink{class_equipement_3e3703936280f99d55619e7b86810f3b}{ipInterfaceName}
+\begin{CompactList}\small\item\em attribute which represent the ip interface name. \item\end{CompactList}\item 
+std::string \hyperlink{class_equipement_1c7ae76643400f1402231514c2a21ae2}{header}
+\begin{CompactList}\small\item\em attribute which represent the header. \item\end{CompactList}\item 
+int \hyperlink{class_equipement_45ae2acbe57b1a47e7e9eeed67738109}{x}
+\begin{CompactList}\small\item\em attribute which represent the x position of the object. \item\end{CompactList}\item 
+int \hyperlink{class_equipement_de92f12b5da5dde6f2b43921789cf676}{y}
+\begin{CompactList}\small\item\em attribute which represent the y position of the object. \item\end{CompactList}\end{CompactItemize}
 
 
 \subsection{Detailed Description}
@@ -114,14 +92,23 @@ This class is the main class of the differents equipement you can choose to use.
 
 Constructor which set default value. 
 
-The constructor set the default common value at all subclasses. 
+The constructor set the default common value at all subclasses. \hypertarget{class_equipement_e7751a52f2665d9e4b3e2cd6929bd986}{
+\index{Equipement@{Equipement}!$\sim$Equipement@{$\sim$Equipement}}
+\index{$\sim$Equipement@{$\sim$Equipement}!Equipement@{Equipement}}
+\subsubsection[{$\sim$Equipement}]{\setlength{\rightskip}{0pt plus 5cm}Equipement::$\sim$Equipement ()\hspace{0.3cm}{\tt  \mbox{[}virtual\mbox{]}}}}
+\label{class_equipement_e7751a52f2665d9e4b3e2cd6929bd986}
+
+
+Destructor from the class \hyperlink{class_equipement}{Equipement}. 
+
+Destructor from the class 
 
 \subsection{Member Function Documentation}
-\hypertarget{class_equipement_8d24220539ff36aeb021daaec32f729e}{
+\hypertarget{class_equipement_136cc8d242b48a665691f8edafa48210}{
 \index{Equipement@{Equipement}!GenerateHeader@{GenerateHeader}}
 \index{GenerateHeader@{GenerateHeader}!Equipement@{Equipement}}
-\subsubsection[{GenerateHeader}]{\setlength{\rightskip}{0pt plus 5cm}string Equipement::GenerateHeader ()\hspace{0.3cm}{\tt  \mbox{[}inline, virtual\mbox{]}}}}
-\label{class_equipement_8d24220539ff36aeb021daaec32f729e}
+\subsubsection[{GenerateHeader}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string Equipement::GenerateHeader ()\hspace{0.3cm}{\tt  \mbox{[}pure virtual\mbox{]}}}}
+\label{class_equipement_136cc8d242b48a665691f8edafa48210}
 
 
 Function wich return the c++ header code from node. 
@@ -132,11 +119,11 @@ This function return a string which contain the header lines from the specified 
 \item[Returns:]header. \end{Desc}
 
 
-Reimplemented in \hyperlink{class_pc_a84eb29bce881921ec8f591dfd5b8ba0}{Pc}.\hypertarget{class_equipement_d1e684114ebf6746f77cc370cdb449e5}{
+Implemented in \hyperlink{class_pc_0b152acc530cc73f502f046e19f9344f}{Pc}.\hypertarget{class_equipement_74f771f93374710e8aa42ae17e6b54b4}{
 \index{Equipement@{Equipement}!GenerateIpAssign@{GenerateIpAssign}}
 \index{GenerateIpAssign@{GenerateIpAssign}!Equipement@{Equipement}}
-\subsubsection[{GenerateIpAssign}]{\setlength{\rightskip}{0pt plus 5cm}string Equipement::GenerateIpAssign ()\hspace{0.3cm}{\tt  \mbox{[}inline, virtual\mbox{]}}}}
-\label{class_equipement_d1e684114ebf6746f77cc370cdb449e5}
+\subsubsection[{GenerateIpAssign}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string Equipement::GenerateIpAssign ()\hspace{0.3cm}{\tt  \mbox{[}pure virtual\mbox{]}}}}
+\label{class_equipement_74f771f93374710e8aa42ae17e6b54b4}
 
 
 Function wich return the c++ code from the ip asssign part. 
@@ -147,11 +134,11 @@ This function return a string wich contain the c++ code from the Ipv4 Assign par
 \item[Returns:]IpAssign. \end{Desc}
 
 
-Reimplemented in \hyperlink{class_pc_b743fd5f5d74f1d5db9549aa43fab9c5}{Pc}.\hypertarget{class_equipement_37fe31be30e3ea66fe6bdaab9d66bc15}{
+Implemented in \hyperlink{class_pc_85794eaecd61612d44e1c68746e1c156}{Pc}.\hypertarget{class_equipement_98eda1e24e07c343712dcd35eba6bd18}{
 \index{Equipement@{Equipement}!GenerateIpStack@{GenerateIpStack}}
 \index{GenerateIpStack@{GenerateIpStack}!Equipement@{Equipement}}
-\subsubsection[{GenerateIpStack}]{\setlength{\rightskip}{0pt plus 5cm}string Equipement::GenerateIpStack ()\hspace{0.3cm}{\tt  \mbox{[}inline, virtual\mbox{]}}}}
-\label{class_equipement_37fe31be30e3ea66fe6bdaab9d66bc15}
+\subsubsection[{GenerateIpStack}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string Equipement::GenerateIpStack ()\hspace{0.3cm}{\tt  \mbox{[}pure virtual\mbox{]}}}}
+\label{class_equipement_98eda1e24e07c343712dcd35eba6bd18}
 
 
 Function wich return the c++ code from IpStack. 
@@ -162,11 +149,11 @@ This function return a string which contain the c++ code from the Ipv4 stack dec
 \item[Returns:]ipStack. \end{Desc}
 
 
-Reimplemented in \hyperlink{class_pc_205240ed7c68ad780ff4a669376c04eb}{Pc}.\hypertarget{class_equipement_e51f720e7db340b33d7392eb78c9cea2}{
+Implemented in \hyperlink{class_pc_6b81e7a8e167ed51f92ce55c0447fefe}{Pc}.\hypertarget{class_equipement_e03cafed5e059dfe332643719c8d8dd4}{
 \index{Equipement@{Equipement}!GenerateNode@{GenerateNode}}
 \index{GenerateNode@{GenerateNode}!Equipement@{Equipement}}
-\subsubsection[{GenerateNode}]{\setlength{\rightskip}{0pt plus 5cm}string Equipement::GenerateNode ()\hspace{0.3cm}{\tt  \mbox{[}inline, virtual\mbox{]}}}}
-\label{class_equipement_e51f720e7db340b33d7392eb78c9cea2}
+\subsubsection[{GenerateNode}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string Equipement::GenerateNode ()\hspace{0.3cm}{\tt  \mbox{[}pure virtual\mbox{]}}}}
+\label{class_equipement_e03cafed5e059dfe332643719c8d8dd4}
 
 
 Function wich return the c++ code from node. 
@@ -177,11 +164,11 @@ This function return a string which contain the declaration and instanciation of
 \item[Returns:]node. \end{Desc}
 
 
-Reimplemented in \hyperlink{class_pc_e72f59f25f046967f021e56a90281d77}{Pc}.\hypertarget{class_equipement_46225506a8202eab2f688ce23e14ce97}{
+Implemented in \hyperlink{class_pc_36ace04642cd481b39d312b51c37c114}{Pc}.\hypertarget{class_equipement_c4aa745380e69d02a91f1e601430a545}{
 \index{Equipement@{Equipement}!getHeader@{getHeader}}
 \index{getHeader@{getHeader}!Equipement@{Equipement}}
-\subsubsection[{getHeader}]{\setlength{\rightskip}{0pt plus 5cm}string Equipement::getHeader ()}}
-\label{class_equipement_46225506a8202eab2f688ce23e14ce97}
+\subsubsection[{getHeader}]{\setlength{\rightskip}{0pt plus 5cm}std::string Equipement::getHeader ()}}
+\label{class_equipement_c4aa745380e69d02a91f1e601430a545}
 
 
 Function wich return the c++ header code. 
@@ -190,11 +177,11 @@ Function which return the c++ code from the equipement
 
 \begin{Desc}
 \item[Returns:]header c++ code. \end{Desc}
-\hypertarget{class_equipement_59cfa2b20bf9b66d150f353a0316eeae}{
+\hypertarget{class_equipement_6074ba51d63aaeebe8293a9ba9fde31f}{
 \index{Equipement@{Equipement}!getIndice@{getIndice}}
 \index{getIndice@{getIndice}!Equipement@{Equipement}}
-\subsubsection[{getIndice}]{\setlength{\rightskip}{0pt plus 5cm}string Equipement::getIndice ()}}
-\label{class_equipement_59cfa2b20bf9b66d150f353a0316eeae}
+\subsubsection[{getIndice}]{\setlength{\rightskip}{0pt plus 5cm}std::string Equipement::getIndice ()}}
+\label{class_equipement_6074ba51d63aaeebe8293a9ba9fde31f}
 
 
 Function wich return the node number. 
@@ -203,11 +190,11 @@ Function wich return a string with the node number.
 
 \begin{Desc}
 \item[Returns:]node number in type string. \end{Desc}
-\hypertarget{class_equipement_1b589d4b1c6580ceeb3f8ce9c6e8d579}{
+\hypertarget{class_equipement_4a0b3805228532e39dcb5f83bb2d6eac}{
 \index{Equipement@{Equipement}!getIp@{getIp}}
 \index{getIp@{getIp}!Equipement@{Equipement}}
-\subsubsection[{getIp}]{\setlength{\rightskip}{0pt plus 5cm}string Equipement::getIp ()}}
-\label{class_equipement_1b589d4b1c6580ceeb3f8ce9c6e8d579}
+\subsubsection[{getIp}]{\setlength{\rightskip}{0pt plus 5cm}std::string Equipement::getIp ()}}
+\label{class_equipement_4a0b3805228532e39dcb5f83bb2d6eac}
 
 
 Function wich return the ip address. 
@@ -216,11 +203,11 @@ Function wich return a string with the ip address.
 
 \begin{Desc}
 \item[Returns:]ip. \end{Desc}
-\hypertarget{class_equipement_c1bc0f20388d78e67e4d808548ec0e7e}{
+\hypertarget{class_equipement_a603e0547ea7c1b7f10757226100e1cc}{
 \index{Equipement@{Equipement}!getIpInterfaceName@{getIpInterfaceName}}
 \index{getIpInterfaceName@{getIpInterfaceName}!Equipement@{Equipement}}
-\subsubsection[{getIpInterfaceName}]{\setlength{\rightskip}{0pt plus 5cm}string Equipement::getIpInterfaceName ()}}
-\label{class_equipement_c1bc0f20388d78e67e4d808548ec0e7e}
+\subsubsection[{getIpInterfaceName}]{\setlength{\rightskip}{0pt plus 5cm}std::string Equipement::getIpInterfaceName ()}}
+\label{class_equipement_a603e0547ea7c1b7f10757226100e1cc}
 
 
 Function wich return the name of the Ip interface. 
@@ -229,11 +216,11 @@ Function wich return the ip interface name of the equipement.
 
 \begin{Desc}
 \item[Returns:]ip interface name. \end{Desc}
-\hypertarget{class_equipement_02fa3326bab78a49535be1cbd2bd8078}{
+\hypertarget{class_equipement_fd9a9ce18e78c3540a0cb6d633def3d3}{
 \index{Equipement@{Equipement}!getMask@{getMask}}
 \index{getMask@{getMask}!Equipement@{Equipement}}
-\subsubsection[{getMask}]{\setlength{\rightskip}{0pt plus 5cm}string Equipement::getMask ()}}
-\label{class_equipement_02fa3326bab78a49535be1cbd2bd8078}
+\subsubsection[{getMask}]{\setlength{\rightskip}{0pt plus 5cm}std::string Equipement::getMask ()}}
+\label{class_equipement_fd9a9ce18e78c3540a0cb6d633def3d3}
 
 
 Function wich return a string with the mask. 
@@ -242,11 +229,11 @@ Function wich return a string with the mask.
 
 \begin{Desc}
 \item[Returns:]mask. \end{Desc}
-\hypertarget{class_equipement_b8f87002fae848cffc5761f627a5af45}{
+\hypertarget{class_equipement_4ab70e59e11de8b7f8af99d06409b032}{
 \index{Equipement@{Equipement}!getNodeName@{getNodeName}}
 \index{getNodeName@{getNodeName}!Equipement@{Equipement}}
-\subsubsection[{getNodeName}]{\setlength{\rightskip}{0pt plus 5cm}string Equipement::getNodeName ()}}
-\label{class_equipement_b8f87002fae848cffc5761f627a5af45}
+\subsubsection[{getNodeName}]{\setlength{\rightskip}{0pt plus 5cm}std::string Equipement::getNodeName ()}}
+\label{class_equipement_4ab70e59e11de8b7f8af99d06409b032}
 
 
 Function wich return the node name. 
@@ -255,11 +242,11 @@ function used to get the node name of the equipement.
 
 \begin{Desc}
 \item[Returns:]node name. \end{Desc}
-\hypertarget{class_equipement_0899c6ce57408519616fc3c237ca0c83}{
+\hypertarget{class_equipement_a5f9ea9a69609f65b8c64cda70446b02}{
 \index{Equipement@{Equipement}!getX@{getX}}
 \index{getX@{getX}!Equipement@{Equipement}}
-\subsubsection[{getX}]{\setlength{\rightskip}{0pt plus 5cm}string Equipement::getX ()}}
-\label{class_equipement_0899c6ce57408519616fc3c237ca0c83}
+\subsubsection[{getX}]{\setlength{\rightskip}{0pt plus 5cm}std::string Equipement::getX ()}}
+\label{class_equipement_a5f9ea9a69609f65b8c64cda70446b02}
 
 
 Function which return the x position. 
@@ -268,11 +255,11 @@ Function wich return the graphical x position of the object.
 
 \begin{Desc}
 \item[Returns:]x position. \end{Desc}
-\hypertarget{class_equipement_daa17552b40be78e18b1cb03087a2a27}{
+\hypertarget{class_equipement_a3b627e52bd5bfddadd665ffbf88cbd4}{
 \index{Equipement@{Equipement}!getY@{getY}}
 \index{getY@{getY}!Equipement@{Equipement}}
-\subsubsection[{getY}]{\setlength{\rightskip}{0pt plus 5cm}string Equipement::getY ()}}
-\label{class_equipement_daa17552b40be78e18b1cb03087a2a27}
+\subsubsection[{getY}]{\setlength{\rightskip}{0pt plus 5cm}std::string Equipement::getY ()}}
+\label{class_equipement_a3b627e52bd5bfddadd665ffbf88cbd4}
 
 
 Function which return the y position. 
@@ -281,11 +268,11 @@ Function wich return the graphical y position of the object.
 
 \begin{Desc}
 \item[Returns:]y position. \end{Desc}
-\hypertarget{class_equipement_95b372e1d9f733f4c8fde9b3a1cf8321}{
+\hypertarget{class_equipement_9068d14ff2c67d06be75a21ebc9fbcd7}{
 \index{Equipement@{Equipement}!setHeader@{setHeader}}
 \index{setHeader@{setHeader}!Equipement@{Equipement}}
-\subsubsection[{setHeader}]{\setlength{\rightskip}{0pt plus 5cm}void Equipement::setHeader (string {\em \_\-header})\hspace{0.3cm}{\tt  \mbox{[}inline, virtual\mbox{]}}}}
-\label{class_equipement_95b372e1d9f733f4c8fde9b3a1cf8321}
+\subsubsection[{setHeader}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Equipement::setHeader (std::string {\em \_\-header})\hspace{0.3cm}{\tt  \mbox{[}pure virtual\mbox{]}}}}
+\label{class_equipement_9068d14ff2c67d06be75a21ebc9fbcd7}
 
 
 Procedure used to the the c++ header code. 
@@ -299,11 +286,11 @@ This procedure is used to set the header c++ code as a string. It's used to gene
 \end{Desc}
 
 
-Reimplemented in \hyperlink{class_pc_45386d5f2837f3d2087fe62ca1692883}{Pc}.\hypertarget{class_equipement_a73b74eda1a7305f94a66611e2b50866}{
+Implemented in \hyperlink{class_pc_8049628cd139b39cbae2327e70ca0eb7}{Pc}.\hypertarget{class_equipement_cea2da7dead8d0b74c90933c422211c4}{
 \index{Equipement@{Equipement}!setIpInterfaceName@{setIpInterfaceName}}
 \index{setIpInterfaceName@{setIpInterfaceName}!Equipement@{Equipement}}
-\subsubsection[{setIpInterfaceName}]{\setlength{\rightskip}{0pt plus 5cm}void Equipement::setIpInterfaceName (string {\em \_\-ipInterfaceName})}}
-\label{class_equipement_a73b74eda1a7305f94a66611e2b50866}
+\subsubsection[{setIpInterfaceName}]{\setlength{\rightskip}{0pt plus 5cm}void Equipement::setIpInterfaceName (std::string {\em \_\-ipInterfaceName})}}
+\label{class_equipement_cea2da7dead8d0b74c90933c422211c4}
 
 
 Procedure to set the Ip interface name. 
@@ -315,11 +302,11 @@ This procedure is used to the the ipInterfaceName. Sometimes this var is used in
 \begin{description}
 \item[{\em \_\-ipInterfaceName}]\end{description}
 \end{Desc}
-\hypertarget{class_equipement_8ad1b79f648fa6917cff0df9ab8d9240}{
+\hypertarget{class_equipement_ff68b70ae1942fca75462d78194cd443}{
 \index{Equipement@{Equipement}!setIpv4Address@{setIpv4Address}}
 \index{setIpv4Address@{setIpv4Address}!Equipement@{Equipement}}
-\subsubsection[{setIpv4Address}]{\setlength{\rightskip}{0pt plus 5cm}void Equipement::setIpv4Address (string {\em \_\-ip}, \/  string {\em \_\-mask})}}
-\label{class_equipement_8ad1b79f648fa6917cff0df9ab8d9240}
+\subsubsection[{setIpv4Address}]{\setlength{\rightskip}{0pt plus 5cm}void Equipement::setIpv4Address (std::string {\em \_\-ip}, \/  std::string {\em \_\-mask})}}
+\label{class_equipement_ff68b70ae1942fca75462d78194cd443}
 
 
 Procedure to set the ip and mask. 
@@ -331,11 +318,11 @@ The ip have to be inserted as an ipv4 address. Example :10.0.0.1 Mask example : 
 \begin{description}
 \item[{\em \_\-ip}]the ip. \item[{\em \_\-mask}]the mask. \end{description}
 \end{Desc}
-\hypertarget{class_equipement_8f83b540ca8ad94b6c70a1d135e66ba6}{
+\hypertarget{class_equipement_a3d502e4f5b4292e87ff33ca15801897}{
 \index{Equipement@{Equipement}!setNodeName@{setNodeName}}
 \index{setNodeName@{setNodeName}!Equipement@{Equipement}}
-\subsubsection[{setNodeName}]{\setlength{\rightskip}{0pt plus 5cm}void Equipement::setNodeName (string {\em \_\-nodeName})}}
-\label{class_equipement_8f83b540ca8ad94b6c70a1d135e66ba6}
+\subsubsection[{setNodeName}]{\setlength{\rightskip}{0pt plus 5cm}void Equipement::setNodeName (std::string {\em \_\-nodeName})}}
+\label{class_equipement_a3d502e4f5b4292e87ff33ca15801897}
 
 
 Procedure to set the node name. 
@@ -345,7 +332,7 @@ The node name is use to declare and instace the node in the c++ generated code.
 \begin{Desc}
 \item[Parameters:]
 \begin{description}
-\item[{\em \_\-nodename}]the string which containe the node name. \end{description}
+\item[{\em \_\-nodeName}]the string which containe the node name. \end{description}
 \end{Desc}
 \hypertarget{class_equipement_70bc8e8f1b9527a9c54f4ac6bd93a2c7}{
 \index{Equipement@{Equipement}!setPosition@{setPosition}}
@@ -363,11 +350,11 @@ This procedure is used to change the position of an equipement. Like after a dra
 \begin{description}
 \item[{\em \_\-x}]the x position. \item[{\em \_\-y}]the y position. \end{description}
 \end{Desc}
-\hypertarget{class_equipement_33973a0f392135d7c50b8ce59fa60941}{
+\hypertarget{class_equipement_e6b65817f2f2d1f93669475530d849ca}{
 \index{Equipement@{Equipement}!toString@{toString}}
 \index{toString@{toString}!Equipement@{Equipement}}
-\subsubsection[{toString}]{\setlength{\rightskip}{0pt plus 5cm}string Equipement::toString (int {\em nbr})}}
-\label{class_equipement_33973a0f392135d7c50b8ce59fa60941}
+\subsubsection[{toString}]{\setlength{\rightskip}{0pt plus 5cm}std::string Equipement::toString (int {\em nbr})}}
+\label{class_equipement_e6b65817f2f2d1f93669475530d849ca}
 
 
 Function wich convert int to string. 
@@ -383,7 +370,82 @@ Function wich convert in to string.
 \item[Returns:]nbr in type string. \end{Desc}
 
 
+\subsection{Member Data Documentation}
+\hypertarget{class_equipement_1c7ae76643400f1402231514c2a21ae2}{
+\index{Equipement@{Equipement}!header@{header}}
+\index{header@{header}!Equipement@{Equipement}}
+\subsubsection[{header}]{\setlength{\rightskip}{0pt plus 5cm}std::string {\bf Equipement::header}\hspace{0.3cm}{\tt  \mbox{[}protected\mbox{]}}}}
+\label{class_equipement_1c7ae76643400f1402231514c2a21ae2}
+
+
+attribute which represent the header. 
+
+This attribute reprensent the differents files to be included for the node. \hypertarget{class_equipement_d5124abeb4730c781cf45e7d538ebbc2}{
+\index{Equipement@{Equipement}!indice@{indice}}
+\index{indice@{indice}!Equipement@{Equipement}}
+\subsubsection[{indice}]{\setlength{\rightskip}{0pt plus 5cm}std::string {\bf Equipement::indice}\hspace{0.3cm}{\tt  \mbox{[}protected\mbox{]}}}}
+\label{class_equipement_d5124abeb4730c781cf45e7d538ebbc2}
+
+
+attribute which represent the node number. 
+
+This is an attribute which represent the number of the object creation. \hypertarget{class_equipement_0b1a1b3183ff2e26d5e86adcaa1a151d}{
+\index{Equipement@{Equipement}!ip@{ip}}
+\index{ip@{ip}!Equipement@{Equipement}}
+\subsubsection[{ip}]{\setlength{\rightskip}{0pt plus 5cm}std::string {\bf Equipement::ip}\hspace{0.3cm}{\tt  \mbox{[}protected\mbox{]}}}}
+\label{class_equipement_0b1a1b3183ff2e26d5e86adcaa1a151d}
+
+
+attribute which represent the ip. 
+
+The ip attributed to the node. \hypertarget{class_equipement_3e3703936280f99d55619e7b86810f3b}{
+\index{Equipement@{Equipement}!ipInterfaceName@{ipInterfaceName}}
+\index{ipInterfaceName@{ipInterfaceName}!Equipement@{Equipement}}
+\subsubsection[{ipInterfaceName}]{\setlength{\rightskip}{0pt plus 5cm}std::string {\bf Equipement::ipInterfaceName}\hspace{0.3cm}{\tt  \mbox{[}protected\mbox{]}}}}
+\label{class_equipement_3e3703936280f99d55619e7b86810f3b}
+
+
+attribute which represent the ip interface name. 
+
+The ip interface name is used to generate the code for the applications like an udp\_\-echo. \hypertarget{class_equipement_bc9e4c10eacad003427f4812890c7d52}{
+\index{Equipement@{Equipement}!mask@{mask}}
+\index{mask@{mask}!Equipement@{Equipement}}
+\subsubsection[{mask}]{\setlength{\rightskip}{0pt plus 5cm}std::string {\bf Equipement::mask}\hspace{0.3cm}{\tt  \mbox{[}protected\mbox{]}}}}
+\label{class_equipement_bc9e4c10eacad003427f4812890c7d52}
+
+
+attribute which represent the mask. 
+
+The mask attributed to the node network. \hypertarget{class_equipement_c83d966d9331f8b92ffa09b5eaf05816}{
+\index{Equipement@{Equipement}!nodeName@{nodeName}}
+\index{nodeName@{nodeName}!Equipement@{Equipement}}
+\subsubsection[{nodeName}]{\setlength{\rightskip}{0pt plus 5cm}std::string {\bf Equipement::nodeName}\hspace{0.3cm}{\tt  \mbox{[}protected\mbox{]}}}}
+\label{class_equipement_c83d966d9331f8b92ffa09b5eaf05816}
+
+
+attribute which represent the node name. 
+
+The node name. \hypertarget{class_equipement_45ae2acbe57b1a47e7e9eeed67738109}{
+\index{Equipement@{Equipement}!x@{x}}
+\index{x@{x}!Equipement@{Equipement}}
+\subsubsection[{x}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Equipement::x}\hspace{0.3cm}{\tt  \mbox{[}protected\mbox{]}}}}
+\label{class_equipement_45ae2acbe57b1a47e7e9eeed67738109}
+
+
+attribute which represent the x position of the object. 
+
+The x graphical position. \hypertarget{class_equipement_de92f12b5da5dde6f2b43921789cf676}{
+\index{Equipement@{Equipement}!y@{y}}
+\index{y@{y}!Equipement@{Equipement}}
+\subsubsection[{y}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Equipement::y}\hspace{0.3cm}{\tt  \mbox{[}protected\mbox{]}}}}
+\label{class_equipement_de92f12b5da5dde6f2b43921789cf676}
+
+
+attribute which represent the y position of the object. 
+
+The y graphical position. 
+
 The documentation for this class was generated from the following files:\begin{CompactItemize}
 \item 
-/home/elz/workspace/ns-3-generator/Equipement.h\item 
-/home/elz/workspace/ns-3-generator/Equipement.cpp\end{CompactItemize}
+/home/elz/workspace/ns-3-generator/\hyperlink{_equipement_8h}{Equipement.h}\item 
+/home/elz/workspace/ns-3-generator/\hyperlink{_equipement_8cpp}{Equipement.cpp}\end{CompactItemize}

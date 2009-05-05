@@ -16,13 +16,18 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+/**
+* \file Pc.h
+* \brief Subclasse from Equipement.
+* \author Pierre Weiss
+* \date 2009
+*/
 
 #ifndef PC_H
 #define PC_H
 
 #include "Equipement.h"
 
-using namespace std;
 #include <iostream>
 #include <string>
 #include <vector>
@@ -40,7 +45,6 @@ class Pc : public Equipement
 {
 public:
   /**
-   * \fn Pc();
    * \brief Constructor used for a Pc.
    * 
    * This is the constructor of the Pc class.
@@ -49,58 +53,60 @@ public:
    * 
    */
   Pc();
+  
+  /**
+   * \brief the destructor of the class.
+   * 
+   * The class destructor.
+   */
   virtual ~Pc();
   
   /**
-   * \fn string GenerateHeader();
    * \brief Function witch return the header c++ code.
    *
    * Function wich return a string with the header c++ code from a Pc.
    * 
    * \return header.
    */
-  virtual string GenerateHeader();
+  virtual std::string GenerateHeader();
   
   /**
-   * \fn string GenerateNode();
    * \brief Function witch return the node c++ code.
    *
    * Function wich return a string with the node c++ code from a Pc.
    * 
    * \return node.
    */
-  virtual string GenerateNode();
+  virtual std::string GenerateNode();
   
   /**
-   * \fn string GenerateIpStack();
    * \brief Function witch return the ip stack c++ code.
    *
    * Function wich return a string with the ip stack c++ code from a Pc.
    * 
    * \return ip stack.
    */
-  virtual string GenerateIpStack();
+  virtual std::string GenerateIpStack();
   
   /**
-   * \fn string GenerateIpAssign();
    * \brief Function witch return the ip assign c++ code.
    *
    * Function wich return a string with the ip assign c++ code from a Pc.
    * 
    * \return ip assign.
    */
-  virtual string GenerateIpAssign();
+  virtual std::string GenerateIpAssign();
   
   /**
-   * \fn void setHeader(string _header);
    * \brief Function witch set the header c++ code.
    *
    * Function wich set the c++ code from the Pc.
    * 
-   * \param _header, the new header string.
+   * \param _header the new header string.
    */
-  virtual void setHeader(string _header);
+  virtual void setHeader(std::string _header);
 
 };
 
-#endif 
+#endif /* PC_H */
+

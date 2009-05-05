@@ -16,6 +16,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+/**
+* \file Generator.cpp
+* \brief The main class of the Generator.
+* \author Pierre Weiss
+* \date 2009
+*/
 
 
 #include "Generator.h"
@@ -25,13 +31,13 @@
 int Generator::indiceEquipement = 0;
 int Generator::indiceApplication = 0;
 int Generator::indiceLink = 0;
-vector<Equipement*> Generator::listEquipement;
+std::vector<Equipement*> Generator::listEquipement;
 //~ vector<Application> Generator::listApplication;
 //~ vector<Link> Generator::listLink;
 
 
-Generator::Generator(){
-  
+Generator::Generator()
+{
 }
 
 //
@@ -39,22 +45,36 @@ Generator::Generator(){
 //
 
 
-void Generator::AddEquipement(string type) {
+void Generator::AddEquipement(std::string type) 
+{
   // call to the right type constructor. 
-  if(type.compare("Pc") == 0){
+  if(type.compare("Pc") == 0)
+  {
   	Pc *equi = new Pc();
   	Generator::listEquipement.push_back(equi);
-  } else if(type.compare("Router") == 0){
+  } 
+  else if(type.compare("Router") == 0)
+  {
   	//~ Router equi;
-  } else if(type.compare("Ap") == 0){
+  } 
+  else if(type.compare("Ap") == 0)
+  {
   	//~ Ap equi;
-  } else if(type.compare("Station") == 0){
+  } 
+  else if(type.compare("Station") == 0)
+  {
     //~ Station equi;
-  } else if(type.compare("Hub") == 0){
+  } 
+  else if(type.compare("Hub") == 0)
+  {
   	//~ Hub equi;
-  } else if(type.compare("Bridge") == 0){
+  } 
+  else if(type.compare("Bridge") == 0)
+  {
     //~ Switch equi;
-  } else if(type.compare("Tap") == 0){
+  } 
+  else if(type.compare("Tap") == 0)
+  {
   	//~ Tap equi;
   } 
   
@@ -64,10 +84,10 @@ void Generator::AddEquipement(string type) {
   
   // equipement added incrementation of indice. 
   Generator::indiceEquipement += 1;
-
 }
 
-int Generator::getIndiceEquipement() {
+int Generator::getIndiceEquipement() 
+{
   return Generator::indiceEquipement;
 }
 
@@ -76,7 +96,9 @@ int Generator::getIndiceEquipement() {
 //
 
 
-void Generator::AddApplication(string type) {
+void Generator::AddApplication(std::string type) 
+{
+  std::cout << type << std::endl;
 /*  
   // call to the right type constructor. 
   if(type.compare("Ping") == 0){
@@ -95,7 +117,8 @@ void Generator::AddApplication(string type) {
 */
 }
 
-int Generator::getIndiceApplication() {
+int Generator::getIndiceApplication() 
+{
   return Generator::indiceApplication;
 }
 
@@ -105,7 +128,9 @@ int Generator::getIndiceApplication() {
 //
 
 
-void Generator::AddLink(string type) {
+void Generator::AddLink(std::string type) 
+{
+   std::cout << type << std::endl;
 /*
   // call to the right type constructor.
   if(type.compare("Emu") == 0){
@@ -124,7 +149,8 @@ void Generator::AddLink(string type) {
 */  
 }
 
-int Generator::getIndiceLink() {
+int Generator::getIndiceLink() 
+{
   return Generator::indiceLink;
 }
 
@@ -135,25 +161,24 @@ int Generator::getIndiceLink() {
 //
 
 
-void Generator::GenerateCode() {
-	
-cout << "GenerateCode" << endl;
-GenerateHeader();
-cout << "out" << endl;
-//~ GenerateCmdLine() 
-//~ GenerateConfig() 
-//~ GenerateNode() 
-//~ GenerateLink() 
-//~ GenerateNetDevice() 
-//~ GenerateIpStack() 
-//~ GenerateIpAssign() 
-//~ GenerateRoute() 
-//~ GenerateApplications() 
+void Generator::GenerateCode() 
+{	
+  std::cout << "GenerateCode" << std::endl;
+  GenerateHeader();
+  //~ GenerateCmdLine() 
+  //~ GenerateConfig() 
+  GenerateNode(); 
+  //~ GenerateLink() 
+  //~ GenerateNetDevice() 
+  //~ GenerateIpStack() 
+  //~ GenerateIpAssign() 
+  //~ GenerateRoute() 
+  //~ GenerateApplications() 
 }
 
-vector<string> Generator::GenerateHeader() 
+std::vector<std::string> Generator::GenerateHeader() 
 {
-  vector<string> allHeaders;
+  std::vector<std::string> allHeaders;
   /* get all headers. */
   for(int i = 0; i < Generator::getIndiceEquipement(); i++)
   {
@@ -161,14 +186,14 @@ vector<string> Generator::GenerateHeader()
   }
 
   /* check for duplicate */
-  vector<string> headersWithoutDuplicateElem;
+  std::vector<std::string> headersWithoutDuplicateElem;
   bool isDuplicate = false;
   /* iterate all headers string */
-  for(int i = 0; i < allHeaders.size(); i++)
+  for(int i = 0; i < (int) allHeaders.size(); i++)
   {
   	isDuplicate = false;
   	/* iterate the vector whith no duplicate */
-  	for(int j = 0; j < headersWithoutDuplicateElem.size(); j++)
+  	for(int j = 0; j < (int) headersWithoutDuplicateElem.size(); j++)
   	{
   	  /* check if the string into the allHeaders vector is also in the vector without duplicate */
   	  if( allHeaders.at(i).compare(headersWithoutDuplicateElem.at(j)) == 0 )
@@ -186,48 +211,57 @@ vector<string> Generator::GenerateHeader()
   }
   
   /* print the res to see.*/
-  for(int i = 0; i < headersWithoutDuplicateElem.size(); i++)
+  for(int i = 0; i < (int) headersWithoutDuplicateElem.size(); i++)
   {
-  	cout << "Num :" << i << " - " << headersWithoutDuplicateElem.at(i) << endl;
+  	std::cout << "Num :" << i << " - " << headersWithoutDuplicateElem.at(i) << std::endl;
   }
   
   return headersWithoutDuplicateElem;
   
 }
 
-string Generator::GenerateCmdLine() {
-
+std::string Generator::GenerateCmdLine() 
+{
+  return "";
 }
 
-string Generator::GenerateConfig() {
-
+std::string Generator::GenerateConfig() 
+{
+  return "";
 }
 
-string Generator::GenerateNode() {
-
+std::string Generator::GenerateNode() 
+{
+  return "";
 }
 
-string Generator::GenerateLink() {
-
+std::string Generator::GenerateLink() 
+{
+  return "";
 }
-string Generator::GenerateNetDevice() {
-
-}
-
-string Generator::GenerateIpStack() {
-
+std::string Generator::GenerateNetDevice() 
+{
+  return "";
 }
 
-string Generator::GenerateIpAssign() {
-
+std::string Generator::GenerateIpStack() 
+{
+  return "";
 }
 
-string Generator::GenerateRoute() {
-
+std::string Generator::GenerateIpAssign() 
+{
+  return "";
 }
 
-string Generator::GenerateApplications() {
+std::string Generator::GenerateRoute() 
+{
+  return "";
+}
 
+std::string Generator::GenerateApplications() 
+{
+  return "";
 }
 
 
@@ -235,19 +269,22 @@ string Generator::GenerateApplications() {
 // XML generation operation part.
 //
 
-void Generator::OpenXml() {
-
+void Generator::OpenXml() 
+{
 }
 
-string Generator::getXmlFileName() {
+std::string Generator::getXmlFileName() 
+{
   return this->xmlFileName;
 }
 
-void Generator::WriteXml(string _line) {
-
+void Generator::WriteXml(std::string _line) 
+{
+  std::cout << _line << std::endl;
 }
 
-void Generator::setXmlFileName(string _xmlFileName) {
+void Generator::setXmlFileName(std::string _xmlFileName) 
+{
   this->xmlFileName = _xmlFileName;
 }
 
@@ -255,30 +292,37 @@ void Generator::setXmlFileName(string _xmlFileName) {
 // Cpp generation operation part.
 //
 
-string Generator::getCppFileName() {
+std::string Generator::getCppFileName() 
+{
   return this->cppFileName;
 }
 
-void Generator::setCppFileName(string _cppFileName ) {
+void Generator::setCppFileName(std::string _cppFileName ) 
+{
   this->cppFileName = _cppFileName;
 }
 
-void Generator::WriteCpp(string _line) {
-
+void Generator::WriteCpp(std::string _line) 
+{
+  std::cout << _line << std::endl;
 }
 
 //
 // Python generation operation part.
 //
   
-void Generator::WritePython(string _line){
+void Generator::WritePython(std::string _line)
+{
+   std::cout << _line << std::endl;
 }
 
-string Generator::getPyFileName() {
+std::string Generator::getPyFileName() 
+{
   return this->pyFileName;
 }
 
-void Generator::setPyFileName(string _pyFileName ) {
+void Generator::setPyFileName(std::string _pyFileName ) 
+{
   this->pyFileName = _pyFileName;
 }
 
