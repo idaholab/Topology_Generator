@@ -24,14 +24,12 @@
 */
 
 #include "Equipement.h"
-#include "Generator.h"
-
 #include <sstream>
 
-Equipement::Equipement()
+Equipement::Equipement(size_t _indice, std::string _type)
 {
-  this->indice = toString(Generator::getIndiceEquipement());
-  this->nodeName = "node_"+toString(Generator::getIndiceEquipement());
+  this->indice = _indice;
+  this->nodeName = _type + this->toString(_indice);
   this->ip = "0.0.0.0";
   this->mask = "0.0.0.0";
   this->ipInterfaceName = "iface_"+this->nodeName;
@@ -39,16 +37,57 @@ Equipement::Equipement()
   this->y = 0;	
 }
 
-//no pointer nothing to destroy
+//no pointer, nothing to destroy
 Equipement::~Equipement()
 {
 }
 
-std::string Equipement::toString(int nbr)
+std::vector<std::string> Equipement::GenerateHeader()
+{
+  std::vector<std::string> headers;
+  headers.push_back("#include \"ns3/helper-module.h\"");
+
+  return headers; 
+}
+
+std::vector<std::string> Equipement::GenerateNode()
+{
+  std::vector<std::string> nodes;
+  nodes.push_back("NodeContainer "+this->getNodeName()+";");
+  nodes.push_back(this->getNodeName()+".Create(1);");
+
+  return nodes; 
+}
+
+std::vector<std::string> Equipement::GenerateIpStack()
+{
+  std::vector<std::string> stack;
+  stack.push_back("InternetStackHelper net_"+this->getNodeName()+";");
+  stack.push_back("net_"+this->getNodeName()+".Install ("+this->getNodeName()+");");
+
+  return stack; 
+}
+  
+std::vector<std::string> Equipement::GenerateIpAssign()
+{
+  // need to think about the third argument from the SetBase method.
+  std::vector<std::string> ipAssign;
+  ipAssign.push_back("Ipv4AddressHelper ipv4_"+this->getNodeName()+";");
+  ipAssign.push_back("ipv4.SetBase (\""+this->getIp()+"\", \""+this->getMask()+"\", \"0.0.0."+this->getIndice()+"\");");
+  
+  // Ipv4InterfaceContainer have to be used with an application.
+  //ipAssign.push_back("Ipv4InterfaceContainer "+this->getIpInterfaceName()+" = ipv4.Assign(netDeviceCont_"+this->getNodeName()+");");
+  ipAssign.push_back("ipv4.Assign(netDeviceCont_"+this->getNodeName()+");");
+
+  return ipAssign; 
+}
+
+std::string Equipement::toString(size_t nbr)
 {
   std::ostringstream out;
   out << nbr;
-return out.str();
+  
+  return out.str();
 }
 
 void Equipement::setNodeName(std::string _nodeName)
@@ -77,7 +116,7 @@ std::string Equipement::getIpInterfaceName()
   return this->ipInterfaceName;
 }
  
-void Equipement::setPosition(int _x, int _y)
+void Equipement::setPosition(size_t _x, size_t _y)
 {
   this->x = _x;
   this->y = _y;
@@ -105,6 +144,10 @@ std::string Equipement::getY()
 
 std::string Equipement::getIndice()
 {
-  return this->indice;
+  return toString(this->indice);
 }
+
+
+
+
 

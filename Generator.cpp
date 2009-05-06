@@ -26,18 +26,32 @@
 
 #include "Generator.h"
 #include "Equipement.h"
-#include "Pc.h"
 
-int Generator::indiceEquipement = 0;
-int Generator::indiceApplication = 0;
-int Generator::indiceLink = 0;
-std::vector<Equipement*> Generator::listEquipement;
+std::vector<Equipement*> listEquipement;
+size_t indiceEquipementPc = 0;
+size_t indiceEquipementRouter = 0;
+size_t indiceEquipementAp = 0;
+size_t indiceEquipementStation = 0;
+size_t indiceEquipementBridge = 0;
+size_t indiceEquipementTap = 0;
+
+
+size_t indiceApplication = 0;
+size_t indiceLink = 0;
 //~ vector<Application> Generator::listApplication;
 //~ vector<Link> Generator::listLink;
 
 
 Generator::Generator()
 {
+}
+
+Generator::~Generator()
+{
+  for(size_t i = 0; i < (size_t) this->listEquipement.size(); i ++)
+  {
+    delete this->listEquipement.at(i);
+  }
 }
 
 //
@@ -47,48 +61,42 @@ Generator::Generator()
 
 void Generator::AddEquipement(std::string type) 
 {
+  Equipement *equi = new Equipement(0, type);
+  
   // call to the right type constructor. 
   if(type.compare("Pc") == 0)
   {
-  	Pc *equi = new Pc();
-  	Generator::listEquipement.push_back(equi);
+  	equi = new Equipement(this->indiceEquipementPc, "node_");
+  	this->indiceEquipementPc += 1;
   } 
   else if(type.compare("Router") == 0)
   {
-  	//~ Router equi;
+  	equi = new Equipement(this->indiceEquipementRouter, "router_");
+  	this->indiceEquipementRouter += 1;
   } 
   else if(type.compare("Ap") == 0)
   {
-  	//~ Ap equi;
+  	equi = new Equipement(this->indiceEquipementAp, "ap_");
+  	this->indiceEquipementAp += 1;
   } 
   else if(type.compare("Station") == 0)
   {
-    //~ Station equi;
-  } 
-  else if(type.compare("Hub") == 0)
-  {
-  	//~ Hub equi;
+    equi = new Equipement(this->indiceEquipementStation, "station_");
+  	this->indiceEquipementStation += 1;
   } 
   else if(type.compare("Bridge") == 0)
   {
-    //~ Switch equi;
+    equi = new Equipement(this->indiceEquipementBridge, "bridge_");
+  	this->indiceEquipementBridge += 1;
   } 
   else if(type.compare("Tap") == 0)
   {
-  	//~ Tap equi;
+  	equi = new Equipement(this->indiceEquipementTap, "tap_");
+  	this->indiceEquipementTap += 1;
   } 
   
-  //add to the equipement list.
-  //You can't write this here ... you got an compile error. 
-  //Generator::listEquipement.push_back(equi);
+  this->listEquipement.push_back(equi);
   
-  // equipement added incrementation of indice. 
-  Generator::indiceEquipement += 1;
-}
-
-int Generator::getIndiceEquipement() 
-{
-  return Generator::indiceEquipement;
 }
 
 //
@@ -99,29 +107,7 @@ int Generator::getIndiceEquipement()
 void Generator::AddApplication(std::string type) 
 {
   std::cout << type << std::endl;
-/*  
-  // call to the right type constructor. 
-  if(type.compare("Ping") == 0){
-  	Ping apps;
-  } else if(type.compare("Tcp_large_transfert") == 0){
-  	Tcp_large_transfert apps;
-  } else if(type.compare("Udp_echo") == 0){
-  	Udp_Echo apps;
-  } 
-  
-  // add to the application list. 
-  listApplication.push_back(apps);
-  
-  // application added incrementation of indice. 
-  Generator::indiceApplixation += 1;
-*/
 }
-
-int Generator::getIndiceApplication() 
-{
-  return Generator::indiceApplication;
-}
-
 
 //
 // Part of Link.
@@ -131,27 +117,6 @@ int Generator::getIndiceApplication()
 void Generator::AddLink(std::string type) 
 {
    std::cout << type << std::endl;
-/*
-  // call to the right type constructor.
-  if(type.compare("Emu") == 0){
-  	Emu link;
-  } else if(type.compare("PointToPoint") == 0){
-  	PointToPoint link;
-  } else if(type.compare("Csma") == 0){
-  	Csma link;
-  } 
-  
-  // add to the application list.
-  listLink.push_back(link);
-  
-  // application added incrementation of indice. 
-  Generator::indiceLink += 1;
-*/  
-}
-
-int Generator::getIndiceLink() 
-{
-  return Generator::indiceLink;
 }
 
 
@@ -175,7 +140,7 @@ void Generator::GenerateCode()
   std::cout << "#include \"ns3/core-module.h\"" << std::endl;
 
   std::vector<std::string> allHeaders = GenerateHeader();
-  for(int i = 0; i < (int) allHeaders.size(); i++)
+  for(size_t i = 0; i < (size_t) allHeaders.size(); i++)
   {
   	std::cout << "" << allHeaders.at(i) << std::endl;
   }
@@ -184,7 +149,7 @@ void Generator::GenerateCode()
   std::cout << "using namespace ns3;" << std::endl;
   std::cout << "" << std::endl;
   
-  std::cout << "int main(int argc, char[] *argv)" << std::endl;
+  std::cout << "int main(int argc, char *argv[])" << std::endl;
   std::cout << "{" << std::endl;
   std::cout << "" << std::endl;
               
@@ -209,7 +174,7 @@ void Generator::GenerateCode()
   std::cout << "" << std::endl;
   std::cout << "  /* Build nodes. */" << std::endl;
   std::vector<std::string> nodeBuild = GenerateNode();
-  for(int i = 0; i < (int) nodeBuild.size(); i++)
+  for(size_t i = 0; i < (size_t) nodeBuild.size(); i++)
   {
   	std::cout << "  " << nodeBuild.at(i) << std::endl;
   }
@@ -223,7 +188,7 @@ void Generator::GenerateCode()
   std::cout << "" << std::endl;
   std::cout << "  /* Install the IP stack */" << std::endl;
   std::vector<std::string> allStacks = GenerateIpStack();
-  for(int i = 0; i < (int) allStacks.size(); i++)
+  for(size_t i = 0; i < (size_t) allStacks.size(); i++)
   {
   	std::cout << "  " << allStacks.at(i) << std::endl;
   }
@@ -234,7 +199,7 @@ void Generator::GenerateCode()
   std::cout << "" << std::endl;
   std::cout << "  /* IP assign */" << std::endl;
   std::vector<std::string> allAssign = GenerateIpAssign();
-  for(int i = 0; i < (int) allAssign.size(); i++)
+  for(size_t i = 0; i < (size_t) allAssign.size(); i++)
   {
   	std::cout << "  " << allAssign.at(i) << std::endl;
   } 
@@ -242,6 +207,7 @@ void Generator::GenerateCode()
   //
   // Generate Route.
   //
+  std::cout << "" << std::endl;
   std::cout << "  /* Generate Route. */" << std::endl;
   std::cout << "  GlobalRouteManager::PopulateRoutingTables ();" << std::endl;
   //~ GenerateRoute() 
@@ -257,10 +223,10 @@ std::vector<std::string> Generator::GenerateHeader()
   /* still in developpement, must be add the link and the applications headers! */
   std::vector<std::string> allHeaders;
   /* get all headers. */
-  for(int i = 0; i < Generator::getIndiceEquipement(); i++)
+  for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
   {
-    std::vector<std::string> trans = (Generator::listEquipement.at(i))->GenerateHeader();
-    for(int j = 0; j < (int) trans.size(); j++)
+    std::vector<std::string> trans = (this->listEquipement.at(i))->GenerateHeader();
+    for(size_t j = 0; j < (size_t) trans.size(); j++)
     {
   	  allHeaders.push_back(trans.at(j));
     }
@@ -270,11 +236,11 @@ std::vector<std::string> Generator::GenerateHeader()
   std::vector<std::string> headersWithoutDuplicateElem;
   bool isDuplicate = false;
   /* iterate all headers string */
-  for(int i = 0; i < (int) allHeaders.size(); i++)
+  for(size_t i = 0; i < (size_t) allHeaders.size(); i++)
   {
   	isDuplicate = false;
   	/* iterate the vector whith no duplicate */
-  	for(int j = 0; j < (int) headersWithoutDuplicateElem.size(); j++)
+  	for(size_t j = 0; j < (size_t) headersWithoutDuplicateElem.size(); j++)
   	{
   	  /* check if the string into the allHeaders vector is also in the vector without duplicate */
   	  if( allHeaders.at(i).compare(headersWithoutDuplicateElem.at(j)) == 0 )
@@ -307,10 +273,10 @@ std::vector<std::string> Generator::GenerateNode()
 {
   std::vector<std::string> allNodes;
   /* get all the node code. */
-  for(int i = 0; i < Generator::getIndiceEquipement(); i++)
+  for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
   {
-    std::vector<std::string> trans = (Generator::listEquipement.at(i))->GenerateNode();
-    for(int j = 0; j < (int) trans.size(); j++)
+    std::vector<std::string> trans = (this->listEquipement.at(i))->GenerateNode();
+    for(size_t j = 0; j < (size_t) trans.size(); j++)
     {
       allNodes.push_back(trans.at(j));
     }
@@ -331,10 +297,10 @@ std::vector<std::string> Generator::GenerateIpStack()
 {
   std::vector<std::string> allStack;
   /* get all the node code. */
-  for(int i = 0; i < Generator::getIndiceEquipement(); i++)
+  for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
   {
-    std::vector<std::string> trans = (Generator::listEquipement.at(i)->GenerateIpStack());
-    for(int j = 0; j < (int) trans.size(); j++)
+    std::vector<std::string> trans = (this->listEquipement.at(i)->GenerateIpStack());
+    for(size_t j = 0; j < (size_t) trans.size(); j++)
     {
       allStack.push_back(trans.at(j));
     }
@@ -347,10 +313,10 @@ std::vector<std::string> Generator::GenerateIpAssign()
 {
   std::vector<std::string> allAssign;
   /* get all the ip assign code. */
-  for(int i = 0; i < Generator::getIndiceEquipement(); i++)
+  for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
   {
-    std::vector<std::string> trans = (Generator::listEquipement.at(i)->GenerateIpAssign());
-    for(int j = 0; j < (int) trans.size(); j++)
+    std::vector<std::string> trans = (this->listEquipement.at(i)->GenerateIpAssign());
+    for(size_t j = 0; j < (size_t) trans.size(); j++)
     {
       allAssign.push_back(trans.at(j));
     }

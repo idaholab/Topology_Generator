@@ -30,17 +30,17 @@ using namespace std;
 
 
 /* this procedure list all Equipement created by the generator and print it. */
-void ListAllEquipement()
+void ListAllEquipement(Generator *gen)
 {
-  for(int i = 0; i < Generator::getIndiceEquipement(); i++)
+  for(size_t i = 0; i < (size_t) gen->listEquipement.size(); i++)
   {
     std::cout << "Numéro :" << i << std::endl;
-	  std::cout << "nodeName :"<< Generator::listEquipement.at(i)->getNodeName() << std::endl;
-	  std::cout << "ip :"<< Generator::listEquipement.at(i)->getIp() << std::endl;
-	  std::cout << "mask :" << Generator::listEquipement.at(i)->getMask() << std::endl;
-	  std::cout << "ipInterfaceName :" << Generator::listEquipement.at(i)->getIpInterfaceName() << std::endl;
-	  std::cout << "x :" << Generator::listEquipement.at(i)->getX() << std::endl;
-	  std::cout << "y :" << Generator::listEquipement.at(i)->getY() << std::endl;
+	  std::cout << "nodeName :"<< gen->listEquipement.at(i)->getNodeName() << std::endl;
+	  std::cout << "ip :"<< gen->listEquipement.at(i)->getIp() << std::endl;
+	  std::cout << "mask :" << gen->listEquipement.at(i)->getMask() << std::endl;
+	  std::cout << "ipInterfaceName :" << gen->listEquipement.at(i)->getIpInterfaceName() << std::endl;
+	  std::cout << "x :" << gen->listEquipement.at(i)->getX() << std::endl;
+	  std::cout << "y :" << gen->listEquipement.at(i)->getY() << std::endl;
 	  std::cout << "#################" << std::endl;	
   }	
 		
@@ -65,19 +65,31 @@ void Usage()
 int main()
 {
   //int nbrChoose = 0;
-  Generator gen;
+  Generator *gen = new Generator();
   
-  /* add 10 pc. */
+  /* add 2 pc. */
   int i = 0;	
-  while( i < 10 )
+  while( i < 2)
   {
-  	gen.AddEquipement("Pc");
+  	gen->AddEquipement("Pc");
   	i += 1;
   }	
-  std::cout<< "Main" << std::endl;
-  //std::cout << (Generator::listEquipement.at(0))->GenerateHeader() << std::endl;
+  
+  /* add 2 Router. */
+  i = 0;	
+  while( i < 2)
+  {
+  	gen->AddEquipement("Router");
+  	i += 1;
+  }	
+  
+  /* add 1 ap. */
+  gen->AddEquipement("Ap");
+  
+  /* add 1 station. */
+  gen->AddEquipement("Station");
 	
-  gen.GenerateCode();
+  gen->GenerateCode();
   
 
   /* manual operations. */
@@ -106,6 +118,8 @@ int main()
     }
   }
   */
+  
+  delete gen;
 }
 
 

@@ -18,7 +18,7 @@
  */
 /**
 * \file Equipement.h
-* \brief Abstract Equipement Base Class.
+* \brief Equipement Base Class.
 * \author Pierre Weiss
 * \date 2009
 */
@@ -33,125 +33,100 @@
 
 /**
  * \ingroup generator
- * \brief Abstract Equipement Base Class.
+ * \brief Equipement Base Class.
  *
  * This class is the main class of the differents equipement you can choose to use.
- * It contain the Pc, Hub, Switch, Router, Tap, Wifi Ap, Wifi Station.
+ * It contain the Pc Switch, Router, Tap, Wifi Ap, Wifi Station.
  */
 class Equipement 
 {
 
-protected:
+private:
   /**
    * \brief attribute which represent the node number.
-   * 
-   * This is an attribute which represent the number of the object creation.
    */
-  std::string indice;
+  size_t indice;
   
   /**
    * \brief attribute which represent the node name.
-   * 
-   * The node name.
    */
   std::string nodeName;
   
   /**
    * \brief attribute which represent the ip.
-   * 
-   * The ip attributed to the node.
    */
   std::string ip;
   
   /**
    * \brief attribute which represent the mask.
-   * 
-   * The mask attributed to the node network.
    */
   std::string mask;
   
   /**
    * \brief attribute which represent the ip interface name. 
-   * 
-   * The ip interface name is used to generate the code for the applications like an udp_echo.
    */
   std::string ipInterfaceName;
   
   /**
    * \brief attribute which represent the x position of the object.
-   * 
-   * The x graphical position.
    */
-  int x;
+  size_t x;
   
   /**
    * \brief attribute which represent the y position of the object.
-   * 
-   * The y graphical position.
    */
-  int y;
+  size_t y;
 
 public:
   /**
    * \brief Constructor which set default value.
-   *
-   * The constructor set the default common value at all subclasses. 
-   * 
    */
-  Equipement();
+  Equipement(size_t _indice, std::string _type);
   
   /**
    * \brief Destructor from the class Equipement.
-   * 
-   * Destructor from the class
    */
-  virtual ~Equipement();
+  ~Equipement();
 
   /**
    * \brief Function wich return the c++ header code from node.
    *
    * This function return a string which contain the header lines from the specified object.
-   * This function have to be rewritten in all subclasses.
    * 
    * \return header.
    */
-  virtual std::vector<std::string> GenerateHeader() = 0;
+  std::vector<std::string> GenerateHeader();
 
   /**
    * \brief Function wich return the c++ code from node.
    *
    * This function return a string which contain the declaration and instanciation of the node.
-   * This function have to be rewritten in all subclasses.
    * 
    * \return node.
    */
-  virtual std::vector<std::string> GenerateNode() = 0;
+  std::vector<std::string> GenerateNode();
 
   /**
    * \brief Function wich return the c++ code from IpStack.
    *
    * This function return a string which contain the c++ code from the Ipv4 stack declaration and instanciation.
-   * This function have to be rewritten in all subclasses.
    * 
    * \return ipStack.
    */
-  virtual std::vector<std::string> GenerateIpStack() = 0;
+  std::vector<std::string> GenerateIpStack();
   
   /**
    * \brief Function wich return the c++ code from the ip asssign part.
    *
    * This function return a string wich contain the c++ code from the Ipv4 Assign part. It's about ip and mask assign.
-   * This function have to be rewritten in all subclasses;
    * 
    * \return IpAssign.
    */
-  virtual std::vector<std::string> GenerateIpAssign() = 0;
+  std::vector<std::string> GenerateIpAssign();
   
   /**
    * \brief Procedure to set the node name.
    * 
-   * The node name is use to declare and instace the node in the c++ generated code.
-   *
    * \param _nodeName the string which containe the node name.
    */
   void setNodeName(std::string _nodeName);
@@ -171,7 +146,7 @@ public:
    * \brief Procedure to set the Ip interface name.
    * 
    * This procedure is used to the the ipInterfaceName. 
-   * Sometimes this var is used in application like an UdpEcho.
+   * Sometimes this var is used in application like as UdpEcho.
    *
    * \param _ipInterfaceName
    */
@@ -186,13 +161,11 @@ public:
    * \param _x the x position.
    * \param _y the y position.
    */
-   void setPosition(int _x, int _y);
+   void setPosition(size_t _x, size_t _y);
 
   /**
    * \brief Function wich return the node name.
    *
-   * function used to get the node name of the equipement.
-   * 
    * \return node name.
    */
   std::string getNodeName();
@@ -200,8 +173,6 @@ public:
   /**
    * \brief Function wich return the name of the Ip interface.
    * 
-   * Function wich return the ip interface name of the equipement.
-   *
    * \return ip interface name.
    */
   std::string getIpInterfaceName();
@@ -209,16 +180,12 @@ public:
   /**
    * \brief Function wich return the ip address.
    *
-   * Function wich return a string with the ip address.
-   * 
    * \return ip.
    */
   std::string getIp();
   
   /**
    * \brief Function wich return a string with the mask.
-   * 
-   * Function wich return a string with the mask.
    *
    * \return mask.
    */
@@ -226,8 +193,6 @@ public:
   
   /**
    * \brief Function which return the x position.
-   *
-   * Function wich return the graphical x position of the object.
    * 
    * \return x position.
    */
@@ -235,8 +200,6 @@ public:
   
   /**
    * \brief Function which return the y position.
-   *
-   * Function wich return the graphical y position of the object.
    * 
    * \return y position.
    */
@@ -245,18 +208,15 @@ public:
    /**
     * \brief Function wich convert int to string.
     *
-    * Function wich convert in to string.
     * 
     * \param nbr the number to convert.
     * \return nbr in type string.
     */
-   std::string toString(int nbr);
+   std::string toString(size_t nbr);
    
    /**
     * \brief Function wich return the node number.
     *
-    * Function wich return a string with the node number.
-    * 
     * \return node number in type string.
     */
    std::string getIndice();
