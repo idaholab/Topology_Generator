@@ -27,7 +27,10 @@
 #define GENERATOR_H
 
 #include "Equipement.h"
+#include "Link.h"
 
+
+/* Others */
 #include <iostream>
 #include <string>
 #include <vector>
@@ -94,30 +97,13 @@ public:
   // Part of Application.
   //
 private:
-  /**
-   * \brief number attribute wich return the number of application created.
-   * 
-   * \return number of application
-   */
+  
   size_t indiceApplication; 
  
 public:
-  /**
-   * \brief list of application created instace.
-   * 
-   * This attribute is the list of the created application of equipement.
-   * 
-   */
+  
   //~ std::vector<Application> listApplication;
    
-  /**
-   * \brief Procedure used to add an application.
-   * 
-   * This procedure is used to add an application. It add the application to the
-   * vector listApplication and increment the number of application.
-   * 
-   * \param type the type of the application. (Ping, Udp_Echo,...)
-   */
   void AddApplication(std::string type);
 
   
@@ -132,7 +118,13 @@ private:
    * 
    * \return number of link
    */
-  size_t indiceLink; 
+  size_t indiceLinkAp;
+  size_t indiceLinkStation;
+  size_t indiceLinkEmu;
+  size_t indiceLinkPointToPoint;
+  size_t indiceLinkTap;
+  size_t indiceLinkHub;//csma
+  size_t indiceLinkBridge; 
   
 public:
   /**
@@ -141,7 +133,7 @@ public:
    * This attribute is the list of the created instance of link.
    * 
    */
-  //~ static vector<Link> listLink;
+  std::vector<Link*> listLink;
   
   /**
    * \brief Procedure used to add an link.
@@ -208,7 +200,7 @@ private:
    * 
    * \return generated link
    */
-  std::string GenerateLink();
+  std::vector<std::string> GenerateLink();
 
 
   /**
@@ -216,7 +208,7 @@ private:
    * 
    * \return generated net device
    */
-  std::string GenerateNetDevice();
+  std::vector<std::string> GenerateNetDevice();
 
 
   /**

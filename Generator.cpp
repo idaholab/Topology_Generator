@@ -23,9 +23,10 @@
 * \date 2009
 */
 
-
 #include "Generator.h"
 #include "Equipement.h"
+#include "Hub.h"
+
 
 std::vector<Equipement*> listEquipement;
 size_t indiceEquipementPc = 0;
@@ -35,11 +36,18 @@ size_t indiceEquipementStation = 0;
 size_t indiceEquipementBridge = 0;
 size_t indiceEquipementTap = 0;
 
+std::vector<Link*> listLink;
+size_t indiceLinkAp = 0;
+size_t indiceLinkStation = 0;
+size_t indiceLinkEmu = 0;
+size_t indiceLinkPointToPoint = 0;
+size_t indiceLinkTap = 0;
+size_t indiceLinkHub = 0;//csma
+size_t indiceLinkBridge = 0; 
 
-size_t indiceApplication = 0;
-size_t indiceLink = 0;
+
 //~ vector<Application> Generator::listApplication;
-//~ vector<Link> Generator::listLink;
+size_t indiceApplication = 0;
 
 
 Generator::Generator()
@@ -48,9 +56,13 @@ Generator::Generator()
 
 Generator::~Generator()
 {
-  for(size_t i = 0; i < (size_t) this->listEquipement.size(); i ++)
+  for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
   {
     delete this->listEquipement.at(i);
+  }
+  for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
+  {
+    delete this->listLink.at(i);
   }
 }
 
@@ -116,7 +128,45 @@ void Generator::AddApplication(std::string type)
 
 void Generator::AddLink(std::string type) 
 {
-   std::cout << type << std::endl;
+  // call to the right type constructor. 
+  if(type.compare("Hub") == 0)
+  {
+  	Hub *link = new Hub(this->indiceLinkHub);
+  	this->indiceLinkHub += 1;
+  	this->listLink.push_back(link);
+  } 
+  else if(type.compare("PointToPoint") == 0)
+  {
+  	//~ link = new Link(this->indiceLinkPointToPoint);
+  	this->indiceLinkPointToPoint += 1;
+  } 
+  else if(type.compare("Bridge") == 0)
+  {
+  	//~ link = new Link(this->indiceLinkBridge);
+  	this->indiceLinkBridge += 1;
+  } 
+  else if(type.compare("Ap") == 0)
+  {
+  	//~ link = new Link(this->indiceLinkAp);
+  	this->indiceLinkAp += 1;
+  }
+  else if(type.compare("Station") == 0)
+  {
+  	//~ link = new Link(this->indiceLinkStation);
+  	this->indiceLinkStation += 1;
+  }  
+  else if(type.compare("Emu") == 0)
+  {
+  	//~ link = new Link(this->indiceLinkEmu);
+  	this->indiceLinkEmu += 1;
+  } 
+  else if(type.compare("Tap") == 0)
+  {
+  	//~ link = new Link(this->indiceLinkTap);
+  	this->indiceLinkTap += 1;
+  } 
+    
+  
 }
 
 
@@ -179,8 +229,28 @@ void Generator::GenerateCode()
   	std::cout << "  " << nodeBuild.at(i) << std::endl;
   }
   
-  //~ GenerateLink() 
-  //~ GenerateNetDevice() 
+  //
+  // Generate Link.
+  //
+  std::cout << "" << std::endl;
+  std::cout << "  /* Build link. */" << std::endl;
+  std::vector<std::string> linkBuild = GenerateLink(); 
+  for(size_t i = 0; i < (size_t) linkBuild.size(); i++)
+  {
+  	std::cout << "  " << linkBuild.at(i) << std::endl;
+  }
+  
+  //
+  // Generate link net device container.
+  //
+  std::cout << "" << std::endl;
+  std::cout << "  /* Build link net device container. */" << std::endl;
+  std::vector<std::string> linkNdcBuild = GenerateNetDevice(); 
+  for(size_t i = 0; i < (size_t) linkNdcBuild.size(); i++)
+  {
+  	std::cout << "  " << linkNdcBuild.at(i) << std::endl;
+  }
+
   
   //
   // Generate Ip Stack. 
@@ -223,9 +293,19 @@ std::vector<std::string> Generator::GenerateHeader()
   /* still in developpement, must be add the link and the applications headers! */
   std::vector<std::string> allHeaders;
   /* get all headers. */
+  /* from listEquipement. */
   for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
   {
     std::vector<std::string> trans = (this->listEquipement.at(i))->GenerateHeader();
+    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    {
+  	  allHeaders.push_back(trans.at(j));
+    }
+  }
+  /* from listLink */
+  for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
+  {
+    std::vector<std::string> trans = (this->listLink.at(i))->GenerateHeader();
     for(size_t j = 0; j < (size_t) trans.size(); j++)
     {
   	  allHeaders.push_back(trans.at(j));
@@ -284,13 +364,33 @@ std::vector<std::string> Generator::GenerateNode()
   return allNodes;
 }
 
-std::string Generator::GenerateLink() 
+std::vector<std::string> Generator::GenerateLink() 
 {
-  return "";
+  std::vector<std::string> allLink;
+  /* get all the link build code. */
+  for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
+  {
+    std::vector<std::string> trans = (this->listLink.at(i))->GenerateLink();
+    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    {
+      allLink.push_back(trans.at(j));
+    }
+  }
+  return allLink;
 }
-std::string Generator::GenerateNetDevice() 
+std::vector<std::string> Generator::GenerateNetDevice() 
 {
-  return "";
+  std::vector<std::string> allNdc;
+  /* get all the link build code. */
+  for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
+  {
+    std::vector<std::string> trans = (this->listLink.at(i))->GenerateNetDevice();
+    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    {
+      allNdc.push_back(trans.at(j));
+    }
+  }
+  return allNdc;
 }
 
 std::vector<std::string> Generator::GenerateIpStack() 

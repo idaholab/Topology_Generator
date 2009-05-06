@@ -77,7 +77,7 @@ std::vector<std::string> Equipement::GenerateIpAssign()
   
   // Ipv4InterfaceContainer have to be used with an application.
   //ipAssign.push_back("Ipv4InterfaceContainer "+this->getIpInterfaceName()+" = ipv4.Assign(netDeviceCont_"+this->getNodeName()+");");
-  ipAssign.push_back("ipv4.Assign(netDeviceCont_"+this->getNodeName()+");");
+  ipAssign.push_back("ipv4.Assign(\"hum ???\");");
 
   return ipAssign; 
 }

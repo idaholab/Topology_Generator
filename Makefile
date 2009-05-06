@@ -7,12 +7,18 @@ generator.o: Generator.cpp
 
 equipement.o: Equipement.cpp
 	g++ -c Equipement.cpp $(FLAG)
+
+link.o: Link.cpp
+	g++ -c Link.cpp $(FLAG)
+
+hub.o: Hub.cpp
+	g++ -c Hub.cpp $(FLAG)
   
 main.o: main.cpp
 	g++ -c main.cpp $(FLAG)
 
-main: generator.o equipement.o  main.o
-	g++ -o main Generator.o Equipement.o main.o $(FLAG)
+main: generator.o equipement.o link.o hub.o main.o
+	g++ -o main Generator.o Equipement.o Link.o Hub.o main.o $(FLAG)
 	
 doc:
 	doxygen

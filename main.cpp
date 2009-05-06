@@ -75,20 +75,15 @@ int main()
   	i += 1;
   }	
   
-  /* add 2 Router. */
-  i = 0;	
-  while( i < 2)
-  {
-  	gen->AddEquipement("Router");
-  	i += 1;
-  }	
+  /* Add it to a Csma network. */
+  gen->AddLink("Hub");
+  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(0)->getNodeName());
+  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(1)->getNodeName());
+ 
   
-  /* add 1 ap. */
-  gen->AddEquipement("Ap");
-  
-  /* add 1 station. */
-  gen->AddEquipement("Station");
-	
+  //
+	// Generate de application code.
+	//
   gen->GenerateCode();
   
 
@@ -118,8 +113,7 @@ int main()
     }
   }
   */
-  
-  delete gen;
+
 }
 
 
