@@ -26,6 +26,8 @@
 #include "Generator.h"
 #include "Equipement.h"
 #include "Hub.h"
+#include "PointToPoint.h"
+#include "Bridge.h"
 
 /**
  * \brief see Generator.h
@@ -196,32 +198,37 @@ void Generator::AddLink(std::string type)
   } 
   else if(type.compare("PointToPoint") == 0)
   {
-  	//~ link = new Link(this->indiceLinkPointToPoint);
+  	PointToPoint *link = new PointToPoint(this->indiceLinkPointToPoint);
   	this->indiceLinkPointToPoint += 1;
+  	this->listLink.push_back(link);
   } 
   else if(type.compare("Bridge") == 0)
   {
-  	//~ link = new Link(this->indiceLinkBridge);
+    Equipement *equi = new Equipement(this->indiceEquipementBridge, "bridge_");
+  	this->indiceEquipementBridge += 1;
+  	this->listEquipement.push_back(equi);
+  	Bridge *link = new Bridge(this->indiceLinkBridge, equi->getNodeName());
   	this->indiceLinkBridge += 1;
+  	this->listLink.push_back(link);
   } 
   else if(type.compare("Ap") == 0)
   {
-  	//~ link = new Link(this->indiceLinkAp);
+  	//~ *link = new Link(this->indiceLinkAp);
   	this->indiceLinkAp += 1;
   }
   else if(type.compare("Station") == 0)
   {
-  	//~ link = new Link(this->indiceLinkStation);
+  	//~ *link = new Link(this->indiceLinkStation);
   	this->indiceLinkStation += 1;
   }  
   else if(type.compare("Emu") == 0)
   {
-  	//~ link = new Link(this->indiceLinkEmu);
+  	//~ *link = new Link(this->indiceLinkEmu);
   	this->indiceLinkEmu += 1;
   } 
   else if(type.compare("Tap") == 0)
   {
-  	//~ link = new Link(this->indiceLinkTap);
+  	//~ *link = new Link(this->indiceLinkTap);
   	this->indiceLinkTap += 1;
   } 
     
