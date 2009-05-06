@@ -62,14 +62,33 @@ public:
   //
 private:
   /**
-   * \brief number attribute of pc equipement created.
-   * 
+   * \brief number attribute of Pc equipement created.
    */
   size_t indiceEquipementPc;
+  
+  /**
+   * \brief number attribute of Router equipement created.
+   */
   size_t indiceEquipementRouter;
+  
+  /**
+   * \brief number attribute of Ap equipement created.
+   */
   size_t indiceEquipementAp;
+  
+  /**
+   * \brief number attribute of Station equipement created.
+   */
   size_t indiceEquipementStation;
+  
+  /**
+   * \brief number attribute of Bridge equipement created.
+   */
   size_t indiceEquipementBridge;
+  
+  /**
+   * \brief number attribute of Tap equipement created.
+   */
   size_t indiceEquipementTap;
   
   
@@ -97,13 +116,18 @@ public:
   // Part of Application.
   //
 private:
-  
+  /**
+   * \brief 
+   */
   size_t indiceApplication; 
  
 public:
   
   //~ std::vector<Application> listApplication;
-   
+  /**
+   * \brief 
+   * \param type
+   */
   void AddApplication(std::string type);
 
   
@@ -112,18 +136,38 @@ public:
   //
 private:
   /**
-   * \brief number attribute wich return the number of link created.
-   * 
-   * This function return the number of link created in the application.
-   * 
-   * \return number of link
+   * \brief number attribute of Ap link created.
    */
   size_t indiceLinkAp;
+  
+  /**
+   * \brief number attribute of Station link created.
+   */
   size_t indiceLinkStation;
+  
+  /**
+   * \brief number attribute of Emu link created.
+   */
   size_t indiceLinkEmu;
+  
+  /**
+   * \brief number attribute of PointToPoint link created.
+   */
   size_t indiceLinkPointToPoint;
+  
+  /**
+   * \brief number attribute of Tap link created.
+   */
   size_t indiceLinkTap;
-  size_t indiceLinkHub;//csma
+  
+  /**
+   * \brief number attribute of Hub link created.
+   */
+  size_t indiceLinkHub;
+  
+  /**
+   * \brief number attribute of Bridge link created.
+   */
   size_t indiceLinkBridge; 
   
 public:

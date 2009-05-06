@@ -32,15 +32,44 @@
 #include <string>
 #include <vector>
 
+/**
+ * \ingroup generator
+ * \brief Hub link subclasse.
+ *
+ * This class is a subclasse from Link, it create a hub link as a Csma network.
+ * 
+ */
 class Hub : public Link
 {
 public:
+  /**
+   * \brief Constructor
+   * \param _indice the hub number
+   */
   Hub(size_t _indice);
+  
+  /**
+   * \brief Destructor
+   */
   virtual ~Hub();
   
 private:
+  /**
+   * \brief Function which return the generated headers.
+   * \return headers.
+   */
   virtual std::vector<std::string> GenerateHeader();
+  
+  /**
+   * \brief Function which generate the build link code.
+   * \return build link code.
+   */
   virtual std::vector<std::string> GenerateLink();
+  
+  /**
+   * \brief Function which return the build of the net device container.
+   * \return the net device container.
+   */
   virtual std::vector<std::string> GenerateNetDevice();
   
 };

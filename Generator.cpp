@@ -27,26 +27,85 @@
 #include "Equipement.h"
 #include "Hub.h"
 
-
+/**
+ * \brief see Generator.h
+ */
 std::vector<Equipement*> listEquipement;
+
+/**
+ * \brief see Generator.h
+ */
 size_t indiceEquipementPc = 0;
+
+/**
+ * \brief see Generator.h
+ */
 size_t indiceEquipementRouter = 0;
+
+/**
+ * \brief see Generator.h
+ */
 size_t indiceEquipementAp = 0;
+
+/**
+ * \brief see Generator.h
+ */
 size_t indiceEquipementStation = 0;
+
+/**
+ * \brief see Generator.h
+ */
 size_t indiceEquipementBridge = 0;
+
+/**
+ * \brief see Generator.h
+ */
 size_t indiceEquipementTap = 0;
 
+/**
+ * \brief see Generator.h
+ */
 std::vector<Link*> listLink;
+
+/**
+ * \brief see Generator.h
+ */
 size_t indiceLinkAp = 0;
+
+/**
+ * \brief see Generator.h
+ */
 size_t indiceLinkStation = 0;
+
+/**
+ * \brief see Generator.h
+ */
 size_t indiceLinkEmu = 0;
+
+/**
+ * \brief see Generator.h
+ */
 size_t indiceLinkPointToPoint = 0;
+
+/**
+ * \brief see Generator.h
+ */
 size_t indiceLinkTap = 0;
+
+/**
+ * \brief see Generator.h
+ */
 size_t indiceLinkHub = 0;//csma
+
+/**
+ * \brief see Generator.h
+ */
 size_t indiceLinkBridge = 0; 
 
-
 //~ vector<Application> Generator::listApplication;
+/**
+ * \brief see Generator.h
+ */
 size_t indiceApplication = 0;
 
 
