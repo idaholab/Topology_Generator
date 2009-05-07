@@ -28,6 +28,7 @@
 #include "Hub.h"
 #include "PointToPoint.h"
 #include "Bridge.h"
+#include "Wifi.h"
 
 Generator::Generator()
 {
@@ -41,8 +42,7 @@ this->indiceEquipementBridge = 0;
 this->indiceEquipementTap = 0;
 
 //~ std::vector<Link*> listLink;
-this->indiceLinkAp = 0;
-this->indiceLinkStation = 0;
+this->indiceLinkWifi = 0;
 this->indiceLinkEmu = 0;
 this->indiceLinkPointToPoint = 0;
 this->indiceLinkTap = 0;
@@ -149,15 +149,14 @@ void Generator::AddLink(std::string type)
   	this->indiceLinkBridge += 1;
   	this->listLink.push_back(link);
   } 
-  else if(type.compare("Ap") == 0)
+  else if(type.compare("Wifi") == 0)
   {
-  	//~ *link = new Link(this->indiceLinkAp);
-  	this->indiceLinkAp += 1;
-  }
-  else if(type.compare("Station") == 0)
-  {
-  	//~ *link = new Link(this->indiceLinkStation);
-  	this->indiceLinkStation += 1;
+  	Equipement *equi = new Equipement(this->indiceEquipementAp, "ap_");
+  	this->indiceEquipementAp += 1;
+  	this->listEquipement.push_back(equi);
+  	Wifi *link = new Wifi(this->indiceLinkWifi, equi->getNodeName());
+  	this->indiceLinkWifi += 1;
+  	this->listLink.push_back(link);
   }  
   else if(type.compare("Emu") == 0)
   {

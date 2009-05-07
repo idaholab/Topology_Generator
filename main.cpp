@@ -68,12 +68,12 @@ int main()
   Generator *gen = new Generator();
   
   /* add 2 pc. */
-  /*int i = 0;	
+  int i = 0;	
   while( i < 2)
   {
   	gen->AddEquipement("Pc");
   	i += 1;
-  }	*/
+  }	
   
   /* Add it to a Csma network. */
   //~ gen->AddLink("Hub");
@@ -82,7 +82,11 @@ int main()
  
   //~ gen->AddLink("PointToPoint");
   
-  gen->AddLink("Bridge");
+  //~ gen->AddLink("Bridge");
+  
+  gen->AddLink("Wifi");// create the wifi ap(equipement) and the Link.
+  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(1)->getNodeName());
+  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(2)->getNodeName());
   //
 	// Generate de application code.
 	//

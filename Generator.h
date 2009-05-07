@@ -138,12 +138,8 @@ private:
   /**
    * \brief number attribute of Ap link created.
    */
-  size_t indiceLinkAp;
+  size_t indiceLinkWifi;
   
-  /**
-   * \brief number attribute of Station link created.
-   */
-  size_t indiceLinkStation;
   
   /**
    * \brief number attribute of Emu link created.

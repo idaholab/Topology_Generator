@@ -19,12 +19,15 @@ pointtopoint.o: PointToPoint.cpp
 
 bridge.o: Bridge.cpp
 	g++ -c Bridge.cpp $(FLAG)
+
+wifi.o: Wifi.cpp
+	g++ -c Wifi.cpp $(FLAG)
   
 main.o: main.cpp
 	g++ -c main.cpp $(FLAG)
 
-main: generator.o equipement.o link.o hub.o pointtopoint.o bridge.o main.o
-	g++ -o main Generator.o Equipement.o Link.o Hub.o PointToPoint.o Bridge.o  main.o $(FLAG)
+main: generator.o equipement.o link.o hub.o pointtopoint.o bridge.o wifi.o main.o
+	g++ -o main Generator.o Equipement.o Link.o Hub.o PointToPoint.o Bridge.o Wifi.o main.o $(FLAG)
 	
 doc:
 	doxygen
