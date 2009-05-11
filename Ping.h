@@ -17,16 +17,16 @@
  * 
  */
 /**
-* \file Wifi.h
-* \brief Wifi link subclasse.
+* \file Ping.h
+* \brief The ping class subclasse of Application.
 * \author Pierre Weiss
 * \date 2009
 */
 
-#ifndef WIFI_H
-#define WIFI_H
+#ifndef PING_H
+#define PING_H
 
-#include "Link.h"
+#include "Application.h"
 
 #include <iostream>
 #include <string>
@@ -34,62 +34,40 @@
 
 /**
  * \ingroup generator
- * \brief Wifi link subclasse.
+ * \brief The Ping subclasse from Application.
  *
- * This class is a subclasse from Link, it create a wifi station and 
- * you can add station to it.
- * 
+ * This class generate the code to ping source to destination.
  */
-class Wifi : public Link
+class Ping : public Application
 {
 public:
   /**
-   * \brief Constructor
-   * \param _indice the Wifi number
-   * \param _apNode the node which is the ap.
+   * \brief Constructor which set default value.
+   * \param _indice
+   * \param _senderNode
+   * \param _receiverNode
+   * \param _startTime
+   * \param _endTime
    */
-  Wifi(size_t _indice, std::string _apNode);
+  Ping(size_t _indice, std::string _senderNode, std::string _receiverNode, size_t _startTime, size_t _endTime);
   
   /**
    * \brief Destructor
    */
-  virtual ~Wifi();
-  
-private:
-  /**
-   * \brief attribute which represent the Wifi node.
-   */
-  std::string apNode;
+  ~Ping();
   
   /**
-   * \brief Function to the ap node name.
-   * \returnt the ap node name.
-   */
-  std::string getApNode();
-  
-  /**
-   * \brief Function which return the generated headers.
+   * \brief Function used to generate the headers.
    * \return headers.
    */
   virtual std::vector<std::string> GenerateHeader();
   
   /**
-   * \brief Function which generate the build link code.
-   * \return build link code.
+   * \brief Function used to generate the application.
+   * \return application code.
    */
-  virtual std::vector<std::string> GenerateLink();
-  
-  /**
-   * \brief Function which return the build of the net device container.
-   * \return the net device container.
-   */
-  virtual std::vector<std::string> GenerateNetDevice();
+  virtual std::vector<std::string> GenerateApplication();
   
 };
 
-#endif /* WIFI_H */
-
-
-
-
-
+#endif /* PING_H */

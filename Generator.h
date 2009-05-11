@@ -28,9 +28,9 @@
 
 #include "Equipement.h"
 #include "Link.h"
+#include "Application.h"
 
 
-/* Others */
 #include <iostream>
 #include <string>
 #include <vector>
@@ -117,18 +117,43 @@ public:
   //
 private:
   /**
-   * \brief 
+   * \brief number attribute of Ping application created.
    */
-  size_t indiceApplication; 
+  size_t indiceApplicationPing; 
+  
+  /**
+   * \brief number attribute of Tcp large transfert application created.
+   */
+  size_t indiceApplicationTcpLargeTransfert;
+  
+  /**
+   * \brief number attribute of Udp echo application created.
+   */
+  size_t indiceApplicationUdp_Echo;
  
 public:
   
-  //~ std::vector<Application> listApplication;
   /**
-   * \brief 
-   * \param type
+   * \brief list of application created instace.
+   * 
+   * This attribute is the list of the created instance of application.
+   * 
    */
-  void AddApplication(std::string type);
+  std::vector<Application*> listApplication;
+  
+  /**
+   * \brief Procedure used to add an appplication.
+   * 
+   * This procedure is used to add an procedure. It add the application to the
+   * vector listApplication and increment the number of application.
+   * 
+   * \param type the type of the application. (Ping, TcpLargeTransfert, Udp_Echo ...)
+   * \param senderNode
+   * \param receiverNode
+   * \param startTime
+   * \param endTime
+   */
+  void AddApplication(std::string type, std::string senderNode, std::string receiverNode, size_t startTime, size_t endTime);
 
   
   //
@@ -182,8 +207,9 @@ public:
    * vector listLink and increment the number of link.
    * 
    * \param type the type of the link. (PointToPoint, Csma,...)
+   * \param linkNode an optional node used to dedicated equipement such as an ap or a bridge.
    */
-  void AddLink(std::string type);
+  void AddLink(std::string type, std::string linkNode);
 
  
   //
@@ -280,7 +306,7 @@ private:
    * 
    * \return generated application
    */
-  std::string GenerateApplications();
+  std::vector<std::string> GenerateApplication();
 
 
   
@@ -386,6 +412,14 @@ private:
    * \param _line, the line to be writted. 
    */
    void WritePython(std::string _line);
+   
+public :
+  /**
+   * \brief Function to convert size_t to string.
+   * \param nbr the number to convert.
+   * \return the string of the number.
+   */
+  static std::string toString(size_t nbr);
 
 };
 

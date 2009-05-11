@@ -80,6 +80,8 @@ private:
 public:
   /**
    * \brief Constructor which set default value.
+   * \param _indice
+   * \param _type
    */
   Equipement(size_t _indice, std::string _type);
   
@@ -120,9 +122,10 @@ public:
    *
    * This function return a string wich contain the c++ code from the Ipv4 Assign part. It's about ip and mask assign.
    * 
+   * \param netDeviceContainerNode the netDeviceContainerNode
    * \return IpAssign.
    */
-  std::vector<std::string> GenerateIpAssign();
+  std::vector<std::string> GenerateIpAssign(std::string netDeviceContainerNode);
   
   /**
    * \brief Procedure to set the node name.
@@ -205,21 +208,12 @@ public:
    */
   std::string getY();
   
-   /**
-    * \brief Function wich convert int to string.
-    *
-    * 
-    * \param nbr the number to convert.
-    * \return nbr in type string.
-    */
-   std::string toString(size_t nbr);
-   
-   /**
-    * \brief Function wich return the node number.
-    *
-    * \return node number in type string.
-    */
-   std::string getIndice();
+  /**
+  * \brief Function wich return the node number.
+  *
+  * \return node number in type string.
+  */
+  std::string getIndice();
  
 };
 

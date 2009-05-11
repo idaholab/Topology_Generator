@@ -24,8 +24,7 @@
 */
 
 #include "Link.h"
-
-#include <sstream>
+#include "Generator.h"
 
 Link::Link(size_t _indice)
 {
@@ -38,17 +37,9 @@ Link::~Link()
 {
 }
 
-std::string Link::toString(size_t nbr)
-{
-  std::ostringstream out;
-  out << nbr;
-  
-  return out.str();
-}
-
 std::string Link::getIndice()
 {
-  return this->toString(this->indice);
+  return Generator::toString(this->indice);
 }
 
 std::string Link::getLinkName()

@@ -23,56 +23,70 @@
 * \date 2009
 */
 
+#include <sstream>
+
 #include "Generator.h"
 #include "Equipement.h"
 #include "Hub.h"
 #include "PointToPoint.h"
 #include "Bridge.h"
 #include "Wifi.h"
+#include "Link.h"
+#include "Ping.h"
 
 Generator::Generator()
 {
  
-//~ std::vector<Equipement*> listEquipement;
-this->indiceEquipementPc = 0;
-this->indiceEquipementRouter = 0;
-this->indiceEquipementAp = 0;
-this->indiceEquipementStation = 0;
-this->indiceEquipementBridge = 0;
-this->indiceEquipementTap = 0;
+  /* Equipement. */
+  this->indiceEquipementPc = 0;
+  this->indiceEquipementRouter = 0;
+  this->indiceEquipementAp = 0;
+  this->indiceEquipementStation = 0;
+  this->indiceEquipementBridge = 0;
+  this->indiceEquipementTap = 0;
 
-//~ std::vector<Link*> listLink;
-this->indiceLinkWifi = 0;
-this->indiceLinkEmu = 0;
-this->indiceLinkPointToPoint = 0;
-this->indiceLinkTap = 0;
-this->indiceLinkHub = 0;
-this->indiceLinkBridge = 0;
+  /* Link */
+  this->indiceLinkWifi = 0;
+  this->indiceLinkEmu = 0;
+  this->indiceLinkPointToPoint = 0;
+  this->indiceLinkTap = 0;
+  this->indiceLinkHub = 0;
+  this->indiceLinkBridge = 0;
 
-//~ vector<Application> Generator::listApplication;
-this->indiceApplication = 0; 
+  /* Application */
+  this->indiceApplicationPing = 0; 
+  this->indiceApplicationTcpLargeTransfert = 0;
+  this->indiceApplicationUdp_Echo = 0;
+
 }
 
 Generator::~Generator()
 {
+  /* Equipement */
   for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
   {
     delete this->listEquipement.at(i);
   }
+  
+  /* Link */
   for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
   {
     delete this->listLink.at(i);
+  }
+  
+  /* Application */
+  for(size_t i = 0; i < (size_t) this->listApplication.size(); i++)
+  {
+    delete this->listApplication.at(i);
   }
 }
 
 //
 // Part of Equipement.
 //
-
-
 void Generator::AddEquipement(std::string type) 
 {
-  Equipement *equi = new Equipement(0, type);
+  Equipement *equi = NULL;
   
   // call to the right type constructor. 
   if(type.compare("Pc") == 0)
@@ -106,57 +120,56 @@ void Generator::AddEquipement(std::string type)
   	this->indiceEquipementTap += 1;
   } 
   
-  this->listEquipement.push_back(equi);
+  if(equi)//!= NULL
+  {
+    this->listEquipement.push_back(equi);
+  }
   
 }
 
 //
 // Part of Application.
 //
-
-
-void Generator::AddApplication(std::string type) 
+void Generator::AddApplication(std::string type, std::string senderNode, std::string receiverNode, size_t startTime, size_t endTime) 
 {
-  std::cout << type << std::endl;
+  if(type.compare("Ping") == 0)
+  {
+      Ping *app = new Ping(this->indiceApplicationPing, senderNode, receiverNode, startTime, endTime);
+      this->indiceApplicationPing += 1;
+      this->listApplication.push_back(app);
+  }
+  
 }
 
 //
 // Part of Link.
 //
-
-
-void Generator::AddLink(std::string type) 
+void Generator::AddLink(std::string type, std::string linkNode) 
 {
   // call to the right type constructor. 
   if(type.compare("Hub") == 0)
   {
   	Hub *link = new Hub(this->indiceLinkHub);
   	this->indiceLinkHub += 1;
-  	this->listLink.push_back(link);
+    this->listLink.push_back(link);
   } 
   else if(type.compare("PointToPoint") == 0)
   {
   	PointToPoint *link = new PointToPoint(this->indiceLinkPointToPoint);
   	this->indiceLinkPointToPoint += 1;
-  	this->listLink.push_back(link);
+    this->listLink.push_back(link);
   } 
   else if(type.compare("Bridge") == 0)
   {
-    Equipement *equi = new Equipement(this->indiceEquipementBridge, "bridge_");
-  	this->indiceEquipementBridge += 1;
-  	this->listEquipement.push_back(equi);
-  	Bridge *link = new Bridge(this->indiceLinkBridge, equi->getNodeName());
+  	Bridge *link = new Bridge(this->indiceLinkBridge, linkNode);
   	this->indiceLinkBridge += 1;
-  	this->listLink.push_back(link);
+    this->listLink.push_back(link);
   } 
   else if(type.compare("Wifi") == 0)
   {
-  	Equipement *equi = new Equipement(this->indiceEquipementAp, "ap_");
-  	this->indiceEquipementAp += 1;
-  	this->listEquipement.push_back(equi);
-  	Wifi *link = new Wifi(this->indiceLinkWifi, equi->getNodeName());
+  	Wifi *link = new Wifi(this->indiceLinkWifi, linkNode);
   	this->indiceLinkWifi += 1;
-  	this->listLink.push_back(link);
+    this->listLink.push_back(link);
   }  
   else if(type.compare("Emu") == 0)
   {
@@ -168,7 +181,6 @@ void Generator::AddLink(std::string type)
   	//~ *link = new Link(this->indiceLinkTap);
   	this->indiceLinkTap += 1;
   } 
-    
   
 }
 
@@ -182,15 +194,14 @@ void Generator::AddLink(std::string type)
 void Generator::GenerateCode() 
 {	
   /* In first time we just print it to stdout, at the end, we will use the write cpp function */
-  std::cout << "Code Generation :" << std::endl;
-  
+ 
   //
   // Generate headers 
   //
-  
   std::cout << "#include \"ns3/simulator-module.h\"" << std::endl;
   std::cout << "#include \"ns3/node-module.h\"" << std::endl;
   std::cout << "#include \"ns3/core-module.h\"" << std::endl;
+  std::cout << "#include \"ns3/global-route-manager.h\"" << std::endl;
 
   std::vector<std::string> allHeaders = GenerateHeader();
   for(size_t i = 0; i < (size_t) allHeaders.size(); i++)
@@ -223,7 +234,6 @@ void Generator::GenerateCode()
   //
   // Generate Nodes. 
   //
-  
   std::cout << "" << std::endl;
   std::cout << "  /* Build nodes. */" << std::endl;
   std::vector<std::string> nodeBuild = GenerateNode();
@@ -254,7 +264,6 @@ void Generator::GenerateCode()
   	std::cout << "  " << linkNdcBuild.at(i) << std::endl;
   }
 
-  
   //
   // Generate Ip Stack. 
   //
@@ -285,8 +294,16 @@ void Generator::GenerateCode()
   std::cout << "  GlobalRouteManager::PopulateRoutingTables ();" << std::endl;
   //~ GenerateRoute() 
   
-  
-  //~ GenerateApplications()
+  //
+  // Generate Application.
+  //
+  std::cout << "" << std::endl;
+  std::cout << "  /* Generate Application. */" << std::endl;
+  std::vector<std::string> allApps = GenerateApplication();
+  for(size_t i = 0; i < (size_t) allApps.size(); i++)
+  {
+  	std::cout << "  " << allApps.at(i) << std::endl;
+  } 
   
   std::cout << "}" << std::endl; 
 }
@@ -314,6 +331,15 @@ std::vector<std::string> Generator::GenerateHeader()
   	  allHeaders.push_back(trans.at(j));
     }
   }
+  /* from listApplication */
+  for(size_t i = 0; i < (size_t) this->listApplication.size(); i++)
+  {
+    std::vector<std::string> trans = (this->listApplication.at(i))->GenerateHeader();
+    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    {
+  	  allHeaders.push_back(trans.at(j));
+    }
+  }
 
   /* check for duplicate */
   std::vector<std::string> headersWithoutDuplicateElem;
@@ -328,7 +354,7 @@ std::vector<std::string> Generator::GenerateHeader()
   	  /* check if the string into the allHeaders vector is also in the vector without duplicate */
   	  if( allHeaders.at(i).compare(headersWithoutDuplicateElem.at(j)) == 0 )
   	  {
-  	  	/* it's an duplicate. */
+  	  	/* it's an duplicated elem. */
   	  	isDuplicate = true;
   	  	break;
 	  }	
@@ -417,8 +443,8 @@ std::vector<std::string> Generator::GenerateIpAssign()
   std::vector<std::string> allAssign;
   /* get all the ip assign code. */
   for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
-  {
-    std::vector<std::string> trans = (this->listEquipement.at(i)->GenerateIpAssign());
+  {// ........................ NET DEVICE CONTAINER ......................
+    std::vector<std::string> trans = (this->listEquipement.at(i)->GenerateIpAssign(this->listEquipement.at(i)->getNodeName()));
     for(size_t j = 0; j < (size_t) trans.size(); j++)
     {
       allAssign.push_back(trans.at(j));
@@ -433,9 +459,20 @@ std::string Generator::GenerateRoute()
   return "";
 }
 
-std::string Generator::GenerateApplications() 
+std::vector<std::string> Generator::GenerateApplication() 
 {
-  return "";
+  std::vector<std::string> allApps;
+  /* get all the ip assign code. */
+  for(size_t i = 0; i < (size_t) this->listApplication.size(); i++)
+  {
+    std::vector<std::string> trans = (this->listApplication.at(i)->GenerateApplication());
+    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    {
+      allApps.push_back(trans.at(j));
+    }
+  }
+
+  return allApps;
 }
 
 
@@ -498,5 +535,17 @@ std::string Generator::getPyFileName()
 void Generator::setPyFileName(std::string _pyFileName ) 
 {
   this->pyFileName = _pyFileName;
+}
+
+//
+//
+//
+
+std::string Generator::toString(size_t nbr)
+{
+  std::ostringstream out;
+  out << nbr;
+  
+  return out.str();
 }
 

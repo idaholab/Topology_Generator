@@ -24,12 +24,13 @@
 */
 
 #include "Equipement.h"
+#include "Generator.h"
 #include <sstream>
 
 Equipement::Equipement(size_t _indice, std::string _type)
 {
   this->indice = _indice;
-  this->nodeName = _type + this->toString(_indice);
+  this->nodeName = _type + Generator::toString(_indice);
   this->ip = "0.0.0.0";
   this->mask = "0.0.0.0";
   this->ipInterfaceName = "iface_"+this->nodeName;
@@ -68,26 +69,18 @@ std::vector<std::string> Equipement::GenerateIpStack()
   return stack; 
 }
   
-std::vector<std::string> Equipement::GenerateIpAssign()
+std::vector<std::string> Equipement::GenerateIpAssign(std::string netDeviceContainerNode)/* assignNode */
 {
   // need to think about the third argument from the SetBase method.
   std::vector<std::string> ipAssign;
   ipAssign.push_back("Ipv4AddressHelper ipv4_"+this->getNodeName()+";");
-  ipAssign.push_back("ipv4.SetBase (\""+this->getIp()+"\", \""+this->getMask()+"\", \"0.0.0."+this->getIndice()+"\");");
+  ipAssign.push_back("ipv4_"+this->getNodeName()+".SetBase (\""+this->getIp()+"\", \""+this->getMask()+"\");");
   
   // Ipv4InterfaceContainer have to be used with an application.
-  //ipAssign.push_back("Ipv4InterfaceContainer "+this->getIpInterfaceName()+" = ipv4.Assign(netDeviceCont_"+this->getNodeName()+");");
-  ipAssign.push_back("ipv4.Assign(\"hum ???\");");
+  ipAssign.push_back("Ipv4InterfaceContainer "+this->getIpInterfaceName()+" = ipv4_"+this->getNodeName()+".Assign("+netDeviceContainerNode+");");
+  //~ ipAssign.push_back("ipv4_"+this->getNodeName()+".Assign("+netDeviceContainerNode+");");
 
   return ipAssign; 
-}
-
-std::string Equipement::toString(size_t nbr)
-{
-  std::ostringstream out;
-  out << nbr;
-  
-  return out.str();
 }
 
 void Equipement::setNodeName(std::string _nodeName)
@@ -134,17 +127,17 @@ std::string Equipement::getMask()
 
 std::string Equipement::getX()
 {
-  return toString(this->x);
+  return Generator::toString(this->x);
 }
 
 std::string Equipement::getY()
 {
-  return toString(this->y);
+  return Generator::toString(this->y);
 }
 
 std::string Equipement::getIndice()
 {
-  return toString(this->indice);
+  return Generator::toString(this->indice);
 }
 
 

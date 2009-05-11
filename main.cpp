@@ -76,50 +76,17 @@ int main()
   }	
   
   /* Add it to a Csma network. */
-  //~ gen->AddLink("Hub");
-  //~ gen->listLink.at(0)->AddNodes(gen->listEquipement.at(0)->getNodeName());
-  //~ gen->listLink.at(0)->AddNodes(gen->listEquipement.at(1)->getNodeName());
- 
-  //~ gen->AddLink("PointToPoint");
-  
-  //~ gen->AddLink("Bridge");
-  
-  gen->AddLink("Wifi");// create the wifi ap(equipement) and the Link.
+  gen->AddLink("Hub", "");
+  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(0)->getNodeName());
   gen->listLink.at(0)->AddNodes(gen->listEquipement.at(1)->getNodeName());
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(2)->getNodeName());
+  
+  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(1)->getNodeName(), 0, 5);
+
   //
 	// Generate de application code.
 	//
   gen->GenerateCode();
   
-
-  /* manual operations. */
-  /*	
-  while(1)
-  {
-  	Usage();
-    std::cin >> nbrChoose;
-    if (std::cin.fail()) 
-    {
-      std::cin.clear(); 
-      std::cin.ignore( numeric_limits<streamsize>::max(), '\n' );
-    }
-
-    if(nbrChoose == 0)
-    {
-      exit(EXIT_SUCCESS);
-    } 
-    else if(nbrChoose == 1)
-    {
-      ListAllEquipement(); 
-    } 
-    else if(nbrChoose == 2)
-    {
-      gen.AddEquipement("Pc");
-    }
-  }
-  */
-
 }
 
 
