@@ -64,9 +64,12 @@ public:
   
   /**
    * \brief Function used to generate the application.
+   * 
+   * \param netDeviceContainer
+   * \param numberIntoNetDevice
    * \return application code.
    */
-  virtual std::vector<std::string> GenerateApplication();
+  virtual std::vector<std::string> GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice);
   
 };
 

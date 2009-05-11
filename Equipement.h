@@ -118,16 +118,6 @@ public:
   std::vector<std::string> GenerateIpStack();
   
   /**
-   * \brief Function wich return the c++ code from the ip asssign part.
-   *
-   * This function return a string wich contain the c++ code from the Ipv4 Assign part. It's about ip and mask assign.
-   * 
-   * \param netDeviceContainerNode the netDeviceContainerNode
-   * \return IpAssign.
-   */
-  std::vector<std::string> GenerateIpAssign(std::string netDeviceContainerNode);
-  
-  /**
    * \brief Procedure to set the node name.
    * 
    * \param _nodeName the string which containe the node name.

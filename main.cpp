@@ -87,6 +87,7 @@ int main()
 	//
   gen->GenerateCode();
   
+  delete gen;
 }
 
 

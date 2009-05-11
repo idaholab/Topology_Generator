@@ -69,20 +69,6 @@ std::vector<std::string> Equipement::GenerateIpStack()
   return stack; 
 }
   
-std::vector<std::string> Equipement::GenerateIpAssign(std::string netDeviceContainerNode)/* assignNode */
-{
-  // need to think about the third argument from the SetBase method.
-  std::vector<std::string> ipAssign;
-  ipAssign.push_back("Ipv4AddressHelper ipv4_"+this->getNodeName()+";");
-  ipAssign.push_back("ipv4_"+this->getNodeName()+".SetBase (\""+this->getIp()+"\", \""+this->getMask()+"\");");
-  
-  // Ipv4InterfaceContainer have to be used with an application.
-  ipAssign.push_back("Ipv4InterfaceContainer "+this->getIpInterfaceName()+" = ipv4_"+this->getNodeName()+".Assign("+netDeviceContainerNode+");");
-  //~ ipAssign.push_back("ipv4_"+this->getNodeName()+".Assign("+netDeviceContainerNode+");");
-
-  return ipAssign; 
-}
-
 void Equipement::setNodeName(std::string _nodeName)
 {
   this->nodeName = _nodeName;

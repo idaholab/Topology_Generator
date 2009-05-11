@@ -305,6 +305,15 @@ void Generator::GenerateCode()
   	std::cout << "  " << allApps.at(i) << std::endl;
   } 
   
+  //
+  // Other
+  //
+  std::cout << "" << std::endl;
+  std::cout << "  /* Simulation. */" << std::endl;
+  std::cout << "  CsmaHelper::EnablePcapAll (\"test\", false);" << std::endl;
+  std::cout << "  Simulator::Run ();" << std::endl;
+  std::cout << "  Simulator::Destroy ();" << std::endl;
+  
   std::cout << "}" << std::endl; 
 }
 
@@ -440,18 +449,19 @@ std::vector<std::string> Generator::GenerateIpStack()
 
 std::vector<std::string> Generator::GenerateIpAssign() 
 {
-  std::vector<std::string> allAssign;
-  /* get all the ip assign code. */
-  for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
-  {// ........................ NET DEVICE CONTAINER ......................
-    std::vector<std::string> trans = (this->listEquipement.at(i)->GenerateIpAssign(this->listEquipement.at(i)->getNodeName()));
-    for(size_t j = 0; j < (size_t) trans.size(); j++)
-    {
-      allAssign.push_back(trans.at(j));
-    }
+  std::vector<std::string> ipAssign;
+  
+  ipAssign.push_back("Ipv4AddressHelper ipv4;");
+  
+  size_t ipRange = 0;
+  for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
+  {
+    ipAssign.push_back("ipv4.SetBase (\"10.0."+Generator::toString(ipRange)+".0\", \"255.255.255.0\");");
+    ipAssign.push_back("Ipv4InterfaceContainer iface_"+this->listLink.at(i)->getNdcName()+" = ipv4.Assign("+this->listLink.at(i)->getNdcName()+");");
+    ipRange += 1;
   }
-
-  return allAssign;
+  
+  return ipAssign;
 }
 
 std::string Generator::GenerateRoute() 
@@ -461,11 +471,33 @@ std::string Generator::GenerateRoute()
 
 std::vector<std::string> Generator::GenerateApplication() 
 {
+  size_t nodeNumber = 0;
+  std::string ndcName = "";
+  
   std::vector<std::string> allApps;
   /* get all the ip assign code. */
   for(size_t i = 0; i < (size_t) this->listApplication.size(); i++)
   {
-    std::vector<std::string> trans = (this->listApplication.at(i)->GenerateApplication());
+    /* get NetDeviceContainer and number from the receiver. */
+    std::string receiverName = this->listApplication.at(i)->getReceiverNode();
+    for(size_t j = 0; j < (size_t) this->listLink.size(); j++)
+    {
+      std::vector<std::string> nodes = (this->listLink.at(j))->getNodes();
+      for(size_t k = 0; k < (size_t) nodes.size(); k++)
+      {
+        if( (nodes.at(k)).compare(receiverName) == 0)
+        {
+          /* this means that the node is in this link.*/
+          ndcName = (this->listLink.at(j))->getNdcName();
+          nodeNumber = k;
+          break; 
+        }
+      }
+    }
+    
+    
+    /* get the application code with param. */
+    std::vector<std::string> trans = (this->listApplication.at(i)->GenerateApplication(ndcName, nodeNumber));
     for(size_t j = 0; j < (size_t) trans.size(); j++)
     {
       allApps.push_back(trans.at(j));
