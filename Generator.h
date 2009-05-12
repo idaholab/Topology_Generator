@@ -124,12 +124,12 @@ private:
   /**
    * \brief number attribute of Tcp large transfert application created.
    */
-  size_t indiceApplicationTcpLargeTransfert;
+  size_t indiceApplicationTcpLargeTransfer;
   
   /**
    * \brief number attribute of Udp echo application created.
    */
-  size_t indiceApplicationUdp_Echo;
+  size_t indiceApplicationUdpEcho;
  
 public:
   
@@ -152,8 +152,9 @@ public:
    * \param receiverNode
    * \param startTime
    * \param endTime
+   * \param port
    */
-  void AddApplication(std::string type, std::string senderNode, std::string receiverNode, size_t startTime, size_t endTime);
+  void AddApplication(std::string type, std::string senderNode, std::string receiverNode, size_t startTime, size_t endTime, size_t port);
 
   
   //

@@ -29,11 +29,17 @@ application.o: Application.cpp
 ping.o: Ping.cpp
 	g++ -c Ping.cpp $(FLAG)
 
+udpecho.o: UdpEcho.cpp
+	g++ -c UdpEcho.cpp $(FLAG)
+
+tcplargetransfer.o: TcpLargeTransfer.cpp
+	g++ -c TcpLargeTransfer.cpp $(FLAG)
+
 main.o: main.cpp
 	g++ -c main.cpp $(FLAG)
 
-main: generator.o equipement.o link.o hub.o pointtopoint.o bridge.o wifi.o application.o ping.o main.o
-	g++ -o main Generator.o Equipement.o Link.o Hub.o PointToPoint.o Bridge.o Wifi.o Application.o Ping.o main.o $(FLAG)
+main: generator.o equipement.o link.o hub.o pointtopoint.o bridge.o wifi.o application.o ping.o udpecho.o tcplargetransfer.o main.o
+	g++ -o main Generator.o Equipement.o Link.o Hub.o PointToPoint.o Bridge.o Wifi.o Application.o Ping.o UdpEcho.o TcpLargeTransfer.o main.o $(FLAG)
 	
 doc:
 	doxygen

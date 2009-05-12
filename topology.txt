@@ -15,7 +15,7 @@ Topology :
   gen->listLink.at(0)->AddNodes(gen->listEquipement.at(1)->getNodeName());
 
   /* Add Ping application from pc to pc. */
-  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(1)->getNodeName(), 0, 5);// 0 start time - 5 end time
+  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(1)->getNodeName(), 0, 5, 0);// 0 start time - 5 end time
 
 
 //
@@ -49,7 +49,7 @@ Topology :
   gen->listLink.at(1)->AddNodes(gen->listEquipement.at(2)->getNodeName());
   
   /* Add an application */
-  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(4)->getNodeName(), 0, 5);// 0 start time - 5 end time
+  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(4)->getNodeName(), 0, 5, 0);// 0 start time - 5 end time
   
   
 //
@@ -69,7 +69,7 @@ Topology :
   gen->listLink.at(0)->AddNodes(gen->listEquipement.at(1)->getNodeName());
   
   /* Add an application */
-  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(1)->getNodeName(), 0, 5);// 0 start time - 5 end time
+  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(1)->getNodeName(), 0, 5, 0);// 0 start time - 5 end time
   
   
 
@@ -110,7 +110,7 @@ Topology :
   
   
   /* Add an application */
-  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(5)->getNodeName(), 0, 5);// 0 start time - 5 end time
+  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(5)->getNodeName(), 0, 5, 0);// 0 start time - 5 end time
   
 //
 //              (*)-PC
@@ -131,7 +131,7 @@ Topology :
   gen->listLink.at(0)->AddNodes(gen->listEquipement.at(3)->getNodeName());
   
   /* Add an application */
-  gen->AddApplication("Ping", gen->listEquipement.at(1)->getNodeName(), gen->listEquipement.at(2)->getNodeName(), 0, 5);// 0 start time - 5 end time
+  gen->AddApplication("Ping", gen->listEquipement.at(1)->getNodeName(), gen->listEquipement.at(2)->getNodeName(), 0, 5, 0);// 0 start time - 5 end time
 
 //
 //  PC                                       PC
@@ -165,4 +165,4 @@ Topology :
   gen->listLink.at(2)->AddNodes(gen->listEquipement.at(5)->getNodeName());
   
   /* Add an application */
-  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(5)->getNodeName(), 0, 5);// 0 start time - 5 end time
+  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(5)->getNodeName(), 0, 5, 0);// 0 start time - 5 end time

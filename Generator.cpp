@@ -33,6 +33,8 @@
 #include "Wifi.h"
 #include "Link.h"
 #include "Ping.h"
+#include "UdpEcho.h"
+#include "TcpLargeTransfer.h"
 
 Generator::Generator()
 {
@@ -55,8 +57,8 @@ Generator::Generator()
 
   /* Application */
   this->indiceApplicationPing = 0; 
-  this->indiceApplicationTcpLargeTransfert = 0;
-  this->indiceApplicationUdp_Echo = 0;
+  this->indiceApplicationTcpLargeTransfer = 0;
+  this->indiceApplicationUdpEcho = 0;
 
 }
 
@@ -130,13 +132,25 @@ void Generator::AddEquipement(std::string type)
 //
 // Part of Application.
 //
-void Generator::AddApplication(std::string type, std::string senderNode, std::string receiverNode, size_t startTime, size_t endTime) 
+void Generator::AddApplication(std::string type, std::string senderNode, std::string receiverNode, size_t startTime, size_t endTime, size_t port) 
 {
   if(type.compare("Ping") == 0)
   {
-      Ping *app = new Ping(this->indiceApplicationPing, senderNode, receiverNode, startTime, endTime);
-      this->indiceApplicationPing += 1;
-      this->listApplication.push_back(app);
+    Ping *app = new Ping(this->indiceApplicationPing, senderNode, receiverNode, startTime, endTime);
+    this->indiceApplicationPing += 1;
+    this->listApplication.push_back(app);
+  } 
+  else if(type.compare("UdpEcho") == 0)
+  {
+    UdpEcho *app = new UdpEcho(this->indiceApplicationUdpEcho, senderNode, receiverNode, startTime, endTime, port);
+    this->indiceApplicationUdpEcho += 1;
+    this->listApplication.push_back(app);
+  }
+  else if(type.compare("TcpLargeTransfer") == 0)
+  {
+    TcpLargeTransfer *app = new TcpLargeTransfer(this->indiceApplicationTcpLargeTransfer, senderNode, receiverNode, startTime, endTime, port);
+    this->indiceApplicationTcpLargeTransfer += 1;
+    this->listApplication.push_back(app);
   }
   
 }
@@ -314,7 +328,16 @@ void Generator::GenerateCode()
   //
   std::cout << "" << std::endl;
   std::cout << "  /* Simulation. */" << std::endl;
+  
+  
+  /* must be added pcap for wifi installation ... */
   std::cout << "  CsmaHelper::EnablePcapAll (\"test\", false);" << std::endl;
+  std::cout << "  YansWifiPhyHelper::EnablePcapAll (\"test\");" << std::endl;
+  
+  std::cout << "  /* Set Stop to Down the Ap */" << std::endl;
+  std::cout << "  uint32_t stopTime = 20;" << std::endl; 
+  std::cout << "  Simulator::Stop (Seconds (stopTime));" << std::endl;
+  
   std::cout << "  Simulator::Run ();" << std::endl;
   std::cout << "  Simulator::Destroy ();" << std::endl;
   
