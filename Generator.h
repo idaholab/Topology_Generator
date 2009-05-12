@@ -298,7 +298,7 @@ private:
    * 
    * \return generated route
    */
-  std::string GenerateRoute();
+  std::vector<std::string> GenerateRoute();
 
 
   /**

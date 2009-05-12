@@ -291,8 +291,11 @@ void Generator::GenerateCode()
   //
   std::cout << "" << std::endl;
   std::cout << "  /* Generate Route. */" << std::endl;
-  std::cout << "  GlobalRouteManager::PopulateRoutingTables ();" << std::endl;
-  //~ GenerateRoute() 
+  std::vector<std::string> allRoutes = GenerateRoute();
+  for(size_t i = 0; i < (size_t) allRoutes.size(); i++)
+  {
+  	std::cout << "  " << allRoutes.at(i) << std::endl;
+  } 
   
   //
   // Generate Application.
@@ -434,14 +437,21 @@ std::vector<std::string> Generator::GenerateNetDevice()
 std::vector<std::string> Generator::GenerateIpStack() 
 {
   std::vector<std::string> allStack;
+  std::string nodeName = "";
   /* get all the node code. */
   for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
   {
-    std::vector<std::string> trans = (this->listEquipement.at(i)->GenerateIpStack());
-    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    nodeName = (this->listEquipement.at(i))->getNodeName();
+    /* if it is not a bridge you can add it. */
+    if(nodeName.find("bridge_") != 0)
     {
-      allStack.push_back(trans.at(j));
+      std::vector<std::string> trans = (this->listEquipement.at(i)->GenerateIpStack());
+      for(size_t j = 0; j < (size_t) trans.size(); j++)
+      {
+       allStack.push_back(trans.at(j));
+      }
     }
+    
   }
 
   return allStack;
@@ -464,9 +474,23 @@ std::vector<std::string> Generator::GenerateIpAssign()
   return ipAssign;
 }
 
-std::string Generator::GenerateRoute() 
+std::vector<std::string> Generator::GenerateRoute() 
 {
-  return "";
+  std::vector<std::string> allRoutes;
+  std::string nodeName = "";
+  allRoutes.push_back("NodeContainer allRoutes;");
+  for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
+  {
+    nodeName = (this->listEquipement.at(i))->getNodeName();
+    /* if it is not a bridge you can add it. */
+    if(nodeName.find("bridge_") != 0)
+    {
+      allRoutes.push_back("allRoutes.Add("+nodeName+");");
+    }
+  }
+  allRoutes.push_back("GlobalRouteManager::PopulateRoutingTables (allRoutes);");
+  
+  return allRoutes;
 }
 
 std::vector<std::string> Generator::GenerateApplication() 

@@ -64,30 +64,44 @@ void Usage()
 
 int main()
 {
-  //int nbrChoose = 0;
   Generator *gen = new Generator();
   
-  /* add 2 pc. */
-  int i = 0;	
-  while( i < 2)
-  {
-  	gen->AddEquipement("Pc");
-  	i += 1;
-  }	
+  /* Add Equipement : */
+  gen->AddEquipement("Pc");//0
+  gen->AddEquipement("Pc");//1
   
-  /* Add it to a Csma network. */
-  gen->AddLink("Hub", "");
+  gen->AddEquipement("Bridge");//2
+  
+  gen->AddEquipement("Router");//3
+  
+  gen->AddEquipement("Bridge");//4
+
+  gen->AddEquipement("Pc");//5
+  gen->AddEquipement("Pc");//6
+  
+    
+  /* Add the bridge. */
+  gen->AddLink("Bridge", gen->listEquipement.at(2)->getNodeName());//link 0
   gen->listLink.at(0)->AddNodes(gen->listEquipement.at(0)->getNodeName());
   gen->listLink.at(0)->AddNodes(gen->listEquipement.at(1)->getNodeName());
   
-  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(1)->getNodeName(), 0, 5);
-
-  //
-	// Generate de application code.
-	//
+  gen->AddLink("Bridge", gen->listEquipement.at(4)->getNodeName());//link 1
+  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(5)->getNodeName());
+  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(6)->getNodeName());
+  
+  /* link switch to router. */
+  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(3)->getNodeName());
+  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(3)->getNodeName());
+  
+  
+  /* Add an application */
+  //~ gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(1)->getNodeName(), 0, 5);// 0 start time - 5 end time
+  //~ gen->AddApplication("Ping", gen->listEquipement.at(5)->getNodeName(), gen->listEquipement.at(6)->getNodeName(), 0, 5);// 0 start time - 5 end time
+  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(5)->getNodeName(), 0, 5);// 0 start time - 5 end time
+  
+	/* Generate de application code. */
   gen->GenerateCode();
   
   delete gen;
 }
-
 
