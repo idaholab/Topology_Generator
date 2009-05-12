@@ -68,36 +68,49 @@ int main()
   
   /* Add Equipement : */
   gen->AddEquipement("Pc");//0
-  gen->AddEquipement("Pc");//1
-  
-  gen->AddEquipement("Bridge");//2
-  
+  gen->AddEquipement("Router");//1
+  gen->AddEquipement("Pc");//2
   gen->AddEquipement("Router");//3
-  
-  gen->AddEquipement("Bridge");//4
-
-  gen->AddEquipement("Pc");//5
+  gen->AddEquipement("Pc");//4
+  gen->AddEquipement("Router");//5
   gen->AddEquipement("Pc");//6
+  gen->AddEquipement("Router");//7
+  gen->AddEquipement("Pc");//8
   
-    
-  /* Add the bridge. */
-  gen->AddLink("Bridge", gen->listEquipement.at(2)->getNodeName());//link 0
+  gen->AddLink("Hub", "");//0
   gen->listLink.at(0)->AddNodes(gen->listEquipement.at(0)->getNodeName());
   gen->listLink.at(0)->AddNodes(gen->listEquipement.at(1)->getNodeName());
   
-  gen->AddLink("Bridge", gen->listEquipement.at(4)->getNodeName());//link 1
-  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(5)->getNodeName());
-  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(6)->getNodeName());
+  gen->AddLink("PointToPoint", "");//1
+  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(1)->getNodeName());
+  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(2)->getNodeName());
   
-  /* link switch to router. */
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(3)->getNodeName());
-  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(3)->getNodeName());
+  gen->AddLink("PointToPoint", "");//2
+  gen->listLink.at(2)->AddNodes(gen->listEquipement.at(2)->getNodeName());
+  gen->listLink.at(2)->AddNodes(gen->listEquipement.at(3)->getNodeName());
   
+  gen->AddLink("PointToPoint", "");//3
+  gen->listLink.at(3)->AddNodes(gen->listEquipement.at(3)->getNodeName());
+  gen->listLink.at(3)->AddNodes(gen->listEquipement.at(4)->getNodeName());
+  
+  gen->AddLink("PointToPoint", "");//4
+  gen->listLink.at(4)->AddNodes(gen->listEquipement.at(4)->getNodeName());
+  gen->listLink.at(4)->AddNodes(gen->listEquipement.at(5)->getNodeName());
+  
+  gen->AddLink("PointToPoint", "");//5
+  gen->listLink.at(5)->AddNodes(gen->listEquipement.at(5)->getNodeName());
+  gen->listLink.at(5)->AddNodes(gen->listEquipement.at(6)->getNodeName());
+  
+  gen->AddLink("PointToPoint", "");//6
+  gen->listLink.at(6)->AddNodes(gen->listEquipement.at(6)->getNodeName());
+  gen->listLink.at(6)->AddNodes(gen->listEquipement.at(7)->getNodeName());
+  
+  gen->AddLink("Hub", "");//7
+  gen->listLink.at(7)->AddNodes(gen->listEquipement.at(7)->getNodeName());
+  gen->listLink.at(7)->AddNodes(gen->listEquipement.at(8)->getNodeName());
   
   /* Add an application */
-  //~ gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(1)->getNodeName(), 0, 5);// 0 start time - 5 end time
-  //~ gen->AddApplication("Ping", gen->listEquipement.at(5)->getNodeName(), gen->listEquipement.at(6)->getNodeName(), 0, 5);// 0 start time - 5 end time
-  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(5)->getNodeName(), 0, 5);// 0 start time - 5 end time
+  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(8)->getNodeName(), 0, 5);// 0 start time - 5 end time
   
 	/* Generate de application code. */
   gen->GenerateCode();

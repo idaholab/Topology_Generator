@@ -201,6 +201,7 @@ void Generator::GenerateCode()
   std::cout << "#include \"ns3/simulator-module.h\"" << std::endl;
   std::cout << "#include \"ns3/node-module.h\"" << std::endl;
   std::cout << "#include \"ns3/core-module.h\"" << std::endl;
+  std::cout << "#include \"ns3/common-module.h\""<< std::endl;
   std::cout << "#include \"ns3/global-route-manager.h\"" << std::endl;
 
   std::vector<std::string> allHeaders = GenerateHeader();
@@ -503,6 +504,7 @@ std::vector<std::string> Generator::GenerateApplication()
   for(size_t i = 0; i < (size_t) this->listApplication.size(); i++)
   {
     /* get NetDeviceContainer and number from the receiver. */
+    
     std::string receiverName = this->listApplication.at(i)->getReceiverNode();
     for(size_t j = 0; j < (size_t) this->listLink.size(); j++)
     {
@@ -518,7 +520,6 @@ std::vector<std::string> Generator::GenerateApplication()
         }
       }
     }
-    
     
     /* get the application code with param. */
     std::vector<std::string> trans = (this->listApplication.at(i)->GenerateApplication(ndcName, nodeNumber));

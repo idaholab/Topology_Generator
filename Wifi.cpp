@@ -28,6 +28,7 @@
 
 Wifi::Wifi(size_t _indice, std::string _apNode) : Link(_indice)
 {
+  this->nodes.push_back(_apNode);
   this->linkName = "wifi_"+this->getIndice();
   this->ndcName = "ndc_"+this->getLinkName();
   this->allNodeContainer = "all_"+this->getLinkName();
@@ -47,6 +48,7 @@ std::vector<std::string> Wifi::GenerateHeader()
   std::vector<std::string> headers;
   headers.push_back("#include \"ns3/wifi-module.h\"");
   headers.push_back("#include \"ns3/mobility-module.h\"");
+  headers.push_back("#include \"ns3/contrib-module.h\"");
   
   return headers;
 }
@@ -69,26 +71,27 @@ std::vector<std::string> Wifi::GenerateNetDevice()
   std::vector<std::string> allNodes = this->GroupAsNodeContainer();//all station nodes !
   for(size_t i = 0; i < (size_t) allNodes.size(); i++)
   {
-    ndc.push_back(allNodes.at(i));
+      ndc.push_back(allNodes.at(i));
   }
-  
+  ndc.push_back("NetDeviceContainer "+this->getNdcName()+";");
   ndc.push_back("Ssid ssid_"+this->getLinkName()+" = Ssid (\"wifi-default-"+this->getIndice()+"\");");
   ndc.push_back("WifiHelper wifi_"+this->getLinkName()+" = WifiHelper::Default ();");
+  ndc.push_back("NqosWifiMacHelper wifiMac_"+this->getLinkName()+" = NqosWifiMacHelper::Default ();");
   ndc.push_back("wifi_"+this->getLinkName()+".SetRemoteStationManager (\"ns3::ArfWifiManager\");");
 
-  ndc.push_back("wifi_"+this->getLinkName()+".SetMac (\"ns3::NqapWifiMac\", ");
+  ndc.push_back("wifiMac_"+this->getLinkName()+".SetType (\"ns3::NqapWifiMac\", ");
   ndc.push_back("   \"Ssid\", SsidValue (ssid_"+this->getLinkName()+"), ");
   ndc.push_back("   \"BeaconGeneration\", BooleanValue (true),"); 
   ndc.push_back("   \"BeaconInterval\", TimeValue (Seconds (2.5)));");
-  ndc.push_back(this->getNdcName()+".Add(wifi_"+this->getLinkName()+".Install (wifiPhy_"+this->getLinkName()+", "+this->getApNode()+"));");
+  ndc.push_back(this->getNdcName()+".Add(wifi_"+this->getLinkName()+".Install (wifiPhy_"+this->getLinkName()+", wifiMac_"+this->getLinkName()+", "+this->getApNode()+"));");
   
-  ndc.push_back("wifi_"+this->getLinkName()+".SetMac (\"ns3::NqstaWifiMac\",");
+  ndc.push_back("wifiMac_"+this->getLinkName()+".SetType (\"ns3::NqstaWifiMac\",");
   ndc.push_back("   \"Ssid\", SsidValue (ssid_"+this->getLinkName()+"), ");
   ndc.push_back("   \"ActiveProbing\", BooleanValue (false));");
-  ndc.push_back(this->getNdcName()+".Add (wifi_"+this->getLinkName()+".Install (wifiPhy_"+this->getLinkName()+", "+this->getAllNodeContainer()+" );");
+  ndc.push_back(this->getNdcName()+".Add (wifi_"+this->getLinkName()+".Install (wifiPhy_"+this->getLinkName()+", wifiMac_"+this->getLinkName()+", "+this->getAllNodeContainer()+" ));");
 
   ndc.push_back("MobilityHelper mobility_"+this->getLinkName()+";");
-  ndc.push_back("mobility_"+this->getLinkName()+".Install("+this->getAllNodeContainer()+");");
+  ndc.push_back("mobility_"+this->getLinkName()+".Install(NodeContainer("+this->getApNode()+", "+this->getAllNodeContainer()+"));");
   
   return ndc;
 }

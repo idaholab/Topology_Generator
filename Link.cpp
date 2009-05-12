@@ -90,6 +90,24 @@ void Link::setNdcName(std::string _ndcName)
 void Link::AddNodes(std::string _node)
 {
   this->nodes.push_back(_node);
+  std::vector<std::string> trans;
+  std::vector<std::string> transWhitoutRouter;
+  for(size_t i = 0; i < (size_t) this->nodes.size(); i++)
+  {
+    if((this->nodes.at(i)).find("router_") == 0)
+    {
+      trans.push_back(this->nodes.at(i));
+    }
+    else
+    {
+      transWhitoutRouter.push_back(this->nodes.at(i));
+    }
+  }
+  for(size_t i = 0; i < (size_t) transWhitoutRouter.size(); i++)
+  {
+    trans.push_back(transWhitoutRouter.at(i));
+  }
+  this->nodes = trans;
 }
 
 std::string Link::getAllNodeContainer()
@@ -103,9 +121,12 @@ std::vector<std::string> Link::GroupAsNodeContainer()
   res.push_back("NodeContainer "+this->getAllNodeContainer()+";");
   for(size_t i = 0; i < (size_t) this->nodes.size(); i++)
   {
-    res.push_back(this->getAllNodeContainer()+".Add("+this->nodes.at(i)+");");
+    if((this->nodes.at(i)).find("ap_") != 0)
+    {
+      res.push_back(this->getAllNodeContainer()+".Add("+this->nodes.at(i)+");");
+    }
   }
-  
+   
   return res;
 }
   
