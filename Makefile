@@ -38,11 +38,14 @@ tcplargetransfer.o: TcpLargeTransfer.cpp
 tap.o: Tap.cpp
 	g++ -c Tap.cpp $(FLAG)
 
+emu.o: Emu.cpp
+	g++ -c Emu.cpp $(FLAG)
+
 main.o: main.cpp
 	g++ -c main.cpp $(FLAG)
 
-main: generator.o equipement.o link.o hub.o pointtopoint.o bridge.o wifi.o application.o ping.o udpecho.o tcplargetransfer.o tap.o main.o
-	g++ -o main Generator.o Equipement.o Link.o Hub.o PointToPoint.o Bridge.o Wifi.o Application.o Ping.o UdpEcho.o TcpLargeTransfer.o Tap.o main.o $(FLAG)
+main: generator.o equipement.o link.o hub.o pointtopoint.o bridge.o wifi.o application.o ping.o udpecho.o tcplargetransfer.o tap.o emu.o main.o
+	g++ -o main Generator.o Equipement.o Link.o Hub.o PointToPoint.o Bridge.o Wifi.o Application.o Ping.o UdpEcho.o TcpLargeTransfer.o Tap.o Emu.o main.o $(FLAG)
 	
 doc:
 	doxygen

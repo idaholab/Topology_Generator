@@ -17,14 +17,14 @@
  * 
  */
 /**
-* \file Tap.h
-* \brief Tap link subclasse.
+* \file Emu.h
+* \brief Emu link subclasse.
 * \author Pierre Weiss
 * \date 2009
 */
 
-#ifndef TAP_H
-#define TAP_H
+#ifndef EMU_H
+#define EMU_H
 
 #include "Link.h"
 
@@ -34,48 +34,48 @@
 
 /**
  * \ingroup generator
- * \brief Tap link subclasse.
+ * \brief Emu link subclasse.
  *
- * This class is a subclasse from Link, it create a tap link on a csma network.
- * The tap link work like an Hub(csma) ... Just it create the tap bridge to use your host.
+ * This class is a subclasse from Link, it create a Emu link on a csma network.
+ * It use an real host interface like eth0
  * 
  */
-class Tap : public Link
+class Emu : public Link
 {
 public:
   /**
    * \brief Constructor
    * \param _indice the tap number
-   * \param _tapNode the external linux host
+   * \param _emuNode the external linux host
    * \param _ifaceName the iface name
    */
-  Tap(size_t _indice, std::string _tapNode, std::string _ifaceName);
+  Emu(size_t _indice, std::string _emuNode, std::string _ifaceName);
   
   /**
    * \brief Destructor
    */
-  virtual ~Tap();
+  virtual ~Emu();
   
 private:
   /**
-   * \brief tap name attribute
+   * \brief emu node name attribute  
    */
-  std::string tapNode;
+  std::string emuNode;
   
   /**
-   * \brief tap interface name
+   * \brief interface name attribute
    */
   std::string ifaceName;
   
   /**
-   * \brief Function to get the tap node name.
-   * \return tap name
-   */   
-  std::string getTapName();
+   * \brief Function to get the emu node name.
+   * \return emu node name
+   */
+  std::string getEmuName();
   
   /**
-   * \brief Function to get the interface name.
-   * \return interface name. 
+   * \brief Function to get the emu interface name.
+   * \return interface name
    */
   std::string getIfaceName();
 
@@ -99,12 +99,6 @@ private:
   
   /**
    * \brief See main class.
-   * \return the tap bridge code.
-   */
-  std::vector<std::string> GenerateTapBridge();
-  
-  /**
-   * \brief See main class.
    * \return the vars code.
    */
   std::vector<std::string> GenerateVars();
@@ -117,4 +111,4 @@ private:
   
 };
 
-#endif /* TAP_H */
+#endif /* EMU_H */

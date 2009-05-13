@@ -36,6 +36,7 @@
 #include "UdpEcho.h"
 #include "TcpLargeTransfer.h"
 #include "Tap.h"
+#include "Emu.h"
 
 Generator::Generator(std::string _simulationName)
 {
@@ -123,6 +124,7 @@ void Generator::AddEquipement(std::string type)
   	equi = new Equipement(this->indiceEquipementTap, "tap_");
   	this->indiceEquipementTap += 1;
   } 
+ 
   
   if(equi)//!= NULL
   {
@@ -197,8 +199,9 @@ void Generator::AddLink(std::string type, std::string linkNode, std::string ifac
 { 
   if(type.compare("Emu") == 0)
   {
-  	//~ *link = new Link(this->indiceLinkEmu);
+  	Emu *link = new Emu(this->indiceLinkEmu, linkNode, ifaceName);
   	this->indiceLinkEmu += 1;
+  	this->listLink.push_back(link);
   } 
   else if(type.compare("Tap") == 0)
   {
@@ -534,8 +537,9 @@ std::vector<std::string> Generator::GenerateNetDevice()
 std::vector<std::string> Generator::GenerateIpStack() 
 {
   std::vector<std::string> allStack;
+
+  /* construct node without bridge equipement. */
   std::string nodeName = "";
-  /* get all the node code. */
   for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
   {
     nodeName = (this->listEquipement.at(i))->getNodeName();
@@ -548,9 +552,8 @@ std::vector<std::string> Generator::GenerateIpStack()
        allStack.push_back(trans.at(j));
       }
     }
-    
   }
-
+  
   return allStack;
 }
 
@@ -574,17 +577,54 @@ std::vector<std::string> Generator::GenerateIpAssign()
 std::vector<std::string> Generator::GenerateRoute() 
 {
   std::vector<std::string> allRoutes;
-  std::string nodeName = "";
   allRoutes.push_back("NodeContainer allRoutes;");
+  
+  std::vector<std::string> route;
+  std::string nodeName = "";
   for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
   {
     nodeName = (this->listEquipement.at(i))->getNodeName();
     /* if it is not a bridge you can add it. */
-    if(nodeName.find("bridge_") != 0)
+    if(nodeName.find("bridge_") != 0 )
     {
-      allRoutes.push_back("allRoutes.Add("+nodeName+");");
+      //route.push_back("allRoutes.Add("+nodeName+");");
+      route.push_back(nodeName);
     }
   }
+  
+  /* get all node attached to a Emu Link. */
+  std::vector<std::string> emuNodes;
+  for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
+  {
+    if( (this->listLink.at(i)->getLinkName()).find("emu_") == 0)
+    {
+      std::vector<std::string> trans = (this->listLink.at(i))->getNodes();
+      for(size_t j = 0; j < (size_t) trans.size(); j++)
+      {
+        emuNodes.push_back(trans.at(j));
+      }
+    }
+  }
+  
+  /* add all nodes to the out list without the emu nodes. */
+  bool nodeOk = true;
+  for(size_t i = 0; i < (size_t) route.size(); i++)
+  {
+    nodeOk = true;
+    for(size_t j = 0; j < (size_t) emuNodes.size(); j++)
+    {
+      if( (route.at(i)).compare(emuNodes.at(j)) == 0)
+      {
+        /* the node is in the emu node list .. we can't add it. */
+        nodeOk = false;
+      }
+    }
+    if(nodeOk)
+    {
+      allRoutes.push_back("allRoutes.Add("+route.at(i)+");");
+    }
+  }
+  
   allRoutes.push_back("GlobalRouteManager::PopulateRoutingTables (allRoutes);");
   
   return allRoutes;

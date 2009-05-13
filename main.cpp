@@ -33,10 +33,10 @@ int main()
   Generator *gen = new Generator("test simulation");
   
   /* Add Equipement : */
-  gen->AddEquipement("Tap");//0
-  gen->AddEquipement("Tap");//1
+  gen->AddEquipement("Pc");//0
+  gen->AddEquipement("Pc");//1
   
-  gen->AddLink("Tap", gen->listEquipement.at(0)->getNodeName(), "tap0");
+  gen->AddLink("Emu", gen->listEquipement.at(0)->getNodeName(), "lo");
   gen->listLink.at(0)->AddNodes(gen->listEquipement.at(1)->getNodeName());
   
   
