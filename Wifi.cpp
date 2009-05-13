@@ -26,13 +26,14 @@
 #include "Wifi.h"
 
 
-Wifi::Wifi(size_t _indice, std::string _apNode) : Link(_indice)
+Wifi::Wifi(size_t _indice, std::string _apNode, bool _random) : Link(_indice)
 {
   this->nodes.push_back(_apNode);
   this->linkName = "wifi_"+this->getIndice();
   this->ndcName = "ndc_"+this->getLinkName();
   this->allNodeContainer = "all_"+this->getLinkName();
   this->apNode = _apNode;
+  this->random = _random;
 }
 
 Wifi::~Wifi()
@@ -91,7 +92,14 @@ std::vector<std::string> Wifi::GenerateNetDevice()
   ndc.push_back(this->getNdcName()+".Add (wifi_"+this->getLinkName()+".Install (wifiPhy_"+this->getLinkName()+", wifiMac_"+this->getLinkName()+", "+this->getAllNodeContainer()+" ));");
 
   ndc.push_back("MobilityHelper mobility_"+this->getLinkName()+";");
-  ndc.push_back("mobility_"+this->getLinkName()+".Install(NodeContainer("+this->getApNode()+", "+this->getAllNodeContainer()+"));");
+  ndc.push_back("mobility_"+this->getLinkName()+".SetMobilityModel (\"ns3::ConstantPositionMobilityModel\");");
+  ndc.push_back("mobility_"+this->getLinkName()+".Install("+this->getApNode()+");"); 
+  
+  if(this->random)//if random walk is activated.
+  {
+     ndc.push_back("mobility_"+this->getLinkName()+".SetMobilityModel (\"ns3::RandomWalk2dMobilityModel\",\"Bounds\", RectangleValue (Rectangle (-50, 50, -50, 50)));");
+  }
+  ndc.push_back("mobility_"+this->getLinkName()+".Install("+this->getAllNodeContainer()+");");
   
   return ndc;
 }

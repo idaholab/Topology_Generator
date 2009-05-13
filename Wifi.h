@@ -47,8 +47,9 @@ public:
    * \brief Constructor
    * \param _indice the Wifi number
    * \param _apNode the node which is the ap.
+   * \param _random
    */
-  Wifi(size_t _indice, std::string _apNode);
+  Wifi(size_t _indice, std::string _apNode, bool _random);
   
   /**
    * \brief Destructor
@@ -56,6 +57,11 @@ public:
   virtual ~Wifi();
   
 private:
+  /**
+   * \brief attribute which say if station walk is constant or random.
+   */
+  bool random;
+  
   /**
    * \brief attribute which represent the Wifi node.
    */

@@ -187,9 +187,14 @@ void Generator::AddLink(std::string type, std::string linkNode)
   	this->indiceLinkBridge += 1;
     this->listLink.push_back(link);
   } 
-  else if(type.compare("Wifi") == 0)
+  
+}
+
+void Generator::AddLink(std::string type, std::string linkNode, bool mobility)
+{
+  if(type.compare("Wifi") == 0)
   {
-  	Wifi *link = new Wifi(this->indiceLinkWifi, linkNode);
+  	Wifi *link = new Wifi(this->indiceLinkWifi, linkNode, mobility);
   	this->indiceLinkWifi += 1;
     this->listLink.push_back(link);
   } 

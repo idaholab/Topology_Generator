@@ -224,6 +224,15 @@ public:
    */
   void AddLink(std::string type, std::string linkNode);
   
+   /**
+   * \brief See the Precedure AddLink(*)
+   * 
+   * \param type
+   * \param linkNode
+   * \param mobility
+   */
+  void AddLink(std::string type, std::string linkNode, bool mobility);
+  
   /**
    * \brief See the Precedure AddLink(*)
    * 
