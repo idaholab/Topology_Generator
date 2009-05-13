@@ -95,6 +95,11 @@ std::string Application::getEndTime()
 {
   return Generator::toString(this->endTime);
 }
+
+size_t Application::getEndTimeNumber()
+{
+  return this->endTime;
+}
  
 void Application::setEndTime(size_t _endTime)
 {

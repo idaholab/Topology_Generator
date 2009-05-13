@@ -35,10 +35,12 @@
 #include "Ping.h"
 #include "UdpEcho.h"
 #include "TcpLargeTransfer.h"
+#include "Tap.h"
 
-Generator::Generator()
+Generator::Generator(std::string _simulationName)
 {
- 
+  this->simulationName = _simulationName;
+  
   /* Equipement. */
   this->indiceEquipementPc = 0;
   this->indiceEquipementRouter = 0;
@@ -158,7 +160,7 @@ void Generator::AddApplication(std::string type, std::string senderNode, std::st
 //
 // Part of Link.
 //
-void Generator::AddLink(std::string type, std::string linkNode) 
+void Generator::AddLink(std::string type) 
 {
   // call to the right type constructor. 
   if(type.compare("Hub") == 0)
@@ -173,7 +175,11 @@ void Generator::AddLink(std::string type, std::string linkNode)
   	this->indiceLinkPointToPoint += 1;
     this->listLink.push_back(link);
   } 
-  else if(type.compare("Bridge") == 0)
+}
+
+void Generator::AddLink(std::string type, std::string linkNode) 
+{
+  if(type.compare("Bridge") == 0)
   {
   	Bridge *link = new Bridge(this->indiceLinkBridge, linkNode);
   	this->indiceLinkBridge += 1;
@@ -184,20 +190,23 @@ void Generator::AddLink(std::string type, std::string linkNode)
   	Wifi *link = new Wifi(this->indiceLinkWifi, linkNode);
   	this->indiceLinkWifi += 1;
     this->listLink.push_back(link);
-  }  
-  else if(type.compare("Emu") == 0)
+  } 
+}
+
+void Generator::AddLink(std::string type, std::string linkNode, std::string ifaceName)
+{ 
+  if(type.compare("Emu") == 0)
   {
   	//~ *link = new Link(this->indiceLinkEmu);
   	this->indiceLinkEmu += 1;
   } 
   else if(type.compare("Tap") == 0)
   {
-  	//~ *link = new Link(this->indiceLinkTap);
+  	Tap *link = new Tap(this->indiceLinkTap, linkNode, ifaceName);
   	this->indiceLinkTap += 1;
+  	this->listLink.push_back(link);
   } 
-  
 }
-
 
 //
 // Part around the code Generation.
@@ -230,14 +239,27 @@ void Generator::GenerateCode()
   
   std::cout << "int main(int argc, char *argv[])" << std::endl;
   std::cout << "{" << std::endl;
-  std::cout << "" << std::endl;
+  
+  //
+  // Tap/Emu variables
+  //
+  std::vector<std::string> allVars = GenerateVars();
+  for(size_t i = 0; i < (size_t) allVars.size(); i++)
+  {
+  	std::cout << "  " << allVars.at(i) << std::endl;
+  }
               
   //
   // Generate Command Line 
   //
+   std::cout << "" << std::endl;
   std::cout << "  CommandLine cmd;" << std::endl;
            
-  //~ GenerateCmdLine() 
+  std::vector<std::string> allCmdLine = GenerateCmdLine();
+  for(size_t i = 0; i < (size_t) allCmdLine.size(); i++)
+  {
+  	std::cout << "  " << allCmdLine.at(i) << std::endl;
+  } 
   
   std::cout << "  cmd.Parse (argc, argv);" << std::endl;
   
@@ -302,6 +324,20 @@ void Generator::GenerateCode()
   } 
   
   //
+  // Generate TapBridge if tap is used.
+  //
+  std::vector<std::string> allTapBridge = GenerateTapBridge();
+  if(allTapBridge.size() > 0)
+  {
+    std::cout << "" << std::endl;
+    std::cout << "  /* Tap Bridge */" << std::endl;
+  }
+  for(size_t i = 0; i < (size_t) allTapBridge.size(); i++)
+  {
+  	std::cout << "  " << allTapBridge.at(i) << std::endl;
+  } 
+  
+  //
   // Generate Route.
   //
   std::cout << "" << std::endl;
@@ -324,20 +360,34 @@ void Generator::GenerateCode()
   } 
   
   //
-  // Other
+  // Others
   //
   std::cout << "" << std::endl;
   std::cout << "  /* Simulation. */" << std::endl;
   
   
-  /* must be added pcap for wifi installation ... */
-  std::cout << "  CsmaHelper::EnablePcapAll (\"test\", false);" << std::endl;
-  std::cout << "  YansWifiPhyHelper::EnablePcapAll (\"test\");" << std::endl;
+  std::cout << "  /* Pcap output.*/" << std::endl;
+  std::cout << "  CsmaHelper::EnablePcapAll (\""<< this->simulationName <<"\", false);" << std::endl;
+  std::cout << "  YansWifiPhyHelper::EnablePcapAll (\""<< this->simulationName <<"\");" << std::endl;
+  std::cout << "  PointToPointHelper::EnablePcapAll (\""<< this->simulationName <<"\");" << std::endl;
+  std::cout << "  EmuHelper::EnablePcapAll (\""<< this->simulationName <<"\", false);" << std::endl;
   
-  std::cout << "  /* Set Stop to Down the Ap */" << std::endl;
-  std::cout << "  uint32_t stopTime = 20;" << std::endl; 
+  /* Set stop time. */
+  size_t stopTime = 0;/* default stop time. */
+  for(size_t i = 0; i < (size_t) this->listApplication.size(); i++)
+  {
+    if( (this->listApplication.at(i))->getEndTimeNumber() > stopTime)
+    {
+      stopTime = (this->listApplication.at(i))->getEndTimeNumber();
+    }
+  }
+  stopTime += 1;
+  
+  std::cout << "  /* Stop the simulation after x seconds. */" << std::endl;
+  std::cout << "  uint32_t stopTime = "<< stopTime << ";" << std::endl; 
   std::cout << "  Simulator::Stop (Seconds (stopTime));" << std::endl;
   
+  std::cout << "  /* Start and clean simulation. */" << std::endl;
   std::cout << "  Simulator::Run ();" << std::endl;
   std::cout << "  Simulator::Destroy ();" << std::endl;
   
@@ -404,9 +454,32 @@ std::vector<std::string> Generator::GenerateHeader()
   return headersWithoutDuplicateElem;
 }
 
-std::string Generator::GenerateCmdLine() 
+std::vector<std::string> Generator::GenerateVars()
 {
-  return "";
+  std::vector<std::string> allVars;
+  for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
+  {
+    std::vector<std::string> trans = (this->listLink.at(i))->GenerateVars();
+    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    {
+      allVars.push_back(trans.at(j));
+    }
+  }
+  return allVars;
+}
+
+std::vector<std::string> Generator::GenerateCmdLine() 
+{
+  std::vector<std::string> allCmdLine;
+  for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
+  {
+    std::vector<std::string> trans = (this->listLink.at(i))->GenerateCmdLine();
+    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    {
+      allCmdLine.push_back(trans.at(j));
+    }
+  }
+  return allCmdLine;
 }
 
 std::string Generator::GenerateConfig() 
@@ -555,6 +628,21 @@ std::vector<std::string> Generator::GenerateApplication()
   return allApps;
 }
 
+std::vector<std::string> Generator::GenerateTapBridge()
+{
+  std::vector<std::string> allTapBridge;
+ 
+  for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
+  {
+    std::vector<std::string> trans = (this->listLink.at(i))->GenerateTapBridge();
+    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    {
+      allTapBridge.push_back(trans.at(j));
+    }
+  }
+
+  return allTapBridge;
+}
 
 //
 // XML generation operation part.

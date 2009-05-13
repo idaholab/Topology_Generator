@@ -170,6 +170,12 @@ public:
    */
   std::string getEndTime();
   
+   /**
+   * \brief Function to get end time.
+   * \return end time in number.
+   */
+  size_t getEndTimeNumber();
+  
   /**
    * \brief Procedure to set the end time.
    * \param _endTime the end time.

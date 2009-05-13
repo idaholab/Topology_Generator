@@ -46,11 +46,16 @@
 class Generator
 {
 public:
+  /**
+   * \brief the simulation name.
+   */
+  std::string simulationName;
 
   /**
    * \brief the generator of the class Generator.
+   * \param _simulationName
    */
-  Generator();
+  Generator(std::string _simulationName);
   
   /**
    * \brief the destructor of the class.
@@ -208,9 +213,25 @@ public:
    * vector listLink and increment the number of link.
    * 
    * \param type the type of the link. (PointToPoint, Csma,...)
-   * \param linkNode an optional node used to dedicated equipement such as an ap or a bridge.
+   */
+  void AddLink(std::string type);
+  
+  /**
+   * \brief See the Precedure AddLink(*)
+   * 
+   * \param type
+   * \param linkNode
    */
   void AddLink(std::string type, std::string linkNode);
+  
+  /**
+   * \brief See the Precedure AddLink(*)
+   * 
+   * \param type
+   * \param linkNode
+   * \param ifaceName
+   */
+  void AddLink(std::string type, std::string linkNode, std::string ifaceName);
 
  
   //
@@ -236,6 +257,15 @@ private:
    * \return header 
    */
   std::vector<std::string> GenerateHeader();
+  
+  /**
+   * \brief Function which return all variables used.
+   * 
+   * This function return a string wich contain all c++ vars.
+   * 
+   * \return header 
+   */
+  std::vector<std::string> GenerateVars();
 
 
   /**
@@ -243,7 +273,7 @@ private:
    * 
    * \return command line 
    */
-  std::string GenerateCmdLine();
+  std::vector<std::string> GenerateCmdLine();
 
 
   /**
@@ -292,6 +322,13 @@ private:
    * \return generated ip assign
    */
   std::vector<std::string> GenerateIpAssign();
+  
+  /**
+   * \brief Function which return a string with all c++ tap bridge code.
+   * 
+   * \return generated tab bridge
+   */
+  std::vector<std::string> GenerateTapBridge();
 
 
   /**

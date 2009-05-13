@@ -129,5 +129,24 @@ std::vector<std::string> Link::GroupAsNodeContainer()
    
   return res;
 }
+
+std::vector<std::string> Link::GenerateTapBridge()
+{
+  std::vector<std::string> res;
+  return res;
+}
+
+std::vector<std::string> Link::GenerateVars()
+{
+  std::vector<std::string> res;
+  return res;
+}
+  
+std::vector<std::string> Link::GenerateCmdLine()
+{
+  std::vector<std::string> res;
+  return res;
+}
+  
   
   

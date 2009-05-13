@@ -111,6 +111,25 @@ public:
   virtual std::vector<std::string> GenerateNetDevice() = 0;
   
   /**
+   * \brief Function used to generate the tap bridge.
+   * \return tap bridge code.
+   */
+  virtual std::vector<std::string> GenerateTapBridge();
+  
+  /**
+   * \brief Function used to generate the vars.
+   * \return vars code.
+   */
+  virtual std::vector<std::string> GenerateVars();
+  
+  /**
+   * \brief Function used to generate the cmd lines.
+   * \return cmd line code.
+   */
+  virtual std::vector<std::string> GenerateCmdLine();
+  
+  
+  /**
    * \brief Function to get the link number.
    * \return the link number.
    */

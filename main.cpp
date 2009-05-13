@@ -30,25 +30,15 @@ using namespace std;
 
 int main()
 {
-  Generator *gen = new Generator();
+  Generator *gen = new Generator("test simulation");
   
   /* Add Equipement : */
-  gen->AddEquipement("Pc");//0
-  gen->AddEquipement("Router");//1
-  gen->AddEquipement("Ap");//2
-  gen->AddEquipement("Station");//3
+  gen->AddEquipement("Tap");//0
+  gen->AddEquipement("Tap");//1
   
-  gen->AddLink("Hub", "");//0
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(0)->getNodeName());
+  gen->AddLink("Tap", gen->listEquipement.at(0)->getNodeName(), "tap0");
   gen->listLink.at(0)->AddNodes(gen->listEquipement.at(1)->getNodeName());
   
-  gen->AddLink("Wifi", gen->listEquipement.at(2)->getNodeName());//1
-  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(1)->getNodeName());
-  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(3)->getNodeName());
-  
-  
-  /* Add an application */
-  gen->AddApplication("TcpLargeTransfer", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(3)->getNodeName(), 0, 5, 6666);// 0 start time - 5 end time
   
 	/* Generate de application code. */
   gen->GenerateCode();
