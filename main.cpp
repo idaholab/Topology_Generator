@@ -39,7 +39,7 @@ int main()
   gen->AddEquipement("Router");//2
   
   gen->AddEquipement("Pc");//3
-  gen->AddEquipement("Pc");//4
+  gen->AddEquipement("Router");//4
   
   gen->AddEquipement("Pc");//5
   

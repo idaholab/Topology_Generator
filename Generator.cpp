@@ -571,7 +571,7 @@ std::vector<std::string> Generator::GenerateIpAssign()
   std::vector<std::string> ipAssign;
   ipAssign.push_back("Ipv4AddressHelper ipv4;");
   size_t ipRange = 0;
-  size_t ipStart = 0;
+  size_t ipStart = 1;
   size_t ipStart_trans = 0;
   
   bool otherConnection = false;
@@ -610,8 +610,8 @@ std::vector<std::string> Generator::GenerateIpAssign()
     /* no other connection to other link. We can assign. */
     if(!otherConnection)
     {
-      ipStart = 0;
-      ipAssign.push_back("ipv4.SetBase (\"10.0."+Generator::toString(ipRange)+".0\", \"255.255.255.0\", \"0.0.0.0\");");
+      ipStart = 1;
+      ipAssign.push_back("ipv4.SetBase (\"10.0."+Generator::toString(ipRange)+".0\", \"255.255.255.0\", \"0.0.0.1\");");
       ipAssign.push_back("Ipv4InterfaceContainer iface_"+this->listLink.at(i)->getNdcName()+" = ipv4.Assign("+this->listLink.at(i)->getNdcName()+");");
       ipRange += 1;
     }
@@ -622,7 +622,7 @@ std::vector<std::string> Generator::GenerateIpAssign()
       {
         if( (linkConnection.at(1)).compare( (this->listLink.at(l))->getLinkName()) == 0 )
         {
-          ipStart_trans += (this->listLink.at(l)->getNodes().size()) - ipStart;// - 1; collision ...
+          ipStart_trans += (this->listLink.at(l)->getNodes().size()) - ipStart + 1;// - 1; collision ...
         }
       }
       ipAssign.push_back("ipv4.SetBase (\"10.0."+Generator::toString(ipRange)+".0\", \"255.255.255.0\", \"0.0.0."+Generator::toString(ipStart)+"\");");
