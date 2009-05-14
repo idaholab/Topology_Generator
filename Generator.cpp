@@ -573,6 +573,7 @@ std::vector<std::string> Generator::GenerateIpAssign()
   std::vector<std::string> ipAssign;
   ipAssign.push_back("Ipv4AddressHelper ipv4;");
   size_t ipRange = 0;
+  size_t ipStart = 0;
   
   std::cout << "########################################################" << std::endl;
   
@@ -589,11 +590,10 @@ std::vector<std::string> Generator::GenerateIpAssign()
       /* if the nodes checked is an router.*/
       if( (linkNode.at(j)).find("router_") == 0)
       {
-        //~ std::cout << linkNode.at(j) << " is connected to " << (this->listLink.at(i))->getLinkName() << std::endl;
         /* check for duplicate in struct list. */
+        routerAdded = false;
         for(size_t k = 0; k < (size_t) list.size(); k++)
         {
-          routerAdded = false;
           if( ((list.at(k)).routerName).compare(linkNode.at(j)) == 0)
           {
             routerAdded = true;
@@ -616,6 +616,7 @@ std::vector<std::string> Generator::GenerateIpAssign()
           /* go to the router id. */
           for(size_t l = 0; l < (size_t) list.size(); l++)
           {
+            //~ std::cout << "compare " << (list.at(l)).routerName << " et " << linkNode.at(j) << std::endl;
             if( ((list.at(l)).routerName).compare(linkNode.at(j)) == 0)
             {
               list.at(l).linkName.push_back((this->listLink.at(i))->getLinkName());
@@ -636,7 +637,7 @@ std::vector<std::string> Generator::GenerateIpAssign()
       std::cout << "  -" << ((list.at(i)).linkName).at(j) << std::endl;
     }
   }
-  
+
   bool otherRouter = false;
   /* for all router present in the struct. */
   for(size_t i = 0; i < (size_t) list.size(); i++)
@@ -652,7 +653,7 @@ std::vector<std::string> Generator::GenerateIpAssign()
         {
           /* see if the link contain other router. */
           otherRouter = false;
-          std::vector<std::string> nodes = (this->listLink.at(i))->getNodes();
+          std::vector<std::string> nodes = (this->listLink.at(k))->getNodes();
           for( size_t l = 0; l < (size_t) nodes.size(); l++)
           {
             if(nodes.at(l).find("router_") == 0 && nodes.at(l).find(list.at(i).routerName) != 0)
@@ -670,7 +671,27 @@ std::vector<std::string> Generator::GenerateIpAssign()
           }
           else
           {
+            ipStart = 0;
+            
             std::cout << "other router present in the link node !" << std::endl;
+            ipAssign.push_back("ipv4.SetBase (\"10.0."+Generator::toString(ipRange)+".0\", \"255.255.255.0\", \"0.0.0.0\");");
+            ipAssign.push_back("Ipv4InterfaceContainer iface_"+this->listLink.at(k)->getNdcName()+" = ipv4.Assign("+this->listLink.at(k)->getNdcName()+");");
+            /* add the others link connected to the link. */
+            for(size_t m = 1; m < (size_t) list.at(i).linkName.size(); m++)
+            {
+              ipStart += 1;
+              for(size_t n = 0; n < (size_t) this->listLink.size(); n++)
+              {
+                std::cout << "compare " << this->listLink.at(n)->getLinkName() << " et " << list.at(i).linkName.at(m) << std::endl;
+                if( ((this->listLink.at(n))->getLinkName()).compare(list.at(i).linkName.at(m)) == 0)
+                {
+                  ipAssign.push_back("ipv4.SetBase (\"10.0."+Generator::toString(ipRange)+".0\", \"255.255.255.0\", \"0.0.0."+Generator::toString(ipStart)+"\");");
+                  ipAssign.push_back("Ipv4InterfaceContainer iface_"+this->listLink.at(n)->getNdcName()+" = ipv4.Assign("+this->listLink.at(n)->getNdcName()+");");
+                }
+              }
+            }
+          
+            ipRange += 1;
           }
         }
       }
