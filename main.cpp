@@ -39,8 +39,7 @@ int main()
   gen->AddEquipement("Router");//2
   
   gen->AddEquipement("Pc");//3
-  //~ gen->AddEquipement("Pc");//4
-  gen->AddEquipement("Router");//4
+  gen->AddEquipement("Pc");//4
   
   gen->AddEquipement("Pc");//5
   
@@ -62,6 +61,7 @@ int main()
   gen->listLink.at(2)->AddNodes(gen->listEquipement.at(5)->getNodeName());
   
   
+  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(5)->getNodeName(), 0, 5); 
   
 	/* Generate de application code. */
   gen->GenerateCode();

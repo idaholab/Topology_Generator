@@ -160,6 +160,20 @@ public:
    * \param port
    */
   void AddApplication(std::string type, std::string senderNode, std::string receiverNode, size_t startTime, size_t endTime, size_t port);
+  
+  /**
+   * \brief Procedure used to add an appplication.
+   * 
+   * This procedure is used to add an procedure. It add the application to the
+   * vector listApplication and increment the number of application.
+   * 
+   * \param type the type of the application. (Ping, TcpLargeTransfert, Udp_Echo ...)
+   * \param senderNode
+   * \param receiverNode
+   * \param startTime
+   * \param endTime
+   */
+  void AddApplication(std::string type, std::string senderNode, std::string receiverNode, size_t startTime, size_t endTime);
 
   
   //
