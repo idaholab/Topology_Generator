@@ -38,6 +38,12 @@
 #include "Tap.h"
 #include "Emu.h"
 
+struct struct_rl 
+{
+  std::string routerName;
+  std::vector<std::string> linkName;
+};
+
 Generator::Generator(std::string _simulationName)
 {
   this->simulationName = _simulationName;
@@ -565,16 +571,117 @@ std::vector<std::string> Generator::GenerateIpStack()
 std::vector<std::string> Generator::GenerateIpAssign() 
 {
   std::vector<std::string> ipAssign;
-  
   ipAssign.push_back("Ipv4AddressHelper ipv4;");
-  
   size_t ipRange = 0;
+  
+  std::cout << "########################################################" << std::endl;
+  
+  
+  std::vector<struct_rl> list;
+  bool routerAdded = false;
+  /* for all link. */
   for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
   {
-    ipAssign.push_back("ipv4.SetBase (\"10.0."+Generator::toString(ipRange)+".0\", \"255.255.255.0\");");
-    ipAssign.push_back("Ipv4InterfaceContainer iface_"+this->listLink.at(i)->getNdcName()+" = ipv4.Assign("+this->listLink.at(i)->getNdcName()+");");
-    ipRange += 1;
+    std::vector<std::string> linkNode = (this->listLink.at(i))->getNodes();
+    /* for all link nodes. */
+    for(size_t j = 0; j < (size_t) linkNode.size(); j++)
+    {
+      /* if the nodes checked is an router.*/
+      if( (linkNode.at(j)).find("router_") == 0)
+      {
+        //~ std::cout << linkNode.at(j) << " is connected to " << (this->listLink.at(i))->getLinkName() << std::endl;
+        /* check for duplicate in struct list. */
+        for(size_t k = 0; k < (size_t) list.size(); k++)
+        {
+          routerAdded = false;
+          if( ((list.at(k)).routerName).compare(linkNode.at(j)) == 0)
+          {
+            routerAdded = true;
+          }
+        }
+        
+        /* if router never added. */
+        if(!routerAdded)
+        {
+          struct_rl trans;
+          trans.routerName = linkNode.at(j);
+          std::vector<std::string> vec_trans;
+          vec_trans.push_back((this->listLink.at(i))->getLinkName());
+          trans.linkName = vec_trans;
+          list.push_back(trans);
+        }
+        /* if router also added. */
+        else
+        {
+          /* go to the router id. */
+          for(size_t l = 0; l < (size_t) list.size(); l++)
+          {
+            if( ((list.at(l)).routerName).compare(linkNode.at(j)) == 0)
+            {
+              list.at(l).linkName.push_back((this->listLink.at(i))->getLinkName());
+            }
+          }
+        }
+      }//if
+    }//for j
+  }//for i
+  
+  
+  /* print structure */
+  for(size_t i = 0; i < (size_t) list.size(); i++)
+  {
+    std::cout << (list.at(i)).routerName << ": " << std::endl;
+    for(size_t j = 0; j < (size_t) ((list.at(i)).linkName).size(); j++)
+    {
+      std::cout << "  -" << ((list.at(i)).linkName).at(j) << std::endl;
+    }
   }
+  
+  bool otherRouter = false;
+  /* for all router present in the struct. */
+  for(size_t i = 0; i < (size_t) list.size(); i++)
+  {
+    /* for all link where the router is connecte. */
+    for(size_t j = 0; j < (size_t) list.at(i).linkName.size(); j++)
+    {
+      /* get the specific link */
+      for(size_t k = 0; k < (size_t) this->listLink.size(); k++)
+      {
+        /* we get the good link. */
+        if( (this->listLink.at(k)->getLinkName()).compare(list.at(i).linkName.at(j)) == 0)
+        {
+          /* see if the link contain other router. */
+          otherRouter = false;
+          std::vector<std::string> nodes = (this->listLink.at(i))->getNodes();
+          for( size_t l = 0; l < (size_t) nodes.size(); l++)
+          {
+            if(nodes.at(l).find("router_") == 0 && nodes.at(l).find(list.at(i).routerName) != 0)
+            {
+              otherRouter = true; 
+            }
+          }
+          if(!otherRouter)
+          {
+            //~ std::cout << "no other router." << std::endl; 
+            ipAssign.push_back("ipv4.SetBase (\"10.0."+Generator::toString(ipRange)+".0\", \"255.255.255.0\", \"0.0.0.0\");");
+            // this line didn't have to change.
+            ipAssign.push_back("Ipv4InterfaceContainer iface_"+this->listLink.at(k)->getNdcName()+" = ipv4.Assign("+this->listLink.at(k)->getNdcName()+");");
+            ipRange += 1;
+          }
+          else
+          {
+            std::cout << "other router present in the link node !" << std::endl;
+          }
+        }
+      }
+    }
+  }
+  
+  std::cout << "########################################################" << std::endl;
+  
+    
+    // for not change the application ... i just type the start plage of the subnetwork as an third param. 
+    
   
   return ipAssign;
 }

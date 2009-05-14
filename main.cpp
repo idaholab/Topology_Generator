@@ -32,14 +32,37 @@ int main()
 {
   Generator *gen = new Generator("test simulation");
   
-  /* Add Equipement : */
-  gen->AddEquipement("Ap");//0
-  gen->AddEquipement("Station");//1
-  gen->AddEquipement("Station");//2
+   /* Add Equipement : */
+  gen->AddEquipement("Pc");//0
+  gen->AddEquipement("Pc");//1
   
-  gen->AddLink("Wifi", gen->listEquipement.at(0)->getNodeName(), true);
+  gen->AddEquipement("Router");//2
+  
+  gen->AddEquipement("Pc");//3
+  gen->AddEquipement("Pc");//4
+  
+  //gen->AddEquipement("Router");//5
+  
+  gen->AddEquipement("Pc");//6
+  
+  /* Add it to a Csma network. */
+  gen->AddLink("Hub");//0
+  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(0)->getNodeName());
   gen->listLink.at(0)->AddNodes(gen->listEquipement.at(1)->getNodeName());
+  
+  gen->AddLink("Hub");//1
+  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(3)->getNodeName());
+  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(4)->getNodeName());
+  
+  /* link the two subnetworks to the router. */
   gen->listLink.at(0)->AddNodes(gen->listEquipement.at(2)->getNodeName());
+  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(2)->getNodeName());
+  
+  gen->AddLink("Hub");//2
+  gen->listLink.at(2)->AddNodes(gen->listEquipement.at(4)->getNodeName());
+  gen->listLink.at(2)->AddNodes(gen->listEquipement.at(5)->getNodeName());
+  
+  
   
 	/* Generate de application code. */
   gen->GenerateCode();
