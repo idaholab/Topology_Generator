@@ -36,7 +36,21 @@ Equipement::Equipement(size_t _indice, std::string _type)
   this->ipInterfaceName = "iface_"+this->nodeName;
   this->x = 0;
   this->y = 0;
+  this->nsc = "";
+   this->machinesNumber = 1;	
+}
+
+Equipement::Equipement(size_t _indice, std::string _type, size_t _machinesNumber)
+{
+  this->indice = _indice;
+  this->nodeName = _type + Generator::toString(_indice);
+  this->ip = "0.0.0.0";
+  this->mask = "0.0.0.0";
+  this->ipInterfaceName = "iface_"+this->nodeName;
+  this->x = 0;
+  this->y = 0;
   this->nsc = "";	
+  this->machinesNumber = _machinesNumber;
 }
 
 //no pointer, nothing to destroy
@@ -56,7 +70,7 @@ std::vector<std::string> Equipement::GenerateNode()
 {
   std::vector<std::string> nodes;
   nodes.push_back("NodeContainer "+this->getNodeName()+";");
-  nodes.push_back(this->getNodeName()+".Create(1);");
+  nodes.push_back(this->getNodeName()+".Create("+Generator::toString(this->machinesNumber)+");");
 
   return nodes; 
 }
@@ -93,6 +107,11 @@ void Equipement::setIpInterfaceName(std::string _ipInterfaceName)
 std::string Equipement::getNodeName()
 {
   return this->nodeName;
+}
+
+std::string Equipement::getNodeName(size_t number)
+{
+  return std::string("NodeContainer("+this->nodeName+".Get("+Generator::toString(number)+"))");
 }
 
 std::string Equipement::getIpInterfaceName()

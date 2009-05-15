@@ -32,20 +32,10 @@ int main()
 {
   Generator *gen = new Generator("test simulation");
   
-   /* Add Equipement : */
-  gen->AddEquipement("Pc");//0
-  gen->AddEquipement("Pc");//1
-  
-  gen->AddEquipement("Router");//2
-  
-  gen->AddEquipement("Pc");//3
-  gen->AddEquipement("Pc");//4
-  
-  gen->AddEquipement("Pc");//5
-  
+  int machines = 15;
+
+  gen->AddEquipement(machines);//0
   gen->AddEquipement("Pc");
-  gen->listEquipement.at(6)->setNsc("liblinux2.6.26.so");
-  
   
   
   /* Add it to a Csma network. */
@@ -53,20 +43,8 @@ int main()
   gen->listLink.at(0)->AddNodes(gen->listEquipement.at(0)->getNodeName());
   gen->listLink.at(0)->AddNodes(gen->listEquipement.at(1)->getNodeName());
   
-  gen->AddLink("Hub");//1
-  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(3)->getNodeName());
-  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(4)->getNodeName());
-  
-  /* link the two subnetworks to the router. */
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(2)->getNodeName());
-  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(2)->getNodeName());
-  
-  gen->AddLink("PointToPoint");//2
-  gen->listLink.at(2)->AddNodes(gen->listEquipement.at(4)->getNodeName());
-  gen->listLink.at(2)->AddNodes(gen->listEquipement.at(5)->getNodeName());
-  
-  
-  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(5)->getNodeName(), 0, 5); 
+  gen->AddApplication("Ping", gen->listEquipement.at(1)->getNodeName(), gen->listEquipement.at(0)->getNodeName(5), 0, 5);
+  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(0), gen->listEquipement.at(1)->getNodeName(), 0, 5); 
   
 	/* Generate de application code. */
   gen->GenerateCode();

@@ -24,6 +24,7 @@
 */
 
 #include <sstream>
+#include <stdlib.h> 
 
 #include "Generator.h"
 #include "Equipement.h"
@@ -133,6 +134,12 @@ void Generator::AddEquipement(std::string type)
   
 }
 
+void Generator::AddEquipement(size_t machinesNumber) 
+{
+  Equipement *equi = new Equipement(this->indiceEquipementPc, "nodesGroup_", machinesNumber);
+  this->indiceEquipementPc += 1;
+  this->listEquipement.push_back(equi);
+}
 //
 // Part of Application.
 //
@@ -753,7 +760,6 @@ std::vector<std::string> Generator::GenerateApplication()
 {
   size_t nodeNumber = 0;
   std::string ndcName = "";
-  
   std::vector<std::string> allApps;
   /* get all the ip assign code. */
   for(size_t i = 0; i < (size_t) this->listApplication.size(); i++)
@@ -761,16 +767,43 @@ std::vector<std::string> Generator::GenerateApplication()
     /* get NetDeviceContainer and number from the receiver. */
     
     std::string receiverName = this->listApplication.at(i)->getReceiverNode();
+//~ std::cout << "receiver :" << receiverName << std::endl;
     for(size_t j = 0; j < (size_t) this->listLink.size(); j++)
     {
       std::vector<std::string> nodes = (this->listLink.at(j))->getNodes();
       for(size_t k = 0; k < (size_t) nodes.size(); k++)
       {
-        if( (nodes.at(k)).compare(receiverName) == 0)
+//~ std::cout << "node at(k) " << nodes.at(k) << std::endl;
+        if( (nodes.at(k)).compare(receiverName) == 0 || nodes.at(k).find("nodesGroup_") == 0)
         {
           /* this means that the node is in this link.*/
           ndcName = (this->listLink.at(j))->getNdcName();
-          nodeNumber = k;
+//~ std::cout << "ndc name "<<ndcName<<std::endl;
+          if(nodes.at(k).find("nodesGroup_") == 0)
+          {
+            std::string nodeNumberToken("");
+            std::stringstream in(receiverName);
+            std::string token;
+            size_t ii = 0;
+            while ( std::getline( in, token, '(' ) )
+            {
+              if(ii == 2)
+              {
+                nodeNumberToken = token;
+              }
+              ii++;
+            }
+            std::stringstream in2(nodeNumberToken);
+            while ( std::getline( in2, token, ')' ) )
+            {
+              nodeNumber =  atoi(token.c_str());
+              break;
+            }
+          }
+          else
+          {
+            nodeNumber = k;
+          }
           break; 
         }
       }

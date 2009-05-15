@@ -115,6 +115,16 @@ public:
    */
   void AddEquipement(std::string type);
   
+  /**
+   * \brief Procedure used to add an equipement.
+   * 
+   * This procedure is used to add an equipement. It add the equipement to the
+   * vector listEquipement and increment the number of equipement.
+   * 
+   * \param machinesNumber the number of machines to create.
+   */
+  void AddEquipement(size_t machinesNumber);
+  
   
   //
   // Part of Application.

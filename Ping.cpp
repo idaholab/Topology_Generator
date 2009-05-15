@@ -52,7 +52,7 @@ std::vector<std::string> Ping::GenerateApplication(std::string netDeviceContaine
   apps.push_back("onoff_"+this->getAppName()+".SetAttribute (\"OnTime\", RandomVariableValue (ConstantVariable (1.0)));");
   apps.push_back("onoff_"+this->getAppName()+".SetAttribute (\"OffTime\", RandomVariableValue (ConstantVariable (0.0)));");
 
-  apps.push_back("ApplicationContainer apps_"+this->getAppName()+" = onoff_"+this->getAppName()+".Install("+this->getSenderNode()+");");
+  apps.push_back("ApplicationContainer apps_"+this->getAppName()+" = onoff_"+this->getAppName()+".Install("+this->getSenderNode()+".Get(0));");
   apps.push_back("apps_"+this->getAppName()+".Start (Seconds ("+this->getStartTime()+".1));");
   apps.push_back("apps_"+this->getAppName()+".Stop (Seconds ("+this->getEndTime()+".1));");
 
@@ -62,7 +62,7 @@ std::vector<std::string> Ping::GenerateApplication(std::string netDeviceContaine
   apps.push_back("apps_"+this->getAppName()+".Stop (Seconds ("+this->getEndTime()+".2));");
 
   apps.push_back("V4PingHelper ping_"+this->getAppName()+" = V4PingHelper(iface_"+netDeviceContainer+".GetAddress("+Generator::toString(numberIntoNetDevice)+"));");
-  apps.push_back("apps_"+this->getAppName()+" = ping_"+this->getAppName()+".Install("+this->getSenderNode()+");");
+  apps.push_back("apps_"+this->getAppName()+" = ping_"+this->getAppName()+".Install("+this->getSenderNode()+".Get(0));");
   apps.push_back("apps_"+this->getAppName()+".Start (Seconds ("+this->getStartTime()+".2));");
   apps.push_back("apps_"+this->getAppName()+".Stop (Seconds ("+this->getEndTime()+".0));");
 

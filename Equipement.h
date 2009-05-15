@@ -81,6 +81,11 @@ private:
    * \brief attribute which represent the nsc use.
    */
   std::string nsc;
+  
+  /**
+   * \brief attribute which represent the number of machines.
+   */
+  size_t machinesNumber;
 
 public:
   /**
@@ -89,6 +94,14 @@ public:
    * \param _type
    */
   Equipement(size_t _indice, std::string _type);
+  
+  /**
+   * \brief Constructor which set default value.
+   * \param _indice
+   * \param _type
+   * \param _machinesNumber
+   */
+  Equipement(size_t _indice, std::string _type, size_t _machinesNumber);
   
   /**
    * \brief Destructor from the class Equipement.
@@ -167,6 +180,13 @@ public:
    * \return node name.
    */
   std::string getNodeName();
+  
+  /**
+   * \brief Function wich return the node name.
+   * \param number
+   * \return node name.
+   */
+  std::string getNodeName(size_t number);
 
   /**
    * \brief Function wich return the name of the Ip interface.
