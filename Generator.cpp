@@ -618,6 +618,18 @@ std::vector<std::string> Generator::GenerateIpAssign()
 {
   std::vector<std::string> ipAssign;
   ipAssign.push_back("Ipv4AddressHelper ipv4;");
+  
+  size_t ipRange = 0;
+  for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
+  {
+    ipAssign.push_back("ipv4.SetBase (\"10.0."+Generator::toString(ipRange)+".0\", \"255.255.255.0\");");
+    ipAssign.push_back("Ipv4InterfaceContainer iface_"+this->listLink.at(i)->getNdcName()+" = ipv4.Assign("+this->listLink.at(i)->getNdcName()+");");
+    ipRange += 1;
+  } 
+  
+  return ipAssign;
+  
+  /*
   size_t ipRange = 0;
   size_t ipStart = 1;
   size_t ipStart_trans = 0;
@@ -626,14 +638,14 @@ std::vector<std::string> Generator::GenerateIpAssign()
   std::vector<std::string> linkConnection;
   for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
   {
-    /* Check the link : (this->listLink.at(i))->getLinkName() */
+    // Check the link : (this->listLink.at(i))->getLinkName() 
     std::vector<std::string> nodes = (this->listLink.at(i))->getNodes();
     otherConnection = false;
     for(size_t j = 0; j < (size_t) nodes.size(); j++)
-    {
-      /* check if nodes.at(j) has other connection. */
-      /* if the node is a router .... no problem, he got to subnetwork. */
-      /* Check external connection on nodes.at(j)  */
+  
+      // check if nodes.at(j) has other connection.
+      // if the node is a router .... no problem, he got to subnetwork. 
+      // Check external connection on nodes.at(j)  
       if(nodes.at(j).find("router_") != 0)
       {
         for(size_t k = 0; k < this->listLink.size(); k++)
@@ -644,8 +656,8 @@ std::vector<std::string> Generator::GenerateIpAssign()
             
             if( (nodes_trans.at(l)).compare(nodes.at(j)) == 0 && (this->listLink.at(i)->getLinkName()).compare((this->listLink.at(k))->getLinkName()) != 0)
             {
-              /* Find connection link between this->listLink.at(i)->getLinkName() and (this->listLink.at(k))->getLinkName()  */ 
-              /* on node nodes.at(j) */
+              // Find connection link between this->listLink.at(i)->getLinkName() and (this->listLink.at(k))->getLinkName()   
+              // on node nodes.at(j) 
               linkConnection.push_back(nodes.at(j));
               linkConnection.push_back(this->listLink.at(i)->getLinkName());
               otherConnection = true;
@@ -655,7 +667,7 @@ std::vector<std::string> Generator::GenerateIpAssign()
         }//for k
       }
     }//for j
-    /* no other connection to other link. We can assign. */
+    // no other connection to other link. We can assign. 
     if(!otherConnection)
     {
       ipStart = 1;
@@ -663,7 +675,7 @@ std::vector<std::string> Generator::GenerateIpAssign()
       ipAssign.push_back("Ipv4InterfaceContainer iface_"+this->listLink.at(i)->getNdcName()+" = ipv4.Assign("+this->listLink.at(i)->getNdcName()+");");
       ipRange += 1;
     }
-    /* they are other connections. */
+    // they are other connections. 
     else
     {
       for(size_t l = 0; l < (size_t) this->listLink.size(); l++)
@@ -678,8 +690,7 @@ std::vector<std::string> Generator::GenerateIpAssign()
       ipStart += ipStart_trans;
     }
   }//for i
- 
-  return ipAssign;
+  */
 }
 
 std::vector<std::string> Generator::GenerateRoute() 
