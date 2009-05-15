@@ -35,7 +35,8 @@ Equipement::Equipement(size_t _indice, std::string _type)
   this->mask = "0.0.0.0";
   this->ipInterfaceName = "iface_"+this->nodeName;
   this->x = 0;
-  this->y = 0;	
+  this->y = 0;
+  this->nsc = "";	
 }
 
 //no pointer, nothing to destroy
@@ -64,6 +65,10 @@ std::vector<std::string> Equipement::GenerateIpStack()
 {
   std::vector<std::string> stack;
   stack.push_back("InternetStackHelper net_"+this->getNodeName()+";");
+  if(this->getNsc().compare("") != 0)
+  {
+    stack.push_back("net_"+this->getNodeName()+".SetNscStack (nscStack);");
+  }
   stack.push_back("net_"+this->getNodeName()+".Install ("+this->getNodeName()+");");
 
   return stack; 
@@ -124,6 +129,16 @@ std::string Equipement::getY()
 std::string Equipement::getIndice()
 {
   return Generator::toString(this->indice);
+}
+
+std::string Equipement::getNsc()
+{
+  return this->nsc;
+}
+  
+void Equipement::setNsc(std::string _nsc)
+{
+  this->nsc = _nsc;
 }
 
 

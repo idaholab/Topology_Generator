@@ -39,9 +39,14 @@ int main()
   gen->AddEquipement("Router");//2
   
   gen->AddEquipement("Pc");//3
-  gen->AddEquipement("Router");//4
+  gen->AddEquipement("Pc");//4
   
   gen->AddEquipement("Pc");//5
+  
+  gen->AddEquipement("Pc");
+  gen->listEquipement.at(6)->setNsc("liblinux2.6.26.so");
+  
+  
   
   /* Add it to a Csma network. */
   gen->AddLink("Hub");//0
@@ -56,7 +61,7 @@ int main()
   gen->listLink.at(0)->AddNodes(gen->listEquipement.at(2)->getNodeName());
   gen->listLink.at(1)->AddNodes(gen->listEquipement.at(2)->getNodeName());
   
-  gen->AddLink("Hub");//2
+  gen->AddLink("PointToPoint");//2
   gen->listLink.at(2)->AddNodes(gen->listEquipement.at(4)->getNodeName());
   gen->listLink.at(2)->AddNodes(gen->listEquipement.at(5)->getNodeName());
   

@@ -96,7 +96,6 @@ private:
    */
   size_t indiceEquipementTap;
   
-  
 public: 
   /**
    * \brief list of equipement created instace.
@@ -304,7 +303,7 @@ private:
    * 
    * \return generated config
    */
-  std::string GenerateConfig();
+  std::vector<std::string> GenerateConfig();
 
 
   /**

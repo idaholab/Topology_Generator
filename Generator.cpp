@@ -264,7 +264,7 @@ void Generator::GenerateCode()
   //
   // Generate Command Line 
   //
-   std::cout << "" << std::endl;
+  std::cout << "" << std::endl;
   std::cout << "  CommandLine cmd;" << std::endl;
            
   std::vector<std::string> allCmdLine = GenerateCmdLine();
@@ -278,7 +278,14 @@ void Generator::GenerateCode()
   //
   // Generate Optional configuration
   // 
-  //~ GenerateConfig() 
+  std::cout << "" << std::endl;
+  std::cout << "  /* Configuration. */" << std::endl;
+  std::vector<std::string> conf = GenerateConfig();
+  for(size_t i = 0; i < (size_t) conf.size(); i++)
+  {
+  	std::cout << "  " << conf.at(i) << std::endl;
+  }
+   
   
   //
   // Generate Nodes. 
@@ -477,6 +484,15 @@ std::vector<std::string> Generator::GenerateVars()
       allVars.push_back(trans.at(j));
     }
   }
+  
+  /* add nsc var if used. */
+  for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
+  {
+    if( (this->listEquipement.at(i))->getNsc().compare("") != 0)
+    {
+      allVars.push_back("std::string nscStack = \""+(this->listEquipement.at(i))->getNsc()+"\";");
+    }
+  }
   return allVars;
 }
 
@@ -494,9 +510,41 @@ std::vector<std::string> Generator::GenerateCmdLine()
   return allCmdLine;
 }
 
-std::string Generator::GenerateConfig() 
+std::vector<std::string> Generator::GenerateConfig() 
 {
-  return "";
+  std::vector<std::string> allConf;
+  for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
+  {
+    if( ((this->listEquipement.at(i))->getNodeName()).find("tap_") == 0 )
+    {
+      if(allConf.size() == 0)
+      {
+        allConf.push_back("GlobalValue::Bind (\"SimulatorImplementationType\", StringValue (\"ns3::RealtimeSimulatorImpl\"));");
+        allConf.push_back("Config::SetDefault (\"ns3::Ipv4L3Protocol::CalcChecksum\", BooleanValue (true));");
+        allConf.push_back("Config::SetDefault (\"ns3::Icmpv4L4Protocol::CalcChecksum\", BooleanValue (true)); ");
+        allConf.push_back("Config::SetDefault (\"ns3::TcpL4Protocol::CalcChecksum\", BooleanValue (true));");
+        allConf.push_back("Config::SetDefault (\"ns3::UdpL4Protocol::CalcChecksum\", BooleanValue (true));"); 
+        break; 
+      }
+    }
+  }
+  
+  for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
+  {
+    if( ((this->listLink.at(i))->getLinkName()).find("emu_") == 0 )
+    {
+      if(allConf.size() == 0)
+      {
+        allConf.push_back("GlobalValue::Bind (\"SimulatorImplementationType\", StringValue (\"ns3::RealtimeSimulatorImpl\"));");
+        allConf.push_back("Config::SetDefault (\"ns3::Ipv4L3Protocol::CalcChecksum\", BooleanValue (true));");
+        allConf.push_back("Config::SetDefault (\"ns3::Icmpv4L4Protocol::CalcChecksum\", BooleanValue (true)); ");
+        allConf.push_back("Config::SetDefault (\"ns3::TcpL4Protocol::CalcChecksum\", BooleanValue (true));");
+        allConf.push_back("Config::SetDefault (\"ns3::UdpL4Protocol::CalcChecksum\", BooleanValue (true));"); 
+        break; 
+      }
+    }
+  }
+  return allConf;
 }
 
 std::vector<std::string> Generator::GenerateNode() 

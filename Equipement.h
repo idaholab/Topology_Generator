@@ -76,6 +76,11 @@ private:
    * \brief attribute which represent the y position of the object.
    */
   size_t y;
+  
+  /**
+   * \brief attribute which represent the nsc use.
+   */
+  std::string nsc;
 
 public:
   /**
@@ -204,6 +209,18 @@ public:
   * \return node number in type string.
   */
   std::string getIndice();
+  
+  /**
+   * \brief Function to get the nsc use.
+   * \return string
+   */
+  std::string getNsc();
+  
+  /**
+   * \brief Procedure to set the nsc use.
+   * \param _nsc
+   */
+  void setNsc(std::string _nsc);
  
 };
 
