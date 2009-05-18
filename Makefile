@@ -1,14 +1,16 @@
-
 CXX = g++
-CFLAGS = -std=c++98 -Wall -W -pedantic -Wredundant-decls -Wshadow -Werror -O2 -g
+CFLAGS = -std=c++98 -Wall -W -pedantic -Wredundant-decls -Wshadow -Werror -O2 -g -I/core
 OBJS = Generator.o Equipement.o Link.o Hub.o PointToPoint.o Bridge.o Wifi.o Application.o Ping.o UdpEcho.o TcpLargeTransfer.o Tap.o Emu.o main.o
 
 all: main
 
 main: $(OBJS)
-	$(CXX) -o $@ $^
+	$(CXX) -o $@ $^ 
 
-%.o: %.cpp
+main.o: main.cpp
+	$(CXX) $(CFLAGS) -c $<
+  
+%.o: core/%.cpp
 	$(CXX) $(CFLAGS) -c $<
 
 doc:

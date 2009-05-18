@@ -19,7 +19,7 @@
 
 using namespace std;
 
-#include "Generator.h"
+#include "core/Generator.h"
 #include <iostream>
 #include <stdlib.h>
 #include <limits>
@@ -74,18 +74,46 @@ int main()
 {
   gen = new Generator(std::string("Simulation-Name"));
   
-  int group = 2;
-  // Equipement which are possible to create.
-  gen->AddEquipement(group);
-  gen->AddEquipement("Pc");
+  /* Add Equipement : */
+  gen->AddEquipement(9);//note that the central node of the star is number 0.
   
-  //~  Add it to a Csma network.
-  gen->AddLink(std::string("Hub"));
-  ConnectNode(0, std::string(gen->listEquipement.at(0)->getNodeName()));
-  ConnectNode(0, std::string(gen->listEquipement.at(1)->getNodeName()));
+  /* Add the bridge. */
+  gen->AddLink("Hub");
+  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
+  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(0)->getNodeName(1));
   
-  gen->AddApplication(std::string("Ping"), std::string(gen->listEquipement.at(0)->getNodeName(0)), std::string(gen->listEquipement.at(0)->getNodeName(8)), 1, 10);
+  gen->AddLink("Hub");
+  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
+  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(0)->getNodeName(2));
   
+  gen->AddLink("Hub");
+  gen->listLink.at(2)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
+  gen->listLink.at(2)->AddNodes(gen->listEquipement.at(0)->getNodeName(3));
+  
+  gen->AddLink("Hub");
+  gen->listLink.at(3)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
+  gen->listLink.at(3)->AddNodes(gen->listEquipement.at(0)->getNodeName(4));
+  
+  gen->AddLink("Hub");
+  gen->listLink.at(4)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
+  gen->listLink.at(4)->AddNodes(gen->listEquipement.at(0)->getNodeName(5));
+  
+  gen->AddLink("Hub");
+  gen->listLink.at(5)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
+  gen->listLink.at(5)->AddNodes(gen->listEquipement.at(0)->getNodeName(6));
+  
+  gen->AddLink("Hub");
+  gen->listLink.at(6)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
+  gen->listLink.at(6)->AddNodes(gen->listEquipement.at(0)->getNodeName(7));
+  
+  gen->AddLink("Hub");
+  gen->listLink.at(7)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
+  gen->listLink.at(7)->AddNodes(gen->listEquipement.at(0)->getNodeName(8));
+  
+  
+  /* Add an application */
+  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(1), gen->listEquipement.at(0)->getNodeName(5), 0, 5);// 0 start time - 5 end time
+
 	//Generate de application code. 
   gen->GenerateCode();
   
