@@ -49,7 +49,7 @@ public:
    * \param _apNode the node which is the ap.
    * \param _random
    */
-  Wifi(size_t _indice, std::string _apNode, bool _random);
+  Wifi(const size_t &_indice, const std::string &_apNode, const bool &_random);
   
   /**
    * \brief Destructor

@@ -84,7 +84,7 @@ public:
    * 
    * \param _indice the number of the link.
    */
-  Link(size_t _indice);
+  Link(const size_t &_indice);
   
   /**
    * \brief Destructor.
@@ -170,38 +170,38 @@ public:
    * \brief Procedure tu set the link rate.
    * \param _linkName the new link name.
    */
-  void setLinkName(std::string _linkName);
+  void setLinkName(const std::string &_linkName);
   
   /**
    * \brief Procedure to set the data rate.
    * \param _dataRate the new data rate.
    */
-  void setDataRate(std::string _dataRate);
+  void setDataRate(const std::string &_dataRate);
   
   /**
    * \brief Procedure to set the link delay.
    * \param _linkDelay the new link delay.
    */
-  void setLinkDelay(std::string _linkDelay);
+  void setLinkDelay(const std::string &_linkDelay);
   
   /**
    *\brief Procedure to set the net device container name.
    * \param _ndcName the new net device container name.
    */
-  void setNdcName(std::string _ndcName);
+  void setNdcName(const std::string &_ndcName);
   
   /**
    * \brief Procedure to add attached to the link node.
    * \param _node the new node to add.
    */
-  void AddNodes(std::string _node);
+  void AddNodes(const std::string &_node);
 
   /**
    * \brief Function to convert size_t to string.
    * \param nbr the number to convert.
    * \return the string of the number.
    */
-  std::string toString(size_t nbr);
+  std::string toString(const size_t &nbr);
   
   /**
    * \brief Function use to group all the nodes.

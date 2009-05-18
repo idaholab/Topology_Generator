@@ -23,31 +23,72 @@ using namespace std;
 #include <iostream>
 #include <stdlib.h>
 #include <limits>
+#include <stdexcept>
+
+Generator *gen;
 
 //
 // This class is written to test all the implementation of the generator code.
 //
 
+void ConnectNode(const size_t &linkNumber, const std::string &nodeName)
+{
+  size_t numberOfConnectedMachines = 0;
+  
+  /* get the number of machines to add */
+  if(nodeName.find("Get") == 0)
+  {
+    numberOfConnectedMachines += 1;
+  }
+  else
+  {
+    for(size_t i = 0; i < (size_t) gen->listEquipement.size(); i++)
+    {
+      if(nodeName.compare(gen->listEquipement.at(i)->getNodeName()) == 0)
+      {
+        numberOfConnectedMachines += gen->listEquipement.at(i)->getMachinesNumber();
+      }
+    }
+  }
+  
+  /* get the number of machines also connected. */
+  std::vector<std::string> nodes = gen->listLink.at(linkNumber)->getNodes();
+  for(size_t i = 0; i < (size_t) nodes.size(); i++)
+  {
+    for(size_t j = 0; j < (size_t) gen->listEquipement.size(); j++)
+    {
+      if(nodes.at(i).compare(gen->listEquipement.at(j)->getNodeName()) == 0)
+      {
+        numberOfConnectedMachines += gen->listEquipement.at(j)->getMachinesNumber();
+      }
+    }
+  }
+  if( numberOfConnectedMachines > (255 -2) )
+  {
+    throw std::logic_error("Limit of machines exceeded.\n");
+  }
+  gen->listLink.at(linkNumber)->AddNodes(nodeName);
+}
+
 int main()
 {
-  Generator *gen = new Generator("test simulation");
+  gen = new Generator(std::string("Simulation-Name"));
   
-  int machines = 15;
-
-  gen->AddEquipement(machines);//0
+  int group = 2;
+  // Equipement which are possible to create.
+  gen->AddEquipement(group);
   gen->AddEquipement("Pc");
   
+  //~  Add it to a Csma network.
+  gen->AddLink(std::string("Hub"));
+  ConnectNode(0, std::string(gen->listEquipement.at(0)->getNodeName()));
+  ConnectNode(0, std::string(gen->listEquipement.at(1)->getNodeName()));
   
-  /* Add it to a Csma network. */
-  gen->AddLink("Hub");//0
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(0)->getNodeName());
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(1)->getNodeName());
+  gen->AddApplication(std::string("Ping"), std::string(gen->listEquipement.at(0)->getNodeName(0)), std::string(gen->listEquipement.at(0)->getNodeName(8)), 1, 10);
   
-  gen->AddApplication("Ping", gen->listEquipement.at(1)->getNodeName(), gen->listEquipement.at(0)->getNodeName(5), 0, 5);
-  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(0), gen->listEquipement.at(1)->getNodeName(), 0, 5); 
-  
-	/* Generate de application code. */
+	//Generate de application code. 
   gen->GenerateCode();
+  
   
   delete gen;
 }

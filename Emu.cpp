@@ -26,7 +26,7 @@
 #include "Emu.h"
 
 
-Emu::Emu(size_t _indice, std::string _emuNode, std::string _ifaceName) : Link(_indice)
+Emu::Emu(const size_t &_indice, const std::string &_emuNode, const std::string &_ifaceName) : Link(_indice)
 {
   this->nodes.push_back(_emuNode);
   this->emuNode = _emuNode;

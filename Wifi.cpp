@@ -26,7 +26,7 @@
 #include "Wifi.h"
 
 
-Wifi::Wifi(size_t _indice, std::string _apNode, bool _random) : Link(_indice)
+Wifi::Wifi(const size_t &_indice, const std::string &_apNode, const bool &_random) : Link(_indice)
 {
   this->nodes.push_back(_apNode);
   this->linkName = "wifi_"+this->getIndice();

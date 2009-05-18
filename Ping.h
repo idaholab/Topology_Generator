@@ -49,7 +49,7 @@ public:
    * \param _startTime
    * \param _endTime
    */
-  Ping(size_t _indice, std::string _senderNode, std::string _receiverNode, size_t _startTime, size_t _endTime);
+  Ping(const size_t &_indice, const std::string &_senderNode, const std::string &_receiverNode, const size_t &_startTime, const size_t &_endTime);
   
   /**
    * \brief Destructor

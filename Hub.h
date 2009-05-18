@@ -46,7 +46,7 @@ public:
    * \brief Constructor
    * \param _indice the hub number
    */
-  Hub(size_t _indice);
+  Hub(const size_t &_indice);
   
   /**
    * \brief Destructor

@@ -82,7 +82,7 @@ public:
    * \param _startTime
    * \param _endTime
    */
-  Application(size_t _indice, std::string _senderNode, std::string _receiverNode, size_t _startTime, size_t _endTime);
+  Application(const size_t &_indice, const std::string &_senderNode, const std::string &_receiverNode, const size_t &_startTime, const size_t &_endTime);
   
   /**
    * \brief Destructor from the class Equipement.
@@ -114,7 +114,7 @@ public:
    * \brief Procedure to set the app number.
    * \param _indice
    */
-  void setIndice(size_t _indice);
+  void setIndice(const size_t &_indice);
   
   /**
    * \brief Function to get the app node name.
@@ -126,7 +126,7 @@ public:
    * \brief Procedure to set the app name.
    * \param _appName the new app name.
    */
-  void setAppName(std::string _appName);
+  void setAppName(const std::string &_appName);
   
   /**
    * \brief Function to get the sender node name.
@@ -138,7 +138,7 @@ public:
    * \brief Procedure to set the sender node name.
    * \param _senderNode the new sender node name.
    */
-  void setSenderNode(std::string _senderNode);
+  void setSenderNode(const std::string &_senderNode);
   
   /**
    * \brief Function to get the receiver node name.
@@ -150,7 +150,7 @@ public:
    * \brief Procedure to set the receiver node name.
    * \param _receiverNode the new receiver node name.
    */
-  void setReceiverNode(std::string _receiverNode);
+  void setReceiverNode(const std::string &_receiverNode);
   
   /**
    * \brief Function to get start time.
@@ -162,7 +162,7 @@ public:
    * \brief Procedure to set the start time.
    * \param _startTime the start time.
    */
-  void setStartTime(size_t _startTime);
+  void setStartTime(const size_t &_startTime);
   
   /**
    * \brief Function to get end time.
@@ -180,7 +180,7 @@ public:
    * \brief Procedure to set the end time.
    * \param _endTime the end time.
    */
-  void setEndTime(size_t _endTime);
+  void setEndTime(const size_t &_endTime);
   
 };
 

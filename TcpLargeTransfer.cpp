@@ -26,7 +26,7 @@
 #include "TcpLargeTransfer.h"
 #include "Generator.h"
 
-TcpLargeTransfer::TcpLargeTransfer(size_t _indice, std::string _senderNode, std::string _receiverNode, size_t _startTime, size_t _endTime, size_t _port) : Application(_indice, _senderNode, _receiverNode, _startTime, _endTime)
+TcpLargeTransfer::TcpLargeTransfer(const size_t &_indice, const std::string &_senderNode, const std::string &_receiverNode, const size_t &_startTime, const size_t &_endTime, const size_t &_port) : Application(_indice, _senderNode, _receiverNode, _startTime, _endTime)
 {
   this->port = _port;
   this->appName = "tcp_"+this->getIndice();

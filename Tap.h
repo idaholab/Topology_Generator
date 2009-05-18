@@ -49,7 +49,7 @@ public:
    * \param _tapNode the external linux host
    * \param _ifaceName the iface name
    */
-  Tap(size_t _indice, std::string _tapNode, std::string _ifaceName);
+  Tap(const size_t &_indice, const std::string &_tapNode, const std::string &_ifaceName);
   
   /**
    * \brief Destructor

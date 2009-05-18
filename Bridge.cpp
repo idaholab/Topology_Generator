@@ -27,7 +27,7 @@
 #include "Generator.h"
 
 
-Bridge::Bridge(size_t _indice, std::string _nodeBridge) : Link(_indice)
+Bridge::Bridge(const size_t &_indice, const std::string &_nodeBridge) : Link(_indice)
 {
   this->linkName = "bridge_"+this->getIndice();
   this->ndcName = "ndc_"+this->getLinkName();

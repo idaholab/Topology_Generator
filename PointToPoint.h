@@ -46,7 +46,7 @@ public:
    * \brief Constructor
    * \param _indice the PointToPoint number
    */
-  PointToPoint(size_t _indice);
+  PointToPoint(const size_t &_indice);
   
   /**
    * \brief Destructor

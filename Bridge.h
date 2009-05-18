@@ -47,7 +47,7 @@ public:
    * \param _indice the Bridge number
    * \param _nodeBridge the node which are the bridge.
    */
-  Bridge(size_t _indice, std::string _nodeBridge);
+  Bridge(const size_t &_indice, const std::string &_nodeBridge);
   
   /**
    * \brief Destructor

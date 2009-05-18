@@ -26,7 +26,7 @@
 #include "Hub.h"
 
 
-Hub::Hub(size_t _indice) : Link(_indice)
+Hub::Hub(const size_t &_indice) : Link(_indice)
 {
   this->linkName = "hub_"+this->getIndice();
   this->ndcName = "ndc_"+this->getLinkName();

@@ -93,7 +93,7 @@ public:
    * \param _indice
    * \param _type
    */
-  Equipement(size_t _indice, std::string _type);
+  Equipement(const size_t &_indice, const std::string &_type);
   
   /**
    * \brief Constructor which set default value.
@@ -101,7 +101,7 @@ public:
    * \param _type
    * \param _machinesNumber
    */
-  Equipement(size_t _indice, std::string _type, size_t _machinesNumber);
+  Equipement(const size_t &_indice, const std::string &_type, const size_t &_machinesNumber);
   
   /**
    * \brief Destructor from the class Equipement.
@@ -140,7 +140,7 @@ public:
    * 
    * \param _nodeName the string which containe the node name.
    */
-  void setNodeName(std::string _nodeName);
+  void setNodeName(const std::string &_nodeName);
 
   /**
    * \brief Procedure to set the ip and mask.
@@ -151,7 +151,7 @@ public:
    * \param _ip the ip.
    * \param _mask the mask.
    */
-  void setIpv4Address(std::string _ip, std::string _mask);
+  void setIpv4Address(const std::string &_ip, const std::string &_mask);
 
   /**
    * \brief Procedure to set the Ip interface name.
@@ -161,7 +161,7 @@ public:
    *
    * \param _ipInterfaceName
    */
-  void setIpInterfaceName(std::string _ipInterfaceName);
+  void setIpInterfaceName(const std::string &_ipInterfaceName);
   
   /**
    * \brief Procedure to set the graphical position of the equipement.
@@ -172,7 +172,7 @@ public:
    * \param _x the x position.
    * \param _y the y position.
    */
-   void setPosition(size_t _x, size_t _y);
+   void setPosition(const size_t &_x, const size_t &_y);
 
   /**
    * \brief Function wich return the node name.
@@ -186,7 +186,7 @@ public:
    * \param number
    * \return node name.
    */
-  std::string getNodeName(size_t number);
+  std::string getNodeName(const size_t &number);
 
   /**
    * \brief Function wich return the name of the Ip interface.
@@ -240,7 +240,13 @@ public:
    * \brief Procedure to set the nsc use.
    * \param _nsc
    */
-  void setNsc(std::string _nsc);
+  void setNsc(const std::string &_nsc);
+  
+  /**
+   * \brief get the number of machines container un the node.
+   * \return number
+   */
+  size_t getMachinesNumber();
  
 };
 

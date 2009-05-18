@@ -25,8 +25,9 @@
 
 #include "Link.h"
 #include "Generator.h"
+#include <stdexcept>
 
-Link::Link(size_t _indice)
+Link::Link(const size_t &_indice)
 {
   this->indice = _indice;
   this->dataRate = "100Mbps";
@@ -67,27 +68,27 @@ std::vector<std::string> Link::getNodes()
   return this->nodes;
 }
   
-void Link::setLinkName(std::string _linkName)
+void Link::setLinkName(const std::string &_linkName)
 {
   this->linkName = _linkName;
 }
 
-void Link::setDataRate(std::string _dataRate)
+void Link::setDataRate(const std::string &_dataRate)
 {
   this->dataRate = _dataRate;
 }
   
-void Link::setLinkDelay(std::string _linkDelay)
+void Link::setLinkDelay(const std::string &_linkDelay)
 {
   this->linkDelay = _linkDelay;
 }
 
-void Link::setNdcName(std::string _ndcName)
+void Link::setNdcName(const std::string &_ndcName)
 {
   this->ndcName = _ndcName;
 }
 
-void Link::AddNodes(std::string _node)
+void Link::AddNodes(const std::string &_node)
 {
   this->nodes.push_back(_node);
   std::vector<std::string> trans;

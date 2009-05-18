@@ -49,7 +49,7 @@ public:
    * \param _emuNode the external linux host
    * \param _ifaceName the iface name
    */
-  Emu(size_t _indice, std::string _emuNode, std::string _ifaceName);
+  Emu(const size_t &_indice, const std::string &_emuNode, const std::string &_ifaceName);
   
   /**
    * \brief Destructor

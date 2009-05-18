@@ -26,7 +26,7 @@
 #include "PointToPoint.h"
 
 
-PointToPoint::PointToPoint(size_t _indice) : Link(_indice)
+PointToPoint::PointToPoint(const size_t &_indice) : Link(_indice)
 {
   this->linkName = "p2p_"+this->getIndice();
   this->ndcName = "ndc_"+this->getLinkName();

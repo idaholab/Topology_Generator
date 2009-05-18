@@ -26,7 +26,7 @@
 #include "Tap.h"
 
 
-Tap::Tap(size_t _indice, std::string _tapNode, std::string _ifaceName) : Link(_indice)
+Tap::Tap(const size_t &_indice, const std::string &_tapNode, const std::string &_ifaceName) : Link(_indice)
 {
   this->nodes.push_back(_tapNode);
   this->tapNode = _tapNode;

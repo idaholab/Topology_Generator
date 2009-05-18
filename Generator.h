@@ -50,12 +50,23 @@ public:
    * \brief the simulation name.
    */
   std::string simulationName;
+  
+  /**
+   * \brief the configuration list.
+   */
+  std::vector<std::string> listConfiguration;
+  
+  /**
+   * \brief Procedure to add a config line.
+   * \param config
+   */
+  void AddConfig(const std::string &config);
 
   /**
    * \brief the generator of the class Generator.
    * \param _simulationName
    */
-  Generator(std::string _simulationName);
+  Generator(const std::string &_simulationName);
   
   /**
    * \brief the destructor of the class.
@@ -113,7 +124,7 @@ public:
    * 
    * \param type the type of the equipement. (Pc, Hub, Switch,...)
    */
-  void AddEquipement(std::string type);
+  void AddEquipement(const std::string &type);
   
   /**
    * \brief Procedure used to add an equipement.
@@ -123,7 +134,13 @@ public:
    * 
    * \param machinesNumber the number of machines to create.
    */
-  void AddEquipement(size_t machinesNumber);
+  void AddEquipement(const size_t &machinesNumber);
+  
+  /**
+   * \brief Procedure used to remove an equipement elem.
+   * \param number the equipement number to remove
+   */
+  void RemoveEquipement(const size_t &number);
   
   
   //
@@ -168,7 +185,7 @@ public:
    * \param endTime
    * \param port
    */
-  void AddApplication(std::string type, std::string senderNode, std::string receiverNode, size_t startTime, size_t endTime, size_t port);
+  void AddApplication(const std::string &type, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime, const size_t &port);
   
   /**
    * \brief Procedure used to add an appplication.
@@ -182,8 +199,13 @@ public:
    * \param startTime
    * \param endTime
    */
-  void AddApplication(std::string type, std::string senderNode, std::string receiverNode, size_t startTime, size_t endTime);
+  void AddApplication(const std::string &type, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime);
 
+  /**
+   * \brief Procedure used to remove an application elem.
+   * \param number the application number to remove
+   */
+  void RemoveApplication(const size_t &number);
   
   //
   // Part of Link.
@@ -237,7 +259,7 @@ public:
    * 
    * \param type the type of the link. (PointToPoint, Csma,...)
    */
-  void AddLink(std::string type);
+  void AddLink(const std::string &type);
   
   /**
    * \brief See the Precedure AddLink(*)
@@ -245,7 +267,7 @@ public:
    * \param type
    * \param linkNode
    */
-  void AddLink(std::string type, std::string linkNode);
+  void AddLink(const std::string &type, const std::string &linkNode);
   
    /**
    * \brief See the Precedure AddLink(*)
@@ -254,7 +276,7 @@ public:
    * \param linkNode
    * \param mobility
    */
-  void AddLink(std::string type, std::string linkNode, bool mobility);
+  void AddLink(const std::string &type, const std::string &linkNode, const bool &mobility);
   
   /**
    * \brief See the Precedure AddLink(*)
@@ -263,8 +285,13 @@ public:
    * \param linkNode
    * \param ifaceName
    */
-  void AddLink(std::string type, std::string linkNode, std::string ifaceName);
+  void AddLink(const std::string &type, const std::string &linkNode, const std::string &ifaceName);
 
+  /**
+   * \brief Procedure used to remove an link elem.
+   * \param number the link number to remove
+   */
+  void RemoveLink(const size_t &number);
  
   //
   // Part around the code Generation.
@@ -404,14 +431,14 @@ private:
    *
    * \param _xmlFileNam, the new xml file name.
    */
-  void setXmlFileName(std::string _xmlFileName );
+  void setXmlFileName(const std::string &_xmlFileName );
 
   /**
    * \brief Procedure wich write the simulation into xml file.
    * 
    * \param _line, the line to add to the xml file.
    */
-  void WriteXml(std::string _line);
+  void WriteXml(const std::string &_line);
   
   /**
    * \brief procedure wich open and print graphicaly the xml file.
@@ -441,14 +468,14 @@ private:
    * 
    * \param _cppFileName, the new c++ file name
    */
-  void setCppFileName(std::string _cppFileName );
+  void setCppFileName(const std::string &_cppFileName);
   
   /**
    * \brief Procedure to write c++ code into the attribute file name.
    * 
    * \param _line the new line to add to the attribute file name.
    */
-  void WriteCpp(std::string _line);
+  void WriteCpp(const std::string &_line);
   
   
   
@@ -474,14 +501,14 @@ private:
    * 
    * \param _pyFileName the new python file name.
    */
-  void setPyFileName(std::string _pyFileName);
+  void setPyFileName(const std::string &_pyFileName);
   
   /**
    * \brief Procedure to write python code into the attribute file name.
    * 
    * \param _line, the line to be writted. 
    */
-   void WritePython(std::string _line);
+   void WritePython(const std::string &_line);
    
 public :
   /**
@@ -489,7 +516,7 @@ public :
    * \param nbr the number to convert.
    * \return the string of the number.
    */
-  static std::string toString(size_t nbr);
+  static std::string toString(const size_t nbr);
 
 };
 

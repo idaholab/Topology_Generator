@@ -27,7 +27,7 @@
 #include "Generator.h"
 #include <sstream>
 
-Equipement::Equipement(size_t _indice, std::string _type)
+Equipement::Equipement(const size_t &_indice, const std::string &_type)
 {
   this->indice = _indice;
   this->nodeName = _type + Generator::toString(_indice);
@@ -40,7 +40,7 @@ Equipement::Equipement(size_t _indice, std::string _type)
    this->machinesNumber = 1;	
 }
 
-Equipement::Equipement(size_t _indice, std::string _type, size_t _machinesNumber)
+Equipement::Equipement(const size_t &_indice, const std::string &_type, const size_t &_machinesNumber)
 {
   this->indice = _indice;
   this->nodeName = _type + Generator::toString(_indice);
@@ -88,18 +88,18 @@ std::vector<std::string> Equipement::GenerateIpStack()
   return stack; 
 }
   
-void Equipement::setNodeName(std::string _nodeName)
+void Equipement::setNodeName(const std::string &_nodeName)
 {
   this->nodeName = _nodeName;
 }
 
-void Equipement::setIpv4Address(std::string _ip, std::string _mask)
+void Equipement::setIpv4Address(const std::string &_ip, const std::string &_mask)
 {
   this->ip = _ip;
   this->mask = _mask;
 }
 
-void Equipement::setIpInterfaceName(std::string _ipInterfaceName)
+void Equipement::setIpInterfaceName(const std::string &_ipInterfaceName)
 {
   this->ipInterfaceName = _ipInterfaceName;
 }
@@ -109,7 +109,7 @@ std::string Equipement::getNodeName()
   return this->nodeName;
 }
 
-std::string Equipement::getNodeName(size_t number)
+std::string Equipement::getNodeName(const size_t &number)
 {
   return std::string("NodeContainer("+this->nodeName+".Get("+Generator::toString(number)+"))");
 }
@@ -119,7 +119,7 @@ std::string Equipement::getIpInterfaceName()
   return this->ipInterfaceName;
 }
  
-void Equipement::setPosition(size_t _x, size_t _y)
+void Equipement::setPosition(const size_t &_x, const size_t &_y)
 {
   this->x = _x;
   this->y = _y;
@@ -155,9 +155,14 @@ std::string Equipement::getNsc()
   return this->nsc;
 }
   
-void Equipement::setNsc(std::string _nsc)
+void Equipement::setNsc(const std::string &_nsc)
 {
   this->nsc = _nsc;
+}
+
+size_t Equipement::getMachinesNumber()
+{
+  return this->machinesNumber;
 }
 
 

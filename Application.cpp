@@ -26,7 +26,7 @@
 #include "Application.h"
 #include "Generator.h"
 
-Application::Application(size_t _indice, std::string _senderNode, std::string _receiverNode, size_t _startTime, size_t _endTime)
+Application::Application(const size_t &_indice, const std::string &_senderNode, const std::string &_receiverNode, const size_t &_startTime, const size_t &_endTime)
 {
   this->indice = _indice;
   //this->appName = "";//into child
@@ -46,7 +46,7 @@ std::string Application::getIndice()
   return Generator::toString(this->indice);
 }
   
-void Application::setIndice(size_t _indice)
+void Application::setIndice(const size_t &_indice)
 {
   this->indice = _indice;
 }
@@ -56,7 +56,7 @@ std::string Application::getAppName()
   return this->appName;
 }
   
-void Application::setAppName(std::string _appName)
+void Application::setAppName(const std::string &_appName)
 {
   this->appName = _appName;
 }
@@ -66,7 +66,7 @@ std::string Application::getSenderNode()
   return this->senderNode;
 }
   
-void Application::setSenderNode(std::string _senderNode)
+void Application::setSenderNode(const std::string &_senderNode)
 {
   this->senderNode = _senderNode;
 }
@@ -76,7 +76,7 @@ std::string Application::getReceiverNode()
   return this->receiverNode;
 }
   
-void Application::setReceiverNode(std::string _receiverNode)
+void Application::setReceiverNode(const std::string &_receiverNode)
 {
   this->receiverNode = _receiverNode;
 }
@@ -86,7 +86,7 @@ std::string Application::getStartTime()
   return Generator::toString(this->startTime);
 }
  
-void Application::setStartTime(size_t _startTime)
+void Application::setStartTime(const size_t &_startTime)
 {
   this->startTime = _startTime;
 }
@@ -101,7 +101,7 @@ size_t Application::getEndTimeNumber()
   return this->endTime;
 }
  
-void Application::setEndTime(size_t _endTime)
+void Application::setEndTime(const size_t &_endTime)
 {
   this->endTime = _endTime;
 }

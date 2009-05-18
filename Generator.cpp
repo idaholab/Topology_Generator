@@ -24,7 +24,9 @@
 */
 
 #include <sstream>
+#include <iostream>
 #include <stdlib.h> 
+#include <stdexcept>
 
 #include "Generator.h"
 #include "Equipement.h"
@@ -39,7 +41,7 @@
 #include "Tap.h"
 #include "Emu.h"
 
-Generator::Generator(std::string _simulationName)
+Generator::Generator(const std::string &_simulationName)
 {
   this->simulationName = _simulationName;
   
@@ -87,42 +89,58 @@ Generator::~Generator()
   }
 }
 
+void Generator::AddConfig(const std::string &config)
+{
+  bool isDuplicate = false;
+  for(size_t i = 0; i < (size_t) this->listConfiguration.size(); i++)
+  {
+    if(config.compare(this->listConfiguration.at(i)) == 0)
+    {
+      isDuplicate = true;
+    }
+  }
+  if(!isDuplicate)
+  {
+    this->listConfiguration.push_back(config);
+  }
+}
+
 //
 // Part of Equipement.
 //
-void Generator::AddEquipement(std::string type) 
+void Generator::AddEquipement(const std::string &type) 
 {
   Equipement *equi = NULL;
   
   // call to the right type constructor. 
   if(type.compare("Pc") == 0)
   {
-  	equi = new Equipement(this->indiceEquipementPc, "node_");
+  	equi = new Equipement(this->indiceEquipementPc, std::string("node_"));
   	this->indiceEquipementPc += 1;
   } 
   else if(type.compare("Router") == 0)
   {
-  	equi = new Equipement(this->indiceEquipementRouter, "router_");
+  	equi = new Equipement(this->indiceEquipementRouter, std::string("router_"));
   	this->indiceEquipementRouter += 1;
   } 
   else if(type.compare("Ap") == 0)
   {
-  	equi = new Equipement(this->indiceEquipementAp, "ap_");
+  	equi = new Equipement(this->indiceEquipementAp, std::string("ap_"));
   	this->indiceEquipementAp += 1;
   } 
   else if(type.compare("Station") == 0)
   {
-    equi = new Equipement(this->indiceEquipementStation, "station_");
+    equi = new Equipement(this->indiceEquipementStation, std::string("station_"));
   	this->indiceEquipementStation += 1;
   } 
   else if(type.compare("Bridge") == 0)
   {
-    equi = new Equipement(this->indiceEquipementBridge, "bridge_");
+    equi = new Equipement(this->indiceEquipementBridge, std::string("bridge_"));
   	this->indiceEquipementBridge += 1;
   } 
   else if(type.compare("Tap") == 0)
   {
-  	equi = new Equipement(this->indiceEquipementTap, "tap_");
+  	equi = new Equipement(this->indiceEquipementTap, std::string("tap_"));
   	this->indiceEquipementTap += 1;
   } 
  
@@ -134,16 +152,32 @@ void Generator::AddEquipement(std::string type)
   
 }
 
-void Generator::AddEquipement(size_t machinesNumber) 
+void Generator::AddEquipement(const size_t &machinesNumber) 
 {
-  Equipement *equi = new Equipement(this->indiceEquipementPc, "nodesGroup_", machinesNumber);
+  Equipement *equi = new Equipement(this->indiceEquipementPc, std::string("nodesGroup_"), machinesNumber);
   this->indiceEquipementPc += 1;
   this->listEquipement.push_back(equi);
+}
+
+void Generator::RemoveEquipement(const size_t &number)
+{
+  if(number < this->listEquipement.size())
+  {
+    delete this->listEquipement[number];
+    this->listEquipement.erase(this->listEquipement.begin() + number);
+  }
+  else
+  {
+    throw std::logic_error("Remove failed ... Number is out of range.\n");
+  }
+  
 }
 //
 // Part of Application.
 //
-void Generator::AddApplication(std::string type, std::string senderNode, std::string receiverNode, size_t startTime, size_t endTime, size_t port) 
+void Generator::AddApplication(const std::string &type, const std::string &senderNode, 
+                               const std::string &receiverNode, const size_t &startTime, 
+                               const size_t &endTime, const size_t &port) 
 {
   if(type.compare("UdpEcho") == 0)
   {
@@ -160,7 +194,8 @@ void Generator::AddApplication(std::string type, std::string senderNode, std::st
   
 }
 
-void Generator::AddApplication(std::string type, std::string senderNode, std::string receiverNode, size_t startTime, size_t endTime) 
+void Generator::AddApplication(const std::string &type, const std::string &senderNode, 
+                               const std::string &receiverNode, const size_t &startTime, const size_t &endTime) 
 {
   if(type.compare("Ping") == 0)
   {
@@ -170,10 +205,23 @@ void Generator::AddApplication(std::string type, std::string senderNode, std::st
   } 
 }
 
+void Generator::RemoveApplication(const size_t &number)
+{
+  if(number < this->listApplication.size())
+  {
+    delete this->listApplication[number];
+    this->listApplication.erase(this->listApplication.begin() + number);
+  }
+  else
+  {
+    throw std::logic_error("Remove failed ... Number is out of range.\n");
+  }
+}
+
 //
 // Part of Link.
 //
-void Generator::AddLink(std::string type) 
+void Generator::AddLink(const std::string &type) 
 {
   // call to the right type constructor. 
   if(type.compare("Hub") == 0)
@@ -190,7 +238,7 @@ void Generator::AddLink(std::string type)
   } 
 }
 
-void Generator::AddLink(std::string type, std::string linkNode) 
+void Generator::AddLink(const std::string &type, const std::string &linkNode) 
 {
   if(type.compare("Bridge") == 0)
   {
@@ -201,7 +249,7 @@ void Generator::AddLink(std::string type, std::string linkNode)
   
 }
 
-void Generator::AddLink(std::string type, std::string linkNode, bool mobility)
+void Generator::AddLink(const std::string &type, const std::string &linkNode, const bool &mobility)
 {
   if(type.compare("Wifi") == 0)
   {
@@ -211,7 +259,7 @@ void Generator::AddLink(std::string type, std::string linkNode, bool mobility)
   } 
 }
 
-void Generator::AddLink(std::string type, std::string linkNode, std::string ifaceName)
+void Generator::AddLink(const std::string &type, const std::string &linkNode, const std::string &ifaceName)
 { 
   if(type.compare("Emu") == 0)
   {
@@ -225,6 +273,19 @@ void Generator::AddLink(std::string type, std::string linkNode, std::string ifac
   	this->indiceLinkTap += 1;
   	this->listLink.push_back(link);
   } 
+}
+
+void Generator::RemoveLink(const size_t &number)
+{
+  if(number < this->listLink.size())
+  {
+    delete this->listLink[number];
+    this->listLink.erase(this->listLink.begin() + number);
+  }
+  else
+  {
+    throw std::logic_error("Remove failed ... Number is out of range.\n");
+  }
 }
 
 //
@@ -519,38 +580,42 @@ std::vector<std::string> Generator::GenerateCmdLine()
 
 std::vector<std::string> Generator::GenerateConfig() 
 {
-  std::vector<std::string> allConf;
   for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
   {
     if( ((this->listEquipement.at(i))->getNodeName()).find("tap_") == 0 )
     {
-      if(allConf.size() == 0)
-      {
-        allConf.push_back("GlobalValue::Bind (\"SimulatorImplementationType\", StringValue (\"ns3::RealtimeSimulatorImpl\"));");
-        allConf.push_back("Config::SetDefault (\"ns3::Ipv4L3Protocol::CalcChecksum\", BooleanValue (true));");
-        allConf.push_back("Config::SetDefault (\"ns3::Icmpv4L4Protocol::CalcChecksum\", BooleanValue (true)); ");
-        allConf.push_back("Config::SetDefault (\"ns3::TcpL4Protocol::CalcChecksum\", BooleanValue (true));");
-        allConf.push_back("Config::SetDefault (\"ns3::UdpL4Protocol::CalcChecksum\", BooleanValue (true));"); 
-        break; 
-      }
+      this->AddConfig("GlobalValue::Bind (\"SimulatorImplementationType\", StringValue (\"ns3::RealtimeSimulatorImpl\"));");
+      this->AddConfig("Config::SetDefault (\"ns3::Ipv4L3Protocol::CalcChecksum\", BooleanValue (true));");
+      this->AddConfig("Config::SetDefault (\"ns3::Icmpv4L4Protocol::CalcChecksum\", BooleanValue (true)); ");
+      this->AddConfig("Config::SetDefault (\"ns3::TcpL4Protocol::CalcChecksum\", BooleanValue (true));");
+      this->AddConfig("Config::SetDefault (\"ns3::UdpL4Protocol::CalcChecksum\", BooleanValue (true));");
     }
   }
-  
+
   for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
-  {
+  { 
     if( ((this->listLink.at(i))->getLinkName()).find("emu_") == 0 )
     {
-      if(allConf.size() == 0)
-      {
-        allConf.push_back("GlobalValue::Bind (\"SimulatorImplementationType\", StringValue (\"ns3::RealtimeSimulatorImpl\"));");
-        allConf.push_back("Config::SetDefault (\"ns3::Ipv4L3Protocol::CalcChecksum\", BooleanValue (true));");
-        allConf.push_back("Config::SetDefault (\"ns3::Icmpv4L4Protocol::CalcChecksum\", BooleanValue (true)); ");
-        allConf.push_back("Config::SetDefault (\"ns3::TcpL4Protocol::CalcChecksum\", BooleanValue (true));");
-        allConf.push_back("Config::SetDefault (\"ns3::UdpL4Protocol::CalcChecksum\", BooleanValue (true));"); 
-        break; 
-      }
+      this->AddConfig("GlobalValue::Bind (\"SimulatorImplementationType\", StringValue (\"ns3::RealtimeSimulatorImpl\"));");
+      this->AddConfig("Config::SetDefault (\"ns3::Ipv4L3Protocol::CalcChecksum\", BooleanValue (true));");
+      this->AddConfig("Config::SetDefault (\"ns3::Icmpv4L4Protocol::CalcChecksum\", BooleanValue (true)); ");
+      this->AddConfig("Config::SetDefault (\"ns3::TcpL4Protocol::CalcChecksum\", BooleanValue (true));");
+      this->AddConfig("Config::SetDefault (\"ns3::UdpL4Protocol::CalcChecksum\", BooleanValue (true));");
     }
+  } 
+  
+  //~ allConf.push_back("GlobalValue::Bind (\"SimulatorImplementationType\", StringValue (\"ns3::RealtimeSimulatorImpl\"));");
+  //~ allConf.push_back("Config::SetDefault (\"ns3::Ipv4L3Protocol::CalcChecksum\", BooleanValue (true));");
+  //~ allConf.push_back("Config::SetDefault (\"ns3::Icmpv4L4Protocol::CalcChecksum\", BooleanValue (true)); ");
+  //~ allConf.push_back("Config::SetDefault (\"ns3::TcpL4Protocol::CalcChecksum\", BooleanValue (true));");
+  //~ allConf.push_back("Config::SetDefault (\"ns3::UdpL4Protocol::CalcChecksum\", BooleanValue (true));"); 
+    
+  std::vector<std::string> allConf;
+  for(size_t i = 0; i < (size_t) this->listConfiguration.size(); i++)
+  {
+    allConf.push_back(this->listConfiguration.at(i));
   }
+  
   return allConf;
 }
 
@@ -563,7 +628,7 @@ std::vector<std::string> Generator::GenerateNode()
     std::vector<std::string> trans = (this->listEquipement.at(i))->GenerateNode();
     for(size_t j = 0; j < (size_t) trans.size(); j++)
     {
-      allNodes.push_back(trans.at(j));
+        allNodes.push_back(trans.at(j));
     }
   }
   return allNodes;
@@ -767,18 +832,15 @@ std::vector<std::string> Generator::GenerateApplication()
     /* get NetDeviceContainer and number from the receiver. */
     
     std::string receiverName = this->listApplication.at(i)->getReceiverNode();
-//~ std::cout << "receiver :" << receiverName << std::endl;
     for(size_t j = 0; j < (size_t) this->listLink.size(); j++)
     {
       std::vector<std::string> nodes = (this->listLink.at(j))->getNodes();
       for(size_t k = 0; k < (size_t) nodes.size(); k++)
       {
-//~ std::cout << "node at(k) " << nodes.at(k) << std::endl;
         if( (nodes.at(k)).compare(receiverName) == 0 || nodes.at(k).find("nodesGroup_") == 0)
         {
           /* this means that the node is in this link.*/
           ndcName = (this->listLink.at(j))->getNdcName();
-//~ std::cout << "ndc name "<<ndcName<<std::endl;
           if(nodes.at(k).find("nodesGroup_") == 0)
           {
             std::string nodeNumberToken("");
@@ -849,12 +911,12 @@ std::string Generator::getXmlFileName()
   return this->xmlFileName;
 }
 
-void Generator::WriteXml(std::string _line) 
+void Generator::WriteXml(const std::string &_line) 
 {
   std::cout << _line << std::endl;
 }
 
-void Generator::setXmlFileName(std::string _xmlFileName) 
+void Generator::setXmlFileName(const std::string &_xmlFileName) 
 {
   this->xmlFileName = _xmlFileName;
 }
@@ -868,12 +930,12 @@ std::string Generator::getCppFileName()
   return this->cppFileName;
 }
 
-void Generator::setCppFileName(std::string _cppFileName ) 
+void Generator::setCppFileName(const std::string &_cppFileName ) 
 {
   this->cppFileName = _cppFileName;
 }
 
-void Generator::WriteCpp(std::string _line) 
+void Generator::WriteCpp(const std::string &_line) 
 {
   std::cout << _line << std::endl;
 }
@@ -882,7 +944,7 @@ void Generator::WriteCpp(std::string _line)
 // Python generation operation part.
 //
   
-void Generator::WritePython(std::string _line)
+void Generator::WritePython(const std::string &_line)
 {
    std::cout << _line << std::endl;
 }
@@ -892,7 +954,7 @@ std::string Generator::getPyFileName()
   return this->pyFileName;
 }
 
-void Generator::setPyFileName(std::string _pyFileName ) 
+void Generator::setPyFileName(const std::string &_pyFileName ) 
 {
   this->pyFileName = _pyFileName;
 }
@@ -901,7 +963,7 @@ void Generator::setPyFileName(std::string _pyFileName )
 //
 //
 
-std::string Generator::toString(size_t nbr)
+std::string Generator::toString(const size_t nbr)
 {
   std::ostringstream out;
   out << nbr;
