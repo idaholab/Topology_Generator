@@ -29,7 +29,7 @@ using namespace std;
 #include <iostream>
 
 
-#include "core/Generator.h"
+#include "kern/Generator.h"
 #include "gui/dragwidget.h"
 #include "gui/Graph.h"
 
@@ -86,7 +86,7 @@ void ConnectNode(const Generator *gen, const size_t &linkNumber, const std::stri
   gen->listLink.at(linkNumber)->AddNodes(nodeName);
 }
 
-int main()
+int main(int argc, char *argv[])
 {
   Generator *gen = new Generator(std::string("Simulation-Name"));
   
