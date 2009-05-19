@@ -25,16 +25,24 @@ using namespace std;
 #include <limits>
 #include <stdexcept>
 
-Generator *gen;
 
 //
 // This class is written to test all the implementation of the generator code.
 //
 
-void ConnectNode(const size_t &linkNumber, const std::string &nodeName)
+void ConnectNode(const Generator *gen, const size_t &linkNumber, const std::string &nodeName)
 {
-  size_t numberOfConnectedMachines = 0;
+  /* test if the link exist. */
+  try
+  {
+    gen->listLink.at(linkNumber);
+  }
+    catch(const std::out_of_range &e)
+    {
+      throw std::logic_error("This link doesn't exist.\n");
+    }
   
+  size_t numberOfConnectedMachines = 0;
   /* get the number of machines to add */
   if(nodeName.find("Get") == 0)
   {
@@ -72,47 +80,58 @@ void ConnectNode(const size_t &linkNumber, const std::string &nodeName)
 
 int main()
 {
-  gen = new Generator(std::string("Simulation-Name"));
+  Generator *gen = new Generator(std::string("Simulation-Name"));
   
-  /* Add Equipement : */
-  gen->AddEquipement(9);//note that the central node of the star is number 0.
-  
-  /* Add the bridge. */
-  gen->AddLink("Hub");
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(0)->getNodeName(1));
-  
-  gen->AddLink("Hub");
-  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
-  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(0)->getNodeName(2));
-  
-  gen->AddLink("Hub");
-  gen->listLink.at(2)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
-  gen->listLink.at(2)->AddNodes(gen->listEquipement.at(0)->getNodeName(3));
-  
-  gen->AddLink("Hub");
-  gen->listLink.at(3)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
-  gen->listLink.at(3)->AddNodes(gen->listEquipement.at(0)->getNodeName(4));
-  
-  gen->AddLink("Hub");
-  gen->listLink.at(4)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
-  gen->listLink.at(4)->AddNodes(gen->listEquipement.at(0)->getNodeName(5));
-  
-  gen->AddLink("Hub");
-  gen->listLink.at(5)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
-  gen->listLink.at(5)->AddNodes(gen->listEquipement.at(0)->getNodeName(6));
-  
-  gen->AddLink("Hub");
-  gen->listLink.at(6)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
-  gen->listLink.at(6)->AddNodes(gen->listEquipement.at(0)->getNodeName(7));
-  
-  gen->AddLink("Hub");
-  gen->listLink.at(7)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
-  gen->listLink.at(7)->AddNodes(gen->listEquipement.at(0)->getNodeName(8));
-  
-  
-  /* Add an application */
-  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(1), gen->listEquipement.at(0)->getNodeName(5), 0, 5);// 0 start time - 5 end time
+  try
+  {
+    /* Add Equipement : */
+    gen->AddEquipement(9);//note that the central node of the star is number 0.
+    
+    /* Add the bridge. */
+    gen->AddLink("Hub");
+    ConnectNode(gen, 0, gen->listEquipement.at(0)->getNodeName(0));
+    ConnectNode(gen, 0, gen->listEquipement.at(0)->getNodeName(1));
+    
+    gen->AddLink("Hub");
+    ConnectNode(gen, 1, gen->listEquipement.at(0)->getNodeName(0));
+    ConnectNode(gen, 1, gen->listEquipement.at(0)->getNodeName(2));
+    
+    gen->AddLink("Hub");
+    ConnectNode(gen, 2, gen->listEquipement.at(0)->getNodeName(0));
+    ConnectNode(gen, 2, gen->listEquipement.at(0)->getNodeName(3));
+    
+    gen->AddLink("Hub");
+    ConnectNode(gen, 3, gen->listEquipement.at(0)->getNodeName(0));
+    ConnectNode(gen, 3, gen->listEquipement.at(0)->getNodeName(4));
+    
+    gen->AddLink("Hub");
+    ConnectNode(gen, 4, gen->listEquipement.at(0)->getNodeName(0));
+    ConnectNode(gen, 4, gen->listEquipement.at(0)->getNodeName(5));
+    
+    gen->AddLink("Hub");
+    ConnectNode(gen, 5, gen->listEquipement.at(0)->getNodeName(0));
+    ConnectNode(gen, 5, gen->listEquipement.at(0)->getNodeName(6));
+    
+    gen->AddLink("Hub");
+    ConnectNode(gen, 6, gen->listEquipement.at(0)->getNodeName(0));
+    ConnectNode(gen, 6, gen->listEquipement.at(0)->getNodeName(7));
+    
+    gen->AddLink("Hub");
+    ConnectNode(gen, 7, gen->listEquipement.at(0)->getNodeName(0));
+    ConnectNode(gen, 7, gen->listEquipement.at(0)->getNodeName(8));
+    
+    /* Add an application */
+    gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(1), gen->listEquipement.at(0)->getNodeName(5), 0, 5);// 0 start time - 5 end time
+  }
+    catch (const std::out_of_range &e)
+    {
+      std::cerr << e.what() << '\n';
+    }
+    catch (const std::exception &e)
+    {
+      std::cerr << e.what() << '\n';
+    }
+    
 
 	//Generate de application code. 
   gen->GenerateCode();

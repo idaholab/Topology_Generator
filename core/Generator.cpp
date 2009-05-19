@@ -149,7 +149,10 @@ void Generator::AddEquipement(const std::string &type)
   {
     this->listEquipement.push_back(equi);
   }
-  
+  else
+  {
+    throw std::logic_error("Wrong type or forget some param.\n");
+  }
 }
 
 void Generator::AddEquipement(const size_t &machinesNumber) 
@@ -191,6 +194,10 @@ void Generator::AddApplication(const std::string &type, const std::string &sende
     this->indiceApplicationTcpLargeTransfer += 1;
     this->listApplication.push_back(app);
   }
+  else
+  {
+    throw std::logic_error("Wrong type or forget some param.\n");
+  }
   
 }
 
@@ -202,6 +209,10 @@ void Generator::AddApplication(const std::string &type, const std::string &sende
     Ping *app = new Ping(this->indiceApplicationPing, senderNode, receiverNode, startTime, endTime);
     this->indiceApplicationPing += 1;
     this->listApplication.push_back(app);
+  }
+  else
+  {
+    throw std::logic_error("Wrong type or forget some param.\n");
   } 
 }
 
@@ -236,6 +247,10 @@ void Generator::AddLink(const std::string &type)
   	this->indiceLinkPointToPoint += 1;
     this->listLink.push_back(link);
   } 
+  else
+  {
+    throw std::logic_error("Wrong type or forget some param.\n");
+  }
 }
 
 void Generator::AddLink(const std::string &type, const std::string &linkNode) 
@@ -246,7 +261,10 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode)
   	this->indiceLinkBridge += 1;
     this->listLink.push_back(link);
   } 
-  
+  else
+  {
+    throw std::logic_error("Wrong type or forget some param.\n");
+  }
 }
 
 void Generator::AddLink(const std::string &type, const std::string &linkNode, const bool &mobility)
@@ -257,6 +275,10 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode, co
   	this->indiceLinkWifi += 1;
     this->listLink.push_back(link);
   } 
+  else
+  {
+    throw std::logic_error("Wrong type or forget some param.\n");
+  }
 }
 
 void Generator::AddLink(const std::string &type, const std::string &linkNode, const std::string &ifaceName)
@@ -273,6 +295,10 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode, co
   	this->indiceLinkTap += 1;
   	this->listLink.push_back(link);
   } 
+  else
+  {
+    throw std::logic_error("Wrong type or forget some param.\n");
+  }
 }
 
 void Generator::RemoveLink(const size_t &number)
