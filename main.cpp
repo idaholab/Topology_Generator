@@ -30,8 +30,7 @@ using namespace std;
 
 
 #include "kern/Generator.h"
-#include "gui/dragwidget.h"
-#include "gui/Graph.h"
+#include "gui/MainWindow.h"
 
 
 //
@@ -92,9 +91,9 @@ int main(int argc, char *argv[])
   
   QApplication app(argc, argv);
 
-  Graph fenetre;
-  fenetre.setWindowTitle("Generator");
-  fenetre.show();
+  MainWindow win;
+  win.setWindowTitle("Generator");
+  win.show();
     
   app.exec();
 	

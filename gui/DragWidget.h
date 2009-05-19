@@ -12,6 +12,7 @@ class DragWidget : public QWidget
 {
    public:
      DragWidget(QWidget *parent=0);
+     ~DragWidget();
      void CreateObject(std::string type);
      void deleteLastSelected();
      
@@ -25,4 +26,4 @@ class DragWidget : public QWidget
        
 };
 
-#endif
+#endif /* END DRAGWIDGET_H */

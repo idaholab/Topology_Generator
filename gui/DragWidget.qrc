@@ -1,4 +1,4 @@
- <!DOCTYPE RCC>
+<!DOCTYPE RCC>
  <RCC version="1.0">
  	<qresource prefix="">
     	<file>Ico/AP-Wifi.png</file>
@@ -8,4 +8,4 @@
     	<file>Ico/StationWifi.png</file>
     	<file>Ico/Del.png</file>
  	</qresource>
- </RCC>
+</RCC>

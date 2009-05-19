@@ -1,6 +1,6 @@
 #include <QtGui>
 #include <iostream>
-#include "dragwidget.h"
+#include "DragWidget.h"
 
 DragWidget::DragWidget(QWidget *parent) : QWidget(parent)
 {
@@ -9,34 +9,46 @@ DragWidget::DragWidget(QWidget *parent) : QWidget(parent)
      last = new QLabel(this);
 }
 
+DragWidget::~DragWidget()
+{
+  delete last;
+}
+
 void DragWidget::CreateObject(std::string type)
 {
 	QLabel *label = new QLabel(this);
-	if(type.compare("PC") == 0){
-     	label->setPixmap(QPixmap("Ico/PC.png"));
-     	
-     } else if(type.compare("PC-Emu") == 0){
-     	label->setPixmap(QPixmap("Ico/PC-Emu.png"));
-     	
-     } else if(type.compare("PC-Tap") == 0){
-     	label->setPixmap(QPixmap("Ico/PC-Tap.png"));
-     	
-     } else if(type.compare("AP") == 0){
-     	label->setPixmap(QPixmap("Ico/AP-Wifi.png"));
-     
- 	} else if(type.compare("StationWifi") == 0){
-     	label->setPixmap(QPixmap("Ico/StationWifi.png"));
-     	
-    } else if(type.compare("Hub") == 0){
-     	label->setPixmap(QPixmap("Ico/Hub.png"));
-     	
-    } else if(type.compare("Switch") == 0){
-     	label->setPixmap(QPixmap("Ico/Switch.png"));
-     	
-    } else if(type.compare("Router") == 0){
-     	label->setPixmap(QPixmap("Ico/Router.png"));
-     	
-    }
+	if(type.compare("Pc") == 0)
+	{
+    label->setPixmap(QPixmap("./gui/Ico/PC.png"));
+  } 
+  else if(type.compare("Emu") == 0)
+  {
+    label->setPixmap(QPixmap("./gui/Ico/PC-Emu.png"));
+  } 
+  else if(type.compare("Tap") == 0)
+  {
+    label->setPixmap(QPixmap("./gui/Ico/PC-Tap.png"));
+  } 
+  else if(type.compare("Ap") == 0)
+  {
+    label->setPixmap(QPixmap("./gui/Ico/AP-Wifi.png"));
+  } 
+  else if(type.compare("Station") == 0)
+  {
+    label->setPixmap(QPixmap("./gui/Ico/StationWifi.png"));
+  } 
+  else if(type.compare("Hub") == 0)
+  {
+    label->setPixmap(QPixmap("./gui/Ico/Hub.png"));
+  } 
+  else if(type.compare("Switch") == 0)
+  {
+    label->setPixmap(QPixmap("./gui/Ico/Switch.png"));
+  } 
+  else if(type.compare("Router") == 0)
+  {
+    label->setPixmap(QPixmap("./gui/Ico/Router.png"));
+  }
     
     label->move(10, 10);
     label->show();
