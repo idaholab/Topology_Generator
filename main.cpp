@@ -88,18 +88,18 @@ void ConnectNode(const Generator *gen, const size_t &linkNumber, const std::stri
 
 int main(int argc, char *argv[])
 {
-  Generator *gen = new Generator(std::string("Simulation-Name"));
+  //~ Generator *gen = new Generator(std::string("Simulation-Name"));
   
   QApplication app(argc, argv);
 
   Graph fenetre;
+  fenetre.setWindowTitle("Generator");
   fenetre.show();
     
   app.exec();
 	
-	
-  gen->GenerateCode();
+  //~ gen->GenerateCode();
   
-  delete gen;
+  //~ delete gen;
 }
 

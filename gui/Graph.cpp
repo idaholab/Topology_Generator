@@ -35,47 +35,47 @@ Graph::Graph()
    //
    QToolBar *toolBarFichier = addToolBar("Fichier");
    //Delete button
-   QIcon delIcon("Ico/Del.png");
+   QIcon delIcon("./gui/Ico/Del.png");
    QString delString("Delete");  
    QAction *delAction = toolBarFichier->addAction(delIcon, delString);
    connect(delAction, SIGNAL(triggered()), this, SLOT(deleteObject()));
    //PC
-   QIcon pcIcon("Ico/PC.png");
+   QIcon pcIcon("./gui/Ico/PC.png");
    QString pcString("Terminal");  
    QAction *pcAction = toolBarFichier->addAction(pcIcon, pcString);
    connect(pcAction, SIGNAL(triggered()), this, SLOT(addPC()));
    //PC-Emu
-   QIcon emuIcon("Ico/PC-Emu.png");
+   QIcon emuIcon("./gui/Ico/PC-Emu.png");
    QString emuString("PC with emu");  
    QAction *emuAction = toolBarFichier->addAction(emuIcon, emuString);
    connect(emuAction, SIGNAL(triggered()), this, SLOT(addPC_Emu()));
    //PC-Tap
-   QIcon tapIcon("Ico/PC-Tap.png");
+   QIcon tapIcon("./gui/Ico/PC-Tap.png");
    QString tapString("PC with tap");  
    QAction *tapAction = toolBarFichier->addAction(tapIcon, tapString);
    connect(tapAction, SIGNAL(triggered()), this, SLOT(addPC_Tap()));
    //AP-Wifi
-   QIcon apIcon("Ico/AP-Wifi.png");
+   QIcon apIcon("./gui/Ico/AP-Wifi.png");
    QString apString("AP Wifi");  
    QAction *apAction = toolBarFichier->addAction(apIcon, apString);
    connect(apAction, SIGNAL(triggered()), this, SLOT(addAP()));
    //StationWifi
-   QIcon stasIcon("Ico/StationWifi.png");
+   QIcon stasIcon("./gui/Ico/StationWifi.png");
    QString stasString("Station Wifi");  
    QAction *stasAction = toolBarFichier->addAction(stasIcon, stasString);
    connect(stasAction, SIGNAL(triggered()), this, SLOT(addStation()));
    //Hub
-   QIcon hubIcon("Ico/Hub.png");
+   QIcon hubIcon("./gui/Ico/Hub.png");
    QString hubString("Hub");  
    QAction *hubAction = toolBarFichier->addAction(hubIcon, hubString);
    connect(hubAction, SIGNAL(triggered()), this, SLOT(addHub()));
    //Switch
-   QIcon switchIcon("Ico/Switch.png");
+   QIcon switchIcon("./gui/Ico/Switch.png");
    QString switchString("Switch");  
    QAction *switchAction = toolBarFichier->addAction(switchIcon, switchString);
    connect(switchAction, SIGNAL(triggered()), this, SLOT(addSwitch()));
    //Router
-   QIcon routerIcon("Ico/Router.png");
+   QIcon routerIcon("./gui/Ico/Router.png");
    QString routerString("Router");  
    QAction *routerAction = toolBarFichier->addAction(routerIcon, routerString);
    connect(routerAction, SIGNAL(triggered()), this, SLOT(addRouter()));
@@ -146,7 +146,7 @@ void Graph::addRouter()
 
 void Graph::ConfigurationMenu()
 {
-    Configuration *config = new Configuration();
+    Configuration *config = new Configuration;
 }
 
 
