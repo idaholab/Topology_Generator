@@ -1,0 +1,11 @@
+ <!DOCTYPE RCC>
+ <RCC version="1.0">
+ 	<qresource prefix="">
+    	<file>Ico/AP-Wifi.png</file>
+    	<file>Ico/PC.png</file>
+    	<file>Ico/PC-Emu.png</file>
+    	<file>Ico/PC-Tap.png</file>
+    	<file>Ico/StationWifi.png</file>
+    	<file>Ico/Del.png</file>
+ 	</qresource>
+ </RCC>

@@ -19,11 +19,19 @@
 
 using namespace std;
 
-#include "core/Generator.h"
 #include <iostream>
 #include <stdlib.h>
 #include <limits>
 #include <stdexcept>
+#include <QApplication>
+#include <QtGui>
+#include <QHBoxLayout>
+#include <iostream>
+
+
+#include "core/Generator.h"
+#include "gui/dragwidget.h"
+#include "gui/Graph.h"
 
 
 //
@@ -82,60 +90,15 @@ int main()
 {
   Generator *gen = new Generator(std::string("Simulation-Name"));
   
-  try
-  {
-    /* Add Equipement : */
-    gen->AddEquipement(9);//note that the central node of the star is number 0.
-    
-    /* Add the bridge. */
-    gen->AddLink("Hub");
-    ConnectNode(gen, 0, gen->listEquipement.at(0)->getNodeName(0));
-    ConnectNode(gen, 0, gen->listEquipement.at(0)->getNodeName(1));
-    
-    gen->AddLink("Hub");
-    ConnectNode(gen, 1, gen->listEquipement.at(0)->getNodeName(0));
-    ConnectNode(gen, 1, gen->listEquipement.at(0)->getNodeName(2));
-    
-    gen->AddLink("Hub");
-    ConnectNode(gen, 2, gen->listEquipement.at(0)->getNodeName(0));
-    ConnectNode(gen, 2, gen->listEquipement.at(0)->getNodeName(3));
-    
-    gen->AddLink("Hub");
-    ConnectNode(gen, 3, gen->listEquipement.at(0)->getNodeName(0));
-    ConnectNode(gen, 3, gen->listEquipement.at(0)->getNodeName(4));
-    
-    gen->AddLink("Hub");
-    ConnectNode(gen, 4, gen->listEquipement.at(0)->getNodeName(0));
-    ConnectNode(gen, 4, gen->listEquipement.at(0)->getNodeName(5));
-    
-    gen->AddLink("Hub");
-    ConnectNode(gen, 5, gen->listEquipement.at(0)->getNodeName(0));
-    ConnectNode(gen, 5, gen->listEquipement.at(0)->getNodeName(6));
-    
-    gen->AddLink("Hub");
-    ConnectNode(gen, 6, gen->listEquipement.at(0)->getNodeName(0));
-    ConnectNode(gen, 6, gen->listEquipement.at(0)->getNodeName(7));
-    
-    gen->AddLink("Hub");
-    ConnectNode(gen, 7, gen->listEquipement.at(0)->getNodeName(0));
-    ConnectNode(gen, 7, gen->listEquipement.at(0)->getNodeName(8));
-    
-    /* Add an application */
-    gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(1), gen->listEquipement.at(0)->getNodeName(5), 0, 5);// 0 start time - 5 end time
-  }
-    catch (const std::out_of_range &e)
-    {
-      std::cerr << e.what() << '\n';
-    }
-    catch (const std::exception &e)
-    {
-      std::cerr << e.what() << '\n';
-    }
-    
+  QApplication app(argc, argv);
 
-	//Generate de application code. 
+  Graph fenetre;
+  fenetre.show();
+    
+  app.exec();
+	
+	
   gen->GenerateCode();
-  
   
   delete gen;
 }
