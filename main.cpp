@@ -33,9 +33,25 @@ using namespace std;
 #include "gui/MainWindow.h"
 
 
-//
-// This class is written to test all the implementation of the generator code.
-//
+int main(int argc, char *argv[])
+{
+  //~ Generator *gen = new Generator(std::string("Simulation-Name"));
+  
+  QApplication app(argc, argv);
+
+  MainWindow *win = new MainWindow();
+  win->setWindowTitle("Generator");
+  win->show();
+    
+  app.exec();
+	
+	
+	delete win;
+  //~ gen->GenerateCode();
+  
+  //~ delete gen;
+}
+
 
 void ConnectNode(const Generator *gen, const size_t &linkNumber, const std::string &nodeName)
 {
@@ -85,20 +101,4 @@ void ConnectNode(const Generator *gen, const size_t &linkNumber, const std::stri
   gen->listLink.at(linkNumber)->AddNodes(nodeName);
 }
 
-int main(int argc, char *argv[])
-{
-  //~ Generator *gen = new Generator(std::string("Simulation-Name"));
-  
-  QApplication app(argc, argv);
-
-  MainWindow win;
-  win.setWindowTitle("Generator");
-  win.show();
-    
-  app.exec();
-	
-  //~ gen->GenerateCode();
-  
-  //~ delete gen;
-}
 
