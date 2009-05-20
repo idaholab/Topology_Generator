@@ -8,6 +8,7 @@ MainWindow::MainWindow()
   
   this->dw = NULL;
   this->config = NULL;
+  
   //
   // Menu
   //
