@@ -6,16 +6,17 @@ DragWidget::DragWidget(QWidget *parent) : QWidget(parent)
 {
      setMinimumSize(400, 400);
      setAcceptDrops(true);
-     last = new QLabel(this);
+     //this->last = new QLabel(this);
 }
 
 DragWidget::~DragWidget()
 {
-  delete last;
+  //delete last;
 }
 
-void DragWidget::CreateObject(std::string type)
+QLabel* DragWidget::CreateObject(const std::string &type)
 {
+std::cout << "Enter CreateObject" << std::endl;
 	QLabel *label = new QLabel(this);
 	if(type.compare("Pc") == 0)
 	{
@@ -50,13 +51,16 @@ void DragWidget::CreateObject(std::string type)
     label->setPixmap(QPixmap("./gui/Ico/Router.png"));
   }
     
-    label->move(10, 10);
-    label->show();
-    label->setAttribute(Qt::WA_DeleteOnClose);  
+  label->move(10, 10);
+  label->show();
+  label->setAttribute(Qt::WA_DeleteOnClose);
+std::cout << "Out CreateObject" << std::endl;
+  return label;
 }
 
 void DragWidget::dragEnterEvent(QDragEnterEvent *event)
 {
+std::cout << "Enter dragEnterEvent" << std::endl;
      if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
          if (event->source() == this) {
              event->setDropAction(Qt::MoveAction);
@@ -67,10 +71,12 @@ void DragWidget::dragEnterEvent(QDragEnterEvent *event)
      } else {
          event->ignore();
      }
+std::cout << "Out dragEnterEvent" << std::endl;
 }
 
 void DragWidget::dropEvent(QDropEvent *event)
 {
+std::cout << "Enter dropEvent" << std::endl;
      if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
          QByteArray itemData = event->mimeData()->data("application/x-dnditemdata");
          QDataStream dataStream(&itemData, QIODevice::ReadOnly);
@@ -85,7 +91,7 @@ void DragWidget::dropEvent(QDropEvent *event)
          newIcon->show();
          newIcon->setAttribute(Qt::WA_DeleteOnClose);
          //set the last object moved.
-         last = newIcon;
+         //last = newIcon;
 
          if (event->source() == this) {
              event->setDropAction(Qt::MoveAction);
@@ -96,10 +102,12 @@ void DragWidget::dropEvent(QDropEvent *event)
      } else {
          event->ignore();
      }
+std::cout << "Out dropEvent" << std::endl;
 }
 
 void DragWidget::mousePressEvent(QMouseEvent *event)
 {
+std::cout << "Enter mousePressEvent" << std::endl;
      QLabel *child = static_cast<QLabel*>(childAt(event->pos()));
      if (!child){
          return;
@@ -133,11 +141,6 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
          child->show();
          child->setPixmap(pixmap);
      }
+std::cout << "Out mousePressEvent" << std::endl;
 }
 
-void DragWidget::deleteLastSelected()
-{
-	if(last != NULL){
-		last->clear();
-	}
-}

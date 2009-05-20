@@ -53,29 +53,9 @@ private:
   std::string nodeName;
   
   /**
-   * \brief attribute which represent the ip.
-   */
-  std::string ip;
-  
-  /**
-   * \brief attribute which represent the mask.
-   */
-  std::string mask;
-  
-  /**
    * \brief attribute which represent the ip interface name. 
    */
   std::string ipInterfaceName;
-  
-  /**
-   * \brief attribute which represent the x position of the object.
-   */
-  size_t x;
-  
-  /**
-   * \brief attribute which represent the y position of the object.
-   */
-  size_t y;
   
   /**
    * \brief attribute which represent the nsc use.
@@ -86,7 +66,7 @@ private:
    * \brief attribute which represent the number of machines.
    */
   size_t machinesNumber;
-
+  
 public:
   /**
    * \brief Constructor which set default value.
@@ -142,17 +122,7 @@ public:
    */
   void setNodeName(const std::string &_nodeName);
 
-  /**
-   * \brief Procedure to set the ip and mask.
-   *
-   * The ip have to be inserted as an ipv4 address. Example :10.0.0.1
-   * Mask example : 255.255.255.0
-   * 
-   * \param _ip the ip.
-   * \param _mask the mask.
-   */
-  void setIpv4Address(const std::string &_ip, const std::string &_mask);
-
+  
   /**
    * \brief Procedure to set the Ip interface name.
    * 
@@ -163,17 +133,6 @@ public:
    */
   void setIpInterfaceName(const std::string &_ipInterfaceName);
   
-  /**
-   * \brief Procedure to set the graphical position of the equipement.
-   *
-   * This procedure is used to change the position of an equipement.
-   * Like after a drag n drop.
-   * 
-   * \param _x the x position.
-   * \param _y the y position.
-   */
-   void setPosition(const size_t &_x, const size_t &_y);
-
   /**
    * \brief Function wich return the node name.
    *
@@ -195,34 +154,6 @@ public:
    */
   std::string getIpInterfaceName();
 
-  /**
-   * \brief Function wich return the ip address.
-   *
-   * \return ip.
-   */
-  std::string getIp();
-  
-  /**
-   * \brief Function wich return a string with the mask.
-   *
-   * \return mask.
-   */
-  std::string getMask();
-  
-  /**
-   * \brief Function which return the x position.
-   * 
-   * \return x position.
-   */
-  std::string getX();
-  
-  /**
-   * \brief Function which return the y position.
-   * 
-   * \return y position.
-   */
-  std::string getY();
-  
   /**
   * \brief Function wich return the node number.
   *
@@ -247,7 +178,7 @@ public:
    * \return number
    */
   size_t getMachinesNumber();
- 
+  
 };
 
 #endif /* EQUIPEMENT_H */

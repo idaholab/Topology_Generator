@@ -31,29 +31,20 @@ Equipement::Equipement(const size_t &_indice, const std::string &_type)
 {
   this->indice = _indice;
   this->nodeName = _type + Generator::toString(_indice);
-  this->ip = "0.0.0.0";
-  this->mask = "0.0.0.0";
   this->ipInterfaceName = "iface_"+this->nodeName;
-  this->x = 0;
-  this->y = 0;
   this->nsc = "";
-   this->machinesNumber = 1;	
+  this->machinesNumber = 1;	
 }
 
 Equipement::Equipement(const size_t &_indice, const std::string &_type, const size_t &_machinesNumber)
 {
   this->indice = _indice;
   this->nodeName = _type + Generator::toString(_indice);
-  this->ip = "0.0.0.0";
-  this->mask = "0.0.0.0";
   this->ipInterfaceName = "iface_"+this->nodeName;
-  this->x = 0;
-  this->y = 0;
   this->nsc = "";	
   this->machinesNumber = _machinesNumber;
 }
 
-//no pointer, nothing to destroy
 Equipement::~Equipement()
 {
 }
@@ -93,12 +84,6 @@ void Equipement::setNodeName(const std::string &_nodeName)
   this->nodeName = _nodeName;
 }
 
-void Equipement::setIpv4Address(const std::string &_ip, const std::string &_mask)
-{
-  this->ip = _ip;
-  this->mask = _mask;
-}
-
 void Equipement::setIpInterfaceName(const std::string &_ipInterfaceName)
 {
   this->ipInterfaceName = _ipInterfaceName;
@@ -119,32 +104,6 @@ std::string Equipement::getIpInterfaceName()
   return this->ipInterfaceName;
 }
  
-void Equipement::setPosition(const size_t &_x, const size_t &_y)
-{
-  this->x = _x;
-  this->y = _y;
-}
-
-std::string Equipement::getIp()
-{
-  return this->ip;
-}
-
-std::string Equipement::getMask()
-{
-  return this->mask;
-}
-
-std::string Equipement::getX()
-{
-  return Generator::toString(this->x);
-}
-
-std::string Equipement::getY()
-{
-  return Generator::toString(this->y);
-}
-
 std::string Equipement::getIndice()
 {
   return Generator::toString(this->indice);
@@ -164,6 +123,8 @@ size_t Equipement::getMachinesNumber()
 {
   return this->machinesNumber;
 }
+
+ 
 
 
 

@@ -3,11 +3,13 @@
 #include "MainWindow.h"
 #include "DragWidget.h"
 
-MainWindow::MainWindow()
+
+MainWindow::MainWindow(const std::string &simulationName)
 {
   
   this->dw = NULL;
   this->config = NULL;
+  this->gen = new Generator(simulationName);
   
   //
   // Menu
@@ -47,42 +49,42 @@ MainWindow::MainWindow()
   QIcon pcIcon("./gui/Ico/PC.png");
   QString pcString("Terminal");  
   QAction *pcAction = toolBarFichier->addAction(pcIcon, pcString);
-  connect(pcAction, SIGNAL(triggered()), this, SLOT(addPC()));
+  connect(pcAction, SIGNAL(triggered()), this, SLOT(CreatePc()));
   //PC-Emu
   QIcon emuIcon("./gui/Ico/PC-Emu.png");
   QString emuString("PC with emu");  
   QAction *emuAction = toolBarFichier->addAction(emuIcon, emuString);
-  connect(emuAction, SIGNAL(triggered()), this, SLOT(addPC_Emu()));
+  connect(emuAction, SIGNAL(triggered()), this, SLOT(CreateEmu()));
   //PC-Tap
   QIcon tapIcon("./gui/Ico/PC-Tap.png");
   QString tapString("PC with tap");  
   QAction *tapAction = toolBarFichier->addAction(tapIcon, tapString);
-  connect(tapAction, SIGNAL(triggered()), this, SLOT(addPC_Tap()));
+  connect(tapAction, SIGNAL(triggered()), this, SLOT(CreateTap()));
   //AP-Wifi
   QIcon apIcon("./gui/Ico/AP-Wifi.png");
   QString apString("AP Wifi");  
   QAction *apAction = toolBarFichier->addAction(apIcon, apString);
-  connect(apAction, SIGNAL(triggered()), this, SLOT(addAP()));
+  connect(apAction, SIGNAL(triggered()), this, SLOT(CreateAp()));
   //StationWifi
   QIcon stasIcon("./gui/Ico/StationWifi.png");
   QString stasString("Station Wifi");  
   QAction *stasAction = toolBarFichier->addAction(stasIcon, stasString);
-  connect(stasAction, SIGNAL(triggered()), this, SLOT(addStation()));
+  connect(stasAction, SIGNAL(triggered()), this, SLOT(CreateStation()));
   //Hub
   QIcon hubIcon("./gui/Ico/Hub.png");
   QString hubString("Hub");  
   QAction *hubAction = toolBarFichier->addAction(hubIcon, hubString);
-  connect(hubAction, SIGNAL(triggered()), this, SLOT(addHub()));
+  connect(hubAction, SIGNAL(triggered()), this, SLOT(CreateHub()));
   //Switch
   QIcon switchIcon("./gui/Ico/Switch.png");
   QString switchString("Switch");  
   QAction *switchAction = toolBarFichier->addAction(switchIcon, switchString);
-  connect(switchAction, SIGNAL(triggered()), this, SLOT(addSwitch()));
+  connect(switchAction, SIGNAL(triggered()), this, SLOT(CreateSwitch()));
   //Router
   QIcon routerIcon("./gui/Ico/Router.png");
   QString routerString("Router");  
   QAction *routerAction = toolBarFichier->addAction(routerIcon, routerString);
-  connect(routerAction, SIGNAL(triggered()), this, SLOT(addRouter()));
+  connect(routerAction, SIGNAL(triggered()), this, SLOT(CreateRouter()));
      
   //
   // Creation of Drag N Drop Area.
@@ -107,49 +109,54 @@ MainWindow::~MainWindow()
 {
   delete dw;
   delete config;
+  delete gen;
 }
 
-void MainWindow::addPC()
+void MainWindow::CreatePc()
 {
-	dw->CreateObject("Pc");
+std::cout << "1" << std::endl;
+	this->gen->AddEquipement("Pc");
+std::cout << "2" << std::endl;
+	slabel trans;
+std::cout << "3" << std::endl;
+	trans.label = dw->CreateObject("Pc");
+std::cout << "4" << std::endl;
+	trans.name = gen->listEquipement.at(gen->listEquipement.size() - 1)->getNodeName();
+std::cout << "5" << std::endl;
+	this->listDrag.push_back(trans);
 }
 
-void MainWindow::addPC_Emu()
+void MainWindow::CreateEmu()
 {
 	dw->CreateObject("Emu");
 }
 
-void MainWindow::addPC_Tap()
+void MainWindow::CreateTap()
 {
 	dw->CreateObject("Tap");
 }
 
-void MainWindow::addAP()
+void MainWindow::CreateAp()
 {
 	dw->CreateObject("Ap");
 }
 
-void MainWindow::addStation()
+void MainWindow::CreateStation()
 {
 	dw->CreateObject("Station");
 }
 
-void MainWindow::deleteObject()
-{
-	dw->deleteLastSelected();
-}
-
-void MainWindow::addHub()
+void MainWindow::CreateHub()
 {
 	dw->CreateObject("Hub");
 }
 
-void MainWindow::addSwitch()
+void MainWindow::CreateSwitch()
 {
 	dw->CreateObject("Switch");
 }
 
-void MainWindow::addRouter()
+void MainWindow::CreateRouter()
 {
 	dw->CreateObject("Router");
 }
@@ -157,6 +164,11 @@ void MainWindow::addRouter()
 void MainWindow::ConfigurationMenu()
 {
     config = new Configuration();
+}
+
+void MainWindow::deleteObject()
+{
+	//~ dw->deleteLastSelected();
 }
 
 

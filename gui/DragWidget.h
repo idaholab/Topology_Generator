@@ -13,8 +13,7 @@ class DragWidget : public QWidget
    public:
      DragWidget(QWidget *parent=0);
      ~DragWidget();
-     void CreateObject(std::string type);
-     void deleteLastSelected();
+     QLabel* CreateObject(const std::string &type);
      
    protected:
      void dragEnterEvent(QDragEnterEvent *event);
@@ -22,7 +21,7 @@ class DragWidget : public QWidget
      void mousePressEvent(QMouseEvent *event);
      
    private:
-     QLabel *last;
+     //QLabel *last;
        
 };
 

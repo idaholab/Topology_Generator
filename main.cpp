@@ -35,21 +35,15 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-  //~ Generator *gen = new Generator(std::string("Simulation-Name"));
-  
   QApplication app(argc, argv);
 
-  MainWindow *win = new MainWindow();
+  MainWindow *win = new MainWindow(std::string("Simulation-Name"));
   win->setWindowTitle("Generator");
   win->show();
     
   app.exec();
 	
-	
 	delete win;
-  //~ gen->GenerateCode();
-  
-  //~ delete gen;
 }
 
 
