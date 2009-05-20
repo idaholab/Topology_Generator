@@ -4,9 +4,8 @@
 
 DragWidget::DragWidget(QWidget *parent) : QWidget(parent)
 {
-     setMinimumSize(400, 400);
-     setAcceptDrops(true);
-     //this->last = new QLabel(this);
+    setMinimumSize(400, 400);
+    setAcceptDrops(true);
 }
 
 DragWidget::~DragWidget()
@@ -14,48 +13,53 @@ DragWidget::~DragWidget()
   //delete last;
 }
 
-QLabel* DragWidget::CreateObject(const std::string &type)
+void DragWidget::CreateObject(const std::string &type, const std::string &_name)
 {
 std::cout << "Enter CreateObject" << std::endl;
-	QLabel *label = new QLabel(this);
+	QLabel *tlabel = new QLabel(this);
 	if(type.compare("Pc") == 0)
 	{
-    label->setPixmap(QPixmap("./gui/Ico/PC.png"));
+    tlabel->setPixmap(QPixmap(":/Ico/PC.png"));
   } 
   else if(type.compare("Emu") == 0)
   {
-    label->setPixmap(QPixmap("./gui/Ico/PC-Emu.png"));
+    tlabel->setPixmap(QPixmap(":/Ico/PC-Emu.png"));
   } 
   else if(type.compare("Tap") == 0)
   {
-    label->setPixmap(QPixmap("./gui/Ico/PC-Tap.png"));
+    tlabel->setPixmap(QPixmap(":/Ico/PC-Tap.png"));
   } 
   else if(type.compare("Ap") == 0)
   {
-    label->setPixmap(QPixmap("./gui/Ico/AP-Wifi.png"));
+    tlabel->setPixmap(QPixmap(":/Ico/AP-Wifi.png"));
   } 
   else if(type.compare("Station") == 0)
   {
-    label->setPixmap(QPixmap("./gui/Ico/StationWifi.png"));
+    tlabel->setPixmap(QPixmap(":/Ico/StationWifi.png"));
   } 
   else if(type.compare("Hub") == 0)
   {
-    label->setPixmap(QPixmap("./gui/Ico/Hub.png"));
+    tlabel->setPixmap(QPixmap(":/Ico/Hub.png"));
   } 
   else if(type.compare("Switch") == 0)
   {
-    label->setPixmap(QPixmap("./gui/Ico/Switch.png"));
+    tlabel->setPixmap(QPixmap(":/Ico/Switch.png"));
   } 
   else if(type.compare("Router") == 0)
   {
-    label->setPixmap(QPixmap("./gui/Ico/Router.png"));
+    tlabel->setPixmap(QPixmap(":/Ico/Router.png"));
   }
     
-  label->move(10, 10);
-  label->show();
-  label->setAttribute(Qt::WA_DeleteOnClose);
+  tlabel->move(10, 10);
+  tlabel->show();
+  tlabel->setAttribute(Qt::WA_DeleteOnClose);
+  
+  slabel trans;
+  trans.label = tlabel;
+  trans.name = _name;
+  
+  this->listDrag.push_back(trans);
 std::cout << "Out CreateObject" << std::endl;
-  return label;
 }
 
 void DragWidget::dragEnterEvent(QDragEnterEvent *event)
@@ -77,31 +81,35 @@ std::cout << "Out dragEnterEvent" << std::endl;
 void DragWidget::dropEvent(QDropEvent *event)
 {
 std::cout << "Enter dropEvent" << std::endl;
-     if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
-         QByteArray itemData = event->mimeData()->data("application/x-dnditemdata");
-         QDataStream dataStream(&itemData, QIODevice::ReadOnly);
+  if (event->mimeData()->hasFormat("application/x-dnditemdata")) 
+  {
+    QByteArray itemData = event->mimeData()->data("application/x-dnditemdata");
+    QDataStream dataStream(&itemData, QIODevice::ReadOnly);
 
-         QPixmap pixmap;
-         QPoint offset;
-         dataStream >> pixmap >> offset;
+    QPixmap pixmap;
+    QPoint offset;
+    dataStream >> pixmap >> offset;
+   
+    QLabel *label = new QLabel(this);
+    label->setPixmap(pixmap);
+    label->move(event->pos() - offset);
+    label->show();
+    label->setAttribute(Qt::WA_DeleteOnClose);
 
-         QLabel *newIcon = new QLabel(this);
-         newIcon->setPixmap(pixmap);
-         newIcon->move(event->pos() - offset);
-         newIcon->show();
-         newIcon->setAttribute(Qt::WA_DeleteOnClose);
-         //set the last object moved.
-         //last = newIcon;
-
-         if (event->source() == this) {
-             event->setDropAction(Qt::MoveAction);
-             event->accept();
-         } else {
-             event->acceptProposedAction();
-         }
-     } else {
-         event->ignore();
-     }
+    if (event->source() == this) 
+    {
+      event->setDropAction(Qt::MoveAction);
+      event->accept();
+    } 
+    else 
+    {
+      event->acceptProposedAction();
+    }
+  } 
+  else 
+  {
+    event->ignore();
+  }
 std::cout << "Out dropEvent" << std::endl;
 }
 

@@ -41,47 +41,47 @@ MainWindow::MainWindow(const std::string &simulationName)
   //
   QToolBar *toolBarFichier = addToolBar("Fichier");
   //Delete button
-  QIcon delIcon("./gui/Ico/Del.png");
+  QIcon delIcon(":/Ico/Del.png");
   QString delString("Delete");  
   QAction *delAction = toolBarFichier->addAction(delIcon, delString);
   connect(delAction, SIGNAL(triggered()), this, SLOT(deleteObject()));
   //PC
-  QIcon pcIcon("./gui/Ico/PC.png");
+  QIcon pcIcon(":/Ico/PC.png");
   QString pcString("Terminal");  
   QAction *pcAction = toolBarFichier->addAction(pcIcon, pcString);
   connect(pcAction, SIGNAL(triggered()), this, SLOT(CreatePc()));
   //PC-Emu
-  QIcon emuIcon("./gui/Ico/PC-Emu.png");
+  QIcon emuIcon(":/Ico/PC-Emu.png");
   QString emuString("PC with emu");  
   QAction *emuAction = toolBarFichier->addAction(emuIcon, emuString);
   connect(emuAction, SIGNAL(triggered()), this, SLOT(CreateEmu()));
   //PC-Tap
-  QIcon tapIcon("./gui/Ico/PC-Tap.png");
+  QIcon tapIcon(":/Ico/PC-Tap.png");
   QString tapString("PC with tap");  
   QAction *tapAction = toolBarFichier->addAction(tapIcon, tapString);
   connect(tapAction, SIGNAL(triggered()), this, SLOT(CreateTap()));
   //AP-Wifi
-  QIcon apIcon("./gui/Ico/AP-Wifi.png");
+  QIcon apIcon(":/Ico/AP-Wifi.png");
   QString apString("AP Wifi");  
   QAction *apAction = toolBarFichier->addAction(apIcon, apString);
   connect(apAction, SIGNAL(triggered()), this, SLOT(CreateAp()));
   //StationWifi
-  QIcon stasIcon("./gui/Ico/StationWifi.png");
+  QIcon stasIcon(":/Ico/StationWifi.png");
   QString stasString("Station Wifi");  
   QAction *stasAction = toolBarFichier->addAction(stasIcon, stasString);
   connect(stasAction, SIGNAL(triggered()), this, SLOT(CreateStation()));
   //Hub
-  QIcon hubIcon("./gui/Ico/Hub.png");
+  QIcon hubIcon(":/Ico/Hub.png");
   QString hubString("Hub");  
   QAction *hubAction = toolBarFichier->addAction(hubIcon, hubString);
   connect(hubAction, SIGNAL(triggered()), this, SLOT(CreateHub()));
   //Switch
-  QIcon switchIcon("./gui/Ico/Switch.png");
+  QIcon switchIcon(":/Ico/Switch.png");
   QString switchString("Switch");  
   QAction *switchAction = toolBarFichier->addAction(switchIcon, switchString);
   connect(switchAction, SIGNAL(triggered()), this, SLOT(CreateSwitch()));
   //Router
-  QIcon routerIcon("./gui/Ico/Router.png");
+  QIcon routerIcon(":/Ico/Router.png");
   QString routerString("Router");  
   QAction *routerAction = toolBarFichier->addAction(routerIcon, routerString);
   connect(routerAction, SIGNAL(triggered()), this, SLOT(CreateRouter()));
@@ -107,58 +107,50 @@ MainWindow::MainWindow(const std::string &simulationName)
 
 MainWindow::~MainWindow()
 {
-  delete dw;
+  //delete dw;
   delete config;
   delete gen;
 }
 
 void MainWindow::CreatePc()
 {
-std::cout << "1" << std::endl;
 	this->gen->AddEquipement("Pc");
-std::cout << "2" << std::endl;
-	slabel trans;
-std::cout << "3" << std::endl;
-	trans.label = dw->CreateObject("Pc");
-std::cout << "4" << std::endl;
-	trans.name = gen->listEquipement.at(gen->listEquipement.size() - 1)->getNodeName();
-std::cout << "5" << std::endl;
-	this->listDrag.push_back(trans);
+	dw->CreateObject("Pc", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName());
 }
 
 void MainWindow::CreateEmu()
 {
-	dw->CreateObject("Emu");
+	dw->CreateObject("Emu","");
 }
 
 void MainWindow::CreateTap()
 {
-	dw->CreateObject("Tap");
+	dw->CreateObject("Tap","");
 }
 
 void MainWindow::CreateAp()
 {
-	dw->CreateObject("Ap");
+	dw->CreateObject("Ap","");
 }
 
 void MainWindow::CreateStation()
 {
-	dw->CreateObject("Station");
+	dw->CreateObject("Station","");
 }
 
 void MainWindow::CreateHub()
 {
-	dw->CreateObject("Hub");
+	dw->CreateObject("Hub","");
 }
 
 void MainWindow::CreateSwitch()
 {
-	dw->CreateObject("Switch");
+	dw->CreateObject("Switch","");
 }
 
 void MainWindow::CreateRouter()
 {
-	dw->CreateObject("Router");
+	dw->CreateObject("Router","");
 }
 
 void MainWindow::ConfigurationMenu()

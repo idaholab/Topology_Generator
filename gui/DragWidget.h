@@ -10,17 +10,23 @@ class QDropEvent;
 
 class DragWidget : public QWidget
 {
-   public:
-     DragWidget(QWidget *parent=0);
-     ~DragWidget();
-     QLabel* CreateObject(const std::string &type);
+  public:
+    struct slabel
+    {
+      QLabel *label;
+      std::string name;
+    };
+    std::vector<slabel> listDrag;
+    DragWidget(QWidget *parent=0);
+    ~DragWidget();
+    void CreateObject(const std::string &type, const std::string &name);
      
-   protected:
-     void dragEnterEvent(QDragEnterEvent *event);
-     void dropEvent(QDropEvent *event);
-     void mousePressEvent(QMouseEvent *event);
+  protected:
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);
+    void mousePressEvent(QMouseEvent *event);
      
-   private:
+  private:
      //QLabel *last;
        
 };

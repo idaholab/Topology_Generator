@@ -15,15 +15,9 @@ class MainWindow : public QMainWindow
     ~MainWindow();
     
   private:
-    struct slabel
-    {
-      QLabel *label;
-      std::string name;
-    };
     DragWidget *dw;
     Configuration *config;
     Generator *gen;
-    std::vector<slabel> listDrag;
 		
   private slots:
     void CreatePc();
