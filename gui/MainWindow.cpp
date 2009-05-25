@@ -71,22 +71,22 @@ MainWindow::MainWindow(const std::string &simulationName)
   QAction *delAction = toolBarFichier->addAction(delIcon, delString);
   connect(delAction, SIGNAL(triggered()), this, SLOT(deleteObject()));
   //PC
-  QIcon pcIcon(":/Ico/PC.png");
+  QIcon pcIcon(":/Ico/Pc.png");
   QString pcString("Terminal");  
   QAction *pcAction = toolBarFichier->addAction(pcIcon, pcString);
   connect(pcAction, SIGNAL(triggered()), this, SLOT(CreatePc()));
   //PC-Emu
-  QIcon emuIcon(":/Ico/PC-Emu.png");
+  QIcon emuIcon(":/Ico/Emu.png");
   QString emuString("PC with emu");  
   QAction *emuAction = toolBarFichier->addAction(emuIcon, emuString);
   connect(emuAction, SIGNAL(triggered()), this, SLOT(CreateEmu()));
   //PC-Tap
-  QIcon tapIcon(":/Ico/PC-Tap.png");
+  QIcon tapIcon(":/Ico/Tap.png");
   QString tapString("PC with tap");  
   QAction *tapAction = toolBarFichier->addAction(tapIcon, tapString);
   connect(tapAction, SIGNAL(triggered()), this, SLOT(CreateTap()));
   //AP-Wifi
-  QIcon apIcon(":/Ico/AP-Wifi.png");
+  QIcon apIcon(":/Ico/Ap-Wifi.png");
   QString apString("AP Wifi");  
   QAction *apAction = toolBarFichier->addAction(apIcon, apString);
   connect(apAction, SIGNAL(triggered()), this, SLOT(CreateAp()));
