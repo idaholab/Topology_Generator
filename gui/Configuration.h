@@ -5,7 +5,6 @@
 
 class Configuration : public QWidget
 {
- Q_OBJECT
 
 	public:
 		Configuration();

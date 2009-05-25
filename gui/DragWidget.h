@@ -4,6 +4,7 @@
 #include <QFrame>
 #include <vector>
 #include <QtGui>
+#include "DragObject.h"
 
 class QDragEnterEvent;
 class QDropEvent;
@@ -11,12 +12,8 @@ class QDropEvent;
 class DragWidget : public QWidget
 {
   public:
-    struct slabel
-    {
-      QLabel *label;
-      std::string name;
-    };
-    std::vector<slabel> listDrag;
+    size_t selectedObject;
+    std::vector<DragObject*> listDrag;
     DragWidget(QWidget *parent=0);
     ~DragWidget();
     void CreateObject(const std::string &type, const std::string &name);
@@ -25,10 +22,8 @@ class DragWidget : public QWidget
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
     void mousePressEvent(QMouseEvent *event);
-     
-  private:
-     //QLabel *last;
-       
+    
+    
 };
 
 #endif /* END DRAGWIDGET_H */
