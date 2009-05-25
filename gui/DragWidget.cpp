@@ -1,5 +1,31 @@
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
+/*
+ * Copyright (c) 2009 Pierre Weiss <3weissp@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation;
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
+/**
+* \file DragWidget.cpp
+* \brief The drag n drop zone file.
+* \author Pierre Weiss
+* \date 2009
+*/
+
 #include <QtGui>
 #include <iostream>
+
 #include "DragWidget.h"
 #include "DragObject.h"
 
@@ -17,7 +43,8 @@ DragWidget::~DragWidget()
 
 void DragWidget::CreateObject(const std::string &type, const std::string &_name)
 {
-	QLabel *label = new QLabel(this);
+	DragObject *label = new DragObject(this);
+	label->setName(_name);
 	if(type.compare("Pc") == 0)
 	{
     label->setPixmap(QPixmap(":/Ico/PC.png"));
@@ -53,14 +80,6 @@ void DragWidget::CreateObject(const std::string &type, const std::string &_name)
   label->move(10, 10);
   label->show();
   label->setAttribute(Qt::WA_DeleteOnClose);
-  
-  DragObject *drag = new DragObject();
-  drag->label = label;
-  drag->name = _name;
-  drag->x = 10;
-  drag->y = 10;
-  
-  //~ this->listDrag.push_back(label);
 }
 
 void DragWidget::dragEnterEvent(QDragEnterEvent *event)
@@ -71,10 +90,6 @@ void DragWidget::dragEnterEvent(QDragEnterEvent *event)
     {
       event->setDropAction(Qt::MoveAction);
       event->accept();
-      std::cout << "###################################" << std::endl;
-      std::cout << "Position Avant :" << std::endl;
-      std::cout << "x :" << event->pos().x() << " - " << event->pos().y() << std::endl;
-      std::cout << "###################################" << std::endl;
     } 
     else 
     {
@@ -98,13 +113,14 @@ void DragWidget::dropEvent(QDropEvent *event)
     QPoint offset;
     dataStream >> pixmap >> offset;
    
-    std::cout << "###################################" << std::endl;
-    std::cout << "Position Après:" << std::endl;
-    std::cout << "x :" << event->pos().x() << " - " << event->pos().y() << std::endl;
-    std::cout << "event : " << event << std::endl;
-    std::cout << "###################################" << std::endl;
-   
-    QLabel *label = new QLabel(this);
+    /* get the name from the last draged label */
+    DragObject *child = static_cast<DragObject*>(childAt(this->lastPosition));
+    DragObject *label = new DragObject(this);
+    /* avoid seg fault ... */
+    if(child)
+    {
+      label->setName(child->getName());
+    }
     label->setPixmap(pixmap);
     label->move(event->pos() - offset);
     label->show();
@@ -128,10 +144,12 @@ void DragWidget::dropEvent(QDropEvent *event)
 
 void DragWidget::mousePressEvent(QMouseEvent *event)
 {
-     QLabel *child = static_cast<QLabel*>(childAt(event->pos()));
+     DragObject *child = static_cast<DragObject*>(childAt(event->pos()));
      if (!child){
          return;
      }
+     this->lastPosition = event->pos();
+     //~ std::cout << "Object to move : " << child->getName() << std::endl;
 
      QPixmap pixmap = *child->pixmap();
 
