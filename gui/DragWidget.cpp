@@ -26,6 +26,7 @@
 #include <QtGui>
 #include <iostream>
 
+#include "MainWindow.h"
 #include "DragWidget.h"
 #include "DragObject.h"
 
@@ -47,19 +48,19 @@ void DragWidget::CreateObject(const std::string &type, const std::string &_name)
 	label->setName(_name);
 	if(type.compare("Pc") == 0)
 	{
-    label->setPixmap(QPixmap(":/Ico/PC.png"));
+    label->setPixmap(QPixmap(":/Ico/Pc.png"));
   } 
   else if(type.compare("Emu") == 0)
   {
-    label->setPixmap(QPixmap(":/Ico/PC-Emu.png"));
+    label->setPixmap(QPixmap(":/Ico/Emu.png"));
   } 
   else if(type.compare("Tap") == 0)
   {
-    label->setPixmap(QPixmap(":/Ico/PC-Tap.png"));
+    label->setPixmap(QPixmap(":/Ico/Tap.png"));
   } 
   else if(type.compare("Ap") == 0)
   {
-    label->setPixmap(QPixmap(":/Ico/AP-Wifi.png"));
+    label->setPixmap(QPixmap(":/Ico/Ap-Wifi.png"));
   } 
   else if(type.compare("Station") == 0)
   {
@@ -144,39 +145,100 @@ void DragWidget::dropEvent(QDropEvent *event)
 
 void DragWidget::mousePressEvent(QMouseEvent *event)
 {
-     DragObject *child = static_cast<DragObject*>(childAt(event->pos()));
-     if (!child){
-         return;
-     }
-     this->lastPosition = event->pos();
-     //~ std::cout << "Object to move : " << child->getName() << std::endl;
+  DragObject *child = static_cast<DragObject*>(childAt(event->pos()));
+  if (!child)
+  {
+    MainWindow::delAction->setDisabled(true);
+    return;
+  }
+  MainWindow::delAction->setDisabled(false);
+  this->lastPosition = event->pos();
+  
+  QPixmap pixmap = *child->pixmap();
 
-     QPixmap pixmap = *child->pixmap();
+  QByteArray itemData;
+  QDataStream dataStream(&itemData, QIODevice::WriteOnly);
+  dataStream << pixmap << QPoint(event->pos() - child->pos());
 
-     QByteArray itemData;
-     QDataStream dataStream(&itemData, QIODevice::WriteOnly);
-     dataStream << pixmap << QPoint(event->pos() - child->pos());
+  QMimeData *mimeData = new QMimeData;
+  mimeData->setData("application/x-dnditemdata", itemData);
 
-     QMimeData *mimeData = new QMimeData;
-     mimeData->setData("application/x-dnditemdata", itemData);
+  QDrag *drag = new QDrag(this);
+  drag->setMimeData(mimeData);
+  drag->setPixmap(pixmap);
+  drag->setHotSpot(event->pos() - child->pos());
 
-     QDrag *drag = new QDrag(this);
-     drag->setMimeData(mimeData);
-     drag->setPixmap(pixmap);
-     drag->setHotSpot(event->pos() - child->pos());
+  QPixmap tempPixmap = pixmap;
+  QPainter painter;
+  painter.begin(&tempPixmap);
+  painter.fillRect(pixmap.rect(), QColor(127, 127, 127, 127));
+  painter.end();
 
-     QPixmap tempPixmap = pixmap;
-     QPainter painter;
-     painter.begin(&tempPixmap);
-     painter.fillRect(pixmap.rect(), QColor(127, 127, 127, 127));
-     painter.end();
+  child->setPixmap(tempPixmap);
 
-     child->setPixmap(tempPixmap);
-
-     if (drag->start(Qt::CopyAction | Qt::MoveAction) == Qt::MoveAction)
-         child->close();
-     else {
-         child->show();
-         child->setPixmap(pixmap);
-     }
+  if (drag->start(Qt::CopyAction | Qt::MoveAction) == Qt::MoveAction)
+  {
+    child->close();
+  }
+  else 
+  {
+    child->show();
+    child->setPixmap(pixmap);
+  }
 }
+
+void DragWidget::deleteSelected()
+{
+  DragObject *child = static_cast<DragObject*>(childAt(this->lastPosition));
+  if (!child)
+  {
+    MainWindow::delAction->setDisabled(true);
+    return;
+  }
+
+  size_t indice = -1;
+  /* Generator part */
+  for(size_t i = 0; i < (size_t) MainWindow::gen->listEquipement.size(); i++)
+  {
+    if(MainWindow::gen->listEquipement.at(i)->getNodeName().compare(child->getName()) == 0)
+    {
+      indice = i;
+    }
+  }
+  if(indice != (size_t) -1 )
+  {
+    MainWindow::gen->RemoveEquipement(indice);
+  }
+  
+  indice = -1;
+  for(size_t i = 0; i < (size_t) MainWindow::gen->listLink.size(); i++)
+  {
+    if(MainWindow::gen->listLink.at(i)->getLinkName().compare(child->getName()) == 0)
+    {
+      indice = i;
+    }
+  }
+  if(indice != (size_t) -1 )
+  {
+    MainWindow::gen->RemoveLink(indice);
+  }
+
+  /* Gui part */
+  child->clear();
+  child->Destroy();
+  
+  MainWindow::delAction->setDisabled(true);
+}
+
+
+/*
+Usage : QPainter imagePainter(this);
+
+void MainWindow::paintEvent(QPaintEvent *event)
+{
+  QPainter paint(this(QPixmap));
+  paint.drawLine(10,10,100,100);
+  paint.setPen(Qt::black);
+}
+*/
+

@@ -63,6 +63,11 @@ class DragObject : public QLabel
      */
     std::string getName();
     
+    /**
+     * \brief destroy object from qwidget.
+     */
+    void Destroy();
+    
   private:
     /**
      * \brief attribute which reprensent the name. 

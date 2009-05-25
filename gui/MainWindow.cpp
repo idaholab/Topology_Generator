@@ -27,14 +27,17 @@
 
 #include "MainWindow.h"
 #include "DragWidget.h"
+#include "DragObject.h"
 
+QAction* MainWindow::delAction = NULL;
+Generator* MainWindow::gen = NULL;
 
 MainWindow::MainWindow(const std::string &simulationName)
 {
   
   this->dw = NULL;
   this->config = NULL;
-  this->gen = new Generator(simulationName);
+  MainWindow::gen = new Generator(simulationName);
   
   //
   // Menu
@@ -54,22 +57,24 @@ MainWindow::MainWindow(const std::string &simulationName)
   connect(actionConfig, SIGNAL(triggered()), this, SLOT(ConfigurationMenu())); 
      
   QMenu *menuAffichage = menuBar()->addMenu("&Generate");
-  menuAffichage->addAction("Cpp");
+  menuAffichage->addAction("C++");
   menuAffichage->addAction("Python");
      
   QAction *menuAbout = menuBar()->addAction("About");
+  connect(menuAbout, SIGNAL(triggered()), this, SLOT(About())); 
      
   menuAbout = menuAbout;
      
   //
   // toolbar for add equipements.
   //
-  QToolBar *toolBarFichier = addToolBar("Fichier");
+  QToolBar *toolBarFichier = addToolBar("");
   //Delete button
   QIcon delIcon(":/Ico/Del.png");
-  QString delString("Delete");  
-  QAction *delAction = toolBarFichier->addAction(delIcon, delString);
-  connect(delAction, SIGNAL(triggered()), this, SLOT(deleteObject()));
+  QString delString("Delete");
+  MainWindow::delAction = toolBarFichier->addAction(delIcon, delString);
+  MainWindow::delAction->setDisabled (true);  
+  connect(MainWindow::delAction, SIGNAL(triggered()), this, SLOT(deleteObject()));
   //PC
   QIcon pcIcon(":/Ico/Pc.png");
   QString pcString("Terminal");  
@@ -124,63 +129,94 @@ MainWindow::MainWindow(const std::string &simulationName)
   this->setCentralWidget(zoneCentral);
    
   //
-  // About Popup
+  // 
   //
-     
- 
+  
 }
 
 MainWindow::~MainWindow()
 {
-  //delete dw;
   delete config;
-  delete gen;
+  delete MainWindow::gen;
 }
 
 void MainWindow::CreatePc()
 {
-	this->gen->AddEquipement("Pc");
+	MainWindow::gen->AddEquipement("Pc");
 	dw->CreateObject("Pc", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName());
 }
 
 void MainWindow::CreateEmu()
 {
-  /* see to pop up for the iface ... */
-  this->gen->AddEquipement("Pc");
-  this->gen->AddLink("Emu", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName(), std::string("eth0"));
+  bool ok;
+  QString text = QInputDialog::getText(this, "Emu",
+                                        tr("Enter the real host interface to use:"), QLineEdit::Normal,
+                                        "eth0", &ok);
+  if (ok && !text.isEmpty())
+  {
+    //~ std::cout << "text received :" <<  text.toStdString () << std::endl;
+  }
+  else
+  {
+    /* cancel button or no text ... */
+    return;
+  }
+
+  MainWindow::gen->AddEquipement("Pc");
+  MainWindow::gen->AddLink("Emu", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName(), text.toStdString());
 	dw->CreateObject("Emu",this->gen->listLink.at(this->gen->listLink.size() - 1)->getLinkName());
 }
 
 void MainWindow::CreateTap()
 {
-  this->gen->AddEquipement("Tap");
-  this->gen->AddLink("Tap", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName(), std::string("eth0"));
+  bool ok;
+  QString text = QInputDialog::getText(this, "Tap",
+                                        tr("Enter the new interface to use :"), QLineEdit::Normal,
+                                        "tap0", &ok);
+  if (ok && !text.isEmpty())
+  {
+    //~ std::cout << "text received :" <<  text.toStdString () << std::endl;
+  }
+  else
+  {
+    /* cancel button or no text ... */
+    return;
+  }
+  
+  MainWindow::gen->AddEquipement("Tap");
+  MainWindow::gen->AddLink("Tap", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName(), text.toStdString());
 	dw->CreateObject("Tap",this->gen->listLink.at(this->gen->listLink.size() - 1)->getLinkName());
 }
 
 void MainWindow::CreateAp()
 {
-	dw->CreateObject("Ap","");
+	MainWindow::gen->AddEquipement("Ap");
+	dw->CreateObject("Ap", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName());
 }
 
 void MainWindow::CreateStation()
 {
-	dw->CreateObject("Station","");
+	MainWindow::gen->AddEquipement("Station");
+	dw->CreateObject("Station", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName());
 }
 
 void MainWindow::CreateHub()
 {
-	dw->CreateObject("Hub","");
+	MainWindow::gen->AddLink("Hub");
+	dw->CreateObject("Hub", this->gen->listLink.at(this->gen->listLink.size() - 1)->getLinkName());
 }
 
 void MainWindow::CreateSwitch()
 {
-	dw->CreateObject("Switch","");
+	MainWindow::gen->AddEquipement("Bridge");
+  MainWindow::gen->AddLink("Bridge", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName());
+	dw->CreateObject("Switch",this->gen->listLink.at(this->gen->listLink.size() - 1)->getLinkName());
 }
 
 void MainWindow::CreateRouter()
 {
-	dw->CreateObject("Router","");
+	MainWindow::gen->AddEquipement("Router");
+	dw->CreateObject("Router", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName());
 }
 
 void MainWindow::ConfigurationMenu()
@@ -190,8 +226,23 @@ void MainWindow::ConfigurationMenu()
 
 void MainWindow::deleteObject()
 {
-	//~ dw->deleteLastSelected();
+  this->dw->deleteSelected();
 }
+
+void MainWindow::About()
+{
+     QMessageBox::about(this, "About",
+                  tr("<p align=\"center\">"
+                     "<h2>Simulation Generator</h2>"
+                     "<h3>for Network Simulator 3</h3>"
+                     "<br />"
+                     "Copyright (c) 2009 <br />"
+                     "Pierre Weiss<br />"
+                     "3weissp@gmail.com"
+                     "</p>"
+                                ));
+}
+
 
 
 

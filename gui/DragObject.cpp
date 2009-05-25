@@ -47,3 +47,9 @@ std::string DragObject::getName()
 {
   return this->name;
 }
+
+void DragObject::Destroy()
+{
+  this->destroy();
+  this->name = "deleted";
+}

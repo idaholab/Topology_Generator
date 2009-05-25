@@ -62,6 +62,11 @@ class DragWidget : public QWidget
     void CreateObject(const std::string &type, const std::string &name);
     
     /**
+     * \brief Procedure to delete the last selecte elem.
+     */
+    void deleteSelected();
+    
+    /**
      * \brief attribute to save the Position from the last object which moved.
      */ 
     QPoint lastPosition;

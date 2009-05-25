@@ -53,6 +53,17 @@ class MainWindow : public QMainWindow
      */
     ~MainWindow();
     
+     /**
+     * \brief attribute used tu delete object.
+     * Is attribute to setDisable ...
+     */
+    static QAction *delAction;
+    
+    /**
+     * \brief attribute which represent the core object. 
+     */
+    static Generator *gen;
+    
   private:
     /**
      * \brief attribute which represent the drag n drop zone.
@@ -64,11 +75,6 @@ class MainWindow : public QMainWindow
      */
     Configuration *config;
     
-    /**
-     * \brief attribute which represent the core object. 
-     */
-    Generator *gen;
-		
   private slots:
     /**
      * \brief procedure called by the tool bar to create a pc.
@@ -119,7 +125,12 @@ class MainWindow : public QMainWindow
      * \brief procedure called by the tool bar to get the configuration pop up.
      */
     void ConfigurationMenu();
-	    
+    
+    /**
+     * \brief about gui.
+     */
+    void About();
+  
 };
 
 #endif /* END MAINWINDOW_H */
