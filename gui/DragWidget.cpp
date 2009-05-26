@@ -247,6 +247,17 @@ void DragWidget::deleteSelected()
     if(MainWindow::gen->listLink.at(i)->getLinkName().compare(child->getName()) == 0)
     {
       indic = i;
+      if((child->getName()).find("emu_") == 0)
+      {
+        for(size_t j = 0; j < (size_t) MainWindow::gen->listEquipement.size(); j++)
+        {
+          if( (MainWindow::gen->listEquipement.at(j)->getNodeName()).compare(MainWindow::gen->listLink.at(i)->getNodes().at(0)) == 0)
+          {
+            MainWindow::gen->RemoveEquipement(j);
+            break;
+          }
+        }
+      }
     }
   }
   if(indic != (size_t) -1 )

@@ -301,7 +301,8 @@ void MainWindow::CleanIface()
 void MainWindow::CreateAp()
 {
 	MainWindow::gen->AddEquipement("Ap");
-	dw->CreateObject("Ap", MainWindow::gen->listEquipement.at(MainWindow::gen->listEquipement.size() - 1)->getNodeName());
+	MainWindow::gen->AddLink("Wifi", MainWindow::gen->listEquipement.at(MainWindow::gen->listEquipement.size() - 1)->getNodeName(), false);
+	dw->CreateObject("Ap", MainWindow::gen->listLink.at(MainWindow::gen->listLink.size() - 1)->getLinkName() );
 }
 
 void MainWindow::CreateStation()
@@ -331,8 +332,24 @@ void MainWindow::CreateRouter()
 
 void MainWindow::CreateHardLink()
 {
+  /*
+   * The differents link :
+   *  - Pc to Pc (create a hide hub)
+   *  - Pc to Hub
+   *  - Pc to Bridge
+   *  - Pc to Router (create a hide hub)
+   *  - Pc to Ap
+   *  - Ap to Router
+   *  - Hub to Router
+   *  - Switch to Router
+   *  - Pc to emu
+   *  - Pc to Tap
+   */
+  
+  
   /* get the selected equipement. */
   std::vector<std::string> equi = this->dw->getLastSelected();
+  size_t indic = 0;
   
   if(equi.at(0) == "" || equi.at(1) == "" || equi.at(0) == "deleted" || equi.at(1) == "deleted")
   {
@@ -345,35 +362,71 @@ void MainWindow::CreateHardLink()
     QMessageBox::about(this, "Error", "You can't connect object to itself.");
     return;
   }
-  size_t number = -1;
-  size_t number2 = -1;
-  for(size_t i = 0; i < (size_t) MainWindow::gen->listLink.size(); i++)
+  
+  std::cout << equi.at(0) << " - " << equi.at(1) << std::endl;
+  
+  if( (equi.at(0)).find("hub_") == 0 || (equi.at(0)).find("bridge_") == 0 || 
+      (equi.at(0)).find("ap_") == 0  || (equi.at(0)).find("emu_") == 0 || 
+      (equi.at(0).find("tap_") == 0 ))
   {
-    if(equi.at(0).compare(MainWindow::gen->listLink.at(i)->getLinkName()) == 0)
-    {
-      number = i;
-      break;
+    indic = 0;
+    for(size_t i = 0; i < (size_t) MainWindow::gen->listLink.size(); i++)
+    { 
+std::cout << "link name :" << (MainWindow::gen->listLink.at(i)->getLinkName()) << std::endl;
+      if( (MainWindow::gen->listLink.at(i)->getLinkName()).compare(equi.at(0)) == 0)
+      {
+        indic = i;
+      }
     }
-    if(equi.at(1).compare(MainWindow::gen->listLink.at(i)->getLinkName()) == 0)
-    {
-      number2 = i;
-      break;
+    this->ConnectNode(indic, equi.at(1));
+  }
+  else if ((equi.at(1)).find("hub_") == 0 || (equi.at(1)).find("bridge_") == 0 || 
+          (equi.at(1)).find("ap_") == 0  || (equi.at(1)).find("emu_") == 0 || 
+          (equi.at(1).find("tap_") == 0 ))
+  {
+    indic = 0;
+    for(size_t i = 0; i < (size_t) MainWindow::gen->listLink.size(); i++)
+    { 
+std::cout << "link name :" << (MainWindow::gen->listLink.at(i)->getLinkName()) << std::endl;
+      if( (MainWindow::gen->listLink.at(i)->getLinkName()).compare(equi.at(1)) == 0)
+      {
+        indic = i;
+      }
     }
-  }
-  if(number != (size_t) -1 )
-  {
-    this->ConnectNode(number, equi.at(1));
-  }
-  else if(number2 != (size_t) -1)
-  {
-    this->ConnectNode(number2, equi.at(0));
+    this->ConnectNode(indic, equi.at(0));
   }
   else
   {
-    /* you can't connect for example two terminals without an csma network so ... */
-    MainWindow::gen->AddLink("Hub");
-	  this->ConnectNode((MainWindow::gen->listLink.size() - 1), equi.at(0));
-	  this->ConnectNode((MainWindow::gen->listLink.size() - 1), equi.at(1));
+    size_t number = -1;
+    size_t number2 = -1;
+    for(size_t i = 0; i < (size_t) MainWindow::gen->listLink.size(); i++)
+    {
+      if(equi.at(0).compare(MainWindow::gen->listLink.at(i)->getLinkName()) == 0)
+      {
+        number = i;
+        break;
+      }
+      if(equi.at(1).compare(MainWindow::gen->listLink.at(i)->getLinkName()) == 0)
+      {
+        number2 = i;
+        break;
+      }
+    }
+    if(number != (size_t) -1 )
+    {
+      this->ConnectNode(number, equi.at(1));
+    }
+    else if(number2 != (size_t) -1)
+    {
+      this->ConnectNode(number2, equi.at(0));
+    }
+    else
+    {
+      /* you can't connect for example two terminals without an csma network so ... */
+      MainWindow::gen->AddLink("Hub");
+      this->ConnectNode((MainWindow::gen->listLink.size() - 1), equi.at(0));
+      this->ConnectNode((MainWindow::gen->listLink.size() - 1), equi.at(1));
+    }
   }
   
   /* Draw the connection. */
@@ -434,6 +487,7 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
     catch(const std::out_of_range &e)
     {
       QMessageBox::about(this, "Error", "This link doesn't exist.");
+      return;
     }
   
   size_t numberOfConnectedMachines = 0;
@@ -468,6 +522,7 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
   if( numberOfConnectedMachines > (255 -2) )
   {
     QMessageBox::about(this, "Error", "Limit of machines exceeded.");
+    return;
   }
   MainWindow::gen->listLink.at(linkNumber)->AddNodes(nodeName);
 }
