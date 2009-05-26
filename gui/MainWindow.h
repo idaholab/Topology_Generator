@@ -85,11 +85,24 @@ class MainWindow : public QMainWindow
      */
     void CleanIface();
     
+     /**
+     * \brief procedure to connect node to linkNumber.
+     * This procedure prevent mask overflow.
+     * \param linkNumber the number of the link.
+     * \param nodeName the node name tu be added.
+     */
+    void ConnectNode(const size_t &linkNumber, const std::string &nodeName);
+    
   private slots:
     /**
      * \brief procedure called by the tool bar to create a pc.
      */
     void CreatePc();
+    
+    /**
+     * \brief procedure called by the tool bar to creat a pc group.
+     */
+    void CreatePcGroup();
     
     /**
      * \brief procedure called by the tool bar to create an Emu link.
@@ -127,6 +140,21 @@ class MainWindow : public QMainWindow
     void CreateRouter();
     
     /**
+     * \brief procedure to create a hard link from equipement to equipement.
+     */
+    void CreateHardLink();
+    
+    /**
+     * \brief procedure to create a link from station to ap.
+     */
+    void CreateStationLink();
+    
+    /**
+     * \brief procedure to create a p2p link from equipement to equipement.
+     */
+    void CreateP2pLink();
+    
+    /**
      * \brief procedure called by the tool bar to delete an object.
      */
     void deleteObject();
@@ -145,7 +173,12 @@ class MainWindow : public QMainWindow
      * \brief help gui/
      */
     void Help();
-  
+    
+    /**
+     * \brief procedure to generate the cpp code.
+     */
+    void GenerateCpp();
+    
 };
 
 #endif /* END MAINWINDOW_H */

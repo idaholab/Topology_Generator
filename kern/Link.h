@@ -67,12 +67,7 @@ protected:
    * \brief attribute which represent the node device container name.
    */
   std::string ndcName;
-  
-  /**
-   * \brief attribute which represent the node name which are connected to the link.
-   */
-  std::vector<std::string> nodes;
-  
+
   /**
    * \brief attribute used to save the name of the node container group.
    */
@@ -214,6 +209,11 @@ public:
    * \return the node container name.
    */
   std::string getAllNodeContainer();
+  
+  /**
+   * \brief attribute which represent the node name which are connected to the link.
+   */
+  std::vector<std::string> nodes;
   
 };
 

@@ -67,9 +67,34 @@ class DragWidget : public QWidget
     void deleteSelected();
     
     /**
+     * \brief function to return the name of the last selected equipement.
+     * \return last selected name.
+     */
+    std::vector<std::string> getLastSelected();
+    
+    /**
+     * \brief procedure to reset lastSelected.
+     */
+    void ResetSelected();
+    
+    /**
+     * \brief procedure to draw the link.
+     * \param type the link type.
+     */
+    void DrawLine(const std::string &type);
+    void paintEvent(QPaintEvent *event);
+    
+  private:
+    /**
      * \brief attribute to save the Position from the last object which moved.
      */ 
-    QPoint lastPosition;
+    std::vector<QPoint> lastPosition;
+    
+    /**
+     * \brief number which say if we add the elem to place 0 or 1.
+     * with a % 2.
+     */
+    size_t indice;
      
   protected:
     /**
