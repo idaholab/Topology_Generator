@@ -75,12 +75,6 @@ MainWindow::MainWindow(const std::string &simulationName)
   // toolbar for add equipements.
   //
   QToolBar *toolBarFichier = addToolBar("");
-  //Delete button
-  QIcon delIcon(":/Ico/Del.png");
-  QString delString("Delete");
-  MainWindow::delAction = toolBarFichier->addAction(delIcon, delString);
-  MainWindow::delAction->setDisabled (true);  
-  connect(MainWindow::delAction, SIGNAL(triggered()), this, SLOT(deleteObject()));
   //PC
   QIcon pcIcon(":/Ico/Pc.png");
   QString pcString("Terminal");  
@@ -121,6 +115,13 @@ MainWindow::MainWindow(const std::string &simulationName)
   QString routerString("Router");  
   QAction *routerAction = toolBarFichier->addAction(routerIcon, routerString);
   connect(routerAction, SIGNAL(triggered()), this, SLOT(CreateRouter()));
+  
+  //Delete button
+  QIcon delIcon(":/Ico/Del.png");
+  QString delString("Delete");
+  MainWindow::delAction = toolBarFichier->addAction(delIcon, delString);
+  MainWindow::delAction->setDisabled (true);  
+  connect(MainWindow::delAction, SIGNAL(triggered()), this, SLOT(deleteObject()));
      
   //
   // Creation of Drag N Drop Area.
@@ -249,6 +250,7 @@ void MainWindow::CleanIface()
     }
   }
 }
+
 void MainWindow::CreateAp()
 {
 	MainWindow::gen->AddEquipement("Ap");
