@@ -117,7 +117,7 @@ void DragWidget::dropEvent(QDropEvent *event)
     /* get the name from the last draged label */
     DragObject *child = static_cast<DragObject*>(childAt(this->lastPosition));
     DragObject *label = new DragObject(this);
-    /* avoid seg fault ... */
+
     if(child)
     {
       label->setName(child->getName());

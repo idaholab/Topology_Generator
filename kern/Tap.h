@@ -67,6 +67,7 @@ private:
    */
   std::string ifaceName;
   
+public:
   /**
    * \brief Function to get the tap node name.
    * \return tap name

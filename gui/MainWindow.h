@@ -75,6 +75,16 @@ class MainWindow : public QMainWindow
      */
     Configuration *config;
     
+    /**
+     * \brief interface which are used.
+     */ 
+    std::vector<std::string> listIface;
+    
+    /**
+     * \procedure to erase the unused iface. 
+     */
+    void CleanIface();
+    
   private slots:
     /**
      * \brief procedure called by the tool bar to create a pc.
@@ -130,6 +140,11 @@ class MainWindow : public QMainWindow
      * \brief about gui.
      */
     void About();
+    
+    /**
+     * \brief help gui/
+     */
+    void Help();
   
 };
 

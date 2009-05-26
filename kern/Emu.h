@@ -66,7 +66,8 @@ private:
    * \brief interface name attribute
    */
   std::string ifaceName;
-  
+ 
+public:
   /**
    * \brief Function to get the emu node name.
    * \return emu node name

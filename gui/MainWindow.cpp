@@ -28,6 +28,8 @@
 #include "MainWindow.h"
 #include "DragWidget.h"
 #include "DragObject.h"
+#include "Tap.h"
+#include "Emu.h"
 
 QAction* MainWindow::delAction = NULL;
 Generator* MainWindow::gen = NULL;
@@ -62,8 +64,12 @@ MainWindow::MainWindow(const std::string &simulationName)
      
   QAction *menuAbout = menuBar()->addAction("About");
   connect(menuAbout, SIGNAL(triggered()), this, SLOT(About())); 
+  
+  QAction *menuHelp = menuBar()->addAction("Help");
+  connect(menuAbout, SIGNAL(triggered()), this, SLOT(Help()));
      
   menuAbout = menuAbout;
+  menuHelp = menuHelp;
      
   //
   // toolbar for add equipements.
@@ -148,13 +154,25 @@ void MainWindow::CreatePc()
 
 void MainWindow::CreateEmu()
 {
+  this->CleanIface();
+  
   bool ok;
   QString text = QInputDialog::getText(this, "Emu",
                                         tr("Enter the real host interface to use:"), QLineEdit::Normal,
                                         "eth0", &ok);
   if (ok && !text.isEmpty())
   {
-    //~ std::cout << "text received :" <<  text.toStdString () << std::endl;
+    /* test if the iface is already used. */
+    for(size_t i = 0; i < (size_t) this->listIface.size(); i++)
+    {
+      if( (text.toStdString()).compare(this->listIface.at(i)) == 0)
+      {
+        /* interface already used ... */
+        QMessageBox::about(this, "Error", "The specified interface is already used ...");
+        return;
+      }
+    }
+    this->listIface.push_back(text.toStdString());
   }
   else
   {
@@ -169,13 +187,24 @@ void MainWindow::CreateEmu()
 
 void MainWindow::CreateTap()
 {
+  this->CleanIface();
+  
   bool ok;
   QString text = QInputDialog::getText(this, "Tap",
                                         tr("Enter the new interface to use :"), QLineEdit::Normal,
                                         "tap0", &ok);
   if (ok && !text.isEmpty())
   {
-    //~ std::cout << "text received :" <<  text.toStdString () << std::endl;
+    for(size_t i = 0; i < (size_t) this->listIface.size(); i++)
+    {
+      if( (text.toStdString()).compare(this->listIface.at(i)) == 0)
+      {
+        /* interface already used ... */
+        QMessageBox::about(this, "Error", "The specified interface is already used ...");
+        return;
+      }
+    }
+    this->listIface.push_back(text.toStdString());
   }
   else
   {
@@ -188,6 +217,38 @@ void MainWindow::CreateTap()
 	dw->CreateObject("Tap",this->gen->listLink.at(this->gen->listLink.size() - 1)->getLinkName());
 }
 
+void MainWindow::CleanIface()
+{
+  /* remove from list the unused iface. */
+  bool used = false;
+  for(size_t i = 0; i < (size_t) this->listIface.size(); i++)
+  {
+    used = false;
+    for(size_t j = 0; j < MainWindow::gen->listLink.size(); j++)
+    {
+      if( (MainWindow::gen->listLink.at(j)->getLinkName()).find("tap_") == 0)
+      {
+        if( (this->listIface.at(i)).compare(static_cast<Tap*>(MainWindow::gen->listLink.at(j))->getIfaceName()) == 0)
+        {
+          used = true;
+          break;
+        }
+      }
+      if( (MainWindow::gen->listLink.at(j)->getLinkName()).find("emu_") == 0 ) 
+      {
+        if( (this->listIface.at(i)).compare(static_cast<Emu*>(MainWindow::gen->listLink.at(j))->getIfaceName()) == 0)
+        {
+          used = true;
+          break;
+        }
+      }
+    }
+    if(!used)
+    {
+      this->listIface.erase(this->listIface.begin() + i);
+    }
+  }
+}
 void MainWindow::CreateAp()
 {
 	MainWindow::gen->AddEquipement("Ap");
@@ -231,16 +292,26 @@ void MainWindow::deleteObject()
 
 void MainWindow::About()
 {
-     QMessageBox::about(this, "About",
+  QMessageBox::about(this, "About",
                   tr("<p align=\"center\">"
-                     "<h2>Simulation Generator</h2>"
-                     "<h3>for Network Simulator 3</h3>"
+                     "<h2>Simulation Generator<br />"
+                     "for ns-3</h2>"
+                     "</p><br />"
+                     "Copyright (c) 2009 University of Strasbourg<br />"
+                     "This program is free software; you can redistribute it and/or<br />"
+                     "modify it under the terms of the GNU General Public License<br />"
+                     "as published by the Free Software Foundation; either version 2<br />"
+                     "of the License, or (at your option) any later version.<br />"
                      "<br />"
-                     "Copyright (c) 2009 <br />"
-                     "Pierre Weiss<br />"
-                     "3weissp@gmail.com"
-                     "</p>"
+                     "<strong>Authors:</strong><br />"
+                     "Pierre Weiss &lt;3weissp@gmail.com&gt;<br />"
+                     "Sebastien Vincent &lt;vincent@clarinet.u-strasbg.fr&gt;"
                                 ));
+}
+
+void MainWindow::Help()
+{
+
 }
 
 
