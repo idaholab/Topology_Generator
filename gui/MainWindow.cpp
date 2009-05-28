@@ -64,11 +64,11 @@ MainWindow::MainWindow(const std::string &simulationName)
   connect(actionCpp, SIGNAL(triggered()), this, SLOT(GenerateCpp())); 
   menuAffichage->addAction("Python");
      
-  QAction *menuAbout = menuBar()->addAction("About");
+  QMenu *menuHelp = menuBar()->addMenu("&Help");
+  QAction *menuOnlineHelp = menuHelp->addAction("Online Help");
+  connect(menuOnlineHelp, SIGNAL(triggered()), this, SLOT(Help()));
+  QAction *menuAbout = menuHelp->addAction("About");
   connect(menuAbout, SIGNAL(triggered()), this, SLOT(About())); 
-  
-  QAction *menuHelp = menuBar()->addAction("Help");
-  connect(menuAbout, SIGNAL(triggered()), this, SLOT(Help()));
      
   menuAbout = menuAbout;
   menuHelp = menuHelp;
@@ -345,9 +345,20 @@ void MainWindow::CreateHardLink()
    *  - Pc to emu
    *  - Pc to Tap
    */
+  if(this->dw->traceLink)
+  {
+    return;
+  }
+  this->dw->traceLink = true;
   
-  
+}
+
+void MainWindow::ValidHardLink()
+{
+  /* function called when the two equipement are selected. */
   /* get the selected equipement. */
+  this->dw->traceLink = false;
+  
   std::vector<std::string> equi = this->dw->getLastSelected();
   size_t indic = 0;
   
@@ -372,7 +383,6 @@ void MainWindow::CreateHardLink()
     indic = 0;
     for(size_t i = 0; i < (size_t) MainWindow::gen->listLink.size(); i++)
     { 
-std::cout << "link name :" << (MainWindow::gen->listLink.at(i)->getLinkName()) << std::endl;
       if( (MainWindow::gen->listLink.at(i)->getLinkName()).compare(equi.at(0)) == 0)
       {
         indic = i;
@@ -387,7 +397,6 @@ std::cout << "link name :" << (MainWindow::gen->listLink.at(i)->getLinkName()) <
     indic = 0;
     for(size_t i = 0; i < (size_t) MainWindow::gen->listLink.size(); i++)
     { 
-std::cout << "link name :" << (MainWindow::gen->listLink.at(i)->getLinkName()) << std::endl;
       if( (MainWindow::gen->listLink.at(i)->getLinkName()).compare(equi.at(1)) == 0)
       {
         indic = i;
@@ -430,7 +439,7 @@ std::cout << "link name :" << (MainWindow::gen->listLink.at(i)->getLinkName()) <
   }
   
   /* Draw the connection. */
-  this->dw->DrawLine(std::string("HardLink"));
+  this->dw->DrawLine();
   
   this->dw->ResetSelected();
 }
@@ -531,5 +540,6 @@ void MainWindow::GenerateCpp()
 {
   MainWindow::gen->GenerateCode();
 }
+
 
 

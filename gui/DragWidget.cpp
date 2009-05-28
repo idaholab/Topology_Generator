@@ -28,6 +28,7 @@
 
 #include "MainWindow.h"
 #include "DragWidget.h"
+
 #include "DragObject.h"
 
 
@@ -35,11 +36,12 @@ DragWidget::DragWidget(QWidget *parent) : QWidget(parent)
 {
     setMinimumSize(400, 400);
     setAcceptDrops(true);
+   
+    this->traceLink = false;
     
-    this->indice = 0;
-    /* init vector. */
-    this->lastPosition.push_back(QPoint());
-    this->lastPosition.push_back(QPoint());
+    this->linkBegin = "";
+    this->linkEnd = "";
+
 }
 
 DragWidget::~DragWidget()
@@ -122,19 +124,9 @@ void DragWidget::dropEvent(QDropEvent *event)
     QPoint offset;
     dataStream >> pixmap >> offset;
    
-   
     /* get the name from the last draged label */
     /* change the at number ... we are already on drag an elem. */
-    size_t number = 0;
-    if( (this->indice % 2) == 0)
-    {
-      number = 1;
-    }
-    else
-    {
-      number = 0;
-    }
-    DragObject *child = static_cast<DragObject*>(childAt( (this->lastPosition.at(number)) ));
+    DragObject *child = static_cast<DragObject*>(childAt( this->lastPosition ));
     DragObject *label = new DragObject(this);
     if(child)
     {
@@ -169,10 +161,49 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
     MainWindow::delAction->setDisabled(true);
     return;
   }
+  if((child->getName()).compare("deleted") == 0)
+  {
+    /* the child has been deleted ... */
+    return;
+  }
   MainWindow::delAction->setDisabled(false);
 
-  this->lastPosition.at(this->indice % 2) = event->pos();
-  this->indice += 1;
+  this->lastPosition = event->pos();
+  
+  /* trace link ... */
+  if(this->traceLink)
+  {
+    /* update if we drag an existant object. */
+    
+    /*il faut utiliser les noms des objects et non pas les positions ... les positions changent quand on drag et du coup après ont peut
+    plus cast pour recup le child 
+    ....*/
+    
+    /* set the attribute. */
+    if(this->linkBegin == "")
+    {
+      /* begin is not used. */
+      linkBegin = child->getName();
+      std::cout << "Define linkBegin !" << std::endl;
+    }
+    else if(this->linkEnd == "")
+    {
+      /* we got the last equipement. */
+      DragObject *child2 = this->getChildFromName(this->linkBegin);
+      if(child2)
+      {
+        if( (child->getName()).compare(child2->getName()) != 0)
+        {
+          std::cout << "Define linkEnd !" << std::endl;
+          linkEnd = child->getName();
+          lines lig;
+          lig.begin = this->linkBegin;
+          lig.end = this->linkEnd;
+          this->drawLines.push_back(lig);
+        }
+      }
+    }
+  } 
   
   QPixmap pixmap = *child->pixmap();
 
@@ -209,16 +240,7 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
 
 void DragWidget::deleteSelected()
 {
-  size_t number = 0;
-  if( (this->indice % 2) == 0)
-  {
-    number = 1;
-  }
-  else
-  {
-    number = 0;
-  }
-  DragObject *child = static_cast<DragObject*>(childAt( (this->lastPosition.at(number)) ));
+  DragObject *child = static_cast<DragObject*>(childAt(this->lastPosition));
   if (!child)
   {
     MainWindow::delAction->setDisabled(true);
@@ -310,6 +332,23 @@ void DragWidget::deleteSelected()
     }
   }
   
+  /* remove from link part ... */
+  if(child->getName() == this->getChildFromName(this->linkBegin)->getName())
+  {
+    this->linkBegin = "";
+  }
+  if(child->getName() == this->getChildFromName(this->linkEnd)->getName())
+  {
+    this->linkEnd = "";
+  }
+  for(size_t i = 0; i < (size_t) this->drawLines.size(); i++)
+  {
+    if(child->getName() == this->getChildFromName(this->drawLines.at(i).begin)->getName() || child->getName() == this->getChildFromName(this->drawLines.at(i).end)->getName())
+    {
+      this->drawLines.erase(this->drawLines.begin() + i);
+    }
+  }
+  
   /* Gui part */
   child->clear();
   child->Destroy();
@@ -320,8 +359,8 @@ void DragWidget::deleteSelected()
 std::vector<std::string> DragWidget::getLastSelected()
 {
   std::vector<std::string> res;
-  DragObject *child = static_cast<DragObject*>(childAt( (this->lastPosition.at(0)) ));
-  DragObject *child2 = static_cast<DragObject*>(childAt( (this->lastPosition.at(1)) ));
+  DragObject *child = this->getChildFromName(this->linkBegin);
+  DragObject *child2 = this->getChildFromName(this->linkEnd);
   if (child)
   {
     res.push_back(child->getName());
@@ -343,22 +382,51 @@ std::vector<std::string> DragWidget::getLastSelected()
   return res;
 }
 
-void DragWidget::DrawLine(const std::string &type)
+void DragWidget::DrawLine()
 {
-    //QPainter imagePainter(this);
+  
 }
 
 void DragWidget::ResetSelected()
 {
-  this->lastPosition.at(0) = QPoint();
-  this->lastPosition.at(1) = QPoint();
+  this->lastPosition = QPoint(-1, -1);
 }
 
-void DragWidget::paintEvent(QPaintEvent *event)
+void DragWidget::paintEvent(QPaintEvent * event)
 {
-  //~ QPainter paint(this);//(QPixmap));
-  //~ paint.drawLine(this->lastPosition.at(0),this->lastPosition.at(1));
-  //~ paint.setPen(Qt::black);
+  QPainter paint(this);
+  
+  for(size_t i = 0; i < (size_t) this->drawLines.size(); i++)
+  {
+    paint.drawLine( this->getChildFromName(this->drawLines.at(i).begin)->pos(), this->getChildFromName(this->drawLines.at(i).end)->pos());
+  }
+  if(this->traceLink)
+  {
+    if(this->linkBegin != "" && this->linkEnd == "")
+    {
+      std::cout << "Single Paint (" << this->getChildFromName(this->linkBegin)->pos().x() << " - " << this->getChildFromName(this->linkBegin)->pos().y() << ")" << std::endl;
+      paint.drawLine((this->getChildFromName(this->linkBegin))->pos(), QCursor::pos());
+    }
+  }
+  paint.setPen(Qt::black);
+  update();
+}
+
+DragObject* DragWidget::getChildFromName(const std::string &name)
+{
+  for(size_t i = 0; i < (size_t) this->children().size(); i++)
+  {
+    DragObject *child = dynamic_cast<DragObject*>(this->children().at(i));
+    if(child)
+    {
+      if( (child->getName()).compare(name) == 0)
+      {
+        /* we got the right child ... */
+        return child;
+      }
+    }
+  }
+  return new DragObject(this);
 }
 
 

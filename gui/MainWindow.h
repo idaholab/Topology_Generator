@@ -93,6 +93,8 @@ class MainWindow : public QMainWindow
      */
     void ConnectNode(const size_t &linkNumber, const std::string &nodeName);
     
+    void ValidHardLink();
+    
   private slots:
     /**
      * \brief procedure called by the tool bar to create a pc.
@@ -178,6 +180,7 @@ class MainWindow : public QMainWindow
      * \brief procedure to generate the cpp code.
      */
     void GenerateCpp();
+    
     
 };
 

@@ -30,10 +30,12 @@
 #include <vector>
 #include <QtGui>
 
-#include "DragObject.h"
+class DragObject;
 
 class QDragEnterEvent;
 class QDropEvent;
+
+#include "DragObject.h"
 
 /**
  * \ingroup generator
@@ -79,23 +81,39 @@ class DragWidget : public QWidget
     
     /**
      * \brief procedure to draw the link.
-     * \param type the link type.
      */
-    void DrawLine(const std::string &type);
+    void DrawLine();
+    
+    /**
+     * \brief procedure to draw lines.
+     * \param event
+     */
     void paintEvent(QPaintEvent *event);
+    
+    /**
+     * \brief attribute to say if we trace link or not
+     */
+    bool traceLink;
     
   private:
     /**
      * \brief attribute to save the Position from the last object which moved.
      */ 
-    std::vector<QPoint> lastPosition;
+    QPoint lastPosition;
     
-    /**
-     * \brief number which say if we add the elem to place 0 or 1.
-     * with a % 2.
-     */
-    size_t indice;
-     
+    std::string linkBegin;
+    std::string linkEnd;
+    
+    struct lines
+    {
+      std::string begin;
+      std::string end;
+    };
+    
+    std::vector<lines> drawLines;
+    
+    DragObject* getChildFromName(const std::string &name);
+    
   protected:
     /**
      * \brief function which have been rewritted. see Qt doc.
