@@ -32,15 +32,12 @@
 #include "Tap.h"
 #include "Emu.h"
 
-QAction* MainWindow::delAction = NULL;
-Generator* MainWindow::gen = NULL;
-
 MainWindow::MainWindow(const std::string &simulationName)
 {
   
   this->dw = NULL;
   this->config = NULL;
-  MainWindow::gen = new Generator(simulationName);
+  this->gen = new Generator(simulationName);
   
   //
   // Menu
@@ -153,6 +150,7 @@ MainWindow::MainWindow(const std::string &simulationName)
   //
   QHBoxLayout *dragLayout = new QHBoxLayout;
   this->dw = new DragWidget();
+  
   dragLayout->addWidget(dw);
      
   QWidget *zoneCentral = new QWidget; 
@@ -163,19 +161,19 @@ MainWindow::MainWindow(const std::string &simulationName)
   //
   // 
   //
-  
+  this->dw->setMainWindow(this);
 }
 
 MainWindow::~MainWindow()
 {
   delete config;
-  delete MainWindow::gen;
+  delete gen;
 }
 
 void MainWindow::CreatePc()
 {
-	MainWindow::gen->AddEquipement("Pc");
-	dw->CreateObject("Pc", MainWindow::gen->listEquipement.at(MainWindow::gen->listEquipement.size() - 1)->getNodeName());
+	this->gen->AddEquipement("Pc");
+	dw->CreateObject("Pc", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName());
 }
 
 void MainWindow::CreatePcGroup()
@@ -196,8 +194,8 @@ void MainWindow::CreatePcGroup()
     return;
   }
   
-  MainWindow::gen->AddEquipement(number);
-	dw->CreateObject("Pc-group", MainWindow::gen->listEquipement.at(MainWindow::gen->listEquipement.size() - 1)->getNodeName());
+  this->gen->AddEquipement(number);
+	dw->CreateObject("Pc-group", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName());
 }
 
 void MainWindow::CreateEmu()
@@ -228,9 +226,9 @@ void MainWindow::CreateEmu()
     return;
   }
 
-  MainWindow::gen->AddEquipement("Pc");
-  MainWindow::gen->AddLink("Emu", MainWindow::gen->listEquipement.at(MainWindow::gen->listEquipement.size() - 1)->getNodeName(), text.toStdString());
-	dw->CreateObject("Emu",MainWindow::gen->listLink.at(MainWindow::gen->listLink.size() - 1)->getLinkName());
+  this->gen->AddEquipement("Pc");
+  this->gen->AddLink("Emu", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName(), text.toStdString());
+	dw->CreateObject("Emu",this->gen->listLink.at(this->gen->listLink.size() - 1)->getLinkName());
 }
 
 void MainWindow::CreateTap()
@@ -260,9 +258,9 @@ void MainWindow::CreateTap()
     return;
   }
   
-  MainWindow::gen->AddEquipement("Tap");
-  MainWindow::gen->AddLink("Tap", MainWindow::gen->listEquipement.at(MainWindow::gen->listEquipement.size() - 1)->getNodeName(), text.toStdString());
-	dw->CreateObject("Tap",MainWindow::gen->listLink.at(MainWindow::gen->listLink.size() - 1)->getLinkName());
+  this->gen->AddEquipement("Tap");
+  this->gen->AddLink("Tap", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName(), text.toStdString());
+	dw->CreateObject("Tap",this->gen->listLink.at(this->gen->listLink.size() - 1)->getLinkName());
 }
 
 void MainWindow::CleanIface()
@@ -272,19 +270,19 @@ void MainWindow::CleanIface()
   for(size_t i = 0; i < (size_t) this->listIface.size(); i++)
   {
     used = false;
-    for(size_t j = 0; j < MainWindow::gen->listLink.size(); j++)
+    for(size_t j = 0; j < this->gen->listLink.size(); j++)
     {
-      if( (MainWindow::gen->listLink.at(j)->getLinkName()).find("tap_") == 0)
+      if( (this->gen->listLink.at(j)->getLinkName()).find("tap_") == 0)
       {
-        if( (this->listIface.at(i)).compare(static_cast<Tap*>(MainWindow::gen->listLink.at(j))->getIfaceName()) == 0)
+        if( (this->listIface.at(i)).compare(static_cast<Tap*>(this->gen->listLink.at(j))->getIfaceName()) == 0)
         {
           used = true;
           break;
         }
       }
-      if( (MainWindow::gen->listLink.at(j)->getLinkName()).find("emu_") == 0 ) 
+      if( (this->gen->listLink.at(j)->getLinkName()).find("emu_") == 0 ) 
       {
-        if( (this->listIface.at(i)).compare(static_cast<Emu*>(MainWindow::gen->listLink.at(j))->getIfaceName()) == 0)
+        if( (this->listIface.at(i)).compare(static_cast<Emu*>(this->gen->listLink.at(j))->getIfaceName()) == 0)
         {
           used = true;
           break;
@@ -300,34 +298,34 @@ void MainWindow::CleanIface()
 
 void MainWindow::CreateAp()
 {
-	MainWindow::gen->AddEquipement("Ap");
-	MainWindow::gen->AddLink("Wifi", MainWindow::gen->listEquipement.at(MainWindow::gen->listEquipement.size() - 1)->getNodeName(), false);
-	dw->CreateObject("Ap", MainWindow::gen->listLink.at(MainWindow::gen->listLink.size() - 1)->getLinkName() );
+	this->gen->AddEquipement("Ap");
+	this->gen->AddLink("Wifi", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName(), false);
+	dw->CreateObject("Ap", this->gen->listLink.at(this->gen->listLink.size() - 1)->getLinkName() );
 }
 
 void MainWindow::CreateStation()
 {
-	MainWindow::gen->AddEquipement("Station");
-	dw->CreateObject("Station", MainWindow::gen->listEquipement.at(MainWindow::gen->listEquipement.size() - 1)->getNodeName());
+	this->gen->AddEquipement("Station");
+	dw->CreateObject("Station", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName());
 }
 
 void MainWindow::CreateHub()
 {
-	MainWindow::gen->AddLink("Hub");
-	dw->CreateObject("Hub", MainWindow::gen->listLink.at(MainWindow::gen->listLink.size() - 1)->getLinkName());
+	this->gen->AddLink("Hub");
+	dw->CreateObject("Hub", this->gen->listLink.at(this->gen->listLink.size() - 1)->getLinkName());
 }
 
 void MainWindow::CreateSwitch()
 {
-	MainWindow::gen->AddEquipement("Bridge");
-  MainWindow::gen->AddLink("Bridge", MainWindow::gen->listEquipement.at(MainWindow::gen->listEquipement.size() - 1)->getNodeName());
-	dw->CreateObject("Switch",MainWindow::gen->listLink.at(MainWindow::gen->listLink.size() - 1)->getLinkName());
+	this->gen->AddEquipement("Bridge");
+  this->gen->AddLink("Bridge", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName());
+	dw->CreateObject("Switch",this->gen->listLink.at(this->gen->listLink.size() - 1)->getLinkName());
 }
 
 void MainWindow::CreateRouter()
 {
-	MainWindow::gen->AddEquipement("Router");
-	dw->CreateObject("Router", MainWindow::gen->listEquipement.at(MainWindow::gen->listEquipement.size() - 1)->getNodeName());
+	this->gen->AddEquipement("Router");
+	dw->CreateObject("Router", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName());
 }
 
 void MainWindow::CreateHardLink()
@@ -347,6 +345,8 @@ void MainWindow::CreateHardLink()
    */
   if(this->dw->traceLink)
   {
+    this->dw->traceLink = false;
+    this->dw->ResetSelected();
     return;
   }
   this->dw->traceLink = true;
@@ -374,16 +374,14 @@ void MainWindow::ValidHardLink()
     return;
   }
   
-  std::cout << equi.at(0) << " - " << equi.at(1) << std::endl;
-  
   if( (equi.at(0)).find("hub_") == 0 || (equi.at(0)).find("bridge_") == 0 || 
       (equi.at(0)).find("ap_") == 0  || (equi.at(0)).find("emu_") == 0 || 
       (equi.at(0).find("tap_") == 0 ))
   {
     indic = 0;
-    for(size_t i = 0; i < (size_t) MainWindow::gen->listLink.size(); i++)
+    for(size_t i = 0; i < (size_t) this->gen->listLink.size(); i++)
     { 
-      if( (MainWindow::gen->listLink.at(i)->getLinkName()).compare(equi.at(0)) == 0)
+      if( (this->gen->listLink.at(i)->getLinkName()).compare(equi.at(0)) == 0)
       {
         indic = i;
       }
@@ -395,9 +393,9 @@ void MainWindow::ValidHardLink()
           (equi.at(1).find("tap_") == 0 ))
   {
     indic = 0;
-    for(size_t i = 0; i < (size_t) MainWindow::gen->listLink.size(); i++)
+    for(size_t i = 0; i < (size_t) this->gen->listLink.size(); i++)
     { 
-      if( (MainWindow::gen->listLink.at(i)->getLinkName()).compare(equi.at(1)) == 0)
+      if( (this->gen->listLink.at(i)->getLinkName()).compare(equi.at(1)) == 0)
       {
         indic = i;
       }
@@ -408,14 +406,14 @@ void MainWindow::ValidHardLink()
   {
     size_t number = -1;
     size_t number2 = -1;
-    for(size_t i = 0; i < (size_t) MainWindow::gen->listLink.size(); i++)
+    for(size_t i = 0; i < (size_t) this->gen->listLink.size(); i++)
     {
-      if(equi.at(0).compare(MainWindow::gen->listLink.at(i)->getLinkName()) == 0)
+      if(equi.at(0).compare(this->gen->listLink.at(i)->getLinkName()) == 0)
       {
         number = i;
         break;
       }
-      if(equi.at(1).compare(MainWindow::gen->listLink.at(i)->getLinkName()) == 0)
+      if(equi.at(1).compare(this->gen->listLink.at(i)->getLinkName()) == 0)
       {
         number2 = i;
         break;
@@ -432,15 +430,14 @@ void MainWindow::ValidHardLink()
     else
     {
       /* you can't connect for example two terminals without an csma network so ... */
-      MainWindow::gen->AddLink("Hub");
-      this->ConnectNode((MainWindow::gen->listLink.size() - 1), equi.at(0));
-      this->ConnectNode((MainWindow::gen->listLink.size() - 1), equi.at(1));
+      this->gen->AddLink("Hub");
+      this->ConnectNode((this->gen->listLink.size() - 1), equi.at(0));
+      this->ConnectNode((this->gen->listLink.size() - 1), equi.at(1));
     }
   }
   
   /* Draw the connection. */
   this->dw->DrawLine();
-  
   this->dw->ResetSelected();
 }
 
@@ -491,7 +488,7 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
   /* test if the link exist. */
   try
   {
-    MainWindow::gen->listLink.at(linkNumber);
+    this->gen->listLink.at(linkNumber);
   }
     catch(const std::out_of_range &e)
     {
@@ -507,9 +504,9 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
   }
   else
   {
-    for(size_t i = 0; i < (size_t) MainWindow::gen->listEquipement.size(); i++)
+    for(size_t i = 0; i < (size_t) this->gen->listEquipement.size(); i++)
     {
-      if(nodeName.compare(MainWindow::gen->listEquipement.at(i)->getNodeName()) == 0)
+      if(nodeName.compare(this->gen->listEquipement.at(i)->getNodeName()) == 0)
       {
         numberOfConnectedMachines += MainWindow::gen->listEquipement.at(i)->getMachinesNumber();
       }
@@ -517,14 +514,14 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
   }
   
   /* get the number of machines also connected. */
-  std::vector<std::string> nodes = MainWindow::gen->listLink.at(linkNumber)->getNodes();
+  std::vector<std::string> nodes = this->gen->listLink.at(linkNumber)->getNodes();
   for(size_t i = 0; i < (size_t) nodes.size(); i++)
   {
-    for(size_t j = 0; j < (size_t) MainWindow::gen->listEquipement.size(); j++)
+    for(size_t j = 0; j < (size_t) this->gen->listEquipement.size(); j++)
     {
-      if(nodes.at(i).compare(MainWindow::gen->listEquipement.at(j)->getNodeName()) == 0)
+      if(nodes.at(i).compare(this->gen->listEquipement.at(j)->getNodeName()) == 0)
       {
-        numberOfConnectedMachines += MainWindow::gen->listEquipement.at(j)->getMachinesNumber();
+        numberOfConnectedMachines += this->gen->listEquipement.at(j)->getMachinesNumber();
       }
     }
   }
@@ -533,12 +530,12 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
     QMessageBox::about(this, "Error", "Limit of machines exceeded.");
     return;
   }
-  MainWindow::gen->listLink.at(linkNumber)->AddNodes(nodeName);
+  this->gen->listLink.at(linkNumber)->AddNodes(nodeName);
 }
 
 void MainWindow::GenerateCpp()
 {
-  MainWindow::gen->GenerateCode();
+ this->gen->GenerateCode();
 }
 
 

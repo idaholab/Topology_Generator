@@ -57,12 +57,17 @@ class MainWindow : public QMainWindow
      * \brief attribute used tu delete object.
      * Is attribute to setDisable ...
      */
-    static QAction *delAction;
+    QAction *delAction;
     
     /**
      * \brief attribute which represent the core object. 
      */
-    static Generator *gen;
+    Generator *gen;
+    
+    /**
+     * \brief procedure to valid hard link.
+     */
+    void ValidHardLink();
     
   private:
     /**
@@ -93,7 +98,7 @@ class MainWindow : public QMainWindow
      */
     void ConnectNode(const size_t &linkNumber, const std::string &nodeName);
     
-    void ValidHardLink();
+    
     
   private slots:
     /**

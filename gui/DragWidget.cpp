@@ -36,16 +36,21 @@ DragWidget::DragWidget(QWidget *parent) : QWidget(parent)
 {
     setMinimumSize(400, 400);
     setAcceptDrops(true);
+    setMouseTracking(true);
    
     this->traceLink = false;
     
     this->linkBegin = "";
     this->linkEnd = "";
-
 }
 
 DragWidget::~DragWidget()
 {
+}
+
+void DragWidget::setMainWindow(MainWindow *_mw)
+{
+  this->mw = _mw;
 }
 
 void DragWidget::CreateObject(const std::string &type, const std::string &_name)
@@ -136,6 +141,8 @@ void DragWidget::dropEvent(QDropEvent *event)
     label->move(event->pos() - offset);
     label->show();
     label->setAttribute(Qt::WA_DeleteOnClose);
+    
+    update();
 
     if (event->source() == this) 
     {
@@ -158,7 +165,7 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
   DragObject *child = static_cast<DragObject*>(childAt(event->pos()));
   if (!child)
   {
-    MainWindow::delAction->setDisabled(true);
+    this->mw->delAction->setDisabled(true);
     return;
   }
   if((child->getName()).compare("deleted") == 0)
@@ -166,7 +173,7 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
     /* the child has been deleted ... */
     return;
   }
-  MainWindow::delAction->setDisabled(false);
+  this->mw->delAction->setDisabled(false);
 
   this->lastPosition = event->pos();
   
@@ -184,7 +191,6 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
     {
       /* begin is not used. */
       linkBegin = child->getName();
-      std::cout << "Define linkBegin !" << std::endl;
     }
     else if(this->linkEnd == "")
     {
@@ -194,12 +200,13 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
       {
         if( (child->getName()).compare(child2->getName()) != 0)
         {
-          std::cout << "Define linkEnd !" << std::endl;
           linkEnd = child->getName();
           lines lig;
           lig.begin = this->linkBegin;
           lig.end = this->linkEnd;
           this->drawLines.push_back(lig);
+          
+          this->mw->ValidHardLink();
         }
       }
     }
@@ -238,44 +245,49 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
   }
 }
 
+void DragWidget::mouseMoveEvent(QMouseEvent * /*event*/)
+{
+  update();
+}
+    
 void DragWidget::deleteSelected()
 {
   DragObject *child = static_cast<DragObject*>(childAt(this->lastPosition));
   if (!child)
   {
-    MainWindow::delAction->setDisabled(true);
+    this->mw->delAction->setDisabled(true);
     return;
   }
 
   size_t indic = -1;
   /* Generator part */
   /* delete equipement. */
-  for(size_t i = 0; i < (size_t) MainWindow::gen->listEquipement.size(); i++)
+  for(size_t i = 0; i < (size_t) this->mw->gen->listEquipement.size(); i++)
   {
-    if(MainWindow::gen->listEquipement.at(i)->getNodeName().compare(child->getName()) == 0)
+    if(this->mw->gen->listEquipement.at(i)->getNodeName().compare(child->getName()) == 0)
     {
       indic = i;
     }
   }
   if(indic != (size_t) -1 )
   {
-    MainWindow::gen->RemoveEquipement(indic);
+    this->mw->gen->RemoveEquipement(indic);
   }
   
   /* delete link. */
   indic = -1;
-  for(size_t i = 0; i < (size_t) MainWindow::gen->listLink.size(); i++)
+  for(size_t i = 0; i < (size_t) this->mw->gen->listLink.size(); i++)
   {
-    if(MainWindow::gen->listLink.at(i)->getLinkName().compare(child->getName()) == 0)
+    if(this->mw->gen->listLink.at(i)->getLinkName().compare(child->getName()) == 0)
     {
       indic = i;
       if((child->getName()).find("emu_") == 0)
       {
-        for(size_t j = 0; j < (size_t) MainWindow::gen->listEquipement.size(); j++)
+        for(size_t j = 0; j < (size_t) this->mw->gen->listEquipement.size(); j++)
         {
-          if( (MainWindow::gen->listEquipement.at(j)->getNodeName()).compare(MainWindow::gen->listLink.at(i)->getNodes().at(0)) == 0)
+          if( (this->mw->gen->listEquipement.at(j)->getNodeName()).compare(this->mw->gen->listLink.at(i)->getNodes().at(0)) == 0)
           {
-            MainWindow::gen->RemoveEquipement(j);
+            this->mw->gen->RemoveEquipement(j);
             break;
           }
         }
@@ -284,21 +296,21 @@ void DragWidget::deleteSelected()
   }
   if(indic != (size_t) -1 )
   {
-    MainWindow::gen->RemoveLink(indic);
+    this->mw->gen->RemoveLink(indic);
   }
   
   /* delete connections */
   std::vector<std::string> objDelLink;
-  for(size_t i = 0; i < (size_t) MainWindow::gen->listLink.size(); i++)
+  for(size_t i = 0; i < (size_t) this->mw->gen->listLink.size(); i++)
   {
-    std::vector<std::string> nodes = MainWindow::gen->listLink.at(i)->getNodes();
+    std::vector<std::string> nodes = this->mw->gen->listLink.at(i)->getNodes();
     for(size_t j = 0; j < (size_t) nodes.size(); j++)
     {
       /* if the child to be deleted is connected ... we must remove it. */
       if((child->getName()).compare(nodes.at(j)) == 0)
       {
-        objDelLink.push_back(MainWindow::gen->listLink.at(i)->getLinkName());
-        MainWindow::gen->listLink.at(i)->nodes.erase(MainWindow::gen->listLink.at(i)->nodes.begin() + j);
+        objDelLink.push_back(this->mw->gen->listLink.at(i)->getLinkName());
+        this->mw->gen->listLink.at(i)->nodes.erase(this->mw->gen->listLink.at(i)->nodes.begin() + j);
       }
     }
   }
@@ -307,25 +319,25 @@ void DragWidget::deleteSelected()
   bool isHide = true;
   for(size_t i = 0; i < (size_t) objDelLink.size(); i++)
   {
-    for(size_t j = 0; j < (size_t) MainWindow::gen->listLink.size(); j++)
+    for(size_t j = 0; j < (size_t) this->mw->gen->listLink.size(); j++)
     {
-      if( (objDelLink.at(i)).compare(MainWindow::gen->listLink.at(j)->getLinkName()) == 0 )
+      if( (objDelLink.at(i)).compare(this->mw->gen->listLink.at(j)->getLinkName()) == 0 )
       {
-        if(MainWindow::gen->listLink.at(j)->getNodes().size() <= 1)
+        if(this->mw->gen->listLink.at(j)->getNodes().size() <= 1)
         {
           /* the link where the deleted object */
           /* check if the link is hide. */
           isHide = true;
           for(size_t k = 0; k < (size_t) this->children().size(); k++)
           {
-            if( (static_cast<DragObject*>((this->children().at(k)))->getName()).compare(MainWindow::gen->listLink.at(j)->getLinkName()) == 0)
+            if( (static_cast<DragObject*>((this->children().at(k)))->getName()).compare(this->mw->gen->listLink.at(j)->getLinkName()) == 0)
             {
               isHide = false;
             }
           }
           if(isHide)
           {
-            MainWindow::gen->RemoveLink(j);
+            this->mw->gen->RemoveLink(j);
           }
         }
       }
@@ -345,6 +357,7 @@ void DragWidget::deleteSelected()
   {
     if(child->getName() == this->getChildFromName(this->drawLines.at(i).begin)->getName() || child->getName() == this->getChildFromName(this->drawLines.at(i).end)->getName())
     {
+      std::cout << "remove link : " << child->getName() << std::endl;
       this->drawLines.erase(this->drawLines.begin() + i);
     }
   }
@@ -353,7 +366,7 @@ void DragWidget::deleteSelected()
   child->clear();
   child->Destroy();
   
-  MainWindow::delAction->setDisabled(true);
+  this->mw->delAction->setDisabled(true);
 }
 
 std::vector<std::string> DragWidget::getLastSelected()
@@ -384,32 +397,39 @@ std::vector<std::string> DragWidget::getLastSelected()
 
 void DragWidget::DrawLine()
 {
-  
+  update();
 }
 
 void DragWidget::ResetSelected()
 {
-  this->lastPosition = QPoint(-1, -1);
+  this->linkBegin = "";
+  this->linkEnd = "";
 }
 
-void DragWidget::paintEvent(QPaintEvent * event)
+void DragWidget::paintEvent(QPaintEvent * /*event*/)
 {
-  QPainter paint(this);
-  
-  for(size_t i = 0; i < (size_t) this->drawLines.size(); i++)
-  {
-    paint.drawLine( this->getChildFromName(this->drawLines.at(i).begin)->pos(), this->getChildFromName(this->drawLines.at(i).end)->pos());
-  }
-  if(this->traceLink)
-  {
-    if(this->linkBegin != "" && this->linkEnd == "")
+    QPainter paint(this);
+    for(size_t i = 0; i < (size_t) this->drawLines.size(); i++)
     {
-      std::cout << "Single Paint (" << this->getChildFromName(this->linkBegin)->pos().x() << " - " << this->getChildFromName(this->linkBegin)->pos().y() << ")" << std::endl;
-      paint.drawLine((this->getChildFromName(this->linkBegin))->pos(), QCursor::pos());
+      if(this->getChildFromName(this->drawLines.at(i).begin)->getName() != "" && this->getChildFromName(this->drawLines.at(i).end)->getName() != "")
+      {
+        paint.drawLine( (this->getChildFromName(this->drawLines.at(i).begin)->pos().x()+((this->getChildFromName(this->drawLines.at(i).begin))->width()/2)), 
+                        (this->getChildFromName(this->drawLines.at(i).begin)->pos().y()+((this->getChildFromName(this->drawLines.at(i).begin))->height()/2)),
+                      (this->getChildFromName(this->drawLines.at(i).end)->pos().x()+((this->getChildFromName(this->drawLines.at(i).end))->width()/2)),
+                        (this->getChildFromName(this->drawLines.at(i).end)->pos().y()+((this->getChildFromName(this->drawLines.at(i).end))->height()/2))
+                    );
+      }
     }
-  }
-  paint.setPen(Qt::black);
-  update();
+    if(this->traceLink)
+    {
+      if(this->linkBegin != "" && this->linkEnd == "")
+      {
+        paint.drawLine((this->getChildFromName(this->linkBegin))->pos().x()+((this->getChildFromName(this->linkBegin))->width()/2),
+                       (this->getChildFromName(this->linkBegin))->pos().y()+((this->getChildFromName(this->linkBegin))->height()/2),
+                        mapFromGlobal(QCursor::pos()).x(),  mapFromGlobal(QCursor::pos()).y());
+      }
+    }
+    paint.setPen(Qt::black);
 }
 
 DragObject* DragWidget::getChildFromName(const std::string &name)
@@ -428,5 +448,7 @@ DragObject* DragWidget::getChildFromName(const std::string &name)
   }
   return new DragObject(this);
 }
+
+
 
 

@@ -31,6 +31,7 @@
 #include <QtGui>
 
 class DragObject;
+class MainWindow;
 
 class QDragEnterEvent;
 class QDropEvent;
@@ -48,6 +49,7 @@ class DragWidget : public QWidget
   public:
     /**
      * \brief constructor
+     * \param parent 
      */
     DragWidget(QWidget *parent=0);
     
@@ -95,13 +97,26 @@ class DragWidget : public QWidget
      */
     bool traceLink;
     
+    /**
+     * \brief procedure to set the mainwindow attribute.
+     * \param _mw
+     */
+    void setMainWindow(MainWindow *_mw);
+    
   private:
     /**
      * \brief attribute to save the Position from the last object which moved.
      */ 
     QPoint lastPosition;
     
+    /**
+     * \brief the link begin
+     */
     std::string linkBegin;
+    
+    /**
+     * \brief the link end.
+     */
     std::string linkEnd;
     
     struct lines
@@ -109,10 +124,21 @@ class DragWidget : public QWidget
       std::string begin;
       std::string end;
     };
-    
+    /**
+     * \brief the attribute which containt the attribute name to draw lines.
+     */
     std::vector<lines> drawLines;
     
+    /**
+     * \brief function to get the child object from his name.
+     * \param name
+     */
     DragObject* getChildFromName(const std::string &name);
+    
+    /**
+     * \brief the main window attribute
+     */
+    MainWindow *mw;
     
   protected:
     /**
@@ -129,6 +155,11 @@ class DragWidget : public QWidget
     * \brief function which have been rewritted. see Qt doc.
     */
     void mousePressEvent(QMouseEvent *event);
+    
+    /**
+    * \brief function which have been rewritted. see Qt doc.
+    */
+    void mouseMoveEvent(QMouseEvent *event);
     
 };
 
