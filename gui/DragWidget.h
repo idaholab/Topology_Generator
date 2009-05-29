@@ -103,6 +103,39 @@ class DragWidget : public QWidget
      */
     void setMainWindow(MainWindow *_mw);
     
+    /**
+     * \brief link type.
+     */
+    std::string linkType;
+    
+    /**
+     * \brief the link end.
+     */
+    std::string linkEnd;
+    
+    /**
+     * \brief lines struct.
+     */
+    struct lines
+    {
+      /**
+       * \brief begin
+       */
+      std::string begin;
+      /**
+       * \brief end
+       */
+      std::string end;
+      /**
+       * \brief type
+       */
+      std::string type;
+    };
+    /**
+     * \brief the attribute which containt the attribute name to draw lines.
+     */
+    std::vector<lines> drawLines;
+    
   private:
     /**
      * \brief attribute to save the Position from the last object which moved.
@@ -113,21 +146,6 @@ class DragWidget : public QWidget
      * \brief the link begin
      */
     std::string linkBegin;
-    
-    /**
-     * \brief the link end.
-     */
-    std::string linkEnd;
-    
-    struct lines
-    {
-      std::string begin;
-      std::string end;
-    };
-    /**
-     * \brief the attribute which containt the attribute name to draw lines.
-     */
-    std::vector<lines> drawLines;
     
     /**
      * \brief function to get the child object from his name.

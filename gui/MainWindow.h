@@ -67,7 +67,7 @@ class MainWindow : public QMainWindow
     /**
      * \brief procedure to valid hard link.
      */
-    void ValidHardLink();
+    void ValidLink();
     
   private:
     /**

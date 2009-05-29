@@ -350,10 +350,10 @@ void MainWindow::CreateHardLink()
     return;
   }
   this->dw->traceLink = true;
-  
+  this->dw->linkType = "HardLink";
 }
 
-void MainWindow::ValidHardLink()
+void MainWindow::ValidLink()
 {
   /* function called when the two equipement are selected. */
   /* get the selected equipement. */
@@ -374,9 +374,43 @@ void MainWindow::ValidHardLink()
     return;
   }
   
-  if( (equi.at(0)).find("hub_") == 0 || (equi.at(0)).find("bridge_") == 0 || 
-      (equi.at(0)).find("ap_") == 0  || (equi.at(0)).find("emu_") == 0 || 
-      (equi.at(0).find("tap_") == 0 ))
+  //
+  // LINK to LINK
+  //
+  
+  if( (equi.at(0).find("wifi_") == 0 || equi.at(0).find("hub_") == 0 || (equi.at(0)).find("bridge_") == 0 || 
+      (equi.at(0)).find("emu_") == 0 || (equi.at(0).find("tap_") == 0 )) && 
+      (equi.at(1).find("wifi_") == 0 || equi.at(1).find("hub_") == 0 || (equi.at(1)).find("bridge_") == 0 || 
+      (equi.at(1)).find("emu_") == 0 || (equi.at(1).find("tap_") == 0)) )
+  {
+    
+    this->gen->AddEquipement("Pc");
+    
+    indic = 0;
+    for(size_t i = 0; i < (size_t) this->gen->listLink.size(); i++)
+    { 
+      if( (this->gen->listLink.at(i)->getLinkName()).compare(equi.at(0)) == 0)
+      {
+        indic = i;
+      }
+    }
+    this->ConnectNode(indic, this->gen->listEquipement.at(this->gen->listEquipement.size() -1)->getNodeName());
+    
+    indic = 0;
+    for(size_t i = 0; i < (size_t) this->gen->listLink.size(); i++)
+    { 
+      if( (this->gen->listLink.at(i)->getLinkName()).compare(equi.at(1)) == 0)
+      {
+        indic = i;
+      }
+    }
+    this->ConnectNode(indic, this->gen->listEquipement.at(this->gen->listEquipement.size() -1)->getNodeName());
+  }
+  //
+  // OTHERS
+  //
+  else if( (equi.at(0)).find("hub_") == 0 || (equi.at(0)).find("bridge_") == 0 || 
+      (equi.at(0)).find("emu_") == 0 || (equi.at(0).find("tap_") == 0 ))
   {
     indic = 0;
     for(size_t i = 0; i < (size_t) this->gen->listLink.size(); i++)
@@ -389,8 +423,7 @@ void MainWindow::ValidHardLink()
     this->ConnectNode(indic, equi.at(1));
   }
   else if ((equi.at(1)).find("hub_") == 0 || (equi.at(1)).find("bridge_") == 0 || 
-          (equi.at(1)).find("ap_") == 0  || (equi.at(1)).find("emu_") == 0 || 
-          (equi.at(1).find("tap_") == 0 ))
+           (equi.at(1)).find("emu_") == 0 || (equi.at(1).find("tap_") == 0 ))
   {
     indic = 0;
     for(size_t i = 0; i < (size_t) this->gen->listLink.size(); i++)
@@ -430,10 +463,31 @@ void MainWindow::ValidHardLink()
     else
     {
       /* you can't connect for example two terminals without an csma network so ... */
-      this->gen->AddLink("Hub");
-      this->ConnectNode((this->gen->listLink.size() - 1), equi.at(0));
-      this->ConnectNode((this->gen->listLink.size() - 1), equi.at(1));
-    }
+      if(equi.at(2) == "HardLink")
+      {
+        this->gen->AddLink("Hub");
+        this->ConnectNode((this->gen->listLink.size() - 1), equi.at(0));
+        this->ConnectNode((this->gen->listLink.size() - 1), equi.at(1));
+      }
+      else if(equi.at(2) == "P2pLink")
+      {
+        this->gen->AddLink("PointToPoint");
+        this->ConnectNode((this->gen->listLink.size() - 1), equi.at(0));
+        this->ConnectNode((this->gen->listLink.size() - 1), equi.at(1));
+      }
+      else
+      {
+        QMessageBox::about(this, "Error", "An error occured.");
+        /* delete the two equi .... */
+        for(size_t i = 0; i < (size_t) this->dw->drawLines.size(); i++)
+        {
+          if(equi.at(0) == this->dw->drawLines.at(i).begin || equi.at(1) == this->dw->drawLines.at(i).begin )
+          {
+            this->dw->drawLines.erase(this->dw->drawLines.begin() + i);
+          }
+        }
+      }
+    } 
   }
   
   /* Draw the connection. */
@@ -443,10 +497,26 @@ void MainWindow::ValidHardLink()
 
 void MainWindow::CreateStationLink()
 {
+  if(this->dw->traceLink)
+  {
+    this->dw->traceLink = false;
+    this->dw->ResetSelected();
+    return;
+  }
+  this->dw->traceLink = true;
+  this->dw->linkType = "WifiLink";
 }
 
 void MainWindow::CreateP2pLink()
 {
+  if(this->dw->traceLink)
+  {
+    this->dw->traceLink = false;
+    this->dw->ResetSelected();
+    return;
+  }
+  this->dw->traceLink = true;
+  this->dw->linkType = "P2pLink";
 }
 
 void MainWindow::ConfigurationMenu()
