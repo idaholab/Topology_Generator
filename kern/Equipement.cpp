@@ -70,7 +70,7 @@ std::vector<std::string> Equipement::GenerateIpStack()
 {
   std::vector<std::string> stack;
   stack.push_back("InternetStackHelper net_"+this->getNodeName()+";");
-  if(this->getNsc().compare("") != 0)
+  if(this->getNsc() != "")
   {
     stack.push_back("net_"+this->getNodeName()+".SetNscStack (nscStack);");
   }

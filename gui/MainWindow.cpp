@@ -211,7 +211,7 @@ void MainWindow::CreateEmu()
     /* test if the iface is already used. */
     for(size_t i = 0; i < (size_t) this->listIface.size(); i++)
     {
-      if( (text.toStdString()).compare(this->listIface.at(i)) == 0)
+      if( text.toStdString() == this->listIface.at(i))
       {
         /* interface already used ... */
         QMessageBox::about(this, "Error", "The specified interface is already used ...");
@@ -243,7 +243,7 @@ void MainWindow::CreateTap()
   {
     for(size_t i = 0; i < (size_t) this->listIface.size(); i++)
     {
-      if( (text.toStdString()).compare(this->listIface.at(i)) == 0)
+      if( text.toStdString() == this->listIface.at(i))
       {
         /* interface already used ... */
         QMessageBox::about(this, "Error", "The specified interface is already used ...");
@@ -274,7 +274,7 @@ void MainWindow::CleanIface()
     {
       if( (this->gen->listLink.at(j)->getLinkName()).find("tap_") == 0)
       {
-        if( (this->listIface.at(i)).compare(static_cast<Tap*>(this->gen->listLink.at(j))->getIfaceName()) == 0)
+        if( this->listIface.at(i) == static_cast<Tap*>(this->gen->listLink.at(j))->getIfaceName())
         {
           used = true;
           break;
@@ -282,7 +282,7 @@ void MainWindow::CleanIface()
       }
       if( (this->gen->listLink.at(j)->getLinkName()).find("emu_") == 0 ) 
       {
-        if( (this->listIface.at(i)).compare(static_cast<Emu*>(this->gen->listLink.at(j))->getIfaceName()) == 0)
+        if( this->listIface.at(i) == static_cast<Emu*>(this->gen->listLink.at(j))->getIfaceName())
         {
           used = true;
           break;
@@ -365,12 +365,14 @@ void MainWindow::ValidLink()
   if(equi.at(0) == "" || equi.at(1) == "" || equi.at(0) == "deleted" || equi.at(1) == "deleted")
   {
     QMessageBox::about(this, "Error", "You don't have selected two equipement.");
+    this->dw->ResetSelected();
     return;
   }
   
   if(equi.at(0) == equi.at(1))
   {
     QMessageBox::about(this, "Error", "You can't connect object to itself.");
+    this->dw->ResetSelected();
     return;
   }
   
@@ -384,27 +386,6 @@ void MainWindow::ValidLink()
       (equi.at(1)).find("emu_") == 0 || (equi.at(1).find("tap_") == 0)) )
   {
     
-    this->gen->AddEquipement("Pc");
-    
-    indic = 0;
-    for(size_t i = 0; i < (size_t) this->gen->listLink.size(); i++)
-    { 
-      if( (this->gen->listLink.at(i)->getLinkName()).compare(equi.at(0)) == 0)
-      {
-        indic = i;
-      }
-    }
-    this->ConnectNode(indic, this->gen->listEquipement.at(this->gen->listEquipement.size() -1)->getNodeName());
-    
-    indic = 0;
-    for(size_t i = 0; i < (size_t) this->gen->listLink.size(); i++)
-    { 
-      if( (this->gen->listLink.at(i)->getLinkName()).compare(equi.at(1)) == 0)
-      {
-        indic = i;
-      }
-    }
-    this->ConnectNode(indic, this->gen->listEquipement.at(this->gen->listEquipement.size() -1)->getNodeName());
   }
   //
   // OTHERS
@@ -415,7 +396,7 @@ void MainWindow::ValidLink()
     indic = 0;
     for(size_t i = 0; i < (size_t) this->gen->listLink.size(); i++)
     { 
-      if( (this->gen->listLink.at(i)->getLinkName()).compare(equi.at(0)) == 0)
+      if( this->gen->listLink.at(i)->getLinkName() == equi.at(0))
       {
         indic = i;
       }
@@ -428,7 +409,7 @@ void MainWindow::ValidLink()
     indic = 0;
     for(size_t i = 0; i < (size_t) this->gen->listLink.size(); i++)
     { 
-      if( (this->gen->listLink.at(i)->getLinkName()).compare(equi.at(1)) == 0)
+      if( this->gen->listLink.at(i)->getLinkName() == equi.at(1))
       {
         indic = i;
       }
@@ -441,12 +422,12 @@ void MainWindow::ValidLink()
     size_t number2 = -1;
     for(size_t i = 0; i < (size_t) this->gen->listLink.size(); i++)
     {
-      if(equi.at(0).compare(this->gen->listLink.at(i)->getLinkName()) == 0)
+      if(equi.at(0) == this->gen->listLink.at(i)->getLinkName())
       {
         number = i;
         break;
       }
-      if(equi.at(1).compare(this->gen->listLink.at(i)->getLinkName()) == 0)
+      if(equi.at(1) == this->gen->listLink.at(i)->getLinkName())
       {
         number2 = i;
         break;
@@ -576,7 +557,7 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
   {
     for(size_t i = 0; i < (size_t) this->gen->listEquipement.size(); i++)
     {
-      if(nodeName.compare(this->gen->listEquipement.at(i)->getNodeName()) == 0)
+      if(nodeName == this->gen->listEquipement.at(i)->getNodeName())
       {
         numberOfConnectedMachines += MainWindow::gen->listEquipement.at(i)->getMachinesNumber();
       }
@@ -589,7 +570,7 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
   {
     for(size_t j = 0; j < (size_t) this->gen->listEquipement.size(); j++)
     {
-      if(nodes.at(i).compare(this->gen->listEquipement.at(j)->getNodeName()) == 0)
+      if(nodes.at(i) == this->gen->listEquipement.at(j)->getNodeName())
       {
         numberOfConnectedMachines += this->gen->listEquipement.at(j)->getMachinesNumber();
       }

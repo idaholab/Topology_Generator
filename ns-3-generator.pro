@@ -30,6 +30,7 @@ SOURCES += main.cpp \
            gui/DragObject.cpp \
            gui/DragWidget.cpp \
            gui/MainWindow.cpp \
+	   gui/DragLines.cpp \
            kern/Application.cpp \
            kern/Bridge.cpp \
            kern/Emu.cpp \

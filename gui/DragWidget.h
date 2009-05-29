@@ -32,11 +32,13 @@
 
 class DragObject;
 class MainWindow;
+class DragLines;
 
 class QDragEnterEvent;
 class QDropEvent;
 
 #include "DragObject.h"
+#include "DragLines.h"
 
 /**
  * \ingroup generator
@@ -114,27 +116,14 @@ class DragWidget : public QWidget
     std::string linkEnd;
     
     /**
-     * \brief lines struct.
+     * \brief DrawLines class attribute
      */
-    struct lines
-    {
-      /**
-       * \brief begin
-       */
-      std::string begin;
-      /**
-       * \brief end
-       */
-      std::string end;
-      /**
-       * \brief type
-       */
-      std::string type;
-    };
+    DragLines lines;
+    
     /**
      * \brief the attribute which containt the attribute name to draw lines.
      */
-    std::vector<lines> drawLines;
+    std::vector<DragLines> drawLines;
     
   private:
     /**

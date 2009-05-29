@@ -94,7 +94,7 @@ void Generator::AddConfig(const std::string &config)
   bool isDuplicate = false;
   for(size_t i = 0; i < (size_t) this->listConfiguration.size(); i++)
   {
-    if(config.compare(this->listConfiguration.at(i)) == 0)
+    if(config == this->listConfiguration.at(i))
     {
       isDuplicate = true;
     }
@@ -113,32 +113,32 @@ void Generator::AddEquipement(const std::string &type)
   Equipement *equi = NULL;
   
   // call to the right type constructor. 
-  if(type.compare("Pc") == 0)
+  if(type == "Pc")
   {
   	equi = new Equipement(this->indiceEquipementPc, std::string("node_"));
   	this->indiceEquipementPc += 1;
   } 
-  else if(type.compare("Router") == 0)
+  else if(type == "Router")
   {
   	equi = new Equipement(this->indiceEquipementRouter, std::string("router_"));
   	this->indiceEquipementRouter += 1;
   } 
-  else if(type.compare("Ap") == 0)
+  else if(type == "Ap")
   {
   	equi = new Equipement(this->indiceEquipementAp, std::string("ap_"));
   	this->indiceEquipementAp += 1;
   } 
-  else if(type.compare("Station") == 0)
+  else if(type == "Station")
   {
     equi = new Equipement(this->indiceEquipementStation, std::string("station_"));
   	this->indiceEquipementStation += 1;
   } 
-  else if(type.compare("Bridge") == 0)
+  else if(type == "Bridge")
   {
     equi = new Equipement(this->indiceEquipementBridge, std::string("bridge_"));
   	this->indiceEquipementBridge += 1;
   } 
-  else if(type.compare("Tap") == 0)
+  else if(type == "Tap")
   {
   	equi = new Equipement(this->indiceEquipementTap, std::string("tap_"));
   	this->indiceEquipementTap += 1;
@@ -182,13 +182,13 @@ void Generator::AddApplication(const std::string &type, const std::string &sende
                                const std::string &receiverNode, const size_t &startTime, 
                                const size_t &endTime, const size_t &port) 
 {
-  if(type.compare("UdpEcho") == 0)
+  if(type == "UdpEcho")
   {
     UdpEcho *app = new UdpEcho(this->indiceApplicationUdpEcho, senderNode, receiverNode, startTime, endTime, port);
     this->indiceApplicationUdpEcho += 1;
     this->listApplication.push_back(app);
   }
-  else if(type.compare("TcpLargeTransfer") == 0)
+  else if(type == "TcpLargeTransfer")
   {
     TcpLargeTransfer *app = new TcpLargeTransfer(this->indiceApplicationTcpLargeTransfer, senderNode, receiverNode, startTime, endTime, port);
     this->indiceApplicationTcpLargeTransfer += 1;
@@ -204,7 +204,7 @@ void Generator::AddApplication(const std::string &type, const std::string &sende
 void Generator::AddApplication(const std::string &type, const std::string &senderNode, 
                                const std::string &receiverNode, const size_t &startTime, const size_t &endTime) 
 {
-  if(type.compare("Ping") == 0)
+  if(type == "Ping")
   {
     Ping *app = new Ping(this->indiceApplicationPing, senderNode, receiverNode, startTime, endTime);
     this->indiceApplicationPing += 1;
@@ -235,13 +235,13 @@ void Generator::RemoveApplication(const size_t &number)
 void Generator::AddLink(const std::string &type) 
 {
   // call to the right type constructor. 
-  if(type.compare("Hub") == 0)
+  if(type == "Hub")
   {
   	Hub *link = new Hub(this->indiceLinkHub);
   	this->indiceLinkHub += 1;
     this->listLink.push_back(link);
   } 
-  else if(type.compare("PointToPoint") == 0)
+  else if(type == "PointToPoint")
   {
   	PointToPoint *link = new PointToPoint(this->indiceLinkPointToPoint);
   	this->indiceLinkPointToPoint += 1;
@@ -255,7 +255,7 @@ void Generator::AddLink(const std::string &type)
 
 void Generator::AddLink(const std::string &type, const std::string &linkNode) 
 {
-  if(type.compare("Bridge") == 0)
+  if(type == "Bridge")
   {
   	Bridge *link = new Bridge(this->indiceLinkBridge, linkNode);
   	this->indiceLinkBridge += 1;
@@ -269,7 +269,7 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode)
 
 void Generator::AddLink(const std::string &type, const std::string &linkNode, const bool &mobility)
 {
-  if(type.compare("Wifi") == 0)
+  if(type == "Wifi")
   {
   	Wifi *link = new Wifi(this->indiceLinkWifi, linkNode, mobility);
   	this->indiceLinkWifi += 1;
@@ -283,13 +283,13 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode, co
 
 void Generator::AddLink(const std::string &type, const std::string &linkNode, const std::string &ifaceName)
 { 
-  if(type.compare("Emu") == 0)
+  if(type == "Emu")
   {
   	Emu *link = new Emu(this->indiceLinkEmu, linkNode, ifaceName);
   	this->indiceLinkEmu += 1;
   	this->listLink.push_back(link);
   } 
-  else if(type.compare("Tap") == 0)
+  else if(type == "Tap")
   {
   	Tap *link = new Tap(this->indiceLinkTap, linkNode, ifaceName);
   	this->indiceLinkTap += 1;
@@ -551,7 +551,7 @@ std::vector<std::string> Generator::GenerateHeader()
   	for(size_t j = 0; j < (size_t) headersWithoutDuplicateElem.size(); j++)
   	{
   	  /* check if the string into the allHeaders vector is also in the vector without duplicate */
-  	  if( allHeaders.at(i).compare(headersWithoutDuplicateElem.at(j)) == 0 )
+  	  if( allHeaders.at(i) == headersWithoutDuplicateElem.at(j))
   	  {
   	  	/* it's an duplicated elem. */
   	  	isDuplicate = true;
@@ -582,7 +582,7 @@ std::vector<std::string> Generator::GenerateVars()
   /* add nsc var if used. */
   for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
   {
-    if( (this->listEquipement.at(i))->getNsc().compare("") != 0)
+    if( (this->listEquipement.at(i))->getNsc() != "")
     {
       allVars.push_back("std::string nscStack = \""+(this->listEquipement.at(i))->getNsc()+"\";");
     }
@@ -830,7 +830,7 @@ std::vector<std::string> Generator::GenerateRoute()
     nodeOk = true;
     for(size_t j = 0; j < (size_t) emuNodes.size(); j++)
     {
-      if( (route.at(i)).compare(emuNodes.at(j)) == 0)
+      if( route.at(i) == emuNodes.at(j))
       {
         /* the node is in the emu node list .. we can't add it. */
         nodeOk = false;
@@ -863,7 +863,7 @@ std::vector<std::string> Generator::GenerateApplication()
       std::vector<std::string> nodes = (this->listLink.at(j))->getNodes();
       for(size_t k = 0; k < (size_t) nodes.size(); k++)
       {
-        if( (nodes.at(k)).compare(receiverName) == 0 || nodes.at(k).find("nodesGroup_") == 0)
+        if( nodes.at(k) == receiverName || nodes.at(k).find("nodesGroup_") == 0)
         {
           /* this means that the node is in this link.*/
           ndcName = (this->listLink.at(j))->getNdcName();
