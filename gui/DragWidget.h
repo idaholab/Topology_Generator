@@ -37,6 +37,7 @@ class DragLines;
 class QDragEnterEvent;
 class QDropEvent;
 
+
 #include "DragObject.h"
 #include "DragLines.h"
 
@@ -124,6 +125,11 @@ class DragWidget : public QWidget
      * \brief the attribute which containt the attribute name to draw lines.
      */
     std::vector<DragLines> drawLines;
+    
+    /**
+     * \brief timer to refresh a line draw.
+     */
+    QTimer *timer;
     
   private:
     /**

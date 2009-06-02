@@ -27,6 +27,7 @@
 #define CONFIGURATION_H
 
 #include <QtGui>
+#include "MainWindow.h"
 
 /**
  * \ingroup generator
@@ -42,18 +43,30 @@ class Configuration : public QWidget
 	   * \brief Configuration constructor.
 	   * this constructor create the configuration "pop up"
 	   */
-		Configuration();
+		Configuration(MainWindow *_mw);
 		
-	private slots:
-	  /**
-	   * \brief Procedure called on OK button.
-	   */
-		void accept();
+  private:
+    /**
+     * \brief the main window attribute
+     */
+    MainWindow *mw;
+    
+    /**
+     * \brief the dialog frame.
+     */
+    QDialog *dialog;
 		
 		/**
-		 * \brief Procedure called on Cancel button.
+		 * \brief procedure to remove configuration.
+		 * \param motif
 		 */
-		void reject();
+	  void RemoveConfiguration(const std::string &motif);
+	  
+	  /**
+	   * \brief function to return the string from motif.
+	   * \param motif
+	   */
+	  std::string SearchConfig(const std::string &motif);
     
 };
 

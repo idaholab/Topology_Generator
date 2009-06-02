@@ -40,7 +40,6 @@ class DragLines
   public:
     /**
      * \brief Constructor
-     * \param parent the qwidget parent.
      */
     DragLines();
     

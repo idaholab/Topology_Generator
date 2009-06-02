@@ -29,8 +29,9 @@
 #include <QtGui>
 
 #include "DragWidget.h"
-#include "Configuration.h"
 #include "Generator.h"
+class Configuration;
+#include "Configuration.h"
 
 /**
  * \ingroup generator

@@ -612,7 +612,7 @@ std::vector<std::string> Generator::GenerateConfig()
     {
       this->AddConfig("GlobalValue::Bind (\"SimulatorImplementationType\", StringValue (\"ns3::RealtimeSimulatorImpl\"));");
       this->AddConfig("Config::SetDefault (\"ns3::Ipv4L3Protocol::CalcChecksum\", BooleanValue (true));");
-      this->AddConfig("Config::SetDefault (\"ns3::Icmpv4L4Protocol::CalcChecksum\", BooleanValue (true)); ");
+      this->AddConfig("Config::SetDefault (\"ns3::Icmpv4L4Protocol::CalcChecksum\", BooleanValue (true));");
       this->AddConfig("Config::SetDefault (\"ns3::TcpL4Protocol::CalcChecksum\", BooleanValue (true));");
       this->AddConfig("Config::SetDefault (\"ns3::UdpL4Protocol::CalcChecksum\", BooleanValue (true));");
     }
@@ -624,7 +624,7 @@ std::vector<std::string> Generator::GenerateConfig()
     {
       this->AddConfig("GlobalValue::Bind (\"SimulatorImplementationType\", StringValue (\"ns3::RealtimeSimulatorImpl\"));");
       this->AddConfig("Config::SetDefault (\"ns3::Ipv4L3Protocol::CalcChecksum\", BooleanValue (true));");
-      this->AddConfig("Config::SetDefault (\"ns3::Icmpv4L4Protocol::CalcChecksum\", BooleanValue (true)); ");
+      this->AddConfig("Config::SetDefault (\"ns3::Icmpv4L4Protocol::CalcChecksum\", BooleanValue (true));");
       this->AddConfig("Config::SetDefault (\"ns3::TcpL4Protocol::CalcChecksum\", BooleanValue (true));");
       this->AddConfig("Config::SetDefault (\"ns3::UdpL4Protocol::CalcChecksum\", BooleanValue (true));");
     }

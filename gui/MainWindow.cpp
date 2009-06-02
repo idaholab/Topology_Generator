@@ -27,8 +27,10 @@
 #include <stdexcept>
 
 #include "MainWindow.h"
+#include "Configuration.h"
 #include "DragWidget.h"
 #include "DragObject.h"
+
 #include "Tap.h"
 #include "Emu.h"
 
@@ -400,7 +402,6 @@ void MainWindow::ValidLink()
         this->dw->drawLines.erase(this->dw->drawLines.begin() + i);
       }
     }
-        
     this->dw->ResetSelected();
     return;
   }
@@ -519,7 +520,7 @@ void MainWindow::CreateP2pLink()
 
 void MainWindow::ConfigurationMenu()
 {
-    config = new Configuration();
+    config = new Configuration(this);
 }
 
 void MainWindow::deleteObject()

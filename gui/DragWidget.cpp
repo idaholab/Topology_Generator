@@ -49,6 +49,7 @@ DragWidget::DragWidget(QWidget *parent) : QWidget(parent)
 
 DragWidget::~DragWidget()
 {
+  delete this->timer;
 }
 
 void DragWidget::setMainWindow(MainWindow *_mw)
@@ -100,8 +101,8 @@ void DragWidget::CreateObject(const std::string &type, const std::string &_name)
   label->show();
   label->setAttribute(Qt::WA_DeleteOnClose);
   
-  QTimer *timer = new QTimer();
-  timer->start(100);
+  this->timer = new QTimer();
+  this->timer->start(100);
   connect(timer, SIGNAL(timeout()), this, SLOT(update()));
 
 }
