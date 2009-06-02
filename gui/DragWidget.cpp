@@ -25,6 +25,7 @@
 
 #include <QtGui>
 #include <iostream>
+#include <stdexcept>
 
 #include "MainWindow.h"
 #include "DragWidget.h"
@@ -282,7 +283,7 @@ void DragWidget::deleteSelected()
   {
     this->mw->gen->RemoveEquipement(indic);
   }
-  
+
   /* delete link. */
   indic = -1;
   for(size_t i = 0; i < (size_t) this->mw->gen->listLink.size(); i++)
@@ -291,7 +292,7 @@ void DragWidget::deleteSelected()
     {
       indic = i;
       if((child->getName()).find("emu_") == 0 || (child->getName()).find("wifi_") == 0 ||
-         (child->getName()).find("bridge_") == 0 || (child->getName()).find("tap_") == 0  || (child->getName()).find("hub_") == 0)
+         (child->getName()).find("bridge_") == 0 || (child->getName()).find("tap_") == 0 )
       {
         for(size_t j = 0; j < (size_t) this->mw->gen->listEquipement.size(); j++)
         {
@@ -300,6 +301,7 @@ void DragWidget::deleteSelected()
             this->mw->gen->RemoveEquipement(j);
           }
         }
+        break;
       }
     }
   }
@@ -319,7 +321,14 @@ void DragWidget::deleteSelected()
       if(child->getName() == nodes.at(j))
       {
         objDelLink.push_back(this->mw->gen->listLink.at(i)->getLinkName());
-        this->mw->gen->listLink.at(i)->nodes.erase(this->mw->gen->listLink.at(i)->nodes.begin() + j);
+        try
+        {
+          this->mw->gen->listLink.at(i)->nodes.erase(this->mw->gen->listLink.at(i)->nodes.begin() + j);
+        }
+          catch(const std::out_of_range &e)
+          {
+            this->mw->delAction->setDisabled(true);
+          }
       }
     }
   }
@@ -366,7 +375,14 @@ void DragWidget::deleteSelected()
   {
     if(child->getName() == this->getChildFromName(this->drawLines.at(i).begin)->getName() || child->getName() == this->getChildFromName(this->drawLines.at(i).end)->getName())
     {
-      this->drawLines.erase(this->drawLines.begin() + i);
+      try
+      {
+        this->drawLines.erase(this->drawLines.begin() + i);
+      }
+        catch(const std::out_of_range &e)
+        {
+          this->mw->delAction->setDisabled(true);
+        }
     }
   }
 
@@ -375,7 +391,6 @@ void DragWidget::deleteSelected()
   child->Destroy();
   
   this->mw->delAction->setDisabled(true);
- 
 }
 
 std::vector<std::string> DragWidget::getLastSelected()

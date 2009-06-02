@@ -1,4 +1,4 @@
-/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
+ /* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 Pierre Weiss <3weissp@gmail.com>
  *
@@ -17,39 +17,19 @@
  * 
  */
 /**
-* \file DragObject.h
-* \brief The dragged object file.
+* \file DragLines.h
+* \brief The dragged lines.
 * \author Pierre Weiss
 * \date 2009
 */
 
-#include <QtGui>
-#include <iostream>
+#include "DragLines.h"
 
-#include "DragObject.h"
-#include "DragWidget.h"
-
-DragObject::DragObject(QWidget *parent) : QLabel(parent)
-{
-  this->name = "";
-}
-
-DragObject::~DragObject()
+DragLines::DragLines()
 {
 }
+    
 
-void DragObject::setName(const std::string &_name)
-{
-  this->name = _name;
-}
-
-std::string DragObject::getName()
-{
-  return this->name;
-}
-
-void DragObject::Destroy()
-{
-  this->name = "deleted";
-  this->destroy();
-}
+     
+      
+      

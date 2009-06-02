@@ -186,11 +186,17 @@ void MainWindow::CreatePcGroup()
   if (ok && !text.isEmpty())
   {
     /* number ok ! */
-    number = text.toInt();
+    number = text.toUInt();
   }
   else
   {
     /* cancel button or no text ... */
+    return;
+  }
+  
+  if(number <= (size_t) 0 )
+  {
+    QMessageBox::about(this, "Error", "The pc number can't be negative ...");
     return;
   }
   
@@ -385,7 +391,18 @@ void MainWindow::ValidLink()
       (equi.at(1).find("wifi_") == 0 || equi.at(1).find("hub_") == 0 || (equi.at(1)).find("bridge_") == 0 || 
       (equi.at(1)).find("emu_") == 0 || (equi.at(1).find("tap_") == 0)) )
   {
-    
+    QMessageBox::about(this, "Error", "This link can't be etablished. Please use a Pc or a Router.");
+    for(size_t i = 0; i < (size_t) this->dw->drawLines.size(); i++)
+    {
+      if( (equi.at(0) == this->dw->drawLines.at(i).begin && equi.at(1) == this->dw->drawLines.at(i).end) ||
+          (equi.at(1) == this->dw->drawLines.at(i).begin && equi.at(0) == this->dw->drawLines.at(i).end) )
+      {
+        this->dw->drawLines.erase(this->dw->drawLines.begin() + i);
+      }
+    }
+        
+    this->dw->ResetSelected();
+    return;
   }
   //
   // OTHERS

@@ -1,4 +1,4 @@
-/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
+ /* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 Pierre Weiss <3weissp@gmail.com>
  *
@@ -17,39 +17,49 @@
  * 
  */
 /**
-* \file DragObject.h
-* \brief The dragged object file.
+* \file DragLines.h
+* \brief The dragged lines.
 * \author Pierre Weiss
 * \date 2009
 */
 
+#ifndef DRAGLINES_H
+#define DRAGLINES_H
+
+#include <vector>
 #include <QtGui>
-#include <iostream>
 
-#include "DragObject.h"
-#include "DragWidget.h"
-
-DragObject::DragObject(QWidget *parent) : QLabel(parent)
+/**
+ * \ingroup generator
+ * \brief The dragged lines.
+ *
+ * This class represent the coordonate to be drawed.
+ */
+class DragLines
 {
-  this->name = "";
-}
+  public:
+    /**
+     * \brief Constructor
+     * \param parent the qwidget parent.
+     */
+    DragLines();
+    
+    /**
+      * \brief begin
+      */
+    std::string begin;
+    /**
+      * \brief end
+     */
+    std::string end;
+    /**
+      * \brief type
+      */
+    std::string type;
+    
+};
 
-DragObject::~DragObject()
-{
-}
-
-void DragObject::setName(const std::string &_name)
-{
-  this->name = _name;
-}
-
-std::string DragObject::getName()
-{
-  return this->name;
-}
-
-void DragObject::Destroy()
-{
-  this->name = "deleted";
-  this->destroy();
-}
+#endif /* END DRAGLINES_H */
+     
+      
+      
