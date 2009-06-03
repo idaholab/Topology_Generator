@@ -45,6 +45,16 @@ DragWidget::DragWidget(QWidget *parent) : QWidget(parent)
     this->linkBegin = "";
     this->linkEnd = "";
     this->linkType = "";
+    
+    this->appsEnable = false;
+    this->appsPing = false;
+    this->appsUdpEcho = false;
+    this->appsTcp = false;
+    this->appsServer = "";
+    this->appsClient = "";
+    this->startTime = 0;
+    this->endTime = 0;
+    this->port = 0;
 }
 
 DragWidget::~DragWidget()
@@ -222,6 +232,240 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
     }
   } 
   
+  /* application. */
+  if(this->appsEnable)
+  {
+    if(this->appsServer == "")
+    {
+      bool ok = true;
+      std::string serverName = "";    
+      if(child->getName().find("nodesGroup_") == 0)
+      {
+        for(size_t i = 0; i < (size_t) this->mw->gen->listEquipement.size(); i++)
+        {
+          if(this->mw->gen->listEquipement.at(i)->getNodeName() == child->getName())
+          {
+            size_t indice = 0;
+            while(ok)
+            {
+              bool okText;
+              std::string label = "Select the machine number you want to use (0 to "+Generator::toString(this->mw->gen->listEquipement.at(i)->getMachinesNumber() - 1)+"):";
+              QString text = QInputDialog::getText(this, "Number", QString(label.c_str()) , QLineEdit::Normal, "0", &okText);
+  
+              if (okText && !text.isEmpty())
+              {
+                if(text.toInt() > 0 && (size_t) text.toInt() < this->mw->gen->listEquipement.at(i)->getMachinesNumber())
+                {
+                  indice = text.toInt();
+                  ok = false;
+                }
+              }
+            }
+            serverName = this->mw->gen->listEquipement.at(i)->getNodeName(indice);
+          }
+        }
+      }
+      else
+      {
+        serverName = child->getName();
+      }
+            
+      
+      this->appsServer = serverName;
+      QDialog *dialog = new QDialog(this);
+      dialog->setWindowTitle("Application");
+
+      QGridLayout *layout = new QGridLayout;
+      
+      QDialogButtonBox *buttonBox = new QDialogButtonBox(dialog);
+      buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+      connect(buttonBox, SIGNAL(accepted()), dialog, SLOT(accept()));
+      connect(buttonBox, SIGNAL(rejected()), dialog, SLOT(reject()));
+      
+      QLabel *title = new QLabel("<h2>Select the application you want to install :</h2>", dialog);
+      layout->addWidget(title, 0, 3);
+      
+      QLabel *appsPing;
+      appsPing = new QLabel("Ping", dialog);
+      layout->addWidget(appsPing, 2, 0);
+    
+      QCheckBox *box_appsPing = new QCheckBox(dialog);
+      layout->addWidget(box_appsPing, 2, 1);
+      
+      QLabel *appsUdpEcho;
+      appsUdpEcho = new QLabel("Udp Echo", dialog);
+      layout->addWidget(appsUdpEcho, 3, 0);
+    
+      QCheckBox *box_appsUdpEcho = new QCheckBox(dialog);
+      layout->addWidget(box_appsUdpEcho, 3, 1);
+      
+      QLabel *appsTcp;
+      appsTcp = new QLabel("Tcp Large Transfer", dialog);
+      layout->addWidget(appsTcp, 5, 0);
+    
+      QCheckBox *box_appsTcp = new QCheckBox(dialog);
+      layout->addWidget(box_appsTcp, 5, 1);
+      
+      /* */
+      QLabel *startTime = new QLabel("Start time :", dialog);
+      layout->addWidget(startTime, 12, 0);
+      
+      QLineEdit *line_startTime = new QLineEdit(dialog);
+      layout->addWidget(line_startTime, 12, 1);
+      
+      QLabel *endTime = new QLabel("End time :", dialog);
+      layout->addWidget(endTime, 13, 0);
+      
+      QLineEdit *line_endTime = new QLineEdit(dialog);
+      layout->addWidget(line_endTime, 13, 1);
+      
+      QLabel *port = new QLabel("port :", dialog);
+      layout->addWidget(port, 14, 0);
+      
+      QLineEdit *line_port = new QLineEdit(dialog);
+      layout->addWidget(line_port, 14, 1);
+      
+      layout->addWidget(buttonBox, 15, 3);
+      
+      dialog->setLayout(layout);
+      dialog->exec();
+      
+      /* if user clicked on ok */ 
+      if(dialog->result() == 1)
+      {
+        if(box_appsPing->isChecked())
+        {
+          this->appsPing = true;
+        }
+        
+        if(box_appsUdpEcho->isChecked())
+        {
+          if(line_port->text() != "")
+          {
+            this->appsUdpEcho = true;
+            this->port = (line_port->text()).toInt();
+          }
+          else
+          {
+            QMessageBox::about(this, "Application", "For Udp Echo you must assign the port !");
+            bool ok = true;
+            while(ok)
+            {
+              bool okText;
+              QString text = QInputDialog::getText(this, "Port", "Enter the port :" , QLineEdit::Normal, "", &okText);
+    
+              if (okText && !text.isEmpty())
+              {
+                if(text.toInt() > 0)
+                {
+                  line_port->insert(text);
+                  this->port = text.toInt();
+                  ok = false;
+                }
+              }
+            }
+            this->appsUdpEcho = true;
+          }
+        }
+        
+        if(box_appsTcp->isChecked())
+        {
+          if(line_port->text() != "")
+          {
+            this->appsTcp = true;
+            this->port = (line_port->text()).toInt();
+          }
+          else
+          {
+            QMessageBox::about(this, "Application", "For Tcp Large transfer you must assign the port !");
+            bool ok = true;
+            while(ok)
+            {
+              bool okText;
+              QString text = QInputDialog::getText(this, "Port", "Enter the port :" , QLineEdit::Normal, "", &okText);
+    
+              if (okText && !text.isEmpty())
+              {
+                if(text.toInt() > 0)
+                {
+                  line_port->insert(text);
+                  this->port = text.toInt();
+                  ok = false;
+                }
+              }
+            }
+            this->appsTcp = true;
+          }
+        }
+        
+        /* set time ... */
+        if(line_startTime->text() != "" && line_endTime->text() != "")
+        {
+          if((line_startTime->text()).toInt() < (line_endTime->text()).toInt())
+          {
+            this->startTime = (line_startTime->text()).toInt();
+            this->endTime = (line_endTime->text()).toInt();
+          }
+          else
+          {
+            this->startTime = 0;
+            this->endTime = 1;
+          }
+        } 
+        else
+        {
+          this->startTime = 0;
+          this->endTime = 1;
+        }
+        QMessageBox::about(this, "Application", "Please now select the client.");
+      }
+    }
+    else
+    {
+      if(child->getName() != this->appsServer)
+      {
+        bool ok = true;
+        std::string clientName = "";    
+        if(child->getName().find("nodesGroup_") == 0)
+        {
+          for(size_t i = 0; i < (size_t) this->mw->gen->listEquipement.size(); i++)
+          {
+            if(this->mw->gen->listEquipement.at(i)->getNodeName() == child->getName())
+            {
+              size_t indice = 0;
+              while(ok)
+              {
+                bool okText;
+                std::string label = "Select the machine number you want to use (0 to "+Generator::toString(this->mw->gen->listEquipement.at(i)->getMachinesNumber() - 1)+"):";
+                QString text = QInputDialog::getText(this, "Number", QString(label.c_str()) , QLineEdit::Normal, "0", &okText);
+    
+                if (okText && !text.isEmpty())
+                {
+                  if(text.toInt() > 0 && (size_t) text.toInt() < this->mw->gen->listEquipement.at(i)->getMachinesNumber())
+                  {
+                    indice = text.toInt();
+                    ok = false;
+                  }
+                }
+              }
+              clientName = this->mw->gen->listEquipement.at(i)->getNodeName(indice);
+            }
+          }
+        }
+        else
+        {
+          clientName = child->getName();
+        }
+        
+        
+        /* server already selected. */
+        this->appsClient = clientName;
+        
+        this->mw->ValidApps();
+      }
+    }
+  }
+  
   QPixmap pixmap = *child->pixmap();
 
   QByteArray itemData;
@@ -349,9 +593,12 @@ void DragWidget::deleteSelected()
           isHide = true;
           for(size_t k = 0; k < (size_t) this->children().size(); k++)
           {
-            if( static_cast<DragObject*>((this->children().at(k)))->getName() == this->mw->gen->listLink.at(j)->getLinkName())
+            if(dynamic_cast<DragObject*>((this->children().at(k))))
             {
-              isHide = false;
+              if( dynamic_cast<DragObject*>((this->children().at(k)))->getName() == this->mw->gen->listLink.at(j)->getLinkName())
+              {
+                isHide = false;
+              }
             }
           }
           if(isHide)
@@ -384,6 +631,38 @@ void DragWidget::deleteSelected()
         {
           this->mw->delAction->setDisabled(true);
         }
+    }
+  }
+  
+  /* remove application. */
+  std::string sender("");
+  std::string receiver("");
+  for(size_t i = 0; i < (size_t) this->mw->gen->listApplication.size(); i++)
+  {
+    if((child->getName()).find("nodesGroup_") == 0)
+    {
+      sender = this->mw->gen->listApplication.at(i)->getSenderNode();
+      receiver = this->mw->gen->listApplication.at(i)->getReceiverNode();
+      
+      if(sender.find("NodeContainer") == 0)
+      {
+        sender = sender.substr((sender.find_first_of("(") + 1), (sender.find_first_of(".") - sender.find_first_of("(") - 1));
+      }
+      if(receiver.find("NodeContainer") == 0)
+      {
+        receiver = receiver.substr(receiver.find_first_of("(") + 1, (receiver.find_first_of(".") - receiver.find_first_of("(") - 1));
+      }
+    }
+    else
+    {
+      sender = this->mw->gen->listApplication.at(i)->getSenderNode();
+      receiver = this->mw->gen->listApplication.at(i)->getReceiverNode(); 
+    }
+    
+    if(child->getName() == sender ||
+      child->getName() == receiver )
+    {
+      this->mw->gen->RemoveApplication(i);
     }
   }
 
@@ -448,7 +727,7 @@ void DragWidget::paintEvent(QPaintEvent * /*event*/)
   point.setCapStyle(Qt::RoundCap);
 
     
-  QPen p2p(Qt::red);
+  QPen p2p(Qt::green);
   p2p.setWidth(2);
   p2p.setCapStyle(Qt::RoundCap);
 
@@ -478,8 +757,21 @@ void DragWidget::paintEvent(QPaintEvent * /*event*/)
   }
   if(this->traceLink)
   {
+    
     if(this->linkBegin != "" && this->linkEnd == "")
     {
+      if(this->linkType == "HardLink")
+      {
+        paint.setPen(pen);
+      }
+      else if(this->linkType == "WifiLink")
+      {
+        paint.setPen(point);
+      }
+      else if(this->linkType == "P2pLink")
+      {
+        paint.setPen(p2p);
+      }
       paint.drawLine((this->getChildFromName(this->linkBegin))->pos().x()+((this->getChildFromName(this->linkBegin))->width()/2),
                        (this->getChildFromName(this->linkBegin))->pos().y()+((this->getChildFromName(this->linkBegin))->height()/2),
                         mapFromGlobal(QCursor::pos()).x(),  mapFromGlobal(QCursor::pos()).y());

@@ -131,6 +131,51 @@ class DragWidget : public QWidget
      */
     QTimer *timer;
     
+    /**
+     * \brief application attribute
+     */
+    bool appsEnable;
+    
+    /**
+     * \brief the apps server node name.
+     */
+    std::string appsServer;
+    
+    /**
+     * \brief the apps client node name.
+     */
+    std::string appsClient;
+    
+    /**
+     * \brief the apps type ping.
+     */
+    bool appsPing;
+    
+    /**
+     * \brief the apps type udp echo.
+     */
+    bool appsUdpEcho;
+    
+    /**
+     * \brief the apps type tcp large transfer. 
+     */
+    bool appsTcp;
+    
+    /**
+     * \brief the start time.
+     */
+    size_t startTime;
+    
+    /**
+     * \brief the end Time.
+     */
+    size_t endTime;
+    
+    /**
+     * \brief port attribute. 
+     */
+    size_t port;
+    
   private:
     /**
      * \brief attribute to save the Position from the last object which moved.

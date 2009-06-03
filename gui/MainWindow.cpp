@@ -45,11 +45,16 @@ MainWindow::MainWindow(const std::string &simulationName)
   // Menu
   //
   QMenu *menuFichier = menuBar()->addMenu("&File");
-  menuFichier->addAction("Open");
-  menuFichier->addAction("New");
-  menuFichier->addAction("Save");
-  menuFichier->addAction("Save As");
-  menuFichier->addAction("Save Picture");
+  QAction *menuOpen = menuFichier->addAction("Open");
+  menuOpen->setDisabled(true);
+  QAction *menuNew = menuFichier->addAction("New");
+  menuNew->setDisabled(true);
+  QAction *menuSave = menuFichier->addAction("Save");
+  menuSave->setDisabled(true);
+  QAction *menuSaveAs = menuFichier->addAction("Save As");
+  menuSaveAs->setDisabled(true);
+  QAction *menuSavePix = menuFichier->addAction("Save Picture");
+  menuSavePix->setDisabled(true);
      
   QAction *actionQuitter = menuFichier->addAction("Quit");
   connect(actionQuitter, SIGNAL(triggered()), qApp, SLOT(quit()));
@@ -61,10 +66,12 @@ MainWindow::MainWindow(const std::string &simulationName)
   QMenu *menuAffichage = menuBar()->addMenu("&Generate");
   QAction *actionCpp = menuAffichage->addAction("C++");
   connect(actionCpp, SIGNAL(triggered()), this, SLOT(GenerateCpp())); 
-  menuAffichage->addAction("Python");
+  QAction *menuPython = menuAffichage->addAction("Python");
+  menuPython->setDisabled(true);
      
   QMenu *menuHelp = menuBar()->addMenu("&Help");
   QAction *menuOnlineHelp = menuHelp->addAction("Online Help");
+  menuOnlineHelp->setDisabled(true);
   connect(menuOnlineHelp, SIGNAL(triggered()), this, SLOT(Help()));
   QAction *menuAbout = menuHelp->addAction("About");
   connect(menuAbout, SIGNAL(triggered()), this, SLOT(About())); 
@@ -138,6 +145,12 @@ MainWindow::MainWindow(const std::string &simulationName)
   QString p2pLinkString("P2P Link");  
   QAction *p2pLinkAction = toolBarFichier->addAction(p2pLinkIcon, p2pLinkString);
   connect(p2pLinkAction, SIGNAL(triggered()), this, SLOT(CreateP2pLink()));
+  //separator
+  toolBarFichier->addSeparator();
+  QIcon appsLinkIcon("");
+  QString appsLinkString("Application");  
+  QAction *appsLinkAction = toolBarFichier->addAction(appsLinkIcon, appsLinkString);
+  connect(appsLinkAction, SIGNAL(triggered()), this, SLOT(CreateApps()));
   //separator
   toolBarFichier->addSeparator();
   //Delete button
@@ -306,8 +319,20 @@ void MainWindow::CleanIface()
 
 void MainWindow::CreateAp()
 {
+  bool state = false;
+  bool ok;
+  QString text = QInputDialog::getText(this, "Mobility", "Use mobility ? (y/n)", QLineEdit::Normal, "no", &ok);
+  
+  if (ok && !text.isEmpty())
+  {
+    if(text == "y" || text == "yes")
+    {
+      state = true;
+    }
+  }
+  
 	this->gen->AddEquipement("Ap");
-	this->gen->AddLink("Wifi", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName(), false);
+	this->gen->AddLink("Wifi", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName(), state);
 	dw->CreateObject("Ap", this->gen->listLink.at(this->gen->listLink.size() - 1)->getLinkName() );
 }
 
@@ -373,6 +398,14 @@ void MainWindow::ValidLink()
   if(equi.at(0) == "" || equi.at(1) == "" || equi.at(0) == "deleted" || equi.at(1) == "deleted")
   {
     QMessageBox::about(this, "Error", "You don't have selected two equipement.");
+    for(size_t i = 0; i < (size_t) this->dw->drawLines.size(); i++)
+    {
+      if( (equi.at(0) == this->dw->drawLines.at(i).begin && equi.at(1) == this->dw->drawLines.at(i).end) ||
+          (equi.at(1) == this->dw->drawLines.at(i).begin && equi.at(0) == this->dw->drawLines.at(i).end) )
+      {
+        this->dw->drawLines.erase(this->dw->drawLines.begin() + i);
+      }
+    }
     this->dw->ResetSelected();
     return;
   }
@@ -380,6 +413,14 @@ void MainWindow::ValidLink()
   if(equi.at(0) == equi.at(1))
   {
     QMessageBox::about(this, "Error", "You can't connect object to itself.");
+    for(size_t i = 0; i < (size_t) this->dw->drawLines.size(); i++)
+    {
+      if( (equi.at(0) == this->dw->drawLines.at(i).begin && equi.at(1) == this->dw->drawLines.at(i).end) ||
+          (equi.at(1) == this->dw->drawLines.at(i).begin && equi.at(0) == this->dw->drawLines.at(i).end) )
+      {
+        this->dw->drawLines.erase(this->dw->drawLines.begin() + i);
+      }
+    }
     this->dw->ResetSelected();
     return;
   }
@@ -562,6 +603,14 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
     catch(const std::out_of_range &e)
     {
       QMessageBox::about(this, "Error", "This link doesn't exist.");
+      for(size_t i = 0; i < (size_t) this->dw->drawLines.size(); i++)
+      {
+        if( (nodeName == this->dw->drawLines.at(i).begin && this->gen->listLink.at(linkNumber)->getLinkName() == this->dw->drawLines.at(i).end) ||
+            (this->gen->listLink.at(linkNumber)->getLinkName() == this->dw->drawLines.at(i).begin && nodeName == this->dw->drawLines.at(i).end) )
+        {
+          this->dw->drawLines.erase(this->dw->drawLines.begin() + i);
+        }
+      }
       return;
     }
   
@@ -597,6 +646,14 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
   if( numberOfConnectedMachines > (255 -2) )
   {
     QMessageBox::about(this, "Error", "Limit of machines exceeded.");
+    for(size_t i = 0; i < (size_t) this->dw->drawLines.size(); i++)
+    {
+      if( (nodeName == this->dw->drawLines.at(i).begin && this->gen->listLink.at(linkNumber)->getLinkName() == this->dw->drawLines.at(i).end) ||
+          (this->gen->listLink.at(linkNumber)->getLinkName() == this->dw->drawLines.at(i).begin && nodeName == this->dw->drawLines.at(i).end) )
+      {
+        this->dw->drawLines.erase(this->dw->drawLines.begin() + i);
+      }
+    }
     return;
   }
   this->gen->listLink.at(linkNumber)->AddNodes(nodeName);
@@ -605,6 +662,42 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
 void MainWindow::GenerateCpp()
 {
  this->gen->GenerateCode();
+}
+
+void MainWindow::CreateApps()
+{
+  this->dw->appsEnable = true;
+  QMessageBox::about(this, "Application", "Please now select the Server.");
+}
+
+void MainWindow::ValidApps()
+{
+  if(this->dw->appsPing)
+  {
+    this->gen->AddApplication("Ping", this->dw->appsServer, this->dw->appsClient, this->dw->startTime, this->dw->endTime);
+  }
+  
+  if(this->dw->appsUdpEcho)
+  {
+    this->gen->AddApplication("UdpEcho", this->dw->appsServer, this->dw->appsClient, this->dw->startTime, this->dw->endTime, this->dw->port);
+  }
+  
+  if(this->dw->appsTcp)
+  {
+    this->gen->AddApplication("TcpLargeTransfer", this->dw->appsServer, this->dw->appsClient, this->dw->startTime, this->dw->endTime, this->dw->port);
+  }
+  
+  this->dw->appsEnable = false;
+  this->dw->appsPing = false;
+  this->dw->appsUdpEcho = false;
+  this->dw->appsTcp = false;
+  this->dw->appsServer = "";
+  this->dw->appsClient = "";
+  this->dw->startTime = 0;
+  this->dw->endTime = 0;
+  this->dw->port = 0;
+  
+  QMessageBox::about(this, "Application", "Link creation finished.");
 }
 
 

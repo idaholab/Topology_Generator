@@ -70,6 +70,11 @@ class MainWindow : public QMainWindow
      */
     void ValidLink();
     
+    /**
+     * \brief prodcedure to valid apps install.
+     */
+    void ValidApps();
+  
   private:
     /**
      * \brief attribute which represent the drag n drop zone.
@@ -186,6 +191,11 @@ class MainWindow : public QMainWindow
      * \brief procedure to generate the cpp code.
      */
     void GenerateCpp();
+    
+    /**
+     * \biref procedure to create an application/
+     */
+    void CreateApps();
     
     
 };
