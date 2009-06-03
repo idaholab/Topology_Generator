@@ -46,7 +46,7 @@ Configuration::Configuration(MainWindow *_mw)
   std::string trans("");
   /* choose */
   QLabel *ipv4L3Protocol;
-  ipv4L3Protocol = new QLabel("Ipv4L3Protocol CalcCheckSum (bool)", dialog);
+  ipv4L3Protocol = new QLabel("Enable Ip checksum calc ?", dialog);
   layout->addWidget(ipv4L3Protocol, 0, 0);
     
   QCheckBox *box_ipv4L3Protocol;
@@ -60,7 +60,7 @@ Configuration::Configuration(MainWindow *_mw)
   
   /* choose */
   QLabel *icmpv4L4Protocol;
-  icmpv4L4Protocol = new QLabel("Icmpv4L4Protocol CalcCheckSum (bool)", dialog);
+  icmpv4L4Protocol = new QLabel("Enable Icmp checksum calc ?", dialog);
   layout->addWidget(icmpv4L4Protocol, 1, 0);
     
   QCheckBox *box_icmpv4L4Protocol;
@@ -74,7 +74,7 @@ Configuration::Configuration(MainWindow *_mw)
   
   /* choose */
   QLabel *tcpL4Protocol;
-  tcpL4Protocol = new QLabel("TcpL4Protocol CalcCheckSum (bool)", dialog);
+  tcpL4Protocol = new QLabel("Enable Tcp checksum calc ?", dialog);
   layout->addWidget(tcpL4Protocol, 2, 0);
   
   QCheckBox *box_tcpL4Protocol;
@@ -88,7 +88,7 @@ Configuration::Configuration(MainWindow *_mw)
   
   /* choose */
   QLabel *udpL4Protocol;
-  udpL4Protocol = new QLabel("UdpL4Protocol CalcCheckSum (bool)", dialog);
+  udpL4Protocol = new QLabel("Enable Udp checksum calc ?", dialog);
   layout->addWidget(udpL4Protocol, 3, 0);
   
   QCheckBox *box_udpL4Protocol;

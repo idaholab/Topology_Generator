@@ -666,8 +666,66 @@ void MainWindow::GenerateCpp()
 
 void MainWindow::CreateApps()
 {
-  this->dw->appsEnable = true;
-  QMessageBox::about(this, "Application", "Please now select the Server.");
+    QDialog *dialog = new QDialog(this);
+    dialog->setWindowTitle("Application");
+
+    QGridLayout *layout = new QGridLayout;
+      
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(dialog);
+    buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+    connect(buttonBox, SIGNAL(accepted()), dialog, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), dialog, SLOT(reject()));
+      
+    QLabel *title = new QLabel("<h2>Select the application you want to install :</h2>", dialog);
+    layout->addWidget(title, 0, 3);
+    
+    /* PING */
+    QLabel *appsPing;
+    appsPing = new QLabel("Ping", dialog);
+    layout->addWidget(appsPing, 2, 0);
+    
+    QCheckBox *box_appsPing = new QCheckBox(dialog);
+    layout->addWidget(box_appsPing, 2, 1);
+    
+    /* UDP ECHO */
+    QLabel *appsUdpEcho;
+    appsUdpEcho = new QLabel("Udp Echo", dialog);
+    layout->addWidget(appsUdpEcho, 3, 0);
+    
+    QCheckBox *box_appsUdpEcho = new QCheckBox(dialog);
+    layout->addWidget(box_appsUdpEcho, 3, 1);
+      
+    /* TCP LARGE TRANSFER */
+    QLabel *appsTcp;
+    appsTcp = new QLabel("Tcp Large Transfer", dialog);
+    layout->addWidget(appsTcp, 4, 0);
+    
+    QCheckBox *box_appsTcp = new QCheckBox(dialog);
+    layout->addWidget(box_appsTcp, 4, 1);
+    
+    layout->addWidget(buttonBox, 15, 3);
+      
+    dialog->setLayout(layout);
+    dialog->exec();
+    
+    if(dialog->result() == 1)
+    {
+      if(box_appsPing->isChecked())
+      {
+        this->dw->appsPing = true;
+        this->dw->ShowGuiPing();
+      }
+      else if(box_appsUdpEcho->isChecked())
+      {
+        this->dw->appsUdpEcho = true;
+        this->dw->ShowGuiUdpEcho();
+      }
+      else if(box_appsTcp->isChecked())
+      {
+        this->dw->appsTcp = true;
+        this->dw->ShowGuiTcp();
+      }
+    }
 }
 
 void MainWindow::ValidApps()
@@ -675,19 +733,21 @@ void MainWindow::ValidApps()
   if(this->dw->appsPing)
   {
     this->gen->AddApplication("Ping", this->dw->appsServer, this->dw->appsClient, this->dw->startTime, this->dw->endTime);
+    QMessageBox::about(this, "Ping", "Ping successfull installed.");
   }
   
   if(this->dw->appsUdpEcho)
   {
     this->gen->AddApplication("UdpEcho", this->dw->appsServer, this->dw->appsClient, this->dw->startTime, this->dw->endTime, this->dw->port);
+    QMessageBox::about(this, "Udp Echo", "Udp echo successfull installed.");
   }
   
   if(this->dw->appsTcp)
   {
     this->gen->AddApplication("TcpLargeTransfer", this->dw->appsServer, this->dw->appsClient, this->dw->startTime, this->dw->endTime, this->dw->port);
+    QMessageBox::about(this, "Tcp Large Transfer", "Tcp large transfer successfull installed.");
   }
   
-  this->dw->appsEnable = false;
   this->dw->appsPing = false;
   this->dw->appsUdpEcho = false;
   this->dw->appsTcp = false;
@@ -696,8 +756,6 @@ void MainWindow::ValidApps()
   this->dw->startTime = 0;
   this->dw->endTime = 0;
   this->dw->port = 0;
-  
-  QMessageBox::about(this, "Application", "Link creation finished.");
 }
 
 

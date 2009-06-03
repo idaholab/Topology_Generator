@@ -49,6 +49,7 @@ class QDropEvent;
  */
 class DragWidget : public QWidget
 {
+Q_OBJECT
   public:
     /**
      * \brief constructor
@@ -132,11 +133,6 @@ class DragWidget : public QWidget
     QTimer *timer;
     
     /**
-     * \brief application attribute
-     */
-    bool appsEnable;
-    
-    /**
      * \brief the apps server node name.
      */
     std::string appsServer;
@@ -175,6 +171,26 @@ class DragWidget : public QWidget
      * \brief port attribute. 
      */
     size_t port;
+    
+    /**
+     * \brief procedure to show the ping gui.
+     */
+    void ShowGuiPing();
+    
+    /**
+     * \brief procedure to show the udp echo gui.
+     */
+    void ShowGuiUdpEcho();
+    
+    /**
+     * \brief procedure to show the tcp large transfer gui.  
+     */
+    void ShowGuiTcp();
+    
+    /**
+     * \brief attribute which represent thea application dialog box ...
+     */
+    QDialog *dialog;
     
   private:
     /**
@@ -219,6 +235,21 @@ class DragWidget : public QWidget
     */
     void mouseMoveEvent(QMouseEvent *event);
     
+  public slots:
+    /**
+     * \brief procedure to choose the new server node.
+     */
+    void ChooseServer();
+    
+    /**
+     * \brief procedure to choose the new client node.
+     */
+    void ChooseClient();
+    
+    /**
+     * \brief procedure called by cancel button.
+     */
+    void Cancel();
 };
 
 #endif /* END DRAGWIDGET_H */

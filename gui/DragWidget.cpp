@@ -46,15 +46,14 @@ DragWidget::DragWidget(QWidget *parent) : QWidget(parent)
     this->linkEnd = "";
     this->linkType = "";
     
-    this->appsEnable = false;
     this->appsPing = false;
     this->appsUdpEcho = false;
     this->appsTcp = false;
     this->appsServer = "";
     this->appsClient = "";
-    this->startTime = 0;
-    this->endTime = 0;
-    this->port = 0;
+    this->startTime = -1;
+    this->endTime = -1;
+    this->port = -1;
 }
 
 DragWidget::~DragWidget()
@@ -267,238 +266,34 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
   }
   
   /* application. */
-  if(this->appsEnable)
+  if(this->appsServer == "")
   {
-    if(this->appsServer == "")
+    this->appsServer = child->getName();
+  }
+  else
+  {
+    if(this->appsClient == "" && child->getName() != this->appsServer)
     {
-      bool ok = true;
-      std::string serverName = "";    
-      if(child->getName().find("nodesGroup_") == 0)
-      {
-        for(size_t i = 0; i < (size_t) this->mw->gen->listEquipement.size(); i++)
-        {
-          if(this->mw->gen->listEquipement.at(i)->getNodeName() == child->getName())
-          {
-            size_t indice = 0;
-            while(ok)
-            {
-              bool okText;
-              std::string label = "Select the machine number you want to use (0 to "+Generator::toString(this->mw->gen->listEquipement.at(i)->getMachinesNumber() - 1)+"):";
-              QString text = QInputDialog::getText(this, "Number", QString(label.c_str()) , QLineEdit::Normal, "0", &okText);
-  
-              if (okText && !text.isEmpty())
-              {
-                if(text.toInt() > 0 && (size_t) text.toInt() < this->mw->gen->listEquipement.at(i)->getMachinesNumber())
-                {
-                  indice = text.toInt();
-                  ok = false;
-                }
-              }
-            }
-            serverName = this->mw->gen->listEquipement.at(i)->getNodeName(indice);
-          }
-        }
-      }
-      else
-      {
-        serverName = child->getName();
-      }
-            
-      
-      this->appsServer = serverName;
-      QDialog *dialog = new QDialog(this);
-      dialog->setWindowTitle("Application");
-
-      QGridLayout *layout = new QGridLayout;
-      
-      QDialogButtonBox *buttonBox = new QDialogButtonBox(dialog);
-      buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
-      connect(buttonBox, SIGNAL(accepted()), dialog, SLOT(accept()));
-      connect(buttonBox, SIGNAL(rejected()), dialog, SLOT(reject()));
-      
-      QLabel *title = new QLabel("<h2>Select the application you want to install :</h2>", dialog);
-      layout->addWidget(title, 0, 3);
-      
-      QLabel *appsPing;
-      appsPing = new QLabel("Ping", dialog);
-      layout->addWidget(appsPing, 2, 0);
-    
-      QCheckBox *box_appsPing = new QCheckBox(dialog);
-      layout->addWidget(box_appsPing, 2, 1);
-      
-      QLabel *appsUdpEcho;
-      appsUdpEcho = new QLabel("Udp Echo", dialog);
-      layout->addWidget(appsUdpEcho, 3, 0);
-    
-      QCheckBox *box_appsUdpEcho = new QCheckBox(dialog);
-      layout->addWidget(box_appsUdpEcho, 3, 1);
-      
-      QLabel *appsTcp;
-      appsTcp = new QLabel("Tcp Large Transfer", dialog);
-      layout->addWidget(appsTcp, 5, 0);
-    
-      QCheckBox *box_appsTcp = new QCheckBox(dialog);
-      layout->addWidget(box_appsTcp, 5, 1);
-      
-      /* */
-      QLabel *startTime = new QLabel("Start time :", dialog);
-      layout->addWidget(startTime, 12, 0);
-      
-      QLineEdit *line_startTime = new QLineEdit(dialog);
-      layout->addWidget(line_startTime, 12, 1);
-      
-      QLabel *endTime = new QLabel("End time :", dialog);
-      layout->addWidget(endTime, 13, 0);
-      
-      QLineEdit *line_endTime = new QLineEdit(dialog);
-      layout->addWidget(line_endTime, 13, 1);
-      
-      QLabel *port = new QLabel("port :", dialog);
-      layout->addWidget(port, 14, 0);
-      
-      QLineEdit *line_port = new QLineEdit(dialog);
-      layout->addWidget(line_port, 14, 1);
-      
-      layout->addWidget(buttonBox, 15, 3);
-      
-      dialog->setLayout(layout);
-      dialog->exec();
-      
-      /* if user clicked on ok */ 
-      if(dialog->result() == 1)
-      {
-        if(box_appsPing->isChecked())
-        {
-          this->appsPing = true;
-        }
-        
-        if(box_appsUdpEcho->isChecked())
-        {
-          if(line_port->text() != "")
-          {
-            this->appsUdpEcho = true;
-            this->port = (line_port->text()).toInt();
-          }
-          else
-          {
-            QMessageBox::about(this, "Application", "For Udp Echo you must assign the port !");
-            bool ok = true;
-            while(ok)
-            {
-              bool okText;
-              QString text = QInputDialog::getText(this, "Port", "Enter the port :" , QLineEdit::Normal, "", &okText);
-    
-              if (okText && !text.isEmpty())
-              {
-                if(text.toInt() > 0)
-                {
-                  line_port->insert(text);
-                  this->port = text.toInt();
-                  ok = false;
-                }
-              }
-            }
-            this->appsUdpEcho = true;
-          }
-        }
-        
-        if(box_appsTcp->isChecked())
-        {
-          if(line_port->text() != "")
-          {
-            this->appsTcp = true;
-            this->port = (line_port->text()).toInt();
-          }
-          else
-          {
-            QMessageBox::about(this, "Application", "For Tcp Large transfer you must assign the port !");
-            bool ok = true;
-            while(ok)
-            {
-              bool okText;
-              QString text = QInputDialog::getText(this, "Port", "Enter the port :" , QLineEdit::Normal, "", &okText);
-    
-              if (okText && !text.isEmpty())
-              {
-                if(text.toInt() > 0)
-                {
-                  line_port->insert(text);
-                  this->port = text.toInt();
-                  ok = false;
-                }
-              }
-            }
-            this->appsTcp = true;
-          }
-        }
-        
-        /* set time ... */
-        if(line_startTime->text() != "" && line_endTime->text() != "")
-        {
-          if((line_startTime->text()).toInt() < (line_endTime->text()).toInt())
-          {
-            this->startTime = (line_startTime->text()).toInt();
-            this->endTime = (line_endTime->text()).toInt();
-          }
-          else
-          {
-            this->startTime = 0;
-            this->endTime = 1;
-          }
-        } 
-        else
-        {
-          this->startTime = 0;
-          this->endTime = 1;
-        }
-        QMessageBox::about(this, "Application", "Please now select the client.");
-      }
-    }
-    else
-    {
-      if(child->getName() != this->appsServer)
-      {
-        bool ok = true;
-        std::string clientName = "";    
-        if(child->getName().find("nodesGroup_") == 0)
-        {
-          for(size_t i = 0; i < (size_t) this->mw->gen->listEquipement.size(); i++)
-          {
-            if(this->mw->gen->listEquipement.at(i)->getNodeName() == child->getName())
-            {
-              size_t indice = 0;
-              while(ok)
-              {
-                bool okText;
-                std::string label = "Select the machine number you want to use (0 to "+Generator::toString(this->mw->gen->listEquipement.at(i)->getMachinesNumber() - 1)+"):";
-                QString text = QInputDialog::getText(this, "Number", QString(label.c_str()) , QLineEdit::Normal, "0", &okText);
-    
-                if (okText && !text.isEmpty())
-                {
-                  if(text.toInt() > 0 && (size_t) text.toInt() < this->mw->gen->listEquipement.at(i)->getMachinesNumber())
-                  {
-                    indice = text.toInt();
-                    ok = false;
-                  }
-                }
-              }
-              clientName = this->mw->gen->listEquipement.at(i)->getNodeName(indice);
-            }
-          }
-        }
-        else
-        {
-          clientName = child->getName();
-        }
-        
-        
-        /* server already selected. */
-        this->appsClient = clientName;
-        
-        this->mw->ValidApps();
-      }
+      this->appsClient = child->getName();
     }
   }
+  
+  if(this->appsPing)
+  {
+    ShowGuiPing();
+  }
+  
+  if(this->appsUdpEcho)
+  {
+    ShowGuiUdpEcho();
+  }
+  
+  if(this->appsTcp)
+  {
+    ShowGuiTcp();
+  }
+  
+  
 }
 
 void DragWidget::mouseMoveEvent(QMouseEvent * /*event*/)
@@ -797,6 +592,422 @@ DragObject* DragWidget::getChildFromName(const std::string &name)
     }
   }
   return new DragObject(this);
+}
+
+
+void DragWidget::ShowGuiPing()
+{
+  dialog = new QDialog(this);
+  dialog->setWindowTitle("Ping");
+  
+  QGridLayout *layout = new QGridLayout;
+      
+  QDialogButtonBox *buttonBox = new QDialogButtonBox(dialog);
+  buttonBox->setStandardButtons(QDialogButtonBox::Ok);//QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+  
+  connect(buttonBox, SIGNAL(accepted()), dialog, SLOT(accept()));
+  connect(buttonBox, SIGNAL(rejected()), dialog, SLOT(reject()));
+  
+  /* MACHINE LEFT */
+  std::string label_machineLeft("");
+  if(this->appsServer != "")
+  {
+    label_machineLeft = "Machine : "+this->appsServer;
+  }
+  else
+  {
+    label_machineLeft = "Machine : ___________";
+  }
+  
+  QLabel *machineLeft = new QLabel(QString(label_machineLeft.c_str()), dialog);
+  layout->addWidget(machineLeft, 2, 0);
+  
+  QPushButton *button_machineLeft = new QPushButton("Choose", dialog);
+  connect(button_machineLeft, SIGNAL( clicked() ), this, SLOT( ChooseServer() ) );
+
+  layout->addWidget(button_machineLeft, 2, 1);
+  
+  /* MACHINE RIGHT */
+  std::string label_machineRight("");
+  if(this->appsClient != "")
+  {
+    label_machineRight = "Machine : "+this->appsClient;
+  }
+  else
+  {
+    label_machineRight = "Machine : ___________";
+  }
+  
+  QLabel *machineRight = new QLabel(QString(label_machineRight.c_str()), dialog);
+  layout->addWidget(machineRight, 3, 0);
+  
+  QPushButton *button_machineRight = new QPushButton("Choose", dialog);
+  connect(button_machineRight, SIGNAL( clicked() ), this, SLOT( ChooseClient() ) );
+  layout->addWidget(button_machineRight, 3, 1);
+  
+  /* PARAMS. */
+  QLabel *lab_startTime = new QLabel("Start time (s):", dialog);
+  layout->addWidget(lab_startTime, 5, 0);
+      
+  QLineEdit *line_startTime = new QLineEdit(dialog);
+  if(this->startTime != (size_t) -1)
+  {
+    line_startTime->insert(Generator::toString(this->startTime).c_str());
+  }
+  layout->addWidget(line_startTime, 5, 1);
+      
+  QLabel *lab_endTime = new QLabel("End time (s):", dialog);
+  layout->addWidget(lab_endTime, 6, 0);
+      
+  QLineEdit *line_endTime = new QLineEdit(dialog);
+  if(this->endTime != (size_t) -1)
+  {
+    line_endTime->insert(Generator::toString(this->endTime).c_str());
+  }
+  layout->addWidget(line_endTime, 6, 1);
+  
+  /* add OK, CANCEL button */
+  QPushButton *cancel = new QPushButton("Cancel", dialog);
+  connect(cancel, SIGNAL( clicked() ), this, SLOT( Cancel() ) );
+  layout->addWidget(cancel, 8, 3);
+  layout->addWidget(buttonBox, 8, 4);
+      
+  dialog->setLayout(layout);
+  dialog->exec();
+      
+  if(dialog->result() == 1)
+  {
+    this->startTime = line_startTime->text().toInt();
+    this->endTime = line_endTime->text().toInt();
+    
+    if(this->appsServer != "" && this->appsClient != "" && this->startTime != (size_t) -1 && this->startTime != (size_t) -1)
+    {
+      if((this->startTime < this->endTime))
+      {
+        this->mw->ValidApps();
+        this->appsPing = false;
+      }
+      else
+      {
+        QMessageBox::about(this, "Ping", "Start time can't be greather than end time.");
+        this->ShowGuiPing();
+      }
+    }
+    else
+    {
+      if(this->appsServer == "" || this->appsClient == "")
+      {
+        QMessageBox::about(this, "ping", "Sorry, you must choose all machines.");
+        this->ShowGuiPing();
+      }
+      else
+      {
+        if(this->startTime == (size_t) -1 || this->endTime == (size_t) -1)
+        {
+          QMessageBox::about(this, "Ping", "Sorry, start time and end time can't be null.");
+          this->ShowGuiPing();
+        }
+      }
+    }
+  }
+
+}
+
+void DragWidget::ChooseServer()
+{
+  dialog->hide();
+  this->appsServer = "";
+}
+
+void DragWidget::ChooseClient()
+{
+  dialog->hide();
+  this->appsClient = "";
+}
+
+void DragWidget::Cancel()
+{
+  dialog->hide();
+  this->appsServer = "";
+  this->appsClient = "";
+  
+  this->appsPing = false;
+  this->appsUdpEcho = false;
+  this->appsTcp = false;
+}
+
+void DragWidget::ShowGuiUdpEcho()
+{
+  dialog = new QDialog(this);
+  dialog->setWindowTitle("Udp Echo");
+  
+  QGridLayout *layout = new QGridLayout;
+      
+  QDialogButtonBox *buttonBox = new QDialogButtonBox(dialog);
+  buttonBox->setStandardButtons(QDialogButtonBox::Ok);
+  
+  connect(buttonBox, SIGNAL(accepted()), dialog, SLOT(accept()));
+  connect(buttonBox, SIGNAL(rejected()), dialog, SLOT(reject()));
+  
+  /* MACHINE LEFT */
+  std::string label_machineLeft("");
+  if(this->appsServer != "")
+  {
+    label_machineLeft = "Machine : "+this->appsServer;
+  }
+  else
+  {
+    label_machineLeft = "Machine : ___________";
+  }
+  
+  QLabel *machineLeft = new QLabel(QString(label_machineLeft.c_str()), dialog);
+  layout->addWidget(machineLeft, 2, 0);
+  
+  QPushButton *button_machineLeft = new QPushButton("Choose", dialog);
+  connect(button_machineLeft, SIGNAL( clicked() ), this, SLOT( ChooseServer() ) );
+
+  layout->addWidget(button_machineLeft, 2, 1);
+  
+  /* MACHINE RIGHT */
+  std::string label_machineRight("");
+  if(this->appsClient != "")
+  {
+    label_machineRight = "Machine : "+this->appsClient;
+  }
+  else
+  {
+    label_machineRight = "Machine : ___________";
+  }
+  
+  QLabel *machineRight = new QLabel(QString(label_machineRight.c_str()), dialog);
+  layout->addWidget(machineRight, 3, 0);
+  
+  QPushButton *button_machineRight = new QPushButton("Choose", dialog);
+  connect(button_machineRight, SIGNAL( clicked() ), this, SLOT( ChooseClient() ) );
+  layout->addWidget(button_machineRight, 3, 1);
+  
+  /* PARAMS. */
+  QLabel *lab_startTime = new QLabel("Start time (s):", dialog);
+  layout->addWidget(lab_startTime, 5, 0);
+      
+  QLineEdit *line_startTime = new QLineEdit(dialog);
+  if(this->startTime != (size_t) -1)
+  {
+    line_startTime->insert(Generator::toString(this->startTime).c_str());
+  }
+  layout->addWidget(line_startTime, 5, 1);
+      
+  QLabel *lab_endTime = new QLabel("End time (s):", dialog);
+  layout->addWidget(lab_endTime, 6, 0);
+      
+  QLineEdit *line_endTime = new QLineEdit(dialog);
+  if(this->endTime != (size_t) -1)
+  {
+    line_endTime->insert(Generator::toString(this->endTime).c_str());
+  }
+  layout->addWidget(line_endTime, 6, 1);
+  
+  QLabel *lab_port = new QLabel("Port :", dialog);
+  layout->addWidget(lab_port, 7, 0);
+      
+  QLineEdit *line_port = new QLineEdit(dialog);
+  if(this->port != (size_t) -1)
+  {
+    line_port->insert(Generator::toString(this->port).c_str());
+  }
+  layout->addWidget(line_port, 7, 1);
+  
+  /* add OK, CANCEL button */
+  QPushButton *cancel = new QPushButton("Cancel", dialog);
+  connect(cancel, SIGNAL( clicked() ), this, SLOT( Cancel() ) );
+  layout->addWidget(cancel, 8, 3);
+  layout->addWidget(buttonBox, 8, 4);
+      
+  dialog->setLayout(layout);
+  dialog->exec();
+      
+  if(dialog->result() == 1)
+  {
+    this->startTime = line_startTime->text().toInt();
+    this->endTime = line_endTime->text().toInt();
+    this->port = line_port->text().toInt();
+    
+    if(this->appsServer != "" && this->appsClient != "" && this->startTime != (size_t) -1 && this->startTime != (size_t) -1 && this->port != (size_t) -1)
+    {
+      if((this->startTime < this->endTime))
+      {
+        this->mw->ValidApps();
+        this->appsPing = false;
+      }
+      else
+      {
+        QMessageBox::about(this, "Udp Echo", "Start time can't be greather than end time.");
+        this->ShowGuiUdpEcho();
+      }
+    }
+    else
+    {
+      if(this->appsServer == "" || this->appsClient == "")
+      {
+        QMessageBox::about(this, "Udp Echo", "Sorry, you must choose all machines.");
+        this->ShowGuiUdpEcho();
+      }
+      else
+      {
+        if(this->startTime == (size_t) -1 || this->endTime == (size_t) -1)
+        {
+          QMessageBox::about(this, "Udp Echo", "Sorry, start time and end time can't be null.");
+          this->ShowGuiUdpEcho();
+        }
+        else
+        {
+          if(this->port == (size_t) -1)
+          {
+            QMessageBox::about(this, "Udp Echo", "Sorry, port field can't be null.");
+            this->ShowGuiUdpEcho();
+          }
+        }
+      }
+    }
+  }
+
+}
+
+void DragWidget::ShowGuiTcp()
+{
+  dialog = new QDialog(this);
+  dialog->setWindowTitle("Tcp Large Transfer");
+  
+  QGridLayout *layout = new QGridLayout;
+      
+  QDialogButtonBox *buttonBox = new QDialogButtonBox(dialog);
+  buttonBox->setStandardButtons(QDialogButtonBox::Ok);
+  
+  connect(buttonBox, SIGNAL(accepted()), dialog, SLOT(accept()));
+  connect(buttonBox, SIGNAL(rejected()), dialog, SLOT(reject()));
+  
+  /* MACHINE LEFT */
+  std::string label_machineLeft("");
+  if(this->appsServer != "")
+  {
+    label_machineLeft = "Machine : "+this->appsServer;
+  }
+  else
+  {
+    label_machineLeft = "Machine : ___________";
+  }
+  
+  QLabel *machineLeft = new QLabel(QString(label_machineLeft.c_str()), dialog);
+  layout->addWidget(machineLeft, 2, 0);
+  
+  QPushButton *button_machineLeft = new QPushButton("Choose", dialog);
+  connect(button_machineLeft, SIGNAL( clicked() ), this, SLOT( ChooseServer() ) );
+
+  layout->addWidget(button_machineLeft, 2, 1);
+  
+  /* MACHINE RIGHT */
+  std::string label_machineRight("");
+  if(this->appsClient != "")
+  {
+    label_machineRight = "Machine : "+this->appsClient;
+  }
+  else
+  {
+    label_machineRight = "Machine : ___________";
+  }
+  
+  QLabel *machineRight = new QLabel(QString(label_machineRight.c_str()), dialog);
+  layout->addWidget(machineRight, 3, 0);
+  
+  QPushButton *button_machineRight = new QPushButton("Choose", dialog);
+  connect(button_machineRight, SIGNAL( clicked() ), this, SLOT( ChooseClient() ) );
+  layout->addWidget(button_machineRight, 3, 1);
+  
+  /* PARAMS. */
+  QLabel *lab_startTime = new QLabel("Start time (s):", dialog);
+  layout->addWidget(lab_startTime, 5, 0);
+      
+  QLineEdit *line_startTime = new QLineEdit(dialog);
+  if(this->startTime != (size_t) -1)
+  {
+    line_startTime->insert(Generator::toString(this->startTime).c_str());
+  }
+  layout->addWidget(line_startTime, 5, 1);
+      
+  QLabel *lab_endTime = new QLabel("End time (s):", dialog);
+  layout->addWidget(lab_endTime, 6, 0);
+      
+  QLineEdit *line_endTime = new QLineEdit(dialog);
+  if(this->endTime != (size_t) -1)
+  {
+    line_endTime->insert(Generator::toString(this->endTime).c_str());
+  }
+  layout->addWidget(line_endTime, 6, 1);
+  
+  QLabel *lab_port = new QLabel("Port :", dialog);
+  layout->addWidget(lab_port, 7, 0);
+      
+  QLineEdit *line_port = new QLineEdit(dialog);
+  if(this->port != (size_t) -1)
+  {
+    line_port->insert(Generator::toString(this->port).c_str());
+  }
+  layout->addWidget(line_port, 7, 1);
+  
+  /* add OK, CANCEL button */
+  QPushButton *cancel = new QPushButton("Cancel", dialog);
+  connect(cancel, SIGNAL( clicked() ), this, SLOT( Cancel() ) );
+  layout->addWidget(cancel, 8, 3);
+  layout->addWidget(buttonBox, 8, 4);
+      
+  dialog->setLayout(layout);
+  dialog->exec();
+      
+  if(dialog->result() == 1)
+  {
+    this->startTime = line_startTime->text().toInt();
+    this->endTime = line_endTime->text().toInt();
+    this->port = line_port->text().toInt();
+    
+    if(this->appsServer != "" && this->appsClient != "" && this->startTime != (size_t) -1 && this->startTime != (size_t) -1 && this->port != (size_t) -1)
+    {
+      if((this->startTime < this->endTime))
+      {
+        this->mw->ValidApps();
+        this->appsPing = false;
+      }
+      else
+      {
+        QMessageBox::about(this, "Tcp Large Transfer", "Start time can't be greather than end time.");
+        this->ShowGuiTcp();
+      }
+    }
+    else
+    {
+      if(this->appsServer == "" || this->appsClient == "")
+      {
+        QMessageBox::about(this, "Tcp Large Transfer", "Sorry, you must choose all machines.");
+        this->ShowGuiTcp();
+      }
+      else
+      {
+        if(this->startTime == (size_t) -1 || this->endTime == (size_t) -1)
+        {
+          QMessageBox::about(this, "Tcp Large Transfer", "Sorry, start time and end time can't be null.");
+          this->ShowGuiTcp();
+        }
+        else
+        {
+          if(this->port == (size_t) -1)
+          {
+            QMessageBox::about(this, "Tcp Large Transfer", "Sorry, port field can't be null.");
+            this->ShowGuiTcp();
+          }
+        }
+      }
+    }
+  }
+
 }
 
 
