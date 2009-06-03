@@ -232,6 +232,40 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
     }
   } 
   
+  
+  
+  QPixmap pixmap = *child->pixmap();
+
+  QByteArray itemData;
+  QDataStream dataStream(&itemData, QIODevice::WriteOnly);
+  dataStream << pixmap << QPoint(event->pos() - child->pos());
+
+  QMimeData *mimeData = new QMimeData;
+  mimeData->setData("application/x-dnditemdata", itemData);
+
+  QDrag *drag = new QDrag(this);
+  drag->setMimeData(mimeData);
+  drag->setPixmap(pixmap);
+  drag->setHotSpot(event->pos() - child->pos());
+
+  QPixmap tempPixmap = pixmap;
+  QPainter painter;
+  painter.begin(&tempPixmap);
+  painter.fillRect(pixmap.rect(), QColor(127, 127, 127, 127));
+  painter.end();
+
+  child->setPixmap(tempPixmap);
+
+  if (drag->start(Qt::CopyAction | Qt::MoveAction) == Qt::MoveAction)
+  {
+    child->close();
+  }
+  else 
+  {
+    child->show();
+    child->setPixmap(pixmap);
+  }
+  
   /* application. */
   if(this->appsEnable)
   {
@@ -464,38 +498,6 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
         this->mw->ValidApps();
       }
     }
-  }
-  
-  QPixmap pixmap = *child->pixmap();
-
-  QByteArray itemData;
-  QDataStream dataStream(&itemData, QIODevice::WriteOnly);
-  dataStream << pixmap << QPoint(event->pos() - child->pos());
-
-  QMimeData *mimeData = new QMimeData;
-  mimeData->setData("application/x-dnditemdata", itemData);
-
-  QDrag *drag = new QDrag(this);
-  drag->setMimeData(mimeData);
-  drag->setPixmap(pixmap);
-  drag->setHotSpot(event->pos() - child->pos());
-
-  QPixmap tempPixmap = pixmap;
-  QPainter painter;
-  painter.begin(&tempPixmap);
-  painter.fillRect(pixmap.rect(), QColor(127, 127, 127, 127));
-  painter.end();
-
-  child->setPixmap(tempPixmap);
-
-  if (drag->start(Qt::CopyAction | Qt::MoveAction) == Qt::MoveAction)
-  {
-    child->close();
-  }
-  else 
-  {
-    child->show();
-    child->setPixmap(pixmap);
   }
 }
 
