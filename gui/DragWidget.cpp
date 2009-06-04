@@ -46,6 +46,7 @@ DragWidget::DragWidget(QWidget *parent) : QWidget(parent)
     this->linkEnd = "";
     this->linkType = "";
     
+    this->appsEnable = false;
     this->appsPing = false;
     this->appsUdpEcho = false;
     this->appsTcp = false;
@@ -266,15 +267,18 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
   }
   
   /* application. */
-  if(this->appsServer == "")
+  if(this->appsEnable)
   {
-    this->appsServer = child->getName();
-  }
-  else
-  {
-    if(this->appsClient == "" && child->getName() != this->appsServer)
+    if(this->appsServer == "")
     {
-      this->appsClient = child->getName();
+      this->appsServer = child->getName();
+    }
+    else
+    {
+      if(this->appsClient == "" && child->getName() != this->appsServer)
+      {
+        this->appsClient = child->getName();
+      }
     }
   }
   
@@ -293,7 +297,7 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
     ShowGuiTcp();
   }
   
-  
+  //~ this->appsEnable = false;
 }
 
 void DragWidget::mouseMoveEvent(QMouseEvent * /*event*/)
@@ -597,6 +601,8 @@ DragObject* DragWidget::getChildFromName(const std::string &name)
 
 void DragWidget::ShowGuiPing()
 {
+  this->appsEnable = false;
+  
   dialog = new QDialog(this);
   dialog->setWindowTitle("Ping");
   
@@ -612,11 +618,11 @@ void DragWidget::ShowGuiPing()
   std::string label_machineLeft("");
   if(this->appsServer != "")
   {
-    label_machineLeft = "Machine : "+this->appsServer;
+    label_machineLeft = "Sender : "+this->appsServer;
   }
   else
   {
-    label_machineLeft = "Machine : ___________";
+    label_machineLeft = "Sender : ___________";
   }
   
   QLabel *machineLeft = new QLabel(QString(label_machineLeft.c_str()), dialog);
@@ -631,11 +637,11 @@ void DragWidget::ShowGuiPing()
   std::string label_machineRight("");
   if(this->appsClient != "")
   {
-    label_machineRight = "Machine : "+this->appsClient;
+    label_machineRight = "Target : "+this->appsClient;
   }
   else
   {
-    label_machineRight = "Machine : ___________";
+    label_machineRight = "Target : ___________";
   }
   
   QLabel *machineRight = new QLabel(QString(label_machineRight.c_str()), dialog);
@@ -715,12 +721,14 @@ void DragWidget::ShowGuiPing()
 
 void DragWidget::ChooseServer()
 {
+  this->appsEnable = true;
   dialog->hide();
   this->appsServer = "";
 }
 
 void DragWidget::ChooseClient()
 {
+  this->appsEnable = true; 
   dialog->hide();
   this->appsClient = "";
 }
@@ -731,6 +739,7 @@ void DragWidget::Cancel()
   this->appsServer = "";
   this->appsClient = "";
   
+  this->appsEnable = false;
   this->appsPing = false;
   this->appsUdpEcho = false;
   this->appsTcp = false;
@@ -738,6 +747,8 @@ void DragWidget::Cancel()
 
 void DragWidget::ShowGuiUdpEcho()
 {
+  this->appsEnable = false;
+  
   dialog = new QDialog(this);
   dialog->setWindowTitle("Udp Echo");
   
@@ -753,11 +764,11 @@ void DragWidget::ShowGuiUdpEcho()
   std::string label_machineLeft("");
   if(this->appsServer != "")
   {
-    label_machineLeft = "Machine : "+this->appsServer;
+    label_machineLeft = "Server : "+this->appsServer;
   }
   else
   {
-    label_machineLeft = "Machine : ___________";
+    label_machineLeft = "Server : ___________";
   }
   
   QLabel *machineLeft = new QLabel(QString(label_machineLeft.c_str()), dialog);
@@ -772,11 +783,11 @@ void DragWidget::ShowGuiUdpEcho()
   std::string label_machineRight("");
   if(this->appsClient != "")
   {
-    label_machineRight = "Machine : "+this->appsClient;
+    label_machineRight = "Client : "+this->appsClient;
   }
   else
   {
-    label_machineRight = "Machine : ___________";
+    label_machineRight = "Client : ___________";
   }
   
   QLabel *machineRight = new QLabel(QString(label_machineRight.c_str()), dialog);
@@ -875,6 +886,8 @@ void DragWidget::ShowGuiUdpEcho()
 
 void DragWidget::ShowGuiTcp()
 {
+  this->appsEnable = false;
+  
   dialog = new QDialog(this);
   dialog->setWindowTitle("Tcp Large Transfer");
   
@@ -890,11 +903,11 @@ void DragWidget::ShowGuiTcp()
   std::string label_machineLeft("");
   if(this->appsServer != "")
   {
-    label_machineLeft = "Machine : "+this->appsServer;
+    label_machineLeft = "Server : "+this->appsServer;
   }
   else
   {
-    label_machineLeft = "Machine : ___________";
+    label_machineLeft = "Server : ___________";
   }
   
   QLabel *machineLeft = new QLabel(QString(label_machineLeft.c_str()), dialog);
@@ -909,11 +922,11 @@ void DragWidget::ShowGuiTcp()
   std::string label_machineRight("");
   if(this->appsClient != "")
   {
-    label_machineRight = "Machine : "+this->appsClient;
+    label_machineRight = "Client : "+this->appsClient;
   }
   else
   {
-    label_machineRight = "Machine : ___________";
+    label_machineRight = "Client : ___________";
   }
   
   QLabel *machineRight = new QLabel(QString(label_machineRight.c_str()), dialog);

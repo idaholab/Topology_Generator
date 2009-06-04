@@ -192,6 +192,11 @@ Q_OBJECT
      */
     QDialog *dialog;
     
+    /**
+     * \brief attribute which show if the apps is at this time in use or not
+     */
+    bool appsEnable;
+    
   private:
     /**
      * \brief attribute to save the Position from the last object which moved.
