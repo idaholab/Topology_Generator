@@ -17,34 +17,34 @@
  * 
  */
 /**
-* \file Wifi.cpp
-* \brief Wifi link subclasse.
+* \file Ap.cpp
+* \brief Ap link subclasse.
 * \author Pierre Weiss
 * \date 2009
 */
 
-#include "Wifi.h"
+#include "Ap.h"
 
 
-Wifi::Wifi(const size_t &_indice, const std::string &_apNode, const bool &_random) : Link(_indice)
+Ap::Ap(const size_t &_indice, const std::string &_apNode, const bool &_random) : Link(_indice)
 {
   this->nodes.push_back(_apNode);
-  this->linkName = "wifi_"+this->getIndice();
+  this->linkName = "ap_"+this->getIndice();
   this->ndcName = "ndc_"+this->getLinkName();
   this->allNodeContainer = "all_"+this->getLinkName();
   this->apNode = _apNode;
   this->random = _random;
 }
 
-Wifi::~Wifi()
+Ap::~Ap()
 {
 }
-std::string Wifi::getApNode()
+std::string Ap::getApNode()
 {
   return this->apNode;
 }
 
-std::vector<std::string> Wifi::GenerateHeader()
+std::vector<std::string> Ap::GenerateHeader()
 {
   std::vector<std::string> headers;
   headers.push_back("#include \"ns3/wifi-module.h\"");
@@ -54,7 +54,7 @@ std::vector<std::string> Wifi::GenerateHeader()
   return headers;
 }
 
-std::vector<std::string> Wifi::GenerateLink()
+std::vector<std::string> Ap::GenerateLink()
 {
   std::vector<std::string> generatedLink;
   /* creation of the link. */
@@ -65,7 +65,7 @@ std::vector<std::string> Wifi::GenerateLink()
   return generatedLink;
 }
 
-std::vector<std::string> Wifi::GenerateNetDevice()
+std::vector<std::string> Ap::GenerateNetDevice()
 {
   std::vector<std::string> ndc;
   

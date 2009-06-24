@@ -35,9 +35,9 @@
  * \ingroup generator
  * \brief This is the link class.
  *
- * This class is used to used to join Equipement.
+ * This class is used to used to join Node.
  * Like plug pc to a switch.
- * It build the link and join the equipement.
+ * It build the link and join the Node.
  * 
  */
 class Link

@@ -17,17 +17,17 @@
  * 
  */
 /**
-* \file Equipement.cpp
-* \brief Abstract Equipement Base Class.
+* \file Node.cpp
+* \brief Abstract Node Base Class.
 * \author Pierre Weiss
 * \date 2009
 */
 
-#include "Equipement.h"
+#include "Node.h"
 #include "Generator.h"
 #include <sstream>
 
-Equipement::Equipement(const size_t &_indice, const std::string &_type)
+Node::Node(const size_t &_indice, const std::string &_type)
 {
   this->indice = _indice;
   this->nodeName = _type + Generator::toString(_indice);
@@ -36,7 +36,7 @@ Equipement::Equipement(const size_t &_indice, const std::string &_type)
   this->machinesNumber = 1;	
 }
 
-Equipement::Equipement(const size_t &_indice, const std::string &_type, const size_t &_machinesNumber)
+Node::Node(const size_t &_indice, const std::string &_type, const size_t &_machinesNumber)
 {
   this->indice = _indice;
   this->nodeName = _type + Generator::toString(_indice);
@@ -45,11 +45,11 @@ Equipement::Equipement(const size_t &_indice, const std::string &_type, const si
   this->machinesNumber = _machinesNumber;
 }
 
-Equipement::~Equipement()
+Node::~Node()
 {
 }
 
-std::vector<std::string> Equipement::GenerateHeader()
+std::vector<std::string> Node::GenerateHeader()
 {
   std::vector<std::string> headers;
   headers.push_back("#include \"ns3/helper-module.h\"");
@@ -57,7 +57,7 @@ std::vector<std::string> Equipement::GenerateHeader()
   return headers; 
 }
 
-std::vector<std::string> Equipement::GenerateNode()
+std::vector<std::string> Node::GenerateNode()
 {
   std::vector<std::string> nodes;
   nodes.push_back("NodeContainer "+this->getNodeName()+";");
@@ -66,7 +66,7 @@ std::vector<std::string> Equipement::GenerateNode()
   return nodes; 
 }
 
-std::vector<std::string> Equipement::GenerateIpStack()
+std::vector<std::string> Node::GenerateIpStack()
 {
   std::vector<std::string> stack;
   stack.push_back("InternetStackHelper net_"+this->getNodeName()+";");
@@ -79,47 +79,47 @@ std::vector<std::string> Equipement::GenerateIpStack()
   return stack; 
 }
   
-void Equipement::setNodeName(const std::string &_nodeName)
+void Node::setNodeName(const std::string &_nodeName)
 {
   this->nodeName = _nodeName;
 }
 
-void Equipement::setIpInterfaceName(const std::string &_ipInterfaceName)
+void Node::setIpInterfaceName(const std::string &_ipInterfaceName)
 {
   this->ipInterfaceName = _ipInterfaceName;
 }
 
-std::string Equipement::getNodeName()
+std::string Node::getNodeName()
 {
   return this->nodeName;
 }
 
-std::string Equipement::getNodeName(const size_t &number)
+std::string Node::getNodeName(const size_t &number)
 {
   return std::string("NodeContainer("+this->nodeName+".Get("+Generator::toString(number)+"))");
 }
 
-std::string Equipement::getIpInterfaceName()
+std::string Node::getIpInterfaceName()
 {
   return this->ipInterfaceName;
 }
  
-std::string Equipement::getIndice()
+std::string Node::getIndice()
 {
   return Generator::toString(this->indice);
 }
 
-std::string Equipement::getNsc()
+std::string Node::getNsc()
 {
   return this->nsc;
 }
   
-void Equipement::setNsc(const std::string &_nsc)
+void Node::setNsc(const std::string &_nsc)
 {
   this->nsc = _nsc;
 }
 
-size_t Equipement::getMachinesNumber()
+size_t Node::getMachinesNumber()
 {
   return this->machinesNumber;
 }

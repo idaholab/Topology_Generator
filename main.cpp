@@ -23,27 +23,31 @@ using namespace std;
 #include <stdlib.h>
 #include <limits>
 #include <stdexcept>
-#include <QApplication>
-#include <QtGui>
-#include <QHBoxLayout>
-#include <iostream>
 
+//#include <QApplication>
+//#include <QtGui>
+//#include <QHBoxLayout>
 
 #include "kern/Generator.h"
-#include "gui/MainWindow.h"
+//#include "gui/MainWindow.h"
 
 
 int main(int argc, char *argv[])
 {
-  QApplication app(argc, argv);
 
+  
+  
+  /*
+  QApplication app(argc, argv);
+ 
   MainWindow *win = new MainWindow(std::string("Simulation-Name"));
   win->setWindowTitle("Generator");
   win->show();
     
   app.exec();
 	
-	delete win;
+  delete win;
+  */
 }
 
 

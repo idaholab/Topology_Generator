@@ -17,14 +17,14 @@
  * 
  */
 /**
-* \file Wifi.h
-* \brief Wifi link subclasse.
+* \file Ap.h
+* \brief Ap link subclasse.
 * \author Pierre Weiss
 * \date 2009
 */
 
-#ifndef WIFI_H
-#define WIFI_H
+#ifndef Ap_H
+#define Ap_H
 
 #include "Link.h"
 
@@ -34,31 +34,31 @@
 
 /**
  * \ingroup generator
- * \brief Wifi link subclasse.
+ * \brief Ap link subclasse.
  *
- * This class is a subclasse from Link, it create a wifi station and 
+ * This class is a subclasse from Link, it create a wifi ap and 
  * you can add station to it.
  * 
  */
-class Wifi : public Link
+class Ap : public Link
 {
 public:
   /**
    * \brief Constructor
-   * \param _indice the Wifi number
+   * \param _indice the Ap number
    * \param _apNode the node which is the ap.
    * \param _random
    */
-  Wifi(const size_t &_indice, const std::string &_apNode, const bool &_random);
+  Ap(const size_t &_indice, const std::string &_apNode, const bool &_random);
   
   /**
    * \brief Destructor
    */
-  virtual ~Wifi();
+  virtual ~Ap();
   
 private:
   /**
-   * \brief attribute which say if station walk is constant or random.
+   * \brief mobility : attribute which say if station walk is constant or random.
    */
   bool random;
   

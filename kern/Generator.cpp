@@ -29,11 +29,11 @@
 #include <stdexcept>
 
 #include "Generator.h"
-#include "Equipement.h"
+#include "Node.h"
 #include "Hub.h"
 #include "PointToPoint.h"
 #include "Bridge.h"
-#include "Wifi.h"
+#include "Ap.h"
 #include "Link.h"
 #include "Ping.h"
 #include "UdpEcho.h"
@@ -45,16 +45,16 @@ Generator::Generator(const std::string &_simulationName)
 {
   this->simulationName = _simulationName;
   
-  /* Equipement. */
-  this->indiceEquipementPc = 0;
-  this->indiceEquipementRouter = 0;
-  this->indiceEquipementAp = 0;
-  this->indiceEquipementStation = 0;
-  this->indiceEquipementBridge = 0;
-  this->indiceEquipementTap = 0;
+  /* Node. */
+  this->indiceNodePc = 0;
+  this->indiceNodeRouter = 0;
+  this->indiceNodeAp = 0;
+  this->indiceNodeStation = 0;
+  this->indiceNodeBridge = 0;
+  this->indiceNodeTap = 0;
 
   /* Link */
-  this->indiceLinkWifi = 0;
+  this->indiceLinkAp = 0;
   this->indiceLinkEmu = 0;
   this->indiceLinkPointToPoint = 0;
   this->indiceLinkTap = 0;
@@ -70,10 +70,10 @@ Generator::Generator(const std::string &_simulationName)
 
 Generator::~Generator()
 {
-  /* Equipement */
-  for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
+  /* Node */
+  for(size_t i = 0; i < (size_t) this->listNode.size(); i++)
   {
-    delete this->listEquipement.at(i);
+    delete this->listNode.at(i);
   }
   
   /* Link */
@@ -106,48 +106,48 @@ void Generator::AddConfig(const std::string &config)
 }
 
 //
-// Part of Equipement.
+// Part of Node.
 //
-void Generator::AddEquipement(const std::string &type) 
+void Generator::AddNode(const std::string &type) 
 {
-  Equipement *equi = NULL;
+  Node *equi = NULL;
   
   // call to the right type constructor. 
   if(type == "Pc")
   {
-  	equi = new Equipement(this->indiceEquipementPc, std::string("node_"));
-  	this->indiceEquipementPc += 1;
+  	equi = new Node(this->indiceNodePc, std::string("node_"));
+  	this->indiceNodePc += 1;
   } 
   else if(type == "Router")
   {
-  	equi = new Equipement(this->indiceEquipementRouter, std::string("router_"));
-  	this->indiceEquipementRouter += 1;
+  	equi = new Node(this->indiceNodeRouter, std::string("router_"));
+  	this->indiceNodeRouter += 1;
   } 
   else if(type == "Ap")
   {
-  	equi = new Equipement(this->indiceEquipementAp, std::string("ap_"));
-  	this->indiceEquipementAp += 1;
+  	equi = new Node(this->indiceNodeAp, std::string("ap_"));
+  	this->indiceNodeAp += 1;
   } 
   else if(type == "Station")
   {
-    equi = new Equipement(this->indiceEquipementStation, std::string("station_"));
-  	this->indiceEquipementStation += 1;
+    equi = new Node(this->indiceNodeStation, std::string("station_"));
+  	this->indiceNodeStation += 1;
   } 
   else if(type == "Bridge")
   {
-    equi = new Equipement(this->indiceEquipementBridge, std::string("bridge_"));
-  	this->indiceEquipementBridge += 1;
+    equi = new Node(this->indiceNodeBridge, std::string("bridge_"));
+  	this->indiceNodeBridge += 1;
   } 
   else if(type == "Tap")
   {
-  	equi = new Equipement(this->indiceEquipementTap, std::string("tap_"));
-  	this->indiceEquipementTap += 1;
+  	equi = new Node(this->indiceNodeTap, std::string("tap_"));
+  	this->indiceNodeTap += 1;
   } 
  
   
   if(equi)//!= NULL
   {
-    this->listEquipement.push_back(equi);
+    this->listNode.push_back(equi);
   }
   else
   {
@@ -155,19 +155,19 @@ void Generator::AddEquipement(const std::string &type)
   }
 }
 
-void Generator::AddEquipement(const size_t &machinesNumber) 
+void Generator::AddNode(const size_t &machinesNumber) 
 {
-  Equipement *equi = new Equipement(this->indiceEquipementPc, std::string("nodesGroup_"), machinesNumber);
-  this->indiceEquipementPc += 1;
-  this->listEquipement.push_back(equi);
+  Node *equi = new Node(this->indiceNodePc, std::string("nodesGroup_"), machinesNumber);
+  this->indiceNodePc += 1;
+  this->listNode.push_back(equi);
 }
 
-void Generator::RemoveEquipement(const size_t &number)
+void Generator::RemoveNode(const size_t &number)
 {
-  if(number < this->listEquipement.size())
+  if(number < this->listNode.size())
   {
-    delete this->listEquipement[number];
-    this->listEquipement.erase(this->listEquipement.begin() + number);
+    delete this->listNode[number];
+    this->listNode.erase(this->listNode.begin() + number);
   }
   else
   {
@@ -237,14 +237,14 @@ void Generator::AddLink(const std::string &type)
   // call to the right type constructor. 
   if(type == "Hub")
   {
-  	Hub *link = new Hub(this->indiceLinkHub);
-  	this->indiceLinkHub += 1;
+    Hub *link = new Hub(this->indiceLinkHub);
+    this->indiceLinkHub += 1;
     this->listLink.push_back(link);
   } 
   else if(type == "PointToPoint")
   {
-  	PointToPoint *link = new PointToPoint(this->indiceLinkPointToPoint);
-  	this->indiceLinkPointToPoint += 1;
+    PointToPoint *link = new PointToPoint(this->indiceLinkPointToPoint);
+    this->indiceLinkPointToPoint += 1;
     this->listLink.push_back(link);
   } 
   else
@@ -257,8 +257,8 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode)
 {
   if(type == "Bridge")
   {
-  	Bridge *link = new Bridge(this->indiceLinkBridge, linkNode);
-  	this->indiceLinkBridge += 1;
+    Bridge *link = new Bridge(this->indiceLinkBridge, linkNode);
+    this->indiceLinkBridge += 1;
     this->listLink.push_back(link);
   } 
   else
@@ -269,10 +269,10 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode)
 
 void Generator::AddLink(const std::string &type, const std::string &linkNode, const bool &mobility)
 {
-  if(type == "Wifi")
+  if(type == "Ap")
   {
-  	Wifi *link = new Wifi(this->indiceLinkWifi, linkNode, mobility);
-  	this->indiceLinkWifi += 1;
+    Ap *link = new Ap(this->indiceLinkAp, linkNode, mobility);
+    this->indiceLinkAp += 1;
     this->listLink.push_back(link);
   } 
   else
@@ -285,15 +285,15 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode, co
 { 
   if(type == "Emu")
   {
-  	Emu *link = new Emu(this->indiceLinkEmu, linkNode, ifaceName);
-  	this->indiceLinkEmu += 1;
-  	this->listLink.push_back(link);
+    Emu *link = new Emu(this->indiceLinkEmu, linkNode, ifaceName);
+    this->indiceLinkEmu += 1;
+    this->listLink.push_back(link);
   } 
   else if(type == "Tap")
   {
-  	Tap *link = new Tap(this->indiceLinkTap, linkNode, ifaceName);
-  	this->indiceLinkTap += 1;
-  	this->listLink.push_back(link);
+    Tap *link = new Tap(this->indiceLinkTap, linkNode, ifaceName);
+    this->indiceLinkTap += 1;
+    this->listLink.push_back(link);
   } 
   else
   {
@@ -512,10 +512,10 @@ std::vector<std::string> Generator::GenerateHeader()
   /* still in developpement, must be add the link and the applications headers! */
   std::vector<std::string> allHeaders;
   /* get all headers. */
-  /* from listEquipement. */
-  for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
+  /* from listNode. */
+  for(size_t i = 0; i < (size_t) this->listNode.size(); i++)
   {
-    std::vector<std::string> trans = (this->listEquipement.at(i))->GenerateHeader();
+    std::vector<std::string> trans = (this->listNode.at(i))->GenerateHeader();
     for(size_t j = 0; j < (size_t) trans.size(); j++)
     {
   	  allHeaders.push_back(trans.at(j));
@@ -580,11 +580,11 @@ std::vector<std::string> Generator::GenerateVars()
   }
   
   /* add nsc var if used. */
-  for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
+  for(size_t i = 0; i < (size_t) this->listNode.size(); i++)
   {
-    if( (this->listEquipement.at(i))->getNsc() != "")
+    if( (this->listNode.at(i))->getNsc() != "")
     {
-      allVars.push_back("std::string nscStack = \""+(this->listEquipement.at(i))->getNsc()+"\";");
+      allVars.push_back("std::string nscStack = \""+(this->listNode.at(i))->getNsc()+"\";");
     }
   }
   return allVars;
@@ -606,9 +606,9 @@ std::vector<std::string> Generator::GenerateCmdLine()
 
 std::vector<std::string> Generator::GenerateConfig() 
 {
-  for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
+  for(size_t i = 0; i < (size_t) this->listNode.size(); i++)
   {
-    if( ((this->listEquipement.at(i))->getNodeName()).find("tap_") == 0 )
+    if( ((this->listNode.at(i))->getNodeName()).find("tap_") == 0 )
     {
       this->AddConfig("GlobalValue::Bind (\"SimulatorImplementationType\", StringValue (\"ns3::RealtimeSimulatorImpl\"));");
       this->AddConfig("Config::SetDefault (\"ns3::Ipv4L3Protocol::CalcChecksum\", BooleanValue (true));");
@@ -649,9 +649,9 @@ std::vector<std::string> Generator::GenerateNode()
 {
   std::vector<std::string> allNodes;
   /* get all the node code. */
-  for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
+  for(size_t i = 0; i < (size_t) this->listNode.size(); i++)
   {
-    std::vector<std::string> trans = (this->listEquipement.at(i))->GenerateNode();
+    std::vector<std::string> trans = (this->listNode.at(i))->GenerateNode();
     for(size_t j = 0; j < (size_t) trans.size(); j++)
     {
         allNodes.push_back(trans.at(j));
@@ -693,15 +693,15 @@ std::vector<std::string> Generator::GenerateIpStack()
 {
   std::vector<std::string> allStack;
 
-  /* construct node without bridge equipement. */
+  /* construct node without bridge Node. */
   std::string nodeName = "";
-  for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
+  for(size_t i = 0; i < (size_t) this->listNode.size(); i++)
   {
-    nodeName = (this->listEquipement.at(i))->getNodeName();
+    nodeName = (this->listNode.at(i))->getNodeName();
     /* if it is not a bridge you can add it. */
     if(nodeName.find("bridge_") != 0)
     {
-      std::vector<std::string> trans = (this->listEquipement.at(i)->GenerateIpStack());
+      std::vector<std::string> trans = (this->listNode.at(i)->GenerateIpStack());
       for(size_t j = 0; j < (size_t) trans.size(); j++)
       {
        allStack.push_back(trans.at(j));
@@ -798,9 +798,9 @@ std::vector<std::string> Generator::GenerateRoute()
   
   std::vector<std::string> route;
   std::string nodeName = "";
-  for(size_t i = 0; i < (size_t) this->listEquipement.size(); i++)
+  for(size_t i = 0; i < (size_t) this->listNode.size(); i++)
   {
-    nodeName = (this->listEquipement.at(i))->getNodeName();
+    nodeName = (this->listNode.at(i))->getNodeName();
     /* if it is not a bridge you can add it. */
     if(nodeName.find("bridge_") != 0 )
     {

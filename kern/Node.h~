@@ -17,14 +17,14 @@
  * 
  */
 /**
-* \file Equipement.h
-* \brief Equipement Base Class.
+* \file Node.h
+* \brief Node Base Class.
 * \author Pierre Weiss
 * \date 2009
 */
 
-#ifndef EQUIPEMENT_H
-#define EQUIPEMENT_H
+#ifndef NODE_H
+#define NODE_H
 
 #include <iostream>
 #include <string>
@@ -33,12 +33,12 @@
 
 /**
  * \ingroup generator
- * \brief Equipement Base Class.
+ * \brief Node Base Class.
  *
  * This class is the main class of the differents equipement you can choose to use.
  * It contain the Pc Switch, Router, Tap, Wifi Ap, Wifi Station.
  */
-class Equipement 
+class Node 
 {
 
 private:
@@ -73,7 +73,7 @@ public:
    * \param _indice
    * \param _type
    */
-  Equipement(const size_t &_indice, const std::string &_type);
+  Node(const size_t &_indice, const std::string &_type);
   
   /**
    * \brief Constructor which set default value.
@@ -81,12 +81,12 @@ public:
    * \param _type
    * \param _machinesNumber
    */
-  Equipement(const size_t &_indice, const std::string &_type, const size_t &_machinesNumber);
+  Node(const size_t &_indice, const std::string &_type, const size_t &_machinesNumber);
   
   /**
-   * \brief Destructor from the class Equipement.
+   * \brief Destructor from the class Node.
    */
-  ~Equipement();
+  ~Node();
 
   /**
    * \brief Function wich return the c++ header code from node.

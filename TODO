@@ -1,0 +1,19 @@
+Todo file ...
+
+- Add multi-selection of object with ctrl or mouse cursor
+- Window size (take care on out from zone object)
+- show generation time
+- implementation of Menu
+- implement right click on object
+- handle Ctrl+C to memory clean
+- XML generation ...
+- Trace with good link
+- On link use, ico from link must be pressed
+- fix the superimposed link
+- Mapping to intégrate Python 
+- implement keyboard shortcut
+- show a tooltip when the mouse are over an object
+- show the selected object
+- Add status bar
+- add configuration into application
+

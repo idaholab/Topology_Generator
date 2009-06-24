@@ -26,7 +26,7 @@
 #ifndef GENERATOR_H
 #define GENERATOR_H
 
-#include "Equipement.h"
+#include "Node.h"
 #include "Link.h"
 #include "Application.h"
 
@@ -74,73 +74,73 @@ public:
   ~Generator();	
 	
   //
-  // Part of Equipement.
+  // Part of Node.
   //
 private:
   /**
-   * \brief number attribute of Pc equipement created.
+   * \brief number attribute of Pc Node created.
    */
-  size_t indiceEquipementPc;
+  size_t indiceNodePc;
   
   /**
-   * \brief number attribute of Router equipement created.
+   * \brief number attribute of Router Node created.
    */
-  size_t indiceEquipementRouter;
+  size_t indiceNodeRouter;
   
   /**
-   * \brief number attribute of Ap equipement created.
+   * \brief number attribute of Ap Node created.
    */
-  size_t indiceEquipementAp;
+  size_t indiceNodeAp;
   
   /**
-   * \brief number attribute of Station equipement created.
+   * \brief number attribute of Station Node created.
    */
-  size_t indiceEquipementStation;
+  size_t indiceNodeStation;
   
   /**
-   * \brief number attribute of Bridge equipement created.
+   * \brief number attribute of Bridge Node created.
    */
-  size_t indiceEquipementBridge;
+  size_t indiceNodeBridge;
   
   /**
-   * \brief number attribute of Tap equipement created.
+   * \brief number attribute of Tap Node created.
    */
-  size_t indiceEquipementTap;
+  size_t indiceNodeTap;
   
 public: 
   /**
-   * \brief list of equipement created instace.
+   * \brief list of Node created instace.
    * 
-   * This attribute is the list of the created instance of equipement.
+   * This attribute is the list of the created instance of Node.
    * 
    */
-  std::vector<Equipement*> listEquipement;
+  std::vector<Node*> listNode;
  
   /**
-   * \brief Procedure used to add an equipement.
+   * \brief Procedure used to add an Node.
    * 
-   * This procedure is used to add an equipement. It add the equipement to the
-   * vector listEquipement and increment the number of equipement.
+   * This procedure is used to add an Node. It add the Node to the
+   * vector listNode and increment the number of Node.
    * 
-   * \param type the type of the equipement. (Pc, Hub, Switch,...)
+   * \param type the type of the Node. (Pc, Hub, Switch,...)
    */
-  void AddEquipement(const std::string &type);
+  void AddNode(const std::string &type);
   
   /**
-   * \brief Procedure used to add an equipement.
+   * \brief Procedure used to add an Node.
    * 
-   * This procedure is used to add an equipement. It add the equipement to the
-   * vector listEquipement and increment the number of equipement.
+   * This procedure is used to add an Node. It add the Node to the
+   * vector listNode and increment the number of Node.
    * 
    * \param machinesNumber the number of machines to create.
    */
-  void AddEquipement(const size_t &machinesNumber);
+  void AddNode(const size_t &machinesNumber);
   
   /**
-   * \brief Procedure used to remove an equipement elem.
-   * \param number the equipement number to remove
+   * \brief Procedure used to remove an Node elem.
+   * \param number the Node number to remove
    */
-  void RemoveEquipement(const size_t &number);
+  void RemoveNode(const size_t &number);
   
   
   //
@@ -214,7 +214,7 @@ private:
   /**
    * \brief number attribute of Ap link created.
    */
-  size_t indiceLinkWifi;
+  size_t indiceLinkAp;
   
   
   /**

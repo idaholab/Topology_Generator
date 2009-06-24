@@ -85,7 +85,7 @@ public:
   Application(const size_t &_indice, const std::string &_senderNode, const std::string &_receiverNode, const size_t &_startTime, const size_t &_endTime);
   
   /**
-   * \brief Destructor from the class Equipement.
+   * \brief Destructor from the class Application.
    */
   virtual ~Application();
 
