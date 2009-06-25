@@ -37,19 +37,19 @@ int main(int argc, char *argv[])
   Generator *gen = new Generator(std::string("example-bridge"));
   
   /* Add Equipement : */
-  gen->AddEquipement("Pc");//0
-  gen->AddEquipement("Pc");//1
+  gen->AddNode("Pc");//0
+  gen->AddNode("Pc");//1
   
-  gen->AddEquipement("Bridge");//2
+  gen->AddNode("Bridge");//2
   
   /* Add the bridge. */
-  gen->AddLink("Bridge", gen->listEquipement.at(2)->getNodeName());
+  gen->AddLink("Bridge", gen->listNode.at(2)->getNodeName());
   /* Add equipement to bridge */
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(0)->getNodeName());
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(1)->getNodeName());
+  gen->listLink.at(0)->AddNodes(gen->listNode.at(0)->getNodeName());
+  gen->listLink.at(0)->AddNodes(gen->listNode.at(1)->getNodeName());
   
   /* Add an application */
-  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(1)->getNodeName(), 0, 5);// 0 start time - 5 end time
+  gen->AddApplication("Ping", gen->listNode.at(0)->getNodeName(), gen->listNode.at(1)->getNodeName(), 0, 5);// 0 start time - 5 end time
 
   gen->GenerateCode();
   

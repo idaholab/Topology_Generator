@@ -40,34 +40,34 @@ int main(int argc, char *argv[])
   
   Generator *gen = new Generator(std::string("example-router-bridge"));
   
-  /* Add Equipement : */
-  gen->AddEquipement("Pc");//0
-  gen->AddEquipement("Pc");//1
-  gen->AddEquipement("Bridge");//2
+  /* Add Node : */
+  gen->AddNode("Pc");//0
+  gen->AddNode("Pc");//1
+  gen->AddNode("Bridge");//2
   
-  gen->AddEquipement("Router");//3
+  gen->AddNode("Router");//3
   
-  gen->AddEquipement("Bridge");//4
-  gen->AddEquipement("Pc");//5
-  gen->AddEquipement("Pc");//6
+  gen->AddNode("Bridge");//4
+  gen->AddNode("Pc");//5
+  gen->AddNode("Pc");//6
   
     
   /* Add the bridge. */
-  gen->AddLink("Bridge", gen->listEquipement.at(2)->getNodeName());//link 0
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(0)->getNodeName());
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(1)->getNodeName());
+  gen->AddLink("Bridge", gen->listNode.at(2)->getNodeName());//link 0
+  gen->listLink.at(0)->AddNodes(gen->listNode.at(0)->getNodeName());
+  gen->listLink.at(0)->AddNodes(gen->listNode.at(1)->getNodeName());
   
-  gen->AddLink("Bridge", gen->listEquipement.at(4)->getNodeName());//link 1
-  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(5)->getNodeName());
-  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(6)->getNodeName());
+  gen->AddLink("Bridge", gen->listNode.at(4)->getNodeName());//link 1
+  gen->listLink.at(1)->AddNodes(gen->listNode.at(5)->getNodeName());
+  gen->listLink.at(1)->AddNodes(gen->listNode.at(6)->getNodeName());
   
   /* link switch to router. */
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(3)->getNodeName());
-  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(3)->getNodeName());
+  gen->listLink.at(0)->AddNodes(gen->listNode.at(3)->getNodeName());
+  gen->listLink.at(1)->AddNodes(gen->listNode.at(3)->getNodeName());
   
   
   /* Add an application */
-  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(5)->getNodeName(), 0, 5);// 0 start time - 5 end time
+  gen->AddApplication("Ping", gen->listNode.at(0)->getNodeName(), gen->listNode.at(5)->getNodeName(), 0, 5);// 0 start time - 5 end time
 
   gen->GenerateCode();
   

@@ -27,15 +27,6 @@
 #include "Generator.h"
 #include <sstream>
 
-Node::Node(const size_t &_indice, const std::string &_type)
-{
-  this->indice = _indice;
-  this->nodeName = _type + Generator::toString(_indice);
-  this->ipInterfaceName = "iface_"+this->nodeName;
-  this->nsc = "";
-  this->machinesNumber = 1;	
-}
-
 Node::Node(const size_t &_indice, const std::string &_type, const size_t &_machinesNumber)
 {
   this->indice = _indice;
@@ -122,6 +113,11 @@ void Node::setNsc(const std::string &_nsc)
 size_t Node::getMachinesNumber()
 {
   return this->machinesNumber;
+}
+
+void Node::setMachinesNumber(const size_t &_machinesNumber)
+{
+  this->machinesNumber = _machinesNumber;
 }
 
  

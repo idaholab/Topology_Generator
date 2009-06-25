@@ -37,17 +37,17 @@ int main(int argc, char *argv[])
   Generator *gen = new Generator(std::string("example-udpEcho"));
   
   /* Add the Pc equipement. */
-  gen->AddEquipement("Pc");
-  gen->AddEquipement("Pc"); 
+  gen->AddNode("Pc");
+  gen->AddNode("Pc"); 
 
   /* Add the Link (csma) */
   gen->AddLink("Hub"); 
   /* Add equipement to te link */
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(0)->getNodeName());
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(1)->getNodeName());
+  gen->listLink.at(0)->AddNodes(gen->listNode.at(0)->getNodeName());
+  gen->listLink.at(0)->AddNodes(gen->listNode.at(1)->getNodeName());
 
   /* Add Udp echo application from pc to pc on PORT 6666 */
-  gen->AddApplication("UdpEcho", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(1)->getNodeName(), 0, 5, 6666);// 0 start time - 5 end time
+  gen->AddApplication("UdpEcho", gen->listNode.at(0)->getNodeName(), gen->listNode.at(1)->getNodeName(), 0, 5, 6666);// 0 start time - 5 end time
                                                                                                                              
   gen->GenerateCode();
   

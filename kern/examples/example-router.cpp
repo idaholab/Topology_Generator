@@ -40,30 +40,30 @@ int main(int argc, char *argv[])
   
   Generator *gen = new Generator(std::string("example-router"));
   
-  /* Add Equipement : */
-  gen->AddEquipement("Pc");//0
-  gen->AddEquipement("Pc");//1
+  /* Add Node : */
+  gen->AddNode("Pc");//0
+  gen->AddNode("Pc");//1
   
-  gen->AddEquipement("Router");//2
+  gen->AddNode("Router");//2
   
-  gen->AddEquipement("Pc");//3
-  gen->AddEquipement("Pc");//4
+  gen->AddNode("Pc");//3
+  gen->AddNode("Pc");//4
   
   /* Add it to a Csma network. */
   gen->AddLink("Hub");//0
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(0)->getNodeName());
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(1)->getNodeName());
+  gen->listLink.at(0)->AddNodes(gen->listNode.at(0)->getNodeName());
+  gen->listLink.at(0)->AddNodes(gen->listNode.at(1)->getNodeName());
   
   gen->AddLink("Hub");//1
-  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(3)->getNodeName());
-  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(4)->getNodeName());
+  gen->listLink.at(1)->AddNodes(gen->listNode.at(3)->getNodeName());
+  gen->listLink.at(1)->AddNodes(gen->listNode.at(4)->getNodeName());
   
   /* link the two subnetworks to the router. */
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(2)->getNodeName());
-  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(2)->getNodeName());
+  gen->listLink.at(0)->AddNodes(gen->listNode.at(2)->getNodeName());
+  gen->listLink.at(1)->AddNodes(gen->listNode.at(2)->getNodeName());
   
   /* Add an application */
-  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(4)->getNodeName(), 0, 5);// 0 start time - 5 end time
+  gen->AddApplication("Ping", gen->listNode.at(0)->getNodeName(), gen->listNode.at(4)->getNodeName(), 0, 5);// 0 start time - 5 end time
 
   gen->GenerateCode();
   

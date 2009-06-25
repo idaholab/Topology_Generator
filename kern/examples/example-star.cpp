@@ -40,45 +40,45 @@ int main(int argc, char *argv[])
   
   Generator *gen = new Generator(std::string("example-star"));
   
-  /* Add Equipement : */
-  gen->AddEquipement(9);
+  /* Add Node : */
+  gen->AddNode("Pc", 9);
   
   /* Add the bridge. */
   gen->AddLink("Hub");
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(0)->getNodeName(1));
+  gen->listLink.at(0)->AddNodes(gen->listNode.at(0)->getNodeName(0));
+  gen->listLink.at(0)->AddNodes(gen->listNode.at(0)->getNodeName(1));
   
   gen->AddLink("Hub");
-  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
-  gen->listLink.at(1)->AddNodes(gen->listEquipement.at(0)->getNodeName(2));
+  gen->listLink.at(1)->AddNodes(gen->listNode.at(0)->getNodeName(0));
+  gen->listLink.at(1)->AddNodes(gen->listNode.at(0)->getNodeName(2));
   
   gen->AddLink("Hub");
-  gen->listLink.at(2)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
-  gen->listLink.at(2)->AddNodes(gen->listEquipement.at(0)->getNodeName(3));
+  gen->listLink.at(2)->AddNodes(gen->listNode.at(0)->getNodeName(0));
+  gen->listLink.at(2)->AddNodes(gen->listNode.at(0)->getNodeName(3));
   
   gen->AddLink("Hub");
-  gen->listLink.at(3)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
-  gen->listLink.at(3)->AddNodes(gen->listEquipement.at(0)->getNodeName(4));
+  gen->listLink.at(3)->AddNodes(gen->listNode.at(0)->getNodeName(0));
+  gen->listLink.at(3)->AddNodes(gen->listNode.at(0)->getNodeName(4));
   
   gen->AddLink("Hub");
-  gen->listLink.at(4)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
-  gen->listLink.at(4)->AddNodes(gen->listEquipement.at(0)->getNodeName(5));
+  gen->listLink.at(4)->AddNodes(gen->listNode.at(0)->getNodeName(0));
+  gen->listLink.at(4)->AddNodes(gen->listNode.at(0)->getNodeName(5));
   
   gen->AddLink("Hub");
-  gen->listLink.at(5)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
-  gen->listLink.at(5)->AddNodes(gen->listEquipement.at(0)->getNodeName(6));
+  gen->listLink.at(5)->AddNodes(gen->listNode.at(0)->getNodeName(0));
+  gen->listLink.at(5)->AddNodes(gen->listNode.at(0)->getNodeName(6));
   
   gen->AddLink("Hub");
-  gen->listLink.at(6)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
-  gen->listLink.at(6)->AddNodes(gen->listEquipement.at(0)->getNodeName(7));
+  gen->listLink.at(6)->AddNodes(gen->listNode.at(0)->getNodeName(0));
+  gen->listLink.at(6)->AddNodes(gen->listNode.at(0)->getNodeName(7));
   
   gen->AddLink("Hub");
-  gen->listLink.at(7)->AddNodes(gen->listEquipement.at(0)->getNodeName(0));
-  gen->listLink.at(7)->AddNodes(gen->listEquipement.at(0)->getNodeName(8));
+  gen->listLink.at(7)->AddNodes(gen->listNode.at(0)->getNodeName(0));
+  gen->listLink.at(7)->AddNodes(gen->listNode.at(0)->getNodeName(8));
   
   
   /* Add an application */
-  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(1), gen->listEquipement.at(0)->getNodeName(5), 0, 5);// 0 start time - 5 end time
+  gen->AddApplication("Ping", gen->listNode.at(0)->getNodeName(1), gen->listNode.at(0)->getNodeName(5), 0, 5);// 0 start time - 5 end time
 
 
   gen->GenerateCode();

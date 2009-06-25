@@ -110,41 +110,41 @@ void Generator::AddConfig(const std::string &config)
 //
 void Generator::AddNode(const std::string &type) 
 {
+  size_t number = 1;
   Node *equi = NULL;
   
   // call to the right type constructor. 
   if(type == "Pc")
   {
-  	equi = new Node(this->indiceNodePc, std::string("node_"));
+  	equi = new Node(this->indiceNodePc, std::string("node_"), number);
   	this->indiceNodePc += 1;
   } 
   else if(type == "Router")
   {
-  	equi = new Node(this->indiceNodeRouter, std::string("router_"));
+  	equi = new Node(this->indiceNodeRouter, std::string("router_"), number);
   	this->indiceNodeRouter += 1;
   } 
   else if(type == "Ap")
   {
-  	equi = new Node(this->indiceNodeAp, std::string("ap_"));
+  	equi = new Node(this->indiceNodeAp, std::string("ap_"), number);
   	this->indiceNodeAp += 1;
   } 
   else if(type == "Station")
   {
-    equi = new Node(this->indiceNodeStation, std::string("station_"));
+    equi = new Node(this->indiceNodeStation, std::string("station_"), number);
   	this->indiceNodeStation += 1;
   } 
   else if(type == "Bridge")
   {
-    equi = new Node(this->indiceNodeBridge, std::string("bridge_"));
+    equi = new Node(this->indiceNodeBridge, std::string("bridge_"), number);
   	this->indiceNodeBridge += 1;
   } 
   else if(type == "Tap")
   {
-  	equi = new Node(this->indiceNodeTap, std::string("tap_"));
+  	equi = new Node(this->indiceNodeTap, std::string("tap_"), number);
   	this->indiceNodeTap += 1;
   } 
  
-  
   if(equi)//!= NULL
   {
     this->listNode.push_back(equi);
@@ -155,25 +155,70 @@ void Generator::AddNode(const std::string &type)
   }
 }
 
-void Generator::AddNode(const size_t &machinesNumber) 
+void Generator::AddNode(const std::string &type, const size_t &number) 
 {
-  Node *equi = new Node(this->indiceNodePc, std::string("nodesGroup_"), machinesNumber);
-  this->indiceNodePc += 1;
-  this->listNode.push_back(equi);
-}
-
-void Generator::RemoveNode(const size_t &number)
-{
-  if(number < this->listNode.size())
+  Node *equi = NULL;
+  
+  // call to the right type constructor. 
+  if(type == "Pc")
   {
-    delete this->listNode[number];
-    this->listNode.erase(this->listNode.begin() + number);
+  	equi = new Node(this->indiceNodePc, std::string("node_"), number);
+  	this->indiceNodePc += 1;
+  } 
+  else if(type == "Router")
+  {
+  	equi = new Node(this->indiceNodeRouter, std::string("router_"), number);
+  	this->indiceNodeRouter += 1;
+  } 
+  else if(type == "Ap")
+  {
+  	equi = new Node(this->indiceNodeAp, std::string("ap_"), number);
+  	this->indiceNodeAp += 1;
+  } 
+  else if(type == "Station")
+  {
+    equi = new Node(this->indiceNodeStation, std::string("station_"), number);
+  	this->indiceNodeStation += 1;
+  } 
+  else if(type == "Bridge")
+  {
+    equi = new Node(this->indiceNodeBridge, std::string("bridge_"), number);
+  	this->indiceNodeBridge += 1;
+  } 
+  else if(type == "Tap")
+  {
+  	equi = new Node(this->indiceNodeTap, std::string("tap_"), number);
+  	this->indiceNodeTap += 1;
+  } 
+ 
+  if(equi)//!= NULL
+  {
+    this->listNode.push_back(equi);
   }
   else
   {
-    throw std::logic_error("Remove failed ... Number is out of range.\n");
+    throw std::logic_error("Wrong type or forget some param.\n");
   }
-  
+}
+
+
+void Generator::RemoveNode(const std::string &name)
+{
+  size_t startNumber = this->listNode.size();
+  for(int i = 0; (size_t) i < this->listNode.size(); i++)
+  {
+    if(this->listNode.at(i)->getNodeName() == name)
+    {
+      delete this->listNode[i];
+      this->listNode.erase(this->listNode.begin() + i);
+      break;
+    }
+  }
+  size_t endNumber = this->listNode.size();
+  if(startNumber == endNumber)
+  {
+    throw std::logic_error("Remove failed ! Node not found ...\n");
+  }
 }
 //
 // Part of Application.
@@ -216,16 +261,22 @@ void Generator::AddApplication(const std::string &type, const std::string &sende
   } 
 }
 
-void Generator::RemoveApplication(const size_t &number)
+void Generator::RemoveApplication(const std::string &name)
 {
-  if(number < this->listApplication.size())
+  size_t startNumber = this->listApplication.size();
+  for(int i = 0; (size_t) i < this->listApplication.size(); i++)
   {
-    delete this->listApplication[number];
-    this->listApplication.erase(this->listApplication.begin() + number);
+    if(this->listApplication.at(i)->getAppName() == name)
+    {
+      delete this->listApplication[i];
+      this->listApplication.erase(this->listApplication.begin() + i);
+      break;
+    }
   }
-  else
+  size_t endNumber = this->listApplication.size();
+  if(startNumber == endNumber)
   {
-    throw std::logic_error("Remove failed ... Number is out of range.\n");
+    throw std::logic_error("Remove failed ! Application not found ...\n");
   }
 }
 
@@ -301,16 +352,22 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode, co
   }
 }
 
-void Generator::RemoveLink(const size_t &number)
+void Generator::RemoveLink(const std::string &name)
 {
-  if(number < this->listLink.size())
+  size_t startNumber = this->listLink.size();
+  for(int i = 0; (size_t) i < this->listLink.size(); i++)
   {
-    delete this->listLink[number];
-    this->listLink.erase(this->listLink.begin() + number);
+    if(this->listLink.at(i)->getLinkName() == name)
+    {
+      delete this->listLink[i];
+      this->listLink.erase(this->listLink.begin() + i);
+      break;
+    }
   }
-  else
+  size_t endNumber = this->listLink.size();
+  if(startNumber == endNumber)
   {
-    throw std::logic_error("Remove failed ... Number is out of range.\n");
+    throw std::logic_error("Remove failed ! Link not found ...\n");
   }
 }
 
@@ -608,7 +665,7 @@ std::vector<std::string> Generator::GenerateConfig()
 {
   for(size_t i = 0; i < (size_t) this->listNode.size(); i++)
   {
-    if( ((this->listNode.at(i))->getNodeName()).find("tap_") == 0 )
+    if( ((this->listNode.at(i))->getNodeName()).find("tap_") == 0)
     {
       this->AddConfig("GlobalValue::Bind (\"SimulatorImplementationType\", StringValue (\"ns3::RealtimeSimulatorImpl\"));");
       this->AddConfig("Config::SetDefault (\"ns3::Ipv4L3Protocol::CalcChecksum\", BooleanValue (true));");

@@ -68,12 +68,6 @@ private:
   size_t machinesNumber;
   
 public:
-  /**
-   * \brief Constructor which set default value.
-   * \param _indice
-   * \param _type
-   */
-  Node(const size_t &_indice, const std::string &_type);
   
   /**
    * \brief Constructor which set default value.
@@ -178,8 +172,14 @@ public:
    * \return number
    */
   size_t getMachinesNumber();
+
+  /**
+   * \brief procedure to set the machines number.
+   * \param _machinesNumber
+   */
+  void Node::setMachinesNumber(const size_t &_machinesNumber);
   
 };
 
-#endif /* EQUIPEMENT_H */
+#endif /* NODE_H */
 

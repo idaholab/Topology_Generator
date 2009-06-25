@@ -38,21 +38,21 @@ int main(int argc, char *argv[])
   
   Generator *gen = new Generator(std::string("example-wifi-ap"));
   
-  /* Add Equipement : */
-  gen->AddEquipement("Ap");//0
-  gen->AddEquipement("Station");//1
-  gen->AddEquipement("Station");//2
-  gen->AddEquipement("Station");//3
+  /* Add Node : */
+  gen->AddNode("Ap");//0
+  gen->AddNode("Station");//1
+  gen->AddNode("Station");//2
+  gen->AddNode("Station");//3
   
   /* Add the bridge. */
-  gen->AddLink("Wifi", gen->listEquipement.at(0)->getNodeName(), false);//false = constant mobility
+  gen->AddLink("Ap", gen->listNode.at(0)->getNodeName(), false);//false = constant mobility
                                                                         //true = random walk
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(1)->getNodeName());
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(2)->getNodeName());
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(3)->getNodeName());
+  gen->listLink.at(0)->AddNodes(gen->listNode.at(1)->getNodeName());
+  gen->listLink.at(0)->AddNodes(gen->listNode.at(2)->getNodeName());
+  gen->listLink.at(0)->AddNodes(gen->listNode.at(3)->getNodeName());
   
   /* Add an application */
-  gen->AddApplication("Ping", gen->listEquipement.at(1)->getNodeName(), gen->listEquipement.at(2)->getNodeName(), 0, 5);// 0 start time - 5 end time
+  gen->AddApplication("Ping", gen->listNode.at(1)->getNodeName(), gen->listNode.at(2)->getNodeName(), 0, 5);// 0 start time - 5 end time
 
   gen->GenerateCode();
   

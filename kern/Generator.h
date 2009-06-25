@@ -125,22 +125,20 @@ public:
    * \param type the type of the Node. (Pc, Hub, Switch,...)
    */
   void AddNode(const std::string &type);
-  
+
   /**
-   * \brief Procedure used to add an Node.
-   * 
-   * This procedure is used to add an Node. It add the Node to the
-   * vector listNode and increment the number of Node.
-   * 
-   * \param machinesNumber the number of machines to create.
+   * \brief see AddNode(*)
+   * \param type
+   * \param number the nuber which will be added.
    */
-  void AddNode(const size_t &machinesNumber);
-  
+  void AddNode(const std::string &type, const size_t &number);
+
+ 
   /**
    * \brief Procedure used to remove an Node elem.
-   * \param number the Node number to remove
+   * \param name the Node name to remove
    */
-  void RemoveNode(const size_t &number);
+  void RemoveNode(const std::string &name);
   
   
   //
@@ -203,9 +201,9 @@ public:
 
   /**
    * \brief Procedure used to remove an application elem.
-   * \param number the application number to remove
+   * \param name the application name to remove
    */
-  void RemoveApplication(const size_t &number);
+  void RemoveApplication(const std::string &name);
   
   //
   // Part of Link.
@@ -289,9 +287,9 @@ public:
 
   /**
    * \brief Procedure used to remove an link elem.
-   * \param number the link number to remove
+   * \param name the link name to remove
    */
-  void RemoveLink(const size_t &number);
+  void RemoveLink(const std::string &name);
  
   //
   // Part around the code Generation.

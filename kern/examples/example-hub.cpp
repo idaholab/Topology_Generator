@@ -1,4 +1,4 @@
-/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
+// /* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 Pierre Weiss <3weissp@gmail.com>
  *
@@ -37,17 +37,17 @@ int main(int argc, char *argv[])
   Generator *gen = new Generator(std::string("example-hub"));
   
   /* Add the Pc equipement. */
-  gen->AddEquipement("Pc");
-  gen->AddEquipement("Pc"); 
+  gen->AddNode("Pc");
+  gen->AddNode("Pc"); 
 
   /* Add the Link (csma) */
   gen->AddLink("Hub"); 
   /* Add equipement to te link */
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(0)->getNodeName());
-  gen->listLink.at(0)->AddNodes(gen->listEquipement.at(1)->getNodeName());
+  gen->listLink.at(0)->AddNodes(gen->listNode.at(0)->getNodeName());
+  gen->listLink.at(0)->AddNodes(gen->listNode.at(1)->getNodeName());
 
   /* Add Ping application from pc to pc. */
-  gen->AddApplication("Ping", gen->listEquipement.at(0)->getNodeName(), gen->listEquipement.at(1)->getNodeName(), 0, 5);// 0 start time - 5 end time
+  gen->AddApplication("Ping", gen->listNode.at(0)->getNodeName(), gen->listNode.at(1)->getNodeName(), 0, 5);// 0 start time - 5 end time
 
   gen->GenerateCode();
   
