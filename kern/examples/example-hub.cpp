@@ -43,8 +43,8 @@ int main(int argc, char *argv[])
   /* Add the Link (csma) */
   gen->AddLink("Hub"); 
   /* Add equipement to te link */
-  gen->listLink.at(0)->AddNodes(gen->listNode.at(0)->getNodeName());
-  gen->listLink.at(0)->AddNodes(gen->listNode.at(1)->getNodeName());
+  gen->listLink.at(0)->Install(gen->listNode.at(0)->getNodeName());
+  gen->listLink.at(0)->Install(gen->listNode.at(1)->getNodeName());
 
   /* Add Ping application from pc to pc. */
   gen->AddApplication("Ping", gen->listNode.at(0)->getNodeName(), gen->listNode.at(1)->getNodeName(), 0, 5);// 0 start time - 5 end time

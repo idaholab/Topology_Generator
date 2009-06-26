@@ -107,6 +107,11 @@ private:
    */
   size_t indiceNodeTap;
   
+   /**
+   * \brief number attribute of Emu Node created.
+   */
+  size_t indiceNodeEmu;
+
 public: 
   /**
    * \brief list of Node created instace.

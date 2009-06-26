@@ -88,7 +88,7 @@ void Link::setNdcName(const std::string &_ndcName)
   this->ndcName = _ndcName;
 }
 
-void Link::AddNodes(const std::string &_node)
+void Link::Install(const std::string &_node)
 {
   this->nodes.push_back(_node);
   std::vector<std::string> trans;

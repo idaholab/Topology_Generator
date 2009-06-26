@@ -189,7 +189,7 @@ public:
    * \brief Procedure to add attached to the link node.
    * \param _node the new node to add.
    */
-  void AddNodes(const std::string &_node);
+  void Install(const std::string &_node);
 
   /**
    * \brief Function to convert size_t to string.

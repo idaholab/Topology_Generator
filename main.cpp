@@ -31,12 +31,77 @@ using namespace std;
 #include "kern/Generator.h"
 //#include "gui/MainWindow.h"
 
+void printState(Generator *gen)
+{
+  std::cout << "Nodes :" << std::endl;
+  for(int i = 0; (size_t) i < gen->listNode.size(); i++)
+  {
+    std::cout << "- " << gen->listNode.at(i)->getNodeName() << std::endl;
+  }
+
+  std::cout << "Link :" << std::endl;
+  for(int i = 0; (size_t) i < gen->listLink.size(); i++)
+  {
+    std::cout << "- " << gen->listLink.at(i)->getLinkName() << std::endl;
+    for(int j = 0; (size_t) j < gen->listLink.at(i)->getNodes().size(); j++)
+    {
+      std::cout << "  -- " << gen->listLink.at(i)->getNodes().at(j) << std::endl;
+    }
+  }
+}
 
 int main(int argc, char *argv[])
 {
+  Generator *gen = new Generator("Simulation name ...");
+  
+  gen->AddNode(std::string("Pc"), 2);
+  gen->AddNode(std::string("Pc"), 2);
 
-  
-  
+  gen->AddLink("Hub");
+  gen->listLink.at(0)->Install(gen->listNode.at(0)->getNodeName());
+  gen->listLink.at(0)->Install(gen->listNode.at(1)->getNodeName());
+
+  gen->AddApplication(std::string("Ping"), gen->listNode.at(0)->getNodeName(0), gen->listNode.at(1)->getNodeName(1), 0, 2);
+
+  /*gen->AddNode(std::string("Router"));//0
+  gen->AddNode(std::string("Pc"), 10);//1
+  gen->AddNode(std::string("Ap"));//2
+  gen->AddNode(std::string("Station"));//3
+  gen->AddNode(std::string("Bridge"));//4
+  gen->AddNode(std::string("Tap"));//5
+  gen->AddNode(std::string("Emu"));//6
+
+  gen->AddLink(std::string("Hub"));//0
+  gen->listLink.at(0)->Install(gen->listNode.at(0)->getNodeName());
+  gen->listLink.at(0)->Install(gen->listNode.at(1)->getNodeName(0));
+
+  gen->AddLink(std::string("PointToPoint"));//1
+  gen->listLink.at(1)->Install(gen->listNode.at(0)->getNodeName());
+  gen->listLink.at(1)->Install(gen->listNode.at(1)->getNodeName(1));
+
+  gen->AddLink(std::string("Bridge"), gen->listNode.at(4)->getNodeName());//2
+  gen->listLink.at(2)->Install(gen->listNode.at(0)->getNodeName());
+  gen->listLink.at(2)->Install(gen->listNode.at(1)->getNodeName(2));
+
+  bool mobility = true;
+  gen->AddLink(std::string("Ap"), gen->listNode.at(2)->getNodeName(), mobility);//3
+  gen->listLink.at(3)->Install(gen->listNode.at(0)->getNodeName());
+  gen->listLink.at(3)->Install(gen->listNode.at(3)->getNodeName());
+
+  //gen->AddLink(std::string("Emu"), gen->listNode.at(6)->getNodeName(), std::string("wlan0"));//4
+  //gen->AddLink(std::string("Tap"), gen->listNode.at(5)->getNodeName(), std::string("tap0"));//5
+
+  gen->AddApplication(std::string("Ping"), gen->listNode.at(1)->getNodeName(0), gen->listNode.at(1)->getNodeName(1), 0, 5);
+  gen->AddApplication(std::string("Ping"), gen->listNode.at(1)->getNodeName(0), gen->listNode.at(1)->getNodeName(2), 0, 5);
+  gen->AddApplication(std::string("Ping"), gen->listNode.at(1)->getNodeName(0), gen->listNode.at(1)->getNodeName(3), 0, 5);
+  gen->AddApplication(std::string("Ping"), gen->listNode.at(1)->getNodeName(0), gen->listNode.at(3)->getNodeName(), 0, 5);
+
+  */
+  gen->GenerateCode();
+ 
+  //printState(gen);
+
+  delete gen;
   /*
   QApplication app(argc, argv);
  

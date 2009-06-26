@@ -47,9 +47,9 @@ int main(int argc, char *argv[])
   /* Add the bridge. */
   gen->AddLink("Ap", gen->listNode.at(0)->getNodeName(), false);//false = constant mobility
                                                                         //true = random walk
-  gen->listLink.at(0)->AddNodes(gen->listNode.at(1)->getNodeName());
-  gen->listLink.at(0)->AddNodes(gen->listNode.at(2)->getNodeName());
-  gen->listLink.at(0)->AddNodes(gen->listNode.at(3)->getNodeName());
+  gen->listLink.at(0)->Install(gen->listNode.at(1)->getNodeName());
+  gen->listLink.at(0)->Install(gen->listNode.at(2)->getNodeName());
+  gen->listLink.at(0)->Install(gen->listNode.at(3)->getNodeName());
   
   /* Add an application */
   gen->AddApplication("Ping", gen->listNode.at(1)->getNodeName(), gen->listNode.at(2)->getNodeName(), 0, 5);// 0 start time - 5 end time

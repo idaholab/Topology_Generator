@@ -50,18 +50,18 @@ int main(int argc, char *argv[])
   
   /* Add the bridge. */
   gen->AddLink("Hub");
-  gen->listLink.at(0)->AddNodes(gen->listNode.at(0)->getNodeName());
-  gen->listLink.at(0)->AddNodes(gen->listNode.at(1)->getNodeName());
-  gen->listLink.at(0)->AddNodes(gen->listNode.at(2)->getNodeName());
+  gen->listLink.at(0)->Install(gen->listNode.at(0)->getNodeName());
+  gen->listLink.at(0)->Install(gen->listNode.at(1)->getNodeName());
+  gen->listLink.at(0)->Install(gen->listNode.at(2)->getNodeName());
   
   gen->AddLink("PointToPoint");
-  gen->listLink.at(1)->AddNodes(gen->listNode.at(2)->getNodeName());
-  gen->listLink.at(1)->AddNodes(gen->listNode.at(3)->getNodeName());
+  gen->listLink.at(1)->Install(gen->listNode.at(2)->getNodeName());
+  gen->listLink.at(1)->Install(gen->listNode.at(3)->getNodeName());
   
   gen->AddLink("Hub");
-  gen->listLink.at(2)->AddNodes(gen->listNode.at(3)->getNodeName());
-  gen->listLink.at(2)->AddNodes(gen->listNode.at(4)->getNodeName());
-  gen->listLink.at(2)->AddNodes(gen->listNode.at(5)->getNodeName());
+  gen->listLink.at(2)->Install(gen->listNode.at(3)->getNodeName());
+  gen->listLink.at(2)->Install(gen->listNode.at(4)->getNodeName());
+  gen->listLink.at(2)->Install(gen->listNode.at(5)->getNodeName());
   
   /* Add an application */
   gen->AddApplication("Ping", gen->listNode.at(0)->getNodeName(), gen->listNode.at(5)->getNodeName(), 0, 5);// 0 start time - 5 end time

@@ -27,6 +27,7 @@
 #include <iostream>
 #include <stdlib.h> 
 #include <stdexcept>
+#include <boost/algorithm/string.hpp>
 
 #include "Generator.h"
 #include "Node.h"
@@ -52,6 +53,7 @@ Generator::Generator(const std::string &_simulationName)
   this->indiceNodeStation = 0;
   this->indiceNodeBridge = 0;
   this->indiceNodeTap = 0;
+  this->indiceNodeEmu = 0;
 
   /* Link */
   this->indiceLinkAp = 0;
@@ -116,7 +118,7 @@ void Generator::AddNode(const std::string &type)
   // call to the right type constructor. 
   if(type == "Pc")
   {
-  	equi = new Node(this->indiceNodePc, std::string("node_"), number);
+  	equi = new Node(this->indiceNodePc, std::string("term_"), number);
   	this->indiceNodePc += 1;
   } 
   else if(type == "Router")
@@ -144,6 +146,11 @@ void Generator::AddNode(const std::string &type)
   	equi = new Node(this->indiceNodeTap, std::string("tap_"), number);
   	this->indiceNodeTap += 1;
   } 
+  else if(type == "Emu")
+  {
+    equi = new Node(this->indiceNodeEmu, std::string("emu_"), number);
+    this->indiceNodeEmu += 1;
+  }
  
   if(equi)//!= NULL
   {
@@ -151,7 +158,7 @@ void Generator::AddNode(const std::string &type)
   }
   else
   {
-    throw std::logic_error("Wrong type or forget some param.\n");
+    throw std::logic_error("Add Node failed ! ("+type+") unknow. .\n");
   }
 }
 
@@ -162,34 +169,39 @@ void Generator::AddNode(const std::string &type, const size_t &number)
   // call to the right type constructor. 
   if(type == "Pc")
   {
-  	equi = new Node(this->indiceNodePc, std::string("node_"), number);
-  	this->indiceNodePc += 1;
+    equi = new Node(this->indiceNodePc, std::string("term_"), number);
+    this->indiceNodePc += 1;
   } 
   else if(type == "Router")
   {
-  	equi = new Node(this->indiceNodeRouter, std::string("router_"), number);
-  	this->indiceNodeRouter += 1;
+    equi = new Node(this->indiceNodeRouter, std::string("router_"), number);
+    this->indiceNodeRouter += 1;
   } 
   else if(type == "Ap")
   {
-  	equi = new Node(this->indiceNodeAp, std::string("ap_"), number);
-  	this->indiceNodeAp += 1;
+    equi = new Node(this->indiceNodeAp, std::string("ap_"), number);
+    this->indiceNodeAp += 1;
   } 
   else if(type == "Station")
   {
     equi = new Node(this->indiceNodeStation, std::string("station_"), number);
-  	this->indiceNodeStation += 1;
+    this->indiceNodeStation += 1;
   } 
   else if(type == "Bridge")
   {
     equi = new Node(this->indiceNodeBridge, std::string("bridge_"), number);
-  	this->indiceNodeBridge += 1;
+    this->indiceNodeBridge += 1;
   } 
   else if(type == "Tap")
   {
-  	equi = new Node(this->indiceNodeTap, std::string("tap_"), number);
-  	this->indiceNodeTap += 1;
-  } 
+    equi = new Node(this->indiceNodeTap, std::string("tap_"), number);
+    this->indiceNodeTap += 1;
+  }
+  else if(type == "Emu")
+  {
+    equi = new Node(this->indiceNodeEmu, std::string("emu_"), number);
+    this->indiceNodeEmu += 1;
+  }
  
   if(equi)//!= NULL
   {
@@ -197,7 +209,7 @@ void Generator::AddNode(const std::string &type, const size_t &number)
   }
   else
   {
-    throw std::logic_error("Wrong type or forget some param.\n");
+    throw std::logic_error("Add Node failed ! ("+type+") unknow. .\n");
   }
 }
 
@@ -217,7 +229,7 @@ void Generator::RemoveNode(const std::string &name)
   size_t endNumber = this->listNode.size();
   if(startNumber == endNumber)
   {
-    throw std::logic_error("Remove failed ! Node not found ...\n");
+    throw std::logic_error("Node remove failed ! ("+name+") not found ...\n");
   }
 }
 //
@@ -241,7 +253,7 @@ void Generator::AddApplication(const std::string &type, const std::string &sende
   }
   else
   {
-    throw std::logic_error("Wrong type or forget some param.\n");
+    throw std::logic_error("Application add failed.\n");
   }
   
 }
@@ -257,7 +269,7 @@ void Generator::AddApplication(const std::string &type, const std::string &sende
   }
   else
   {
-    throw std::logic_error("Wrong type or forget some param.\n");
+    throw std::logic_error("Application add failed.\n");
   } 
 }
 
@@ -276,7 +288,7 @@ void Generator::RemoveApplication(const std::string &name)
   size_t endNumber = this->listApplication.size();
   if(startNumber == endNumber)
   {
-    throw std::logic_error("Remove failed ! Application not found ...\n");
+    throw std::logic_error("Application remove failed ! ("+name+") not found ...\n");
   }
 }
 
@@ -300,7 +312,7 @@ void Generator::AddLink(const std::string &type)
   } 
   else
   {
-    throw std::logic_error("Wrong type or forget some param.\n");
+    throw std::logic_error("Add Link failed. ("+type+") not found.\n");
   }
 }
 
@@ -314,7 +326,7 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode)
   } 
   else
   {
-    throw std::logic_error("Wrong type or forget some param.\n");
+    throw std::logic_error("Add Link failed. ("+type+") not found.\n");
   }
 }
 
@@ -328,7 +340,7 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode, co
   } 
   else
   {
-    throw std::logic_error("Wrong type or forget some param.\n");
+    throw std::logic_error("Add Link failed. ("+type+") not found.\n");
   }
 }
 
@@ -348,7 +360,7 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode, co
   } 
   else
   {
-    throw std::logic_error("Wrong type or forget some param.\n");
+    throw std::logic_error("Add Link failed. ("+type+") not found.\n");
   }
 }
 
@@ -367,7 +379,7 @@ void Generator::RemoveLink(const std::string &name)
   size_t endNumber = this->listLink.size();
   if(startNumber == endNumber)
   {
-    throw std::logic_error("Remove failed ! Link not found ...\n");
+    throw std::logic_error("Link remove failed ! ("+name+") not found ...\n");
   }
 }
 
@@ -537,10 +549,10 @@ void Generator::GenerateCode()
   
   
   std::cout << "  /* Pcap output.*/" << std::endl;
-  std::cout << "  CsmaHelper::EnablePcapAll (\""<< this->simulationName <<"\", false);" << std::endl;
-  std::cout << "  YansWifiPhyHelper::EnablePcapAll (\""<< this->simulationName <<"\");" << std::endl;
-  std::cout << "  PointToPointHelper::EnablePcapAll (\""<< this->simulationName <<"\");" << std::endl;
-  std::cout << "  EmuHelper::EnablePcapAll (\""<< this->simulationName <<"\", false);" << std::endl;
+  //std::cout << "  CsmaHelper::EnablePcapAll (\""<< this->simulationName <<"\", false);" << std::endl;
+  //std::cout << "  YansWifiPhyHelper::EnablePcapAll (\""<< this->simulationName <<"\");" << std::endl;
+  //std::cout << "  PointToPointHelper::EnablePcapAll (\""<< this->simulationName <<"\");" << std::endl;
+  //std::cout << "  EmuHelper::EnablePcapAll (\""<< this->simulationName <<"\", false);" << std::endl;
   
   /* Set stop time. */
   size_t stopTime = 0;/* default stop time. */
@@ -668,10 +680,7 @@ std::vector<std::string> Generator::GenerateConfig()
     if( ((this->listNode.at(i))->getNodeName()).find("tap_") == 0)
     {
       this->AddConfig("GlobalValue::Bind (\"SimulatorImplementationType\", StringValue (\"ns3::RealtimeSimulatorImpl\"));");
-      this->AddConfig("Config::SetDefault (\"ns3::Ipv4L3Protocol::CalcChecksum\", BooleanValue (true));");
-      this->AddConfig("Config::SetDefault (\"ns3::Icmpv4L4Protocol::CalcChecksum\", BooleanValue (true));");
-      this->AddConfig("Config::SetDefault (\"ns3::TcpL4Protocol::CalcChecksum\", BooleanValue (true));");
-      this->AddConfig("Config::SetDefault (\"ns3::UdpL4Protocol::CalcChecksum\", BooleanValue (true));");
+      this->AddConfig("GlobalValue::Bind (\"ChecksumEnabled\", BooleanValue (true));");
     }
   }
 
@@ -680,19 +689,10 @@ std::vector<std::string> Generator::GenerateConfig()
     if( ((this->listLink.at(i))->getLinkName()).find("emu_") == 0 )
     {
       this->AddConfig("GlobalValue::Bind (\"SimulatorImplementationType\", StringValue (\"ns3::RealtimeSimulatorImpl\"));");
-      this->AddConfig("Config::SetDefault (\"ns3::Ipv4L3Protocol::CalcChecksum\", BooleanValue (true));");
-      this->AddConfig("Config::SetDefault (\"ns3::Icmpv4L4Protocol::CalcChecksum\", BooleanValue (true));");
-      this->AddConfig("Config::SetDefault (\"ns3::TcpL4Protocol::CalcChecksum\", BooleanValue (true));");
-      this->AddConfig("Config::SetDefault (\"ns3::UdpL4Protocol::CalcChecksum\", BooleanValue (true));");
+      this->AddConfig("GlobalValue::Bind (\"ChecksumEnabled\", BooleanValue (true));");
     }
   } 
   
-  //~ allConf.push_back("GlobalValue::Bind (\"SimulatorImplementationType\", StringValue (\"ns3::RealtimeSimulatorImpl\"));");
-  //~ allConf.push_back("Config::SetDefault (\"ns3::Ipv4L3Protocol::CalcChecksum\", BooleanValue (true));");
-  //~ allConf.push_back("Config::SetDefault (\"ns3::Icmpv4L4Protocol::CalcChecksum\", BooleanValue (true)); ");
-  //~ allConf.push_back("Config::SetDefault (\"ns3::TcpL4Protocol::CalcChecksum\", BooleanValue (true));");
-  //~ allConf.push_back("Config::SetDefault (\"ns3::UdpL4Protocol::CalcChecksum\", BooleanValue (true));"); 
-    
   std::vector<std::string> allConf;
   for(size_t i = 0; i < (size_t) this->listConfiguration.size(); i++)
   {
@@ -913,47 +913,84 @@ std::vector<std::string> Generator::GenerateApplication()
   for(size_t i = 0; i < (size_t) this->listApplication.size(); i++)
   {
     /* get NetDeviceContainer and number from the receiver. */
-    
     std::string receiverName = this->listApplication.at(i)->getReceiverNode();
-    for(size_t j = 0; j < (size_t) this->listLink.size(); j++)
+    nodeNumber = 0;
+    ndcName = "";
+
+    /* if the receiver is in NodeContainer */
+    if(receiverName.find("NodeContainer(") == 0)
     {
-      std::vector<std::string> nodes = (this->listLink.at(j))->getNodes();
-      for(size_t k = 0; k < (size_t) nodes.size(); k++)
+      //NodeContainer(term_0.Get(1))
+      std::vector<std::string> tab_name;
+      boost::split(tab_name, receiverName, boost::is_any_of("("));
+      //NodeContainer and term_0.Get and 1))
+      std::string str_get = tab_name.at(1);//name_[0-9]+.Get(...
+      std::vector<std::string> tab_name2;
+      boost::split(tab_name2, str_get, boost::is_any_of("."));
+      // term_0 and Get
+      receiverName = tab_name2.at(0);
+      for(size_t x = 0;  x < this->listLink.size(); x++)
       {
-        if( nodes.at(k) == receiverName || nodes.at(k).find("nodesGroup_") == 0)
-        {
-          /* this means that the node is in this link.*/
-          ndcName = (this->listLink.at(j))->getNdcName();
-          if(nodes.at(k).find("nodesGroup_") == 0)
-          {
-            std::string nodeNumberToken("");
-            std::stringstream in(receiverName);
-            std::string token;
-            size_t ii = 0;
-            while ( std::getline( in, token, '(' ) )
-            {
-              if(ii == 2)
-              {
-                nodeNumberToken = token;
-              }
-              ii++;
-            }
-            std::stringstream in2(nodeNumberToken);
-            while ( std::getline( in2, token, ')' ) )
-            {
-              nodeNumber =  atoi(token.c_str());
-              break;
-            }
-          }
-          else
-          {
-            nodeNumber = k;
-          }
-          break; 
-        }
+	nodeNumber = 0;
+	for(size_t y = 0; y < this->listLink.at(x)->getNodes().size(); y++)
+	{
+	  if(this->listLink.at(x)->getNodes().at(y) == receiverName)
+	  {
+	    ndcName = (this->listLink.at(x))->getNdcName();
+	    break;
+	  }
+	  else
+	  {
+	    for(size_t j = 0; j < (size_t) this->listNode.size(); j++)
+	    {
+	      if(this->listNode.at(j)->getNodeName() == this->listLink.at(x)->getNodes().at(y))
+	      {
+		nodeNumber += this->listNode.at(j)->getMachinesNumber();
+		break;
+	      }
+	    }
+	  }
+	  if(ndcName != "")
+	  {
+	    break;
+	  }
+	}
+      }
+      std::vector<std::string> str_nbr;
+      boost::split(str_nbr, tab_name.at(2), boost::is_any_of(")"));
+      nodeNumber += atoi(str_nbr.at(0).c_str());
+    }
+    else
+    {
+      for(size_t j = 0; j < (size_t) this->listLink.size(); j++)
+      {
+	nodeNumber = 0;
+	std::vector<std::string> nodes = (this->listLink.at(j))->getNodes();
+	for(size_t k = 0; k < (size_t) nodes.size(); k++)
+	{
+	  if( nodes.at(k) == receiverName)
+	  {
+	    ndcName = (this->listLink.at(j))->getNdcName();
+	    break;
+	  }
+	  else
+	  {
+	    for(size_t l = 0; l < (size_t) this->listNode.size(); l++)
+	    {
+	      if(this->listNode.at(l)->getNodeName() == nodes.at(k))
+	      {
+		nodeNumber += this->listNode.at(l)->getMachinesNumber();
+		break;
+	      }
+	    }
+	  }
+	}
+	if(ndcName != "")
+	{
+	  break;
+	}
       }
     }
-    
     /* get the application code with param. */
     std::vector<std::string> trans = (this->listApplication.at(i)->GenerateApplication(ndcName, nodeNumber));
     for(size_t j = 0; j < (size_t) trans.size(); j++)

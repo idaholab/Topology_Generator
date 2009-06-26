@@ -54,16 +54,16 @@ int main(int argc, char *argv[])
     
   /* Add the bridge. */
   gen->AddLink("Bridge", gen->listNode.at(2)->getNodeName());//link 0
-  gen->listLink.at(0)->AddNodes(gen->listNode.at(0)->getNodeName());
-  gen->listLink.at(0)->AddNodes(gen->listNode.at(1)->getNodeName());
+  gen->listLink.at(0)->Install(gen->listNode.at(0)->getNodeName());
+  gen->listLink.at(0)->Install(gen->listNode.at(1)->getNodeName());
   
   gen->AddLink("Bridge", gen->listNode.at(4)->getNodeName());//link 1
-  gen->listLink.at(1)->AddNodes(gen->listNode.at(5)->getNodeName());
-  gen->listLink.at(1)->AddNodes(gen->listNode.at(6)->getNodeName());
+  gen->listLink.at(1)->Install(gen->listNode.at(5)->getNodeName());
+  gen->listLink.at(1)->Install(gen->listNode.at(6)->getNodeName());
   
   /* link switch to router. */
-  gen->listLink.at(0)->AddNodes(gen->listNode.at(3)->getNodeName());
-  gen->listLink.at(1)->AddNodes(gen->listNode.at(3)->getNodeName());
+  gen->listLink.at(0)->Install(gen->listNode.at(3)->getNodeName());
+  gen->listLink.at(1)->Install(gen->listNode.at(3)->getNodeName());
   
   
   /* Add an application */
