@@ -521,6 +521,15 @@ public :
    */
   static std::string toString(const size_t nbr);
 
+  /**
+   * \brief split function as boost::split(...)
+   * \param res the vector wich contain the splitted vector.
+   * \param str the string to split
+   * \param separator the split separator
+   * \return size_t the res vector size.
+   */
+  static size_t Split(std::vector<std::string> &res, std::string str, char separator);
+
 };
 
 #endif /* GENERATOR_H */

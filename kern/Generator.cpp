@@ -27,7 +27,6 @@
 #include <iostream>
 #include <stdlib.h> 
 #include <stdexcept>
-#include <boost/algorithm/string.hpp>
 
 #include "Generator.h"
 #include "Node.h"
@@ -922,11 +921,11 @@ std::vector<std::string> Generator::GenerateApplication()
     {
       //NodeContainer(term_0.Get(1))
       std::vector<std::string> tab_name;
-      boost::split(tab_name, receiverName, boost::is_any_of("("));
+      Generator::Split(tab_name, receiverName, '(');
       //NodeContainer and term_0.Get and 1))
       std::string str_get = tab_name.at(1);//name_[0-9]+.Get(...
       std::vector<std::string> tab_name2;
-      boost::split(tab_name2, str_get, boost::is_any_of("."));
+      Generator::Split(tab_name2, str_get, '.');
       // term_0 and Get
       receiverName = tab_name2.at(0);
       for(size_t x = 0;  x < this->listLink.size(); x++)
@@ -957,7 +956,7 @@ std::vector<std::string> Generator::GenerateApplication()
 	}
       }
       std::vector<std::string> str_nbr;
-      boost::split(str_nbr, tab_name.at(2), boost::is_any_of(")"));
+      Generator::Split(str_nbr, tab_name.at(2), ')');
       nodeNumber += atoi(str_nbr.at(0).c_str());
     }
     else
@@ -1090,4 +1089,23 @@ std::string Generator::toString(const size_t nbr)
   
   return out.str();
 }
+
+
+size_t Generator::Split(std::vector<std::string> &res, std::string str, char separator)
+{
+  res.clear();
+
+  std::string::size_type stTemp = str.find(separator);
+
+  while(stTemp != std::string::npos)
+  {
+    res.push_back(str.substr(0, stTemp));
+    str = str.substr(stTemp + 1);
+    stTemp = str.find(separator);
+  }
+
+  res.push_back(str);
+
+  return res.size();
+} 
 
