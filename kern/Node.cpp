@@ -60,12 +60,13 @@ std::vector<std::string> Node::GenerateNode()
 std::vector<std::string> Node::GenerateIpStack()
 {
   std::vector<std::string> stack;
-  stack.push_back("InternetStackHelper net_"+this->getNodeName()+";");
+  //stack.push_back("InternetStackHelper net_"+this->getNodeName()+";");
   if(this->getNsc() != "")
   {
-    stack.push_back("net_"+this->getNodeName()+".SetNscStack (nscStack);");
+    //stack.push_back("net_"+this->getNodeName()+".SetNscStack (nscStack);");
+    stack.push_back("internetStackH.SetNscStack (nscStack);");
   }
-  stack.push_back("net_"+this->getNodeName()+".Install ("+this->getNodeName()+");");
+  stack.push_back("internetStackH.Install ("+this->getNodeName()+");");
 
   return stack; 
 }

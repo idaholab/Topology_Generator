@@ -742,6 +742,7 @@ std::vector<std::string> Generator::GenerateIpStack()
   std::vector<std::string> allStack;
 
   /* construct node without bridge Node. */
+  allStack.push_back("InternetStackHelper internetStackH;");
   std::string nodeName = "";
   for(size_t i = 0; i < (size_t) this->listNode.size(); i++)
   {
