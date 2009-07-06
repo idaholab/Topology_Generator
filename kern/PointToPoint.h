@@ -71,6 +71,12 @@ private:
    * \return the net device container.
    */
   virtual std::vector<std::string> GenerateNetDevice();
+
+  /**
+   * \brief Function to generate the trace line.
+   * \return trace line.
+   */
+  virtual std::vector<std::string> GenerateTrace();
   
 };
 

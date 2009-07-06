@@ -68,4 +68,16 @@ std::vector<std::string> PointToPoint::GenerateNetDevice()
   return ndc;
 }
 
+std::vector<std::string> PointToPoint::GenerateTrace()
+{
+  std::vector<std::string> trace;
+
+  if(this->enableTrace)
+  {
+    trace.push_back("PointToPointHelper::EnablePcapAll (\""+this->getLinkName()+"\");");
+  }
+
+  return trace;
+}
+
 

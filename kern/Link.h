@@ -72,6 +72,16 @@ protected:
    * \brief attribute used to save the name of the node container group.
    */
   std::string allNodeContainer;
+
+  /**
+   * \brief attribute which represent enable/disable trafic
+   */
+  bool enableTrace;
+
+  /**
+   * \brief attribute which represent the promisciutrace
+   */
+  bool tracePromisc;
   
 public:
   /**
@@ -80,7 +90,7 @@ public:
    * \param _indice the number of the link.
    */
   Link(const size_t &_indice);
-  
+
   /**
    * \brief Destructor.
    */
@@ -122,7 +132,12 @@ public:
    * \return cmd line code.
    */
   virtual std::vector<std::string> GenerateCmdLine();
-  
+
+  /**
+   * \brief Function to generate the trace line.
+   * \return trace line.
+   */
+  virtual std::vector<std::string> GenerateTrace();
   
   /**
    * \brief Function to get the link number.
@@ -214,6 +229,24 @@ public:
    * \brief attribute which represent the node name which are connected to the link.
    */
   std::vector<std::string> nodes;
+
+  /**
+   * \brief see Ap class for more info.
+   * \param _mobility
+   */
+  virtual void setMobility(const bool &_mobility);
+
+  /**
+   * \brief Procedure to enable/disable tracing.
+   * \param _state
+   */
+  void setTrace(const bool &_state);
+
+  /**
+   * \brief Procedure to enable/disable tracing in promiscious state.
+   * \param _state
+   */
+  void setPromisc(const bool &_state);
   
 };
 

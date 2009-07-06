@@ -399,7 +399,12 @@ private:
    */
   std::vector<std::string> GenerateApplication();
 
-
+  /**
+   * \brief Function to generate the pcap trace application code.
+   * 
+   * \return generate trace
+   */
+  std::vector<std::string> GenerateTrace();
   
   //
   // XML generation operation part.

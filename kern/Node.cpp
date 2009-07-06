@@ -64,7 +64,7 @@ std::vector<std::string> Node::GenerateIpStack()
   if(this->getNsc() != "")
   {
     //stack.push_back("net_"+this->getNodeName()+".SetNscStack (nscStack);");
-    stack.push_back("internetStackH.SetNscStack (nscStack);");
+    stack.push_back("internetStackH.SetTcp (\"ns3::NscTcpL4Protocol\",\"Library\",StringValue(nscStack));");
   }
   stack.push_back("internetStackH.Install ("+this->getNodeName()+");");
 

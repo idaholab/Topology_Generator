@@ -32,6 +32,9 @@ Link::Link(const size_t &_indice)
   this->indice = _indice;
   this->dataRate = "100Mbps";
   this->linkDelay = "10";//ms
+
+  this->enableTrace = false;
+  this->tracePromisc = false;
 }
 
 Link::~Link()
@@ -147,6 +150,28 @@ std::vector<std::string> Link::GenerateCmdLine()
 {
   std::vector<std::string> res;
   return res;
+}
+
+std::vector<std::string> Link::GenerateTrace()
+{
+  std::vector<std::string> res;
+  return res;
+}
+
+void Link::setMobility(const bool &_mobility)
+{
+  bool avoidWarns;
+  avoidWarns = _mobility;
+}
+
+void Link::setTrace(const bool &_state)
+{
+  this->enableTrace = _state;
+}
+
+void Link::setPromisc(const bool &_state)
+{
+  this->tracePromisc = _state;
 }
   
   

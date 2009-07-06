@@ -39,6 +39,7 @@ Ap::Ap(const size_t &_indice, const std::string &_apNode) : Link(_indice)
 Ap::~Ap()
 {
 }
+
 std::string Ap::getApNode()
 {
   return this->apNode;
@@ -114,9 +115,18 @@ void Ap::setApName(const std::string &_apName)
   this->apName = _apName;
 }
 
-  
+std::vector<std::string> Ap::GenerateTrace()
+{
+  std::vector<std::string> trace;
 
-  
+  if(this->enableTrace)
+  {
+    //Pas encore testé cette fonction ... 
+    //trace.push_back("wifiPhy_"+this->getLinkName()+".EnablePcap (\"Ap-"+this->getLinkName()+"\", "++"->GetId () ,0););
+  }
+
+  return trace;
+}  
 
   
 

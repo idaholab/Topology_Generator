@@ -109,6 +109,12 @@ public:
    * \return the cmd line code.
    */
   std::vector<std::string> GenerateCmdLine();
+
+  /**
+   * \brief Function to generate the trace line.
+   * \return trace line.
+   */
+  virtual std::vector<std::string> GenerateTrace();
   
 };
 

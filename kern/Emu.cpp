@@ -87,11 +87,31 @@ std::vector<std::string> Emu::GenerateVars()
   vars.push_back("std::string emuDevice_"+this->getLinkName()+" = \""+this->getIfaceName()+"\";");
   return vars;
 }
+
 std::vector<std::string> Emu::GenerateCmdLine()
 {
   std::vector<std::string> cmdLine;
   cmdLine.push_back("cmd.AddValue(\"deviceName_"+this->getLinkName()+"\", \"device name\", emuDevice_"+this->getLinkName()+");");
   return cmdLine;
+}
+
+std::vector<std::string> Emu::GenerateTrace()
+{
+  std::vector<std::string> trace;
+
+  if(this->enableTrace)
+  {
+    if(this->tracePromisc)
+    {
+      trace.push_back("EmuHelper::EnablePcap (\"Emu-"+this->getLinkName()+"\",\""+this->getIfaceName()+"\", true);");
+    }
+    else
+    {
+      trace.push_back("EmuHelper::EnablePcap (\"Emu-"+this->getLinkName()+"\",\""+this->getIfaceName()+"\", false);");
+    }
+  }
+
+  return trace;
 }
   
 

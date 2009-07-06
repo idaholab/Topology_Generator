@@ -540,10 +540,11 @@ void Generator::GenerateCode()
   
   
   std::cout << "  /* Pcap output.*/" << std::endl;
-  //std::cout << "  CsmaHelper::EnablePcapAll (\""<< this->simulationName <<"\", false);" << std::endl;
-  //std::cout << "  YansWifiPhyHelper::EnablePcapAll (\""<< this->simulationName <<"\");" << std::endl;
-  //std::cout << "  PointToPointHelper::EnablePcapAll (\""<< this->simulationName <<"\");" << std::endl;
-  //std::cout << "  EmuHelper::EnablePcapAll (\""<< this->simulationName <<"\", false);" << std::endl;
+  std::vector<std::string> allTrace = GenerateTrace();
+  for(size_t i = 0; i < (size_t) allTrace.size(); i++)
+  {
+  	std::cout << "  " << allTrace.at(i) << std::endl;
+  } 
   
   /* Set stop time. */
   size_t stopTime = 0;/* default stop time. */
@@ -912,6 +913,7 @@ std::vector<std::string> Generator::GenerateApplication()
     /* if the receiver is in NodeContainer */
     if(receiverName.find("NodeContainer(") == 0)
     {
+      std::string oldReceiverName = receiverName;
       //NodeContainer(term_0.Get(1))
       std::vector<std::string> tab_name;
       Generator::Split(tab_name, receiverName, '(');
@@ -926,7 +928,7 @@ std::vector<std::string> Generator::GenerateApplication()
 	nodeNumber = 0;
 	for(size_t y = 0; y < this->listLink.at(x)->getNodes().size(); y++)
 	{
-	  if(this->listLink.at(x)->getNodes().at(y) == receiverName)
+	  if(this->listLink.at(x)->getNodes().at(y) == receiverName || this->listLink.at(x)->getNodes().at(y) == oldReceiverName)
 	  {
 	    ndcName = (this->listLink.at(x))->getNdcName();
 	    break;
@@ -1008,6 +1010,22 @@ std::vector<std::string> Generator::GenerateTapBridge()
   }
 
   return allTapBridge;
+}
+
+std::vector<std::string> Generator::GenerateTrace()
+{
+  std::vector<std::string> allTrace;
+
+  for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
+  {
+    std::vector<std::string> trans = (this->listLink.at(i))->GenerateTrace();
+    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    {
+      allTrace.push_back(trans.at(j));
+    }
+  }
+
+  return allTrace;
 }
 
 //
