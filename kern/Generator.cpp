@@ -323,17 +323,9 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode)
     this->indiceLinkBridge += 1;
     this->listLink.push_back(link);
   } 
-  else
+  else if(type == "Ap")
   {
-    throw std::logic_error("Add Link failed. ("+type+") not found.\n");
-  }
-}
-
-void Generator::AddLink(const std::string &type, const std::string &linkNode, const bool &mobility)
-{
-  if(type == "Ap")
-  {
-    Ap *link = new Ap(this->indiceLinkAp, linkNode, mobility);
+    Ap *link = new Ap(this->indiceLinkAp, linkNode);
     this->indiceLinkAp += 1;
     this->listLink.push_back(link);
   } 
@@ -850,55 +842,55 @@ std::vector<std::string> Generator::GenerateIpAssign()
 std::vector<std::string> Generator::GenerateRoute() 
 {
   std::vector<std::string> allRoutes;
-  allRoutes.push_back("NodeContainer allRoutes;");
+//   allRoutes.push_back("NodeContainer allRoutes;");
   
-  std::vector<std::string> route;
-  std::string nodeName = "";
-  for(size_t i = 0; i < (size_t) this->listNode.size(); i++)
-  {
-    nodeName = (this->listNode.at(i))->getNodeName();
+//   std::vector<std::string> route;
+//   std::string nodeName = "";
+//   for(size_t i = 0; i < (size_t) this->listNode.size(); i++)
+//   {
+//     nodeName = (this->listNode.at(i))->getNodeName();
     /* if it is not a bridge you can add it. */
-    if(nodeName.find("bridge_") != 0 )
-    {
+//     if(nodeName.find("bridge_") != 0 )
+//     {
       //route.push_back("allRoutes.Add("+nodeName+");");
-      route.push_back(nodeName);
-    }
-  }
+//       route.push_back(nodeName);
+//     }
+//   }
   
   /* get all node attached to a Emu Link. */
-  std::vector<std::string> emuNodes;
-  for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
-  {
-    if( (this->listLink.at(i)->getLinkName()).find("emu_") == 0)
-    {
-      std::vector<std::string> trans = (this->listLink.at(i))->getNodes();
-      for(size_t j = 0; j < (size_t) trans.size(); j++)
-      {
-        emuNodes.push_back(trans.at(j));
-      }
-    }
-  }
+//   std::vector<std::string> emuNodes;
+//   for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
+//   {
+//     if( (this->listLink.at(i)->getLinkName()).find("emu_") == 0)
+//     {
+//       std::vector<std::string> trans = (this->listLink.at(i))->getNodes();
+//       for(size_t j = 0; j < (size_t) trans.size(); j++)
+//       {
+//         emuNodes.push_back(trans.at(j));
+//       }
+//     }
+//   }
   
   /* add all nodes to the out list without the emu nodes. */
-  bool nodeOk = true;
-  for(size_t i = 0; i < (size_t) route.size(); i++)
-  {
-    nodeOk = true;
-    for(size_t j = 0; j < (size_t) emuNodes.size(); j++)
-    {
-      if( route.at(i) == emuNodes.at(j))
-      {
+//   bool nodeOk = true;
+//   for(size_t i = 0; i < (size_t) route.size(); i++)
+//   {
+//     nodeOk = true;
+//     for(size_t j = 0; j < (size_t) emuNodes.size(); j++)
+//     {
+//       if( route.at(i) == emuNodes.at(j))
+//       {
         /* the node is in the emu node list .. we can't add it. */
-        nodeOk = false;
-      }
-    }
-    if(nodeOk)
-    {
-      allRoutes.push_back("allRoutes.Add("+route.at(i)+");");
-    }
-  }
+//         nodeOk = false;
+//       }
+//     }
+//     if(nodeOk)
+//     {
+//       allRoutes.push_back("allRoutes.Add("+route.at(i)+");");
+//     }
+//   }
   
-  allRoutes.push_back("GlobalRouteManager::PopulateRoutingTables (allRoutes);");
+  allRoutes.push_back("Ipv4GlobalRoutingHelper::PopulateRoutingTables ();");
   
   return allRoutes;
 }

@@ -25,15 +25,15 @@
 
 #include "Ap.h"
 
-
-Ap::Ap(const size_t &_indice, const std::string &_apNode, const bool &_random) : Link(_indice)
+Ap::Ap(const size_t &_indice, const std::string &_apNode) : Link(_indice)
 {
   this->nodes.push_back(_apNode);
   this->linkName = "ap_"+this->getIndice();
   this->ndcName = "ndc_"+this->getLinkName();
   this->allNodeContainer = "all_"+this->getLinkName();
   this->apNode = _apNode;
-  this->random = _random;
+  this->mobility = false;
+  this->apName = "wifi-default-"+this->getIndice();
 }
 
 Ap::~Ap()
@@ -75,7 +75,7 @@ std::vector<std::string> Ap::GenerateNetDevice()
       ndc.push_back(allNodes.at(i));
   }
   ndc.push_back("NetDeviceContainer "+this->getNdcName()+";");
-  ndc.push_back("Ssid ssid_"+this->getLinkName()+" = Ssid (\"wifi-default-"+this->getIndice()+"\");");
+  ndc.push_back("Ssid ssid_"+this->getLinkName()+" = Ssid (\""+this->apName+"\");");
   ndc.push_back("WifiHelper wifi_"+this->getLinkName()+" = WifiHelper::Default ();");
   ndc.push_back("NqosWifiMacHelper wifiMac_"+this->getLinkName()+" = NqosWifiMacHelper::Default ();");
   ndc.push_back("wifi_"+this->getLinkName()+".SetRemoteStationManager (\"ns3::ArfWifiManager\");");
@@ -95,13 +95,23 @@ std::vector<std::string> Ap::GenerateNetDevice()
   ndc.push_back("mobility_"+this->getLinkName()+".SetMobilityModel (\"ns3::ConstantPositionMobilityModel\");");
   ndc.push_back("mobility_"+this->getLinkName()+".Install("+this->getApNode()+");"); 
   
-  if(this->random)//if random walk is activated.
+  if(this->mobility)//if random walk is activated.
   {
      ndc.push_back("mobility_"+this->getLinkName()+".SetMobilityModel (\"ns3::RandomWalk2dMobilityModel\",\"Bounds\", RectangleValue (Rectangle (-50, 50, -50, 50)));");
   }
   ndc.push_back("mobility_"+this->getLinkName()+".Install("+this->getAllNodeContainer()+");");
   
   return ndc;
+}
+
+void Ap::setMobility(const bool &_mobility)
+{
+  this->mobility = _mobility;
+}
+
+void Ap::setApName(const std::string &_apName)
+{
+  this->apName = _apName;
 }
 
   

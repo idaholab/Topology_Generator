@@ -272,15 +272,6 @@ public:
    */
   void AddLink(const std::string &type, const std::string &linkNode);
   
-   /**
-   * \brief See the Precedure AddLink(*)
-   * 
-   * \param type
-   * \param linkNode
-   * \param mobility
-   */
-  void AddLink(const std::string &type, const std::string &linkNode, const bool &mobility);
-  
   /**
    * \brief See the Precedure AddLink(*)
    * 

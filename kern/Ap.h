@@ -49,7 +49,7 @@ public:
    * \param _apNode the node which is the ap.
    * \param _random
    */
-  Ap(const size_t &_indice, const std::string &_apNode, const bool &_random);
+  Ap(const size_t &_indice, const std::string &_apNode);
   
   /**
    * \brief Destructor
@@ -60,7 +60,12 @@ private:
   /**
    * \brief mobility : attribute which say if station walk is constant or random.
    */
-  bool random;
+  bool mobility;
+
+  /**
+   * \brief the ap name (ssid)
+   */
+  std::string apName;
   
   /**
    * \brief attribute which represent the Wifi node.
@@ -69,9 +74,21 @@ private:
   
   /**
    * \brief Function to the ap node name.
-   * \returnt the ap node name.
+   * \return the ap node name.
    */
   std::string getApNode();
+
+  /**
+   * \brief procedure to mobility on the connected station.
+   * \param _mobility 
+   */
+  void setMobility(const bool &_mobility);
+
+  /**
+   * \brief procedure to set the ap name (ssid)
+   * \param _apName the new apName
+   */
+  void setApName(const std::string &_apName);
   
   /**
    * \brief Function which return the generated headers.
