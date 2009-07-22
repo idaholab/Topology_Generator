@@ -47,35 +47,50 @@ int main(int argc, char *argv[])
   gen->AddLink("Hub");
   gen->listLink.at(0)->Install(gen->listNode.at(0)->getNodeName(0));
   gen->listLink.at(0)->Install(gen->listNode.at(0)->getNodeName(1));
+  /* Enable trace... */
+  gen->listLink.at(0)->setTrace(true);
   
   gen->AddLink("Hub");
   gen->listLink.at(1)->Install(gen->listNode.at(0)->getNodeName(0));
   gen->listLink.at(1)->Install(gen->listNode.at(0)->getNodeName(2));
+  /* Enable trace... */
+  gen->listLink.at(1)->setTrace(true);
   
   gen->AddLink("Hub");
   gen->listLink.at(2)->Install(gen->listNode.at(0)->getNodeName(0));
   gen->listLink.at(2)->Install(gen->listNode.at(0)->getNodeName(3));
+  /* Enable trace... */
+  //gen->listLink.at(2)->setTrace(true);
   
   gen->AddLink("Hub");
   gen->listLink.at(3)->Install(gen->listNode.at(0)->getNodeName(0));
   gen->listLink.at(3)->Install(gen->listNode.at(0)->getNodeName(4));
+  /* Enable trace... */
+  //gen->listLink.at(3)->setTrace(true);
   
   gen->AddLink("Hub");
   gen->listLink.at(4)->Install(gen->listNode.at(0)->getNodeName(0));
   gen->listLink.at(4)->Install(gen->listNode.at(0)->getNodeName(5));
+  /* Enable trace... */
+  gen->listLink.at(4)->setTrace(true);
   
   gen->AddLink("Hub");
   gen->listLink.at(5)->Install(gen->listNode.at(0)->getNodeName(0));
   gen->listLink.at(5)->Install(gen->listNode.at(0)->getNodeName(6));
+  /* Enable trace... */
+  //gen->listLink.at(5)->setTrace(true);
   
   gen->AddLink("Hub");
   gen->listLink.at(6)->Install(gen->listNode.at(0)->getNodeName(0));
   gen->listLink.at(6)->Install(gen->listNode.at(0)->getNodeName(7));
+  /* Enable trace... */
+  //gen->listLink.at(6)->setTrace(true);
   
   gen->AddLink("Hub");
   gen->listLink.at(7)->Install(gen->listNode.at(0)->getNodeName(0));
   gen->listLink.at(7)->Install(gen->listNode.at(0)->getNodeName(8));
-  
+  /* Enable trace... */
+  //gen->listLink.at(7)->setTrace(true);
   
   /* Add an application */
   gen->AddApplication("Ping", gen->listNode.at(0)->getNodeName(1), gen->listNode.at(0)->getNodeName(5), 0, 5);// 0 start time - 5 end time

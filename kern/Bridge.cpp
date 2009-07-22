@@ -91,4 +91,25 @@ std::vector<std::string> Bridge::GenerateNetDevice()
   return ndc;
 }
 
+std::vector<std::string> Bridge::GenerateTrace()
+{
+  std::vector<std::string> trace;
+
+  if(this->enableTrace)
+  {
+    if(this->tracePromisc)
+    {
+      trace.push_back("csma_"+this->getLinkName()+".EnablePcapAll (\"csma_"+this->getLinkName()+"\", true);");
+    }
+    else
+    {
+      trace.push_back("csma_"+this->getLinkName()+".EnablePcapAll (\"csma_"+this->getLinkName()+"\", false);");
+    }
+  }
+
+  return trace;
+}
+
+
+
 

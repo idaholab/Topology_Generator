@@ -901,6 +901,7 @@ std::vector<std::string> Generator::GenerateApplication()
 {
   size_t nodeNumber = 0;
   std::string ndcName = "";
+	size_t linkNumber = 0;
   std::vector<std::string> allApps;
   /* get all the ip assign code. */
   for(size_t i = 0; i < (size_t) this->listApplication.size(); i++)
@@ -909,7 +910,8 @@ std::vector<std::string> Generator::GenerateApplication()
     std::string receiverName = this->listApplication.at(i)->getReceiverNode();
     nodeNumber = 0;
     ndcName = "";
-
+		linkNumber = 0;
+	
     /* if the receiver is in NodeContainer */
     if(receiverName.find("NodeContainer(") == 0)
     {
@@ -925,64 +927,64 @@ std::vector<std::string> Generator::GenerateApplication()
       receiverName = tab_name2.at(0);
       for(size_t x = 0;  x < this->listLink.size(); x++)
       {
-	nodeNumber = 0;
-	for(size_t y = 0; y < this->listLink.at(x)->getNodes().size(); y++)
-	{
-	  if(this->listLink.at(x)->getNodes().at(y) == receiverName || this->listLink.at(x)->getNodes().at(y) == oldReceiverName)
-	  {
-	    ndcName = (this->listLink.at(x))->getNdcName();
-	    break;
-	  }
-	  else
-	  {
-	    for(size_t j = 0; j < (size_t) this->listNode.size(); j++)
-	    {
-	      if(this->listNode.at(j)->getNodeName() == this->listLink.at(x)->getNodes().at(y))
-	      {
-		nodeNumber += this->listNode.at(j)->getMachinesNumber();
-		break;
-	      }
-	    }
-	  }
-	  if(ndcName != "")
-	  {
-	    break;
-	  }
-	}
+				nodeNumber = 0;
+				for(size_t y = 0; y < this->listLink.at(x)->getNodes().size(); y++)
+				{
+					if(this->listLink.at(x)->getNodes().at(y) == receiverName || this->listLink.at(x)->getNodes().at(y) == oldReceiverName)
+					{
+						ndcName = (this->listLink.at(x))->getNdcName();
+						linkNumber = x;
+						break;
+					}
+					if(ndcName != "")
+					{
+						break;
+					}
+				}
       }
-      std::vector<std::string> str_nbr;
-      Generator::Split(str_nbr, tab_name.at(2), ')');
-      nodeNumber += atoi(str_nbr.at(0).c_str());
+      //std::vector<std::string> str_nbr;
+      //Generator::Split(str_nbr, tab_name.at(2), ')');
+      //nodeNumber += atoi(str_nbr.at(0).c_str());
+			std::vector<std::string> linksNode = this->listLink.at(linkNumber)->getNodes();
+			for(size_t j = 0; j < linksNode.size(); j++)
+			{
+				if(linksNode.at(j) == oldReceiverName)
+				{
+					nodeNumber = j;
+					break;
+				}
+			}
     }
     else
     {
       for(size_t j = 0; j < (size_t) this->listLink.size(); j++)
       {
-	nodeNumber = 0;
-	std::vector<std::string> nodes = (this->listLink.at(j))->getNodes();
-	for(size_t k = 0; k < (size_t) nodes.size(); k++)
-	{
-	  if( nodes.at(k) == receiverName)
-	  {
-	    ndcName = (this->listLink.at(j))->getNdcName();
-	    break;
-	  }
-	  else
-	  {
-	    for(size_t l = 0; l < (size_t) this->listNode.size(); l++)
-	    {
-	      if(this->listNode.at(l)->getNodeName() == nodes.at(k))
-	      {
-		nodeNumber += this->listNode.at(l)->getMachinesNumber();
-		break;
-	      }
-	    }
-	  }
-	}
-	if(ndcName != "")
-	{
-	  break;
-	}
+				nodeNumber = 0;
+				linkNumber = 0;
+				std::vector<std::string> nodes = (this->listLink.at(j))->getNodes();
+				for(size_t k = 0; k < (size_t) nodes.size(); k++)
+				{
+					if( nodes.at(k) == receiverName)
+					{
+						ndcName = (this->listLink.at(j))->getNdcName();
+						break;
+					}
+					else
+					{
+						for(size_t l = 0; l < (size_t) this->listNode.size(); l++)
+						{
+							if(this->listNode.at(l)->getNodeName() == nodes.at(k))
+							{
+								nodeNumber += this->listNode.at(l)->getMachinesNumber();
+								break;
+							}
+						}
+					}
+				}
+				if(ndcName != "")
+				{
+					break;
+				}
       }
     }
     /* get the application code with param. */

@@ -53,10 +53,14 @@ int main(int argc, char *argv[])
   gen->AddLink("Hub");//0
   gen->listLink.at(0)->Install(gen->listNode.at(0)->getNodeName());
   gen->listLink.at(0)->Install(gen->listNode.at(1)->getNodeName());
+  /* Enable trace... */
+  gen->listLink.at(0)->setTrace(true);
   
   gen->AddLink("Hub");//1
   gen->listLink.at(1)->Install(gen->listNode.at(3)->getNodeName());
   gen->listLink.at(1)->Install(gen->listNode.at(4)->getNodeName());
+  /* Enable trace... */
+  gen->listLink.at(1)->setTrace(true);
   
   /* link the two subnetworks to the router. */
   gen->listLink.at(0)->Install(gen->listNode.at(2)->getNodeName());

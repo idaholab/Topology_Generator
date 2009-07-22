@@ -53,15 +53,21 @@ int main(int argc, char *argv[])
   gen->listLink.at(0)->Install(gen->listNode.at(0)->getNodeName());
   gen->listLink.at(0)->Install(gen->listNode.at(1)->getNodeName());
   gen->listLink.at(0)->Install(gen->listNode.at(2)->getNodeName());
+  /* Enable trace... */
+  gen->listLink.at(0)->setTrace(true);
   
   gen->AddLink("PointToPoint");
   gen->listLink.at(1)->Install(gen->listNode.at(2)->getNodeName());
   gen->listLink.at(1)->Install(gen->listNode.at(3)->getNodeName());
+  /* Enable trace... */
+  gen->listLink.at(1)->setTrace(true);
   
   gen->AddLink("Hub");
   gen->listLink.at(2)->Install(gen->listNode.at(3)->getNodeName());
   gen->listLink.at(2)->Install(gen->listNode.at(4)->getNodeName());
   gen->listLink.at(2)->Install(gen->listNode.at(5)->getNodeName());
+  /* Enable trace... */
+  gen->listLink.at(2)->setTrace(true);
   
   /* Add an application */
   gen->AddApplication("Ping", gen->listNode.at(0)->getNodeName(), gen->listNode.at(5)->getNodeName(), 0, 5);// 0 start time - 5 end time

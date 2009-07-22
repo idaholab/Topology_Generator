@@ -121,8 +121,7 @@ std::vector<std::string> Ap::GenerateTrace()
 
   if(this->enableTrace)
   {
-    //Pas encore testé cette fonction ... 
-    //trace.push_back("wifiPhy_"+this->getLinkName()+".EnablePcap (\"Ap-"+this->getLinkName()+"\", "++"->GetId () ,0););
+    trace.push_back("wifiPhy_"+this->getLinkName()+".EnablePcap (\""+this->getLinkName()+"\", "+this->getNdcName()+".Get(0));");
   }
 
   return trace;
