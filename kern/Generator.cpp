@@ -911,7 +911,7 @@ std::vector<std::string> Generator::GenerateApplication()
     nodeNumber = 0;
     ndcName = "";
 		linkNumber = 0;
-	
+
     /* if the receiver is in NodeContainer */
     if(receiverName.find("NodeContainer(") == 0)
     {

@@ -57,7 +57,7 @@ std::vector<std::string> Bridge::GenerateLink()
   /* creation of the link. */
   generatedLink.push_back("CsmaHelper csma_"+this->getLinkName()+";");
   generatedLink.push_back("csma_"+this->getLinkName()+".SetChannelAttribute (\"DataRate\", StringValue (\""+this->getDataRate()+"\"));");
-  generatedLink.push_back("csma_"+this->getLinkName()+".SetChannelAttribute (\"Delay\", TimeValue (MilliSeconds ("+this->getLinkDelay()+")));");
+  generatedLink.push_back("csma_"+this->getLinkName()+".SetChannelAttribute (\"Delay\",  StringValue (\""+this->getLinkDelay()+"\"));");
   
   return generatedLink;
 }

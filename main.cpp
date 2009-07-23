@@ -52,18 +52,12 @@ void printState(Generator *gen)
 
 int main(int argc, char *argv[])
 {
+  argc = argc;
+  argv = argv;
+
   Generator *gen = new Generator("Simulation name ...");
   
-  gen->AddNode(std::string("Pc"), 2);
-  gen->AddNode(std::string("Pc"), 2);
-
-  gen->AddLink("Hub");
-  gen->listLink.at(0)->Install(gen->listNode.at(0)->getNodeName());
-  gen->listLink.at(0)->Install(gen->listNode.at(1)->getNodeName());
-
-  gen->AddApplication(std::string("Ping"), gen->listNode.at(0)->getNodeName(0), gen->listNode.at(1)->getNodeName(1), 0, 2);
-
-  /*gen->AddNode(std::string("Router"));//0
+  gen->AddNode(std::string("Router"));//0
   gen->AddNode(std::string("Pc"), 10);//1
   gen->AddNode(std::string("Ap"));//2
   gen->AddNode(std::string("Station"));//3
@@ -74,6 +68,8 @@ int main(int argc, char *argv[])
   gen->AddLink(std::string("Hub"));//0
   gen->listLink.at(0)->Install(gen->listNode.at(0)->getNodeName());
   gen->listLink.at(0)->Install(gen->listNode.at(1)->getNodeName(0));
+  gen->listLink.at(0)->setTrace(true);
+  gen->listLink.at(0)->setPromisc(true);
 
   gen->AddLink(std::string("PointToPoint"));//1
   gen->listLink.at(1)->Install(gen->listNode.at(0)->getNodeName());
@@ -83,8 +79,8 @@ int main(int argc, char *argv[])
   gen->listLink.at(2)->Install(gen->listNode.at(0)->getNodeName());
   gen->listLink.at(2)->Install(gen->listNode.at(1)->getNodeName(2));
 
-  bool mobility = true;
-  gen->AddLink(std::string("Ap"), gen->listNode.at(2)->getNodeName(), mobility);//3
+  gen->AddLink(std::string("Ap"), gen->listNode.at(2)->getNodeName());//3
+  gen->listLink.at(3)->setMobility(true);
   gen->listLink.at(3)->Install(gen->listNode.at(0)->getNodeName());
   gen->listLink.at(3)->Install(gen->listNode.at(3)->getNodeName());
 
@@ -93,13 +89,11 @@ int main(int argc, char *argv[])
 
   gen->AddApplication(std::string("Ping"), gen->listNode.at(1)->getNodeName(0), gen->listNode.at(1)->getNodeName(1), 0, 5);
   gen->AddApplication(std::string("Ping"), gen->listNode.at(1)->getNodeName(0), gen->listNode.at(1)->getNodeName(2), 0, 5);
-  gen->AddApplication(std::string("Ping"), gen->listNode.at(1)->getNodeName(0), gen->listNode.at(1)->getNodeName(3), 0, 5);
   gen->AddApplication(std::string("Ping"), gen->listNode.at(1)->getNodeName(0), gen->listNode.at(3)->getNodeName(), 0, 5);
 
-  */
   gen->GenerateCode();
  
-  //printState(gen);
+  printState(gen);
 
   delete gen;
   /*

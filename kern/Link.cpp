@@ -31,7 +31,7 @@ Link::Link(const size_t &_indice)
 {
   this->indice = _indice;
   this->dataRate = "100Mbps";
-  this->linkDelay = "10";//ms
+  this->linkDelay = "10ms";
 
   this->enableTrace = false;
   this->tracePromisc = false;
