@@ -181,7 +181,45 @@ public:
    * \param _endTime the end time.
    */
   void setEndTime(const size_t &_endTime);
+
+  /* UPD ECHO PARAMS */
   
+  /**
+   * \brief procedure to set packet size.(Udp Echo)
+   * \param _packetSize the new packet size.
+   */
+  virtual void setPacketSize(const size_t &_packetSize);
+
+  /**
+   * \brief function to get the packet size.(Udp Echo)
+   * \return packet size
+   */
+  virtual size_t getPacketSize();
+
+  /**
+   * \brief procedure to set the max packet count.(Udp Echo)
+   * \param _maxPacketCount
+   */
+  virtual void setMaxPacketCount(const size_t &_maxPacketCount);
+
+  /**
+   * \brief function to get the max packet count.(Udp Echo)
+   * \return max packet count
+   */
+  virtual size_t getMaxPacketCount();
+
+  /**
+   * \brief procedure to set the packet interval time.(Udp Echo)
+   * \param _packetIntervalTime
+   */
+  virtual void setPacketIntervalTime(const std::string &_packetIntervalTime);
+
+  /**
+   * \brief function to get the packet interval time.(Udp Echo)
+   * \return packet interval time
+   */
+  virtual std::string getPacketIntervalTime();
+
 };
 
 

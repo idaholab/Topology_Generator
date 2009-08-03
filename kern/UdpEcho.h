@@ -41,7 +41,25 @@
 class UdpEcho : public Application
 {
 private:
+  /**
+   * \brief the application port.
+   */
   size_t port;
+
+  /**
+   * \brief the packet size.
+   */
+  size_t packetSize;
+
+  /**
+   * \brief the max packet count
+   */
+  size_t maxPacketCount;
+
+  /**
+   * \brief the packet interval time
+   */
+  std::string packetIntervalTime;
   
 public:
   /**
@@ -74,7 +92,43 @@ public:
    * \return application code.
    */
   virtual std::vector<std::string> GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice);
+
+  /**
+   * \brief procedure to set packet size.
+   * \param _packetSize the new packet size.
+   */
+  void setPacketSize(const size_t &_packetSize);
+ 
+  /**
+   * \brief function to get the packet size
+   * \return packet size
+   */
+  size_t getPacketSize();
+
+  /**
+   * \brief procedure to set the max packet count
+   * \param _maxPacketCount
+   */
+  void setMaxPacketCount(const size_t &_maxPacketCount);
   
+  /**
+   * \brief function to get the max packet count
+   * \return max packet count
+   */
+  size_t getMaxPacketCount();
+
+  /**
+   * \brief procedure to set the packet interval time
+   * \param _packetIntervalTime
+   */
+  void setPacketIntervalTime(const std::string &_packetIntervalTime);
+  
+  /**
+   * \brief function to get the packet interval time
+   * \return packet interval time
+   */
+  std::string getPacketIntervalTime();
+
 };
 
 #endif /* UDPECHO_H */

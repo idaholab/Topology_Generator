@@ -105,3 +105,39 @@ void Application::setEndTime(const size_t &_endTime)
 {
   this->endTime = _endTime;
 }
+
+/* Udp Echo param */
+
+void Application::setPacketSize(const size_t &_packetSize)
+{
+  size_t avoidWarns;
+  avoidWarns = _packetSize;
+}
+
+size_t Application::getPacketSize()
+{
+    return 0;
+}
+
+void Application::setMaxPacketCount(const size_t &_maxPacketCount)
+{
+  size_t avoidWarns;
+  avoidWarns = _maxPacketCount;
+}
+
+size_t Application::getMaxPacketCount()
+{
+    return 0;
+}
+
+void Application::setPacketIntervalTime(const std::string &_packetIntervalTime)
+{
+  std::string avoidWarns;
+  avoidWarns = _packetIntervalTime;
+}
+
+std::string Application::getPacketIntervalTime()
+{
+    return "";
+}
+

@@ -47,7 +47,6 @@ public:
    * \brief Constructor
    * \param _indice the Ap number
    * \param _apNode the node which is the ap.
-   * \param _random
    */
   Ap(const size_t &_indice, const std::string &_apNode);
 
