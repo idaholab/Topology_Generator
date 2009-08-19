@@ -24,12 +24,12 @@ using namespace std;
 #include <limits>
 #include <stdexcept>
 
-//#include <QApplication>
-//#include <QtGui>
-//#include <QHBoxLayout>
+#include <QApplication>
+#include <QtGui>
+#include <QHBoxLayout>
 
 #include "kern/Generator.h"
-//#include "gui/MainWindow.h"
+#include "gui/MainWindow.h"
 
 void printState(Generator *gen)
 {
@@ -55,7 +55,17 @@ int main(int argc, char *argv[])
   argc = argc;
   argv = argv;
 
-  Generator *gen = new Generator("Simulation name ...");
+  QApplication app(argc, argv);
+ 
+  MainWindow *win = new MainWindow(std::string("Simulation-Name"));
+  win->setWindowTitle("Generator");
+  win->show();
+    
+  app.exec();
+	
+  delete win;
+
+  /*Generator *gen = new Generator("Simulation name ...");
   
   gen->AddNode(std::string("Router"));//0
   gen->AddNode(std::string("Pc"), 10);//1
@@ -95,19 +105,7 @@ int main(int argc, char *argv[])
  
   printState(gen);
 
-  delete gen;
-  /*
-  QApplication app(argc, argv);
- 
-  MainWindow *win = new MainWindow(std::string("Simulation-Name"));
-  win->setWindowTitle("Generator");
-  win->show();
-    
-  app.exec();
-	
-  delete win;
-  */
+  delete gen;*/
 }
-
 
 

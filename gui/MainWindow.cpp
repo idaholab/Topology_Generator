@@ -27,7 +27,6 @@
 #include <stdexcept>
 
 #include "MainWindow.h"
-#include "Configuration.h"
 #include "DragWidget.h"
 #include "DragObject.h"
 
@@ -38,7 +37,6 @@ MainWindow::MainWindow(const std::string &simulationName)
 {
   
   this->dw = NULL;
-  this->config = NULL;
   this->gen = new Generator(simulationName);
   
   //
@@ -61,6 +59,7 @@ MainWindow::MainWindow(const std::string &simulationName)
 
   QMenu *menuEdition = menuBar()->addMenu("&Edit");
   QAction *actionConfig = menuEdition->addAction("Configuration");
+  actionConfig->setDisabled(true);
   connect(actionConfig, SIGNAL(triggered()), this, SLOT(ConfigurationMenu())); 
      
   QMenu *menuAffichage = menuBar()->addMenu("&Generate");
@@ -181,14 +180,13 @@ MainWindow::MainWindow(const std::string &simulationName)
 
 MainWindow::~MainWindow()
 {
-  delete config;
   delete gen;
 }
 
 void MainWindow::CreatePc()
 {
-	this->gen->AddEquipement("Pc");
-	dw->CreateObject("Pc", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName());
+	this->gen->AddNode("Pc");
+	dw->CreateObject("Pc", this->gen->listNode.at(this->gen->listNode.size() - 1)->getNodeName());
 }
 
 void MainWindow::CreatePcGroup()
@@ -215,8 +213,8 @@ void MainWindow::CreatePcGroup()
     return;
   }
   
-  this->gen->AddEquipement(number);
-	dw->CreateObject("Pc-group", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName());
+  this->gen->AddNode("Pc",number);
+	dw->CreateObject("Pc-group", this->gen->listNode.at(this->gen->listNode.size() - 1)->getNodeName());
 }
 
 void MainWindow::CreateEmu()
@@ -247,8 +245,8 @@ void MainWindow::CreateEmu()
     return;
   }
 
-  this->gen->AddEquipement("Pc");
-  this->gen->AddLink("Emu", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName(), text.toStdString());
+  this->gen->AddNode("Pc");
+  this->gen->AddLink("Emu", this->gen->listNode.at(this->gen->listNode.size() - 1)->getNodeName(), text.toStdString());
 	dw->CreateObject("Emu",this->gen->listLink.at(this->gen->listLink.size() - 1)->getLinkName());
 }
 
@@ -279,8 +277,8 @@ void MainWindow::CreateTap()
     return;
   }
   
-  this->gen->AddEquipement("Tap");
-  this->gen->AddLink("Tap", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName(), text.toStdString());
+  this->gen->AddNode("Tap");
+  this->gen->AddLink("Tap", this->gen->listNode.at(this->gen->listNode.size() - 1)->getNodeName(), text.toStdString());
 	dw->CreateObject("Tap",this->gen->listLink.at(this->gen->listLink.size() - 1)->getLinkName());
 }
 
@@ -318,28 +316,16 @@ void MainWindow::CleanIface()
 }
 
 void MainWindow::CreateAp()
-{
-  bool state = false;
-  bool ok;
-  QString text = QInputDialog::getText(this, "Mobility", "Use mobility ? (y/n)", QLineEdit::Normal, "no", &ok);
-  
-  if (ok && !text.isEmpty())
-  {
-    if(text == "y" || text == "yes")
-    {
-      state = true;
-    }
-  }
-  
-	this->gen->AddEquipement("Ap");
-	this->gen->AddLink("Wifi", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName(), state);
+{  
+	this->gen->AddNode("Ap");
+	this->gen->AddLink("Ap", this->gen->listNode.at(this->gen->listNode.size() - 1)->getNodeName());
 	dw->CreateObject("Ap", this->gen->listLink.at(this->gen->listLink.size() - 1)->getLinkName() );
 }
 
 void MainWindow::CreateStation()
 {
-	this->gen->AddEquipement("Station");
-	dw->CreateObject("Station", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName());
+	this->gen->AddNode("Station");
+	dw->CreateObject("Station", this->gen->listNode.at(this->gen->listNode.size() - 1)->getNodeName());
 }
 
 void MainWindow::CreateHub()
@@ -350,15 +336,15 @@ void MainWindow::CreateHub()
 
 void MainWindow::CreateSwitch()
 {
-	this->gen->AddEquipement("Bridge");
-  this->gen->AddLink("Bridge", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName());
+	this->gen->AddNode("Bridge");
+  this->gen->AddLink("Bridge", this->gen->listNode.at(this->gen->listNode.size() - 1)->getNodeName());
 	dw->CreateObject("Switch",this->gen->listLink.at(this->gen->listLink.size() - 1)->getLinkName());
 }
 
 void MainWindow::CreateRouter()
 {
-	this->gen->AddEquipement("Router");
-	dw->CreateObject("Router", this->gen->listEquipement.at(this->gen->listEquipement.size() - 1)->getNodeName());
+	this->gen->AddNode("Router");
+	dw->CreateObject("Router", this->gen->listNode.at(this->gen->listNode.size() - 1)->getNodeName());
 }
 
 void MainWindow::CreateHardLink()
@@ -561,7 +547,6 @@ void MainWindow::CreateP2pLink()
 
 void MainWindow::ConfigurationMenu()
 {
-    config = new Configuration(this);
 }
 
 void MainWindow::deleteObject()
@@ -622,11 +607,11 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
   }
   else
   {
-    for(size_t i = 0; i < (size_t) this->gen->listEquipement.size(); i++)
+    for(size_t i = 0; i < (size_t) this->gen->listNode.size(); i++)
     {
-      if(nodeName == this->gen->listEquipement.at(i)->getNodeName())
+      if(nodeName == this->gen->listNode.at(i)->getNodeName())
       {
-        numberOfConnectedMachines += MainWindow::gen->listEquipement.at(i)->getMachinesNumber();
+        numberOfConnectedMachines += MainWindow::gen->listNode.at(i)->getMachinesNumber();
       }
     }
   }
@@ -635,11 +620,11 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
   std::vector<std::string> nodes = this->gen->listLink.at(linkNumber)->getNodes();
   for(size_t i = 0; i < (size_t) nodes.size(); i++)
   {
-    for(size_t j = 0; j < (size_t) this->gen->listEquipement.size(); j++)
+    for(size_t j = 0; j < (size_t) this->gen->listNode.size(); j++)
     {
-      if(nodes.at(i) == this->gen->listEquipement.at(j)->getNodeName())
+      if(nodes.at(i) == this->gen->listNode.at(j)->getNodeName())
       {
-        numberOfConnectedMachines += this->gen->listEquipement.at(j)->getMachinesNumber();
+        numberOfConnectedMachines += this->gen->listNode.at(j)->getMachinesNumber();
       }
     }
   }
@@ -656,7 +641,7 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
     }
     return;
   }
-  this->gen->listLink.at(linkNumber)->AddNodes(nodeName);
+  this->gen->listLink.at(linkNumber)->Install(nodeName);
 }
 
 void MainWindow::GenerateCpp()

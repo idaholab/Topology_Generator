@@ -30,8 +30,6 @@
 
 #include "DragWidget.h"
 #include "Generator.h"
-class Configuration;
-#include "Configuration.h"
 
 /**
  * \ingroup generator
@@ -80,11 +78,6 @@ class MainWindow : public QMainWindow
      * \brief attribute which represent the drag n drop zone.
      */
     DragWidget *dw;
-    
-    /**
-     * \brief attribute which represent the configuration gui.
-     */
-    Configuration *config;
     
     /**
      * \brief interface which are used.

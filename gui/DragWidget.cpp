@@ -314,47 +314,23 @@ void DragWidget::deleteSelected()
     return;
   }
 
-  size_t indic = -1;
   /* Generator part */
   /* delete equipement. */
-  for(size_t i = 0; i < (size_t) this->mw->gen->listEquipement.size(); i++)
+  try
   {
-    if(this->mw->gen->listEquipement.at(i)->getNodeName() == child->getName())
-    {
-      indic = i;
-      break;
-    }
+    this->mw->gen->RemoveNode(child->getName());
   }
-  if(indic != (size_t) -1 )
-  {
-    this->mw->gen->RemoveEquipement(indic);
-  }
+    catch(const std::exception)
+    {}
 
   /* delete link. */
-  indic = -1;
-  for(size_t i = 0; i < (size_t) this->mw->gen->listLink.size(); i++)
+  /* Attention, if you delete a Link wich need a Node, you must delete it ! */
+  try
   {
-    if(this->mw->gen->listLink.at(i)->getLinkName() == child->getName())
-    {
-      indic = i;
-      if((child->getName()).find("emu_") == 0 || (child->getName()).find("wifi_") == 0 ||
-         (child->getName()).find("bridge_") == 0 || (child->getName()).find("tap_") == 0 )
-      {
-        for(size_t j = 0; j < (size_t) this->mw->gen->listEquipement.size(); j++)
-        {
-          if( this->mw->gen->listEquipement.at(j)->getNodeName() == this->mw->gen->listLink.at(i)->getNodes().at(0))
-          {
-            this->mw->gen->RemoveEquipement(j);
-          }
-        }
-        break;
-      }
-    }
+    this->mw->gen->RemoveLink(child->getName());
   }
-  if(indic != (size_t) -1 )
-  {
-    this->mw->gen->RemoveLink(indic);
-  }
+    catch(const std::exception)
+    {}
   
   /* delete connections */
   std::vector<std::string> objDelLink;
@@ -389,8 +365,8 @@ void DragWidget::deleteSelected()
       {
         if(this->mw->gen->listLink.at(j)->getNodes().size() <= 1)
         {
-          /* the link where the deleted object */
-          /* check if the link is hide. */
+          // the link where the deleted object 
+          // check if the link is hide. 
           isHide = true;
           for(size_t k = 0; k < (size_t) this->children().size(); k++)
           {
@@ -404,7 +380,7 @@ void DragWidget::deleteSelected()
           }
           if(isHide)
           {
-            this->mw->gen->RemoveLink(j);
+            this->mw->gen->RemoveLink(this->mw->gen->listLink.at(j)->getLinkName());
           }
         }
       }
@@ -463,7 +439,7 @@ void DragWidget::deleteSelected()
     if(child->getName() == sender ||
       child->getName() == receiver )
     {
-      this->mw->gen->RemoveApplication(i);
+      this->mw->gen->RemoveApplication(this->mw->gen->listApplication.at(i)->getAppName());
     }
   }
 
