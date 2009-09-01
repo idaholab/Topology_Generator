@@ -16,15 +16,15 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 /**
-* \file Hub.cpp
-* \brief Hub link subclasse.
-* \author Pierre Weiss
-* \date 2009
-*/
+ * \file Hub.cpp
+ * \brief Hub link subclass.
+ * \author Pierre Weiss
+ * \date 2009
+ */
 
 #include "Hub.h"
-
 
 Hub::Hub(const size_t &_indice) : Link(_indice)
 {
@@ -41,7 +41,7 @@ std::vector<std::string> Hub::GenerateHeader()
 {
   std::vector<std::string> headers;
   headers.push_back("#include \"ns3/bridge-module.h\"");
-  
+
   return headers;
 }
 
@@ -51,7 +51,7 @@ std::vector<std::string> Hub::GenerateLink()
   generatedLink.push_back("CsmaHelper csma_"+this->getLinkName()+";");
   generatedLink.push_back("csma_"+this->getLinkName()+".SetChannelAttribute (\"DataRate\", StringValue (\""+this->getDataRate()+"\"));");
   generatedLink.push_back("csma_"+this->getLinkName()+".SetChannelAttribute (\"Delay\",  StringValue (\""+this->getLinkDelay()+"\"));");
-  
+
   return generatedLink;
 }
 
@@ -64,7 +64,7 @@ std::vector<std::string> Hub::GenerateNetDevice()
     ndc.push_back(allNodes.at(i));
   }
   ndc.push_back("NetDeviceContainer "+this->getNdcName()+" = csma_"+this->getLinkName()+".Install ("+this->getAllNodeContainer()+");");
-  
+
   return ndc;
 }
 
@@ -86,5 +86,4 @@ std::vector<std::string> Hub::GenerateTrace()
 
   return trace;
 }
-
 

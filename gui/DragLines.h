@@ -1,4 +1,4 @@
- /* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 Pierre Weiss <3weissp@gmail.com>
  *
@@ -16,12 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 /**
-* \file DragLines.h
-* \brief The dragged lines.
-* \author Pierre Weiss
-* \date 2009
-*/
+ * \file DragLines.h
+ * \brief The dragged lines.
+ * \author Pierre Weiss
+ * \date 2009
+ */
 
 #ifndef DRAGLINES_H
 #define DRAGLINES_H
@@ -42,23 +43,22 @@ class DragLines
      * \brief Constructor
      */
     DragLines();
-    
+
     /**
-      * \brief begin
-      */
+     * \brief begin
+     */
     std::string begin;
+
     /**
-      * \brief end
+     * \brief end
      */
     std::string end;
-    /**
-      * \brief type
-      */
-    std::string type;
     
+    /**
+     * \brief type
+     */
+    std::string type;
 };
 
 #endif /* END DRAGLINES_H */
-     
-      
-      
+

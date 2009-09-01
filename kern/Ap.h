@@ -16,15 +16,16 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
-/**
-* \file Ap.h
-* \brief Ap link subclasse.
-* \author Pierre Weiss
-* \date 2009
-*/
 
-#ifndef Ap_H
-#define Ap_H
+/**
+ * \file Ap.h
+ * \brief Ap link subclass.
+ * \author Pierre Weiss
+ * \date 2009
+ */
+
+#ifndef AP_H
+#define AP_H
 
 #include "Link.h"
 
@@ -34,90 +35,85 @@
 
 /**
  * \ingroup generator
- * \brief Ap link subclasse.
+ * \brief Ap link subclass.
  *
- * This class is a subclasse from Link, it create a wifi ap and 
+ * This class is a subclass from Link, it create a wifi ap and 
  * you can add station to it.
  * 
  */
 class Ap : public Link
 {
-public:
-  /**
-   * \brief Constructor
-   * \param _indice the Ap number
-   * \param _apNode the node which is the ap.
-   */
-  Ap(const size_t &_indice, const std::string &_apNode);
+  public:
+    /**
+     * \brief Constructor.
+     * \param _indice the Ap number
+     * \param _apNode the node which is the ap.
+     */
+    Ap(const size_t &_indice, const std::string &_apNode);
 
-  /**
-   * \brief Destructor
-   */
-  virtual ~Ap();
-  
-private:
-  /**
-   * \brief mobility : attribute which say if station walk is constant or random.
-   */
-  bool mobility;
+    /**
+     * \brief Destructor.
+     */
+    virtual ~Ap();
 
-  /**
-   * \brief the ap name (ssid)
-   */
-  std::string apName;
-  
-  /**
-   * \brief attribute which represent the Wifi node.
-   */
-  std::string apNode;
-  
-  /**
-   * \brief Function to the ap node name.
-   * \return the ap node name.
-   */
-  std::string getApNode();
+  private:
+    /**
+     * \brief mobility : attribute which say if station walk is constant or random.
+     */
+    bool mobility;
 
-  /**
-   * \brief procedure to mobility on the connected station.
-   * \param _mobility 
-   */
-  void setMobility(const bool &_mobility);
+    /**
+     * \brief the AP name (ssid).
+     */
+    std::string apName;
 
-  /**
-   * \brief procedure to set the ap name (ssid)
-   * \param _apName the new apName
-   */
-  void setApName(const std::string &_apName);
-  
-  /**
-   * \brief Function which return the generated headers.
-   * \return headers.
-   */
-  virtual std::vector<std::string> GenerateHeader();
-  
-  /**
-   * \brief Function which generate the build link code.
-   * \return build link code.
-   */
-  virtual std::vector<std::string> GenerateLink();
-  
-  /**
-   * \brief Function which return the build of the net device container.
-   * \return the net device container.
-   */
-  virtual std::vector<std::string> GenerateNetDevice();
+    /**
+     * \brief attribute which represent the Wifi node.
+     */
+    std::string apNode;
 
-  /**
-   * \brief Function to generate the trace line.
-   * \return trace line.
-   */
-  virtual std::vector<std::string> GenerateTrace();
-  
+    /**
+     * \brief Function to the ap node name.
+     * \return the ap node name.
+     */
+    std::string getApNode();
+
+    /**
+     * \brief procedure to mobility on the connected station.
+     * \param _mobility 
+     */
+    void setMobility(const bool &_mobility);
+
+    /**
+     * \brief procedure to set the ap name (ssid).
+     * \param _apName the new apName
+     */
+    void setApName(const std::string &_apName);
+
+    /**
+     * \brief Function which return the generated headers.
+     * \return headers.
+     */
+    virtual std::vector<std::string> GenerateHeader();
+
+    /**
+     * \brief Function which generate the build link code.
+     * \return build link code.
+     */
+    virtual std::vector<std::string> GenerateLink();
+
+    /**
+     * \brief Function which return the build of the net device container.
+     * \return the net device container.
+     */
+    virtual std::vector<std::string> GenerateNetDevice();
+
+    /**
+     * \brief Function to generate the trace line.
+     * \return trace line.
+     */
+    virtual std::vector<std::string> GenerateTrace();
 };
 
-#endif /* Ap_H */
-
-
-
-
+#endif /* AP_H */
 

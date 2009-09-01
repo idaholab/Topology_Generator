@@ -16,12 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 /**
-* \file Tap.h
-* \brief Tap link subclasse.
-* \author Pierre Weiss
-* \date 2009
-*/
+ * \file Tap.h
+ * \brief Tap link subclass.
+ * \author Pierre Weiss
+ * \date 2009
+ */
 
 #ifndef TAP_H
 #define TAP_H
@@ -34,88 +35,87 @@
 
 /**
  * \ingroup generator
- * \brief Tap link subclasse.
+ * \brief Tap link subclass.
  *
- * This class is a subclasse from Link, it create a tap link on a csma network.
+ * This class is a subclass from Link, it create a tap link on a csma network.
  * The tap link work like an Hub(csma) ... Just it create the tap bridge to use your host.
- * 
  */
 class Tap : public Link
 {
-public:
-  /**
-   * \brief Constructor
-   * \param _indice the tap number
-   * \param _tapNode the external linux host
-   * \param _ifaceName the iface name
-   */
-  Tap(const size_t &_indice, const std::string &_tapNode, const std::string &_ifaceName);
-  
-  /**
-   * \brief Destructor
-   */
-  virtual ~Tap();
-  
-private:
-  /**
-   * \brief tap name attribute
-   */
-  std::string tapNode;
-  
-  /**
-   * \brief tap interface name
-   */
-  std::string ifaceName;
-  
-public:
-  /**
-   * \brief Function to get the tap node name.
-   * \return tap name
-   */   
-  std::string getTapName();
-  
-  /**
-   * \brief Function to get the interface name.
-   * \return interface name. 
-   */
-  std::string getIfaceName();
+  public:
+    /**
+     * \brief Constructor.
+     * \param _indice the tap number
+     * \param _tapNode the external linux host
+     * \param _ifaceName the iface name
+     */
+    Tap(const size_t &_indice, const std::string &_tapNode, const std::string &_ifaceName);
 
-  /**
-   * \brief Function which return the generated headers.
-   * \return headers.
-   */
-  virtual std::vector<std::string> GenerateHeader();
-  
-  /**
-   * \brief Function which generate the build link code.
-   * \return build link code.
-   */
-  virtual std::vector<std::string> GenerateLink();
-  
-  /**
-   * \brief Function which return the build of the net device container.
-   * \return the net device container.
-   */
-  virtual std::vector<std::string> GenerateNetDevice();
-  
-  /**
-   * \brief See main class.
-   * \return the tap bridge code.
-   */
-  std::vector<std::string> GenerateTapBridge();
-  
-  /**
-   * \brief See main class.
-   * \return the vars code.
-   */
-  std::vector<std::string> GenerateVars();
-  
-  /**
-   * \brief See main class.
-   * \return the cmd line code.
-   */
-  std::vector<std::string> GenerateCmdLine();
-  
+    /**
+     * \brief Destructor.
+     */
+    virtual ~Tap();
+
+  private:
+    /**
+     * \brief tap name attribute.
+     */
+    std::string tapNode;
+
+    /**
+     * \brief tap interface name.
+     */
+    std::string ifaceName;
+
+  public:
+    /**
+     * \brief Function to get the tap node name.
+     * \return tap name
+     */   
+    std::string getTapName();
+
+    /**
+     * \brief Function to get the interface name.
+     * \return interface name. 
+     */
+    std::string getIfaceName();
+
+    /**
+     * \brief Function which return the generated headers.
+     * \return headers.
+     */
+    virtual std::vector<std::string> GenerateHeader();
+
+    /**
+     * \brief Function which generate the build link code.
+     * \return build link code.
+     */
+    virtual std::vector<std::string> GenerateLink();
+
+    /**
+     * \brief Function which return the build of the net device container.
+     * \return the net device container.
+     */
+    virtual std::vector<std::string> GenerateNetDevice();
+
+    /**
+     * \brief See main class.
+     * \return the tap bridge code.
+     */
+    std::vector<std::string> GenerateTapBridge();
+
+    /**
+     * \brief See main class.
+     * \return the vars code.
+     */
+    std::vector<std::string> GenerateVars();
+
+    /**
+     * \brief See main class.
+     * \return the cmd line code.
+     */
+    std::vector<std::string> GenerateCmdLine();
 };
 
 #endif /* TAP_H */
+

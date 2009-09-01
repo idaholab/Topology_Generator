@@ -16,12 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 /**
-* \file Application.cpp
-* \brief Application Base Class.
-* \author Pierre Weiss
-* \date 2009
-*/
+ * \file Application.cpp
+ * \brief Application Base Class.
+ * \author Pierre Weiss
+ * \date 2009
+ */
 
 #include "Application.h"
 #include "Generator.h"
@@ -34,7 +35,6 @@ Application::Application(const size_t &_indice, const std::string &_senderNode, 
   this->receiverNode= _receiverNode;
   this->startTime = _startTime;
   this->endTime = _endTime;
-  
 }
 
 Application::~Application()
@@ -45,52 +45,52 @@ std::string Application::getIndice()
 {
   return Generator::toString(this->indice);
 }
-  
+
 void Application::setIndice(const size_t &_indice)
 {
   this->indice = _indice;
 }
-  
+
 std::string Application::getAppName()
 {
   return this->appName;
 }
-  
+
 void Application::setAppName(const std::string &_appName)
 {
   this->appName = _appName;
 }
-  
+
 std::string Application::getSenderNode()
 {
   return this->senderNode;
 }
-  
+
 void Application::setSenderNode(const std::string &_senderNode)
 {
   this->senderNode = _senderNode;
 }
-  
+
 std::string Application::getReceiverNode()
 {
   return this->receiverNode;
 }
-  
+
 void Application::setReceiverNode(const std::string &_receiverNode)
 {
   this->receiverNode = _receiverNode;
 }
- 
+
 std::string Application::getStartTime()
 {
   return Generator::toString(this->startTime);
 }
- 
+
 void Application::setStartTime(const size_t &_startTime)
 {
   this->startTime = _startTime;
 }
-  
+
 std::string Application::getEndTime()
 {
   return Generator::toString(this->endTime);
@@ -100,7 +100,7 @@ size_t Application::getEndTimeNumber()
 {
   return this->endTime;
 }
- 
+
 void Application::setEndTime(const size_t &_endTime)
 {
   this->endTime = _endTime;
@@ -116,7 +116,7 @@ void Application::setPacketSize(const size_t &_packetSize)
 
 size_t Application::getPacketSize()
 {
-    return 0;
+  return 0;
 }
 
 void Application::setMaxPacketCount(const size_t &_maxPacketCount)
@@ -127,7 +127,7 @@ void Application::setMaxPacketCount(const size_t &_maxPacketCount)
 
 size_t Application::getMaxPacketCount()
 {
-    return 0;
+  return 0;
 }
 
 void Application::setPacketIntervalTime(const std::string &_packetIntervalTime)
@@ -138,6 +138,6 @@ void Application::setPacketIntervalTime(const std::string &_packetIntervalTime)
 
 std::string Application::getPacketIntervalTime()
 {
-    return "";
+  return "";
 }
 

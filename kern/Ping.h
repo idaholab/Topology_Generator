@@ -16,12 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 /**
-* \file Ping.h
-* \brief The ping class subclasse of Application.
-* \author Pierre Weiss
-* \date 2009
-*/
+ * \file Ping.h
+ * \brief The ping class subclass of Application.
+ * \author Pierre Weiss
+ * \date 2009
+ */
 
 #ifndef PING_H
 #define PING_H
@@ -34,43 +35,43 @@
 
 /**
  * \ingroup generator
- * \brief The Ping subclasse from Application.
+ * \brief The Ping subclass from Application.
  *
  * This class generate the code to ping source to destination.
  */
 class Ping : public Application
 {
-public:
-  /**
-   * \brief Constructor which set default value.
-   * \param _indice
-   * \param _senderNode
-   * \param _receiverNode
-   * \param _startTime
-   * \param _endTime
-   */
-  Ping(const size_t &_indice, const std::string &_senderNode, const std::string &_receiverNode, const size_t &_startTime, const size_t &_endTime);
-  
-  /**
-   * \brief Destructor
-   */
-  ~Ping();
-  
-  /**
-   * \brief Function used to generate the headers.
-   * \return headers.
-   */
-  virtual std::vector<std::string> GenerateHeader();
-  
-  /**
-   * \brief Function used to generate the application.
-   * 
-   * \param netDeviceContainer
-   * \param numberIntoNetDevice
-   * \return application code.
-   */
-  virtual std::vector<std::string> GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice);
-  
+  public:
+    /**
+     * \brief Constructor which set default value.
+     * \param _indice
+     * \param _senderNode
+     * \param _receiverNode
+     * \param _startTime
+     * \param _endTime
+     */
+    Ping(const size_t &_indice, const std::string &_senderNode, const std::string &_receiverNode, const size_t &_startTime, const size_t &_endTime);
+
+    /**
+     * \brief Destructor.
+     */
+    ~Ping();
+
+    /**
+     * \brief Function used to generate the headers.
+     * \return headers.
+     */
+    virtual std::vector<std::string> GenerateHeader();
+
+    /**
+     * \brief Function used to generate the application.
+     * 
+     * \param netDeviceContainer
+     * \param numberIntoNetDevice
+     * \return application code.
+     */
+    virtual std::vector<std::string> GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice);
 };
 
 #endif /* PING_H */
+

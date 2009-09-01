@@ -17,6 +17,12 @@
  * 
  */
 
+/**
+ * \file main.cpp
+ * \brief The ns-3 generator.
+ * \author Pierre Weiss
+ */
+
 using namespace std;
 
 #include <iostream>
@@ -50,6 +56,12 @@ void printState(Generator *gen)
   }
 }
 
+/**
+ * \brief Entry point of program.
+ * \param argc number of argument
+ * \param argv array of argument
+ * \return EXIT_SUCCESS or EXIT_FAILURE
+ */
 int main(int argc, char *argv[])
 {
   argc = argc;

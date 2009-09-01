@@ -16,12 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 /**
-* \file MainWindow.h
-* \brief The main windows file.
-* \author Pierre Weiss
-* \date 2009
-*/
+ * \file MainWindow.h
+ * \brief The main windows file.
+ * \author Pierre Weiss
+ * \date 2009
+ */
 
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
@@ -46,151 +47,148 @@ class MainWindow : public QMainWindow
      * \brief Constructor
      */
     MainWindow(const std::string &simulationName);
-    
+
     /**
      * \brief Destructor
      */
     ~MainWindow();
-    
-     /**
+
+    /**
      * \brief attribute used tu delete object.
      * Is attribute to setDisable ...
      */
     QAction *delAction;
-    
+
     /**
      * \brief attribute which represent the core object. 
      */
     Generator *gen;
-    
+
     /**
      * \brief procedure to valid hard link.
      */
     void ValidLink();
-    
+
     /**
      * \brief prodcedure to valid apps install.
      */
     void ValidApps();
-  
+
   private:
     /**
      * \brief attribute which represent the drag n drop zone.
      */
     DragWidget *dw;
-    
+
     /**
      * \brief interface which are used.
      */ 
     std::vector<std::string> listIface;
-    
+
     /**
-     * \procedure to erase the unused iface. 
+     * \brief Procedure to erase the unused iface. 
      */
     void CleanIface();
-    
-     /**
+
+    /**
      * \brief procedure to connect node to linkNumber.
      * This procedure prevent mask overflow.
      * \param linkNumber the number of the link.
      * \param nodeName the node name tu be added.
      */
     void ConnectNode(const size_t &linkNumber, const std::string &nodeName);
-    
-    
-    
+
   private slots:
     /**
      * \brief procedure called by the tool bar to create a pc.
      */
     void CreatePc();
-    
+
     /**
      * \brief procedure called by the tool bar to creat a pc group.
      */
     void CreatePcGroup();
-    
+
     /**
      * \brief procedure called by the tool bar to create an Emu link.
      */
     void CreateEmu();
-    
+
     /**
      * \brief procedure called by the tool bar to create a tap device.
      */
     void CreateTap();
-    
+
     /**
      * \brief procedure called by the tool bar to create an access point.
      */
     void CreateAp();
-    
+
     /**
      * \brief procedure called by the tool bar to create a wifi station.
      */
     void CreateStation();
-    
+
     /**
      * \brief procedure called by the tool bar to create a hub (csma link)
      */
     void CreateHub();
-    
+
     /**
      * \brief procedure called by the tool bar to create a switch (bridge)
      */
     void CreateSwitch();
-    
+
     /**
      * \brief procedure called by the tool bar to create a router.
      */
     void CreateRouter();
-    
+
     /**
      * \brief procedure to create a hard link from equipement to equipement.
      */
     void CreateHardLink();
-    
+
     /**
      * \brief procedure to create a link from station to ap.
      */
     void CreateStationLink();
-    
+
     /**
      * \brief procedure to create a p2p link from equipement to equipement.
      */
     void CreateP2pLink();
-    
+
     /**
      * \brief procedure called by the tool bar to delete an object.
      */
     void deleteObject();
-    
+
     /**
      * \brief procedure called by the tool bar to get the configuration pop up.
      */
     void ConfigurationMenu();
-    
+
     /**
      * \brief about gui.
      */
     void About();
-    
+
     /**
      * \brief help gui/
      */
     void Help();
-    
+
     /**
      * \brief procedure to generate the cpp code.
      */
     void GenerateCpp();
-    
+
     /**
-     * \biref procedure to create an application/
+     * \brief procedure to create an application/
      */
     void CreateApps();
-    
-    
 };
 
 #endif /* END MAINWINDOW_H */
+

@@ -16,12 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 /**
-* \file PointToPoint.h
-* \brief PointToPoint link subclasse.
-* \author Pierre Weiss
-* \date 2009
-*/
+ * \file PointToPoint.h
+ * \brief PointToPoint link subclass.
+ * \author Pierre Weiss
+ * \date 2009
+ */
 
 #ifndef POINTTOPOINT_H
 #define POINTTOPOINT_H
@@ -34,50 +35,50 @@
 
 /**
  * \ingroup generator
- * \brief PointToPoint link subclasse.
+ * \brief PointToPoint link subclass.
  *
- * This class is a subclasse from Link, it create a PoinToPoint link as a Csma network.
+ * This class is a subclass from Link, it create a PoinToPoint link as a Csma network.
  * 
  */
 class PointToPoint : public Link
 {
-public:
-  /**
-   * \brief Constructor
-   * \param _indice the PointToPoint number
-   */
-  PointToPoint(const size_t &_indice);
-  
-  /**
-   * \brief Destructor
-   */
-  virtual ~PointToPoint();
-  
-private:
-  /**
-   * \brief Function which return the generated headers.
-   * \return headers.
-   */
-  virtual std::vector<std::string> GenerateHeader();
-  
-  /**
-   * \brief Function which generate the build link code.
-   * \return build link code.
-   */
-  virtual std::vector<std::string> GenerateLink();
-  
-  /**
-   * \brief Function which return the build of the net device container.
-   * \return the net device container.
-   */
-  virtual std::vector<std::string> GenerateNetDevice();
+  public:
+    /**
+     * \brief Constructor.
+     * \param _indice the PointToPoint number
+     */
+    PointToPoint(const size_t &_indice);
 
-  /**
-   * \brief Function to generate the trace line.
-   * \return trace line.
-   */
-  virtual std::vector<std::string> GenerateTrace();
-  
+    /**
+     * \brief Destructor.
+     */
+    virtual ~PointToPoint();
+
+  private:
+    /**
+     * \brief Function which return the generated headers.
+     * \return headers.
+     */
+    virtual std::vector<std::string> GenerateHeader();
+
+    /**
+     * \brief Function which generate the build link code.
+     * \return build link code.
+     */
+    virtual std::vector<std::string> GenerateLink();
+
+    /**
+     * \brief Function which return the build of the net device container.
+     * \return the net device container.
+     */
+    virtual std::vector<std::string> GenerateNetDevice();
+
+    /**
+     * \brief Function to generate the trace line.
+     * \return trace line.
+     */
+    virtual std::vector<std::string> GenerateTrace();
 };
 
 #endif /* POINTTOPOINT_H */
+

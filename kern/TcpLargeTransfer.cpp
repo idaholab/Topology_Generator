@@ -16,12 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 /**
-* \file TcpLargeTransfer.cpp
-* \brief Tcp Large Transfer Class.
-* \author Pierre Weiss
-* \date 2009
-*/
+ * \file TcpLargeTransfer.cpp
+ * \brief Tcp Large Transfer Class.
+ * \author Pierre Weiss
+ * \date 2009
+ */
 
 #include "TcpLargeTransfer.h"
 #include "Generator.h"
@@ -41,11 +42,11 @@ std::vector<std::string> TcpLargeTransfer::GenerateHeader()
   std::vector<std::string> headers;
   return headers;
 }
-  
+
 std::vector<std::string> TcpLargeTransfer::GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice)
 {
   std::vector<std::string> apps;
-  
+
   apps.push_back("uint16_t port_"+this->getAppName()+" = "+Generator::toString(this->port)+";");
   apps.push_back("Address sinkLocalAddress_"+this->getAppName()+"(InetSocketAddress (Ipv4Address::GetAny (), port_"+this->getAppName()+"));");
   apps.push_back("PacketSinkHelper sinkHelper_"+this->getAppName()+" (\"ns3::TcpSocketFactory\", sinkLocalAddress_"+this->getAppName()+");");
@@ -56,7 +57,7 @@ std::vector<std::string> TcpLargeTransfer::GenerateApplication(std::string netDe
   apps.push_back("OnOffHelper clientHelper_"+this->getAppName()+" (\"ns3::TcpSocketFactory\", Address ());");
   apps.push_back("clientHelper_"+this->getAppName()+".SetAttribute (\"OnTime\", RandomVariableValue (ConstantVariable (1)));");
   apps.push_back("clientHelper_"+this->getAppName()+".SetAttribute (\"OffTime\", RandomVariableValue (ConstantVariable (0)));");
-  
+
   apps.push_back("ApplicationContainer clientApps_"+this->getAppName()+";");
   apps.push_back("AddressValue remoteAddress_"+this->getAppName()+"(InetSocketAddress (iface_"+netDeviceContainer+".GetAddress ("+Generator::toString(numberIntoNetDevice)+"), port_"+this->getAppName()+"));");
   apps.push_back("clientHelper_"+this->getAppName()+".SetAttribute (\"Remote\", remoteAddress_"+this->getAppName()+");");

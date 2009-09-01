@@ -16,18 +16,25 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 /**
-* \file test.cpp
-* \brief The test runner class
-* \author Pierre Weiss
-* \date 2009
-*/
+ * \file test.cpp
+ * \brief The test runner class
+ * \author Pierre Weiss
+ * \date 2009
+ */
 
 #include <cstdlib>
 
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/ui/text/TestRunner.h>
 
+/**
+ * \brief Entry point of program.
+ * \param argc number of argument
+ * \param argv array of argument
+ * \return EXIT_SUCCESS
+ */
 int main(int argc, char** argv)
 {
   CppUnit::TextUi::TestRunner runner;
@@ -41,5 +48,4 @@ int main(int argc, char** argv)
 
   return EXIT_SUCCESS;
 }
-
 

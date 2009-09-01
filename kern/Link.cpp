@@ -16,12 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 /**
-* \file Link.cpp
-* \brief Link Base Class.
-* \author Pierre Weiss
-* \date 2009
-*/
+ * \file Link.cpp
+ * \brief Link Base Class.
+ * \author Pierre Weiss
+ * \date 2009
+ */
 
 #include "Link.h"
 #include "Generator.h"
@@ -70,7 +71,7 @@ std::vector<std::string> Link::getNodes()
 {
   return this->nodes;
 }
-  
+
 void Link::setLinkName(const std::string &_linkName)
 {
   this->linkName = _linkName;
@@ -80,7 +81,7 @@ void Link::setDataRate(const std::string &_dataRate)
 {
   this->dataRate = _dataRate;
 }
-  
+
 void Link::setLinkDelay(const std::string &_linkDelay)
 {
   this->linkDelay = _linkDelay;
@@ -130,7 +131,7 @@ std::vector<std::string> Link::GroupAsNodeContainer()
       res.push_back(this->getAllNodeContainer()+".Add("+this->nodes.at(i)+");");
     }
   }
-   
+
   return res;
 }
 
@@ -145,7 +146,7 @@ std::vector<std::string> Link::GenerateVars()
   std::vector<std::string> res;
   return res;
 }
-  
+
 std::vector<std::string> Link::GenerateCmdLine()
 {
   std::vector<std::string> res;
@@ -173,6 +174,4 @@ void Link::setPromisc(const bool &_state)
 {
   this->tracePromisc = _state;
 }
-  
-  
-  
+

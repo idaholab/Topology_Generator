@@ -16,12 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 /**
-* \file UdpEcho.cpp
-* \brief UdpEcho Class.
-* \author Pierre Weiss
-* \date 2009
-*/
+ * \file UdpEcho.cpp
+ * \brief UdpEcho Class.
+ * \author Pierre Weiss
+ * \date 2009
+ */
 
 #include "UdpEcho.h"
 #include "Generator.h"
@@ -45,11 +46,11 @@ std::vector<std::string> UdpEcho::GenerateHeader()
   std::vector<std::string> headers;
   return headers;
 }
-  
+
 std::vector<std::string> UdpEcho::GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice)
 {
   std::vector<std::string> apps;
-  
+
   apps.push_back("uint16_t port_"+this->getAppName()+" = "+Generator::toString(this->port)+";"); 
   apps.push_back("UdpEchoServerHelper server_"+this->getAppName()+" (port_"+this->getAppName()+");");
   apps.push_back("ApplicationContainer apps_"+this->getAppName()+" = server_"+this->getAppName()+".Install ("+this->getReceiverNode()+".Get(0));");
@@ -64,7 +65,7 @@ std::vector<std::string> UdpEcho::GenerateApplication(std::string netDeviceConta
   apps.push_back("apps_"+this->getAppName()+" = client_"+this->getAppName()+".Install ("+this->getSenderNode()+".Get (0));");
   apps.push_back("apps_"+this->getAppName()+".Start (Seconds ("+this->getStartTime()+".1));");
   apps.push_back("apps_"+this->getAppName()+".Stop (Seconds ("+this->getEndTime()+".0));");
-  
+
   return apps;
 }
 
@@ -77,7 +78,7 @@ size_t UdpEcho::getPacketSize()
 {
   return this->packetSize;
 }
-    
+
 void UdpEcho::setMaxPacketCount(const size_t &_maxPacketCount)
 {
   this->maxPacketCount = _maxPacketCount;

@@ -16,12 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 /**
-* \file DragWidget.cpp
-* \brief The drag n drop zone file.
-* \author Pierre Weiss
-* \date 2009
-*/
+ * \file DragWidget.cpp
+ * \brief The drag'n'drop zone file.
+ * \author Pierre Weiss
+ * \date 2009
+ */
 
 #include <QtGui>
 #include <iostream>
@@ -33,28 +34,27 @@
 #include "DragObject.h"
 #include "DragLines.h"
 
-
 DragWidget::DragWidget(QWidget *parent) : QWidget(parent)
 {
-    setMinimumSize(400, 400);
-    setAcceptDrops(true);
-    setMouseTracking(true);
-   
-    this->traceLink = false;
-    
-    this->linkBegin = "";
-    this->linkEnd = "";
-    this->linkType = "";
-    
-    this->appsEnable = false;
-    this->appsPing = false;
-    this->appsUdpEcho = false;
-    this->appsTcp = false;
-    this->appsServer = "";
-    this->appsClient = "";
-    this->startTime = -1;
-    this->endTime = -1;
-    this->port = -1;
+  setMinimumSize(400, 400);
+  setAcceptDrops(true);
+  setMouseTracking(true);
+
+  this->traceLink = false;
+
+  this->linkBegin = "";
+  this->linkEnd = "";
+  this->linkType = "";
+
+  this->appsEnable = false;
+  this->appsPing = false;
+  this->appsUdpEcho = false;
+  this->appsTcp = false;
+  this->appsServer = "";
+  this->appsClient = "";
+  this->startTime = -1;
+  this->endTime = -1;
+  this->port = -1;
 }
 
 DragWidget::~DragWidget()
@@ -69,14 +69,14 @@ void DragWidget::setMainWindow(MainWindow *_mw)
 
 void DragWidget::CreateObject(const std::string &type, const std::string &_name)
 {
-	DragObject *label = new DragObject(this);
-	label->setName(_name);
-	if(type == "Pc")
-	{
+  DragObject *label = new DragObject(this);
+  label->setName(_name);
+  if(type == "Pc")
+  {
     label->setPixmap(QPixmap(":/Ico/Pc.png"));
   } 
   if(type == "Pc-group")
-	{
+  {
     label->setPixmap(QPixmap(":/Ico/Pc-group.png"));
   } 
   else if(type == "Emu")
@@ -110,7 +110,7 @@ void DragWidget::CreateObject(const std::string &type, const std::string &_name)
   label->move(10, 10);
   label->show();
   label->setAttribute(Qt::WA_DeleteOnClose);
-  
+
   this->timer = new QTimer();
   this->timer->start(100);
   connect(timer, SIGNAL(timeout()), this, SLOT(update()));
@@ -147,7 +147,7 @@ void DragWidget::dropEvent(QDropEvent *event)
     QPixmap pixmap;
     QPoint offset;
     dataStream >> pixmap >> offset;
-   
+
     /* get the name from the last draged label */
     /* change the at number ... we are already on drag an elem. */
     DragObject *child = static_cast<DragObject*>(childAt( this->lastPosition ));
@@ -160,7 +160,7 @@ void DragWidget::dropEvent(QDropEvent *event)
     label->move(event->pos() - offset);
     label->show();
     label->setAttribute(Qt::WA_DeleteOnClose);
-    
+
     update();
 
     if (event->source() == this) 
@@ -195,16 +195,16 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
   this->mw->delAction->setDisabled(false);
 
   this->lastPosition = event->pos();
-  
+
   /* trace link ... */
   if(this->traceLink)
   {
     /* update if we drag an existant object. */
-    
+
     /*il faut utiliser les noms des objects et non pas les positions ... les positions changent quand on drag et du coup après ont peut
-    plus cast pour recup le child 
-    ....*/
-    
+      plus cast pour recup le child 
+      ....*/
+
     /* set the attribute. */
     if(this->linkBegin == "")
     {
@@ -225,15 +225,15 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
           lig.end = this->linkEnd;
           lig.type = this->linkType;
           this->drawLines.push_back(lig);
-          
+
           this->mw->ValidLink();
         }
       }
     }
   } 
-  
-  
-  
+
+
+
   QPixmap pixmap = *child->pixmap();
 
   QByteArray itemData;
@@ -265,7 +265,7 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
     child->show();
     child->setPixmap(pixmap);
   }
-  
+
   /* application. */
   if(this->appsEnable)
   {
@@ -281,22 +281,22 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
       }
     }
   }
-  
+
   if(this->appsPing)
   {
     ShowGuiPing();
   }
-  
+
   if(this->appsUdpEcho)
   {
     ShowGuiUdpEcho();
   }
-  
+
   if(this->appsTcp)
   {
     ShowGuiTcp();
   }
-  
+
   //~ this->appsEnable = false;
 }
 
@@ -304,7 +304,7 @@ void DragWidget::mouseMoveEvent(QMouseEvent * /*event*/)
 {
   update();
 }
-    
+
 void DragWidget::deleteSelected()
 {
   DragObject *child = static_cast<DragObject*>(childAt(this->lastPosition));
@@ -320,8 +320,8 @@ void DragWidget::deleteSelected()
   {
     this->mw->gen->RemoveNode(child->getName());
   }
-    catch(const std::exception)
-    {}
+  catch(const std::exception)
+  {}
 
   /* delete link. */
   /* Attention, if you delete a Link wich need a Node, you must delete it ! */
@@ -329,9 +329,9 @@ void DragWidget::deleteSelected()
   {
     this->mw->gen->RemoveLink(child->getName());
   }
-    catch(const std::exception)
-    {}
-  
+  catch(const std::exception)
+  {}
+
   /* delete connections */
   std::vector<std::string> objDelLink;
   for(size_t i = 0; i < (size_t) this->mw->gen->listLink.size(); i++)
@@ -347,14 +347,14 @@ void DragWidget::deleteSelected()
         {
           this->mw->gen->listLink.at(i)->nodes.erase(this->mw->gen->listLink.at(i)->nodes.begin() + j);
         }
-          catch(const std::out_of_range &e)
-          {
-            this->mw->delAction->setDisabled(true);
-          }
+        catch(const std::out_of_range &e)
+        {
+          this->mw->delAction->setDisabled(true);
+        }
       }
     }
   }
-  
+
   /* delete hide create hub for until two Pc for example. */
   bool isHide = true;
   for(size_t i = 0; i < (size_t) objDelLink.size(); i++)
@@ -404,13 +404,13 @@ void DragWidget::deleteSelected()
       {
         this->drawLines.erase(this->drawLines.begin() + i);
       }
-        catch(const std::out_of_range &e)
-        {
-          this->mw->delAction->setDisabled(true);
-        }
+      catch(const std::out_of_range &e)
+      {
+        this->mw->delAction->setDisabled(true);
+      }
     }
   }
-  
+
   /* remove application. */
   std::string sender("");
   std::string receiver("");
@@ -420,7 +420,7 @@ void DragWidget::deleteSelected()
     {
       sender = this->mw->gen->listApplication.at(i)->getSenderNode();
       receiver = this->mw->gen->listApplication.at(i)->getReceiverNode();
-      
+
       if(sender.find("NodeContainer") == 0)
       {
         sender = sender.substr((sender.find_first_of("(") + 1), (sender.find_first_of(".") - sender.find_first_of("(") - 1));
@@ -435,9 +435,9 @@ void DragWidget::deleteSelected()
       sender = this->mw->gen->listApplication.at(i)->getSenderNode();
       receiver = this->mw->gen->listApplication.at(i)->getReceiverNode(); 
     }
-    
+
     if(child->getName() == sender ||
-      child->getName() == receiver )
+        child->getName() == receiver )
     {
       this->mw->gen->RemoveApplication(this->mw->gen->listApplication.at(i)->getAppName());
     }
@@ -446,7 +446,7 @@ void DragWidget::deleteSelected()
   /* Gui part */
   child->clear();
   child->Destroy();
-  
+
   this->mw->delAction->setDisabled(true);
 }
 
@@ -463,7 +463,7 @@ std::vector<std::string> DragWidget::getLastSelected()
   {
     res.push_back("");
   }
-  
+
   if (child2)
   {
     res.push_back(child2->getName());
@@ -472,9 +472,9 @@ std::vector<std::string> DragWidget::getLastSelected()
   {
     res.push_back("");
   }
-  
+
   res.push_back(this->linkType);
-  
+
   return res;
 }
 
@@ -493,7 +493,7 @@ void DragWidget::ResetSelected()
 void DragWidget::paintEvent(QPaintEvent * /*event*/)
 {
   QPainter paint(this);
-    
+
   QPen pen(Qt::black);
   pen.setWidth(2);
   pen.setCapStyle(Qt::RoundCap);
@@ -503,12 +503,12 @@ void DragWidget::paintEvent(QPaintEvent * /*event*/)
   point.setStyle(Qt::DotLine);
   point.setCapStyle(Qt::RoundCap);
 
-    
+
   QPen p2p(Qt::green);
   p2p.setWidth(2);
   p2p.setCapStyle(Qt::RoundCap);
 
-    
+
   for(size_t i = 0; i < (size_t) this->drawLines.size(); i++)
   {
     if(this->getChildFromName(this->drawLines.at(i).begin)->getName() != "" && this->getChildFromName(this->drawLines.at(i).end)->getName() != "")
@@ -528,13 +528,13 @@ void DragWidget::paintEvent(QPaintEvent * /*event*/)
       DragObject *begin = this->getChildFromName(this->drawLines.at(i).begin);
       DragObject *end = this->getChildFromName(this->drawLines.at(i).end);
       paint.drawLine( (begin->pos().x() + (begin->width() / 2)), (begin->pos().y() + (begin->height() / 2)),
-                        (end->pos().x() + (end->width() / 2)), (end->pos().y() + (end->height() / 2))
-                    );
+          (end->pos().x() + (end->width() / 2)), (end->pos().y() + (end->height() / 2))
+          );
     }
   }
   if(this->traceLink)
   {
-    
+
     if(this->linkBegin != "" && this->linkEnd == "")
     {
       if(this->linkType == "HardLink")
@@ -549,9 +549,9 @@ void DragWidget::paintEvent(QPaintEvent * /*event*/)
       {
         paint.setPen(p2p);
       }
-      paint.drawLine((this->getChildFromName(this->linkBegin))->pos().x()+((this->getChildFromName(this->linkBegin))->width()/2),
-                       (this->getChildFromName(this->linkBegin))->pos().y()+((this->getChildFromName(this->linkBegin))->height()/2),
-                        mapFromGlobal(QCursor::pos()).x(),  mapFromGlobal(QCursor::pos()).y());
+      paint.drawLine((this->getChildFromName(this->linkBegin))->pos().x() + ((this->getChildFromName(this->linkBegin))->width() / 2),
+          (this->getChildFromName(this->linkBegin))->pos().y() + ((this->getChildFromName(this->linkBegin))->height() / 2),
+          mapFromGlobal(QCursor::pos()).x(),  mapFromGlobal(QCursor::pos()).y());
     }
   }
   paint.setPen(pen);
@@ -578,18 +578,18 @@ DragObject* DragWidget::getChildFromName(const std::string &name)
 void DragWidget::ShowGuiPing()
 {
   this->appsEnable = false;
-  
+
   dialog = new QDialog(this);
   dialog->setWindowTitle("Ping");
-  
+
   QGridLayout *layout = new QGridLayout;
-      
+
   QDialogButtonBox *buttonBox = new QDialogButtonBox(dialog);
   buttonBox->setStandardButtons(QDialogButtonBox::Ok);//QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
-  
+
   connect(buttonBox, SIGNAL(accepted()), dialog, SLOT(accept()));
   connect(buttonBox, SIGNAL(rejected()), dialog, SLOT(reject()));
-  
+
   /* MACHINE LEFT */
   std::string label_machineLeft("");
   if(this->appsServer != "")
@@ -600,15 +600,15 @@ void DragWidget::ShowGuiPing()
   {
     label_machineLeft = "Sender : ___________";
   }
-  
+
   QLabel *machineLeft = new QLabel(QString(label_machineLeft.c_str()), dialog);
   layout->addWidget(machineLeft, 2, 0);
-  
+
   QPushButton *button_machineLeft = new QPushButton("Choose", dialog);
   connect(button_machineLeft, SIGNAL( clicked() ), this, SLOT( ChooseServer() ) );
 
   layout->addWidget(button_machineLeft, 2, 1);
-  
+
   /* MACHINE RIGHT */
   std::string label_machineRight("");
   if(this->appsClient != "")
@@ -619,49 +619,49 @@ void DragWidget::ShowGuiPing()
   {
     label_machineRight = "Target : ___________";
   }
-  
+
   QLabel *machineRight = new QLabel(QString(label_machineRight.c_str()), dialog);
   layout->addWidget(machineRight, 3, 0);
-  
+
   QPushButton *button_machineRight = new QPushButton("Choose", dialog);
   connect(button_machineRight, SIGNAL( clicked() ), this, SLOT( ChooseClient() ) );
   layout->addWidget(button_machineRight, 3, 1);
-  
+
   /* PARAMS. */
   QLabel *lab_startTime = new QLabel("Start time (s):", dialog);
   layout->addWidget(lab_startTime, 5, 0);
-      
+
   QLineEdit *line_startTime = new QLineEdit(dialog);
   if(this->startTime != (size_t) -1)
   {
     line_startTime->insert(Generator::toString(this->startTime).c_str());
   }
   layout->addWidget(line_startTime, 5, 1);
-      
+
   QLabel *lab_endTime = new QLabel("End time (s):", dialog);
   layout->addWidget(lab_endTime, 6, 0);
-      
+
   QLineEdit *line_endTime = new QLineEdit(dialog);
   if(this->endTime != (size_t) -1)
   {
     line_endTime->insert(Generator::toString(this->endTime).c_str());
   }
   layout->addWidget(line_endTime, 6, 1);
-  
+
   /* add OK, CANCEL button */
   QPushButton *cancel = new QPushButton("Cancel", dialog);
   connect(cancel, SIGNAL( clicked() ), this, SLOT( Cancel() ) );
   layout->addWidget(cancel, 8, 3);
   layout->addWidget(buttonBox, 8, 4);
-      
+
   dialog->setLayout(layout);
   dialog->exec();
-      
+
   if(dialog->result() == 1)
   {
     this->startTime = line_startTime->text().toInt();
     this->endTime = line_endTime->text().toInt();
-    
+
     if(this->appsServer != "" && this->appsClient != "" && this->startTime != (size_t) -1 && this->startTime != (size_t) -1)
     {
       if((this->startTime < this->endTime))
@@ -714,7 +714,7 @@ void DragWidget::Cancel()
   dialog->hide();
   this->appsServer = "";
   this->appsClient = "";
-  
+
   this->appsEnable = false;
   this->appsPing = false;
   this->appsUdpEcho = false;
@@ -724,18 +724,18 @@ void DragWidget::Cancel()
 void DragWidget::ShowGuiUdpEcho()
 {
   this->appsEnable = false;
-  
+
   dialog = new QDialog(this);
   dialog->setWindowTitle("Udp Echo");
-  
+
   QGridLayout *layout = new QGridLayout;
-      
+
   QDialogButtonBox *buttonBox = new QDialogButtonBox(dialog);
   buttonBox->setStandardButtons(QDialogButtonBox::Ok);
-  
+
   connect(buttonBox, SIGNAL(accepted()), dialog, SLOT(accept()));
   connect(buttonBox, SIGNAL(rejected()), dialog, SLOT(reject()));
-  
+
   /* MACHINE LEFT */
   std::string label_machineLeft("");
   if(this->appsServer != "")
@@ -746,15 +746,15 @@ void DragWidget::ShowGuiUdpEcho()
   {
     label_machineLeft = "Server : ___________";
   }
-  
+
   QLabel *machineLeft = new QLabel(QString(label_machineLeft.c_str()), dialog);
   layout->addWidget(machineLeft, 2, 0);
-  
+
   QPushButton *button_machineLeft = new QPushButton("Choose", dialog);
   connect(button_machineLeft, SIGNAL( clicked() ), this, SLOT( ChooseServer() ) );
 
   layout->addWidget(button_machineLeft, 2, 1);
-  
+
   /* MACHINE RIGHT */
   std::string label_machineRight("");
   if(this->appsClient != "")
@@ -765,60 +765,60 @@ void DragWidget::ShowGuiUdpEcho()
   {
     label_machineRight = "Client : ___________";
   }
-  
+
   QLabel *machineRight = new QLabel(QString(label_machineRight.c_str()), dialog);
   layout->addWidget(machineRight, 3, 0);
-  
+
   QPushButton *button_machineRight = new QPushButton("Choose", dialog);
   connect(button_machineRight, SIGNAL( clicked() ), this, SLOT( ChooseClient() ) );
   layout->addWidget(button_machineRight, 3, 1);
-  
+
   /* PARAMS. */
   QLabel *lab_startTime = new QLabel("Start time (s):", dialog);
   layout->addWidget(lab_startTime, 5, 0);
-      
+
   QLineEdit *line_startTime = new QLineEdit(dialog);
   if(this->startTime != (size_t) -1)
   {
     line_startTime->insert(Generator::toString(this->startTime).c_str());
   }
   layout->addWidget(line_startTime, 5, 1);
-      
+
   QLabel *lab_endTime = new QLabel("End time (s):", dialog);
   layout->addWidget(lab_endTime, 6, 0);
-      
+
   QLineEdit *line_endTime = new QLineEdit(dialog);
   if(this->endTime != (size_t) -1)
   {
     line_endTime->insert(Generator::toString(this->endTime).c_str());
   }
   layout->addWidget(line_endTime, 6, 1);
-  
+
   QLabel *lab_port = new QLabel("Port :", dialog);
   layout->addWidget(lab_port, 7, 0);
-      
+
   QLineEdit *line_port = new QLineEdit(dialog);
   if(this->port != (size_t) -1)
   {
     line_port->insert(Generator::toString(this->port).c_str());
   }
   layout->addWidget(line_port, 7, 1);
-  
+
   /* add OK, CANCEL button */
   QPushButton *cancel = new QPushButton("Cancel", dialog);
   connect(cancel, SIGNAL( clicked() ), this, SLOT( Cancel() ) );
   layout->addWidget(cancel, 8, 3);
   layout->addWidget(buttonBox, 8, 4);
-      
+
   dialog->setLayout(layout);
   dialog->exec();
-      
+
   if(dialog->result() == 1)
   {
     this->startTime = line_startTime->text().toInt();
     this->endTime = line_endTime->text().toInt();
     this->port = line_port->text().toInt();
-    
+
     if(this->appsServer != "" && this->appsClient != "" && this->startTime != (size_t) -1 && this->startTime != (size_t) -1 && this->port != (size_t) -1)
     {
       if((this->startTime < this->endTime))
@@ -863,18 +863,18 @@ void DragWidget::ShowGuiUdpEcho()
 void DragWidget::ShowGuiTcp()
 {
   this->appsEnable = false;
-  
+
   dialog = new QDialog(this);
   dialog->setWindowTitle("Tcp Large Transfer");
-  
+
   QGridLayout *layout = new QGridLayout;
-      
+
   QDialogButtonBox *buttonBox = new QDialogButtonBox(dialog);
   buttonBox->setStandardButtons(QDialogButtonBox::Ok);
-  
+
   connect(buttonBox, SIGNAL(accepted()), dialog, SLOT(accept()));
   connect(buttonBox, SIGNAL(rejected()), dialog, SLOT(reject()));
-  
+
   /* MACHINE LEFT */
   std::string label_machineLeft("");
   if(this->appsServer != "")
@@ -885,15 +885,15 @@ void DragWidget::ShowGuiTcp()
   {
     label_machineLeft = "Server : ___________";
   }
-  
+
   QLabel *machineLeft = new QLabel(QString(label_machineLeft.c_str()), dialog);
   layout->addWidget(machineLeft, 2, 0);
-  
+
   QPushButton *button_machineLeft = new QPushButton("Choose", dialog);
   connect(button_machineLeft, SIGNAL( clicked() ), this, SLOT( ChooseServer() ) );
 
   layout->addWidget(button_machineLeft, 2, 1);
-  
+
   /* MACHINE RIGHT */
   std::string label_machineRight("");
   if(this->appsClient != "")
@@ -904,60 +904,60 @@ void DragWidget::ShowGuiTcp()
   {
     label_machineRight = "Client : ___________";
   }
-  
+
   QLabel *machineRight = new QLabel(QString(label_machineRight.c_str()), dialog);
   layout->addWidget(machineRight, 3, 0);
-  
+
   QPushButton *button_machineRight = new QPushButton("Choose", dialog);
   connect(button_machineRight, SIGNAL( clicked() ), this, SLOT( ChooseClient() ) );
   layout->addWidget(button_machineRight, 3, 1);
-  
+
   /* PARAMS. */
   QLabel *lab_startTime = new QLabel("Start time (s):", dialog);
   layout->addWidget(lab_startTime, 5, 0);
-      
+
   QLineEdit *line_startTime = new QLineEdit(dialog);
   if(this->startTime != (size_t) -1)
   {
     line_startTime->insert(Generator::toString(this->startTime).c_str());
   }
   layout->addWidget(line_startTime, 5, 1);
-      
+
   QLabel *lab_endTime = new QLabel("End time (s):", dialog);
   layout->addWidget(lab_endTime, 6, 0);
-      
+
   QLineEdit *line_endTime = new QLineEdit(dialog);
   if(this->endTime != (size_t) -1)
   {
     line_endTime->insert(Generator::toString(this->endTime).c_str());
   }
   layout->addWidget(line_endTime, 6, 1);
-  
+
   QLabel *lab_port = new QLabel("Port :", dialog);
   layout->addWidget(lab_port, 7, 0);
-      
+
   QLineEdit *line_port = new QLineEdit(dialog);
   if(this->port != (size_t) -1)
   {
     line_port->insert(Generator::toString(this->port).c_str());
   }
   layout->addWidget(line_port, 7, 1);
-  
+
   /* add OK, CANCEL button */
   QPushButton *cancel = new QPushButton("Cancel", dialog);
   connect(cancel, SIGNAL( clicked() ), this, SLOT( Cancel() ) );
   layout->addWidget(cancel, 8, 3);
   layout->addWidget(buttonBox, 8, 4);
-      
+
   dialog->setLayout(layout);
   dialog->exec();
-      
+
   if(dialog->result() == 1)
   {
     this->startTime = line_startTime->text().toInt();
     this->endTime = line_endTime->text().toInt();
     this->port = line_port->text().toInt();
-    
+
     if(this->appsServer != "" && this->appsClient != "" && this->startTime != (size_t) -1 && this->startTime != (size_t) -1 && this->port != (size_t) -1)
     {
       if((this->startTime < this->endTime))
@@ -996,9 +996,5 @@ void DragWidget::ShowGuiTcp()
       }
     }
   }
-
 }
-
-
-
 

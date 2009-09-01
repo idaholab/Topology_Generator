@@ -16,15 +16,15 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 /**
-* \file Tap.cpp
-* \brief Tap link subclasse.
-* \author Pierre Weiss
-* \date 2009
-*/
+ * \file Tap.cpp
+ * \brief Tap link subclass.
+ * \author Pierre Weiss
+ * \date 2009
+ */
 
 #include "Tap.h"
-
 
 Tap::Tap(const size_t &_indice, const std::string &_tapNode, const std::string &_ifaceName) : Link(_indice)
 {
@@ -45,7 +45,7 @@ std::vector<std::string> Tap::GenerateHeader()
   std::vector<std::string> headers;
   headers.push_back("#include \"ns3/bridge-module.h\"");
   headers.push_back("#include \"ns3/helper-module.h\"");
-  
+
   return headers;
 }
 
@@ -55,7 +55,7 @@ std::vector<std::string> Tap::GenerateLink()
   generatedLink.push_back("CsmaHelper csma_"+this->getLinkName()+";");
   generatedLink.push_back("csma_"+this->getLinkName()+".SetChannelAttribute (\"DataRate\", StringValue (\""+this->getDataRate()+"\"));");
   generatedLink.push_back("csma_"+this->getLinkName()+".SetChannelAttribute (\"Delay\", StringValue (\""+this->getLinkDelay()+"\"));");
-  
+
   return generatedLink;
 }
 
@@ -68,19 +68,19 @@ std::vector<std::string> Tap::GenerateNetDevice()
     ndc.push_back(allNodes.at(i));
   }
   ndc.push_back("NetDeviceContainer "+this->getNdcName()+" = csma_"+this->getLinkName()+".Install ("+this->getAllNodeContainer()+");");
-  
+
   return ndc;
 }
 
 std::vector<std::string> Tap::GenerateTapBridge()
 {
   std::vector<std::string> tapBridge;
-  
+
   tapBridge.push_back("TapBridgeHelper tapBridge_"+this->getLinkName()+" (iface_"+this->getNdcName()+".GetAddress(1));");
   tapBridge.push_back("tapBridge_"+this->getLinkName()+".SetAttribute (\"Mode\", StringValue (mode_"+this->getLinkName()+"));");
   tapBridge.push_back("tapBridge_"+this->getLinkName()+".SetAttribute (\"DeviceName\", StringValue (tapName_"+this->getLinkName()+"));");
   tapBridge.push_back("tapBridge_"+this->getLinkName()+".Install ("+this->getTapName()+".Get(0), "+this->getNdcName()+".Get(0));");
-  
+
   return tapBridge;
 }
 
@@ -108,5 +108,4 @@ std::vector<std::string> Tap::GenerateCmdLine()
   cmdLine.push_back("cmd.AddValue(\"tapName_"+this->getLinkName()+"\", \"Name of the OS tap device\", tapName_"+this->getLinkName()+");");
   return cmdLine;
 }
-  
 

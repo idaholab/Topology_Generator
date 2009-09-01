@@ -16,12 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 /**
-* \file Ping.cpp
-* \brief Ping Class.
-* \author Pierre Weiss
-* \date 2009
-*/
+ * \file Ping.cpp
+ * \brief Ping Class.
+ * \author Pierre Weiss
+ * \date 2009
+ */
 
 #include "Ping.h"
 #include "Generator.h"
@@ -39,14 +40,14 @@ std::vector<std::string> Ping::GenerateHeader()
 {
   std::vector<std::string> headers;
   headers.push_back("#include \"ns3/helper-module.h\"");
-  
+
   return headers;
 }
-  
+
 std::vector<std::string> Ping::GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice)
 {
   std::vector<std::string> apps;
-  
+
   apps.push_back("InetSocketAddress dst_"+this->getAppName()+" = InetSocketAddress (iface_"+netDeviceContainer+".GetAddress("+Generator::toString(numberIntoNetDevice)+"));");
   apps.push_back("OnOffHelper onoff_"+this->getAppName()+" = OnOffHelper (\"ns3::Ipv4RawSocketFactory\", dst_"+this->getAppName()+");");
   apps.push_back("onoff_"+this->getAppName()+".SetAttribute (\"OnTime\", RandomVariableValue (ConstantVariable (1.0)));");

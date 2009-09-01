@@ -16,15 +16,15 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 /**
-* \file PointToPoint.cpp
-* \brief PointToPoint link subclasse.
-* \author Pierre Weiss
-* \date 2009
-*/
+ * \file PointToPoint.cpp
+ * \brief PointToPoint link subclass.
+ * \author Pierre Weiss
+ * \date 2009
+ */
 
 #include "PointToPoint.h"
-
 
 PointToPoint::PointToPoint(const size_t &_indice) : Link(_indice)
 {
@@ -41,7 +41,7 @@ std::vector<std::string> PointToPoint::GenerateHeader()
 {
   std::vector<std::string> headers;
   headers.push_back("#include \"ns3/bridge-module.h\"");
-  
+
   return headers;
 }
 
@@ -51,7 +51,7 @@ std::vector<std::string> PointToPoint::GenerateLink()
   generatedLink.push_back("PointToPointHelper p2p_"+this->getLinkName()+";");
   generatedLink.push_back("p2p_"+this->getLinkName()+".SetDeviceAttribute (\"DataRate\", StringValue (\""+this->getDataRate()+"\"));");
   generatedLink.push_back("p2p_"+this->getLinkName()+".SetChannelAttribute (\"Delay\", TimeValue (MilliSeconds ("+this->getLinkDelay()+")));");
-  
+
   return generatedLink;
 }
 
@@ -64,7 +64,7 @@ std::vector<std::string> PointToPoint::GenerateNetDevice()
     ndc.push_back(allNodes.at(i));
   }
   ndc.push_back("NetDeviceContainer "+this->getNdcName()+" = p2p_"+this->getLinkName()+".Install ("+this->getAllNodeContainer()+");");
-  
+
   return ndc;
 }
 
@@ -79,5 +79,4 @@ std::vector<std::string> PointToPoint::GenerateTrace()
 
   return trace;
 }
-
 

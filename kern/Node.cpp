@@ -16,12 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 /**
-* \file Node.cpp
-* \brief Abstract Node Base Class.
-* \author Pierre Weiss
-* \date 2009
-*/
+ * \file Node.cpp
+ * \brief Node Base Class.
+ * \author Pierre Weiss
+ * \date 2009
+ */
 
 #include "Node.h"
 #include "Generator.h"
@@ -70,7 +71,7 @@ std::vector<std::string> Node::GenerateIpStack()
 
   return stack; 
 }
-  
+
 void Node::setNodeName(const std::string &_nodeName)
 {
   this->nodeName = _nodeName;
@@ -95,7 +96,7 @@ std::string Node::getIpInterfaceName()
 {
   return this->ipInterfaceName;
 }
- 
+
 std::string Node::getIndice()
 {
   return Generator::toString(this->indice);
@@ -105,7 +106,7 @@ std::string Node::getNsc()
 {
   return this->nsc;
 }
-  
+
 void Node::setNsc(const std::string &_nsc)
 {
   this->nsc = _nsc;
@@ -120,10 +121,4 @@ void Node::setMachinesNumber(const size_t &_machinesNumber)
 {
   this->machinesNumber = _machinesNumber;
 }
-
- 
-
-
-
-
 

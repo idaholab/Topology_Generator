@@ -16,12 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 /**
-* \file DragObject.h
-* \brief The dragged object file.
-* \author Pierre Weiss
-* \date 2009
-*/
+ * \file DragObject.h
+ * \brief The dragged object file.
+ * \author Pierre Weiss
+ * \date 2009
+ */
 
 #include <QtGui>
 #include <iostream>
@@ -53,3 +54,4 @@ void DragObject::Destroy()
   this->name = "deleted";
   this->destroy();
 }
+

@@ -16,15 +16,15 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 /**
-* \file Emu.cpp
-* \brief Emu link subclasse.
-* \author Pierre Weiss
-* \date 2009
-*/
+ * \file Emu.cpp
+ * \brief Emu link subclass.
+ * \author Pierre Weiss
+ * \date 2009
+ */
 
 #include "Emu.h"
-
 
 Emu::Emu(const size_t &_indice, const std::string &_emuNode, const std::string &_ifaceName) : Link(_indice)
 {
@@ -45,7 +45,7 @@ std::vector<std::string> Emu::GenerateHeader()
   std::vector<std::string> headers;
   headers.push_back("#include \"ns3/bridge-module.h\"");
   headers.push_back("#include \"ns3/emu-helper.h\"");
-  
+
   return headers;
 }
 
@@ -54,7 +54,7 @@ std::vector<std::string> Emu::GenerateLink()
   std::vector<std::string> generatedLink;
   generatedLink.push_back("EmuHelper "+this->getLinkName()+";");
   generatedLink.push_back(this->getLinkName()+".SetAttribute (\"DeviceName\", StringValue (emuDevice_"+this->getLinkName()+"));");
-  
+
   return generatedLink;
 }
 
@@ -67,7 +67,7 @@ std::vector<std::string> Emu::GenerateNetDevice()
     ndc.push_back(allNodes.at(i));
   }
   ndc.push_back("NetDeviceContainer "+this->getNdcName()+" = "+this->getLinkName()+".Install ("+this->getAllNodeContainer()+");");
-  
+
   return ndc;
 }
 
@@ -113,5 +113,4 @@ std::vector<std::string> Emu::GenerateTrace()
 
   return trace;
 }
-  
 

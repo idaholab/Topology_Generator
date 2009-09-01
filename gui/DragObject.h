@@ -16,12 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 /**
-* \file DragObject.h
-* \brief The dragged object file.
-* \author Pierre Weiss
-* \date 2009
-*/
+ * \file DragObject.h
+ * \brief The dragged object file.
+ * \author Pierre Weiss
+ * \date 2009
+ */
 
 #ifndef DRAGOBJECT_H
 #define DRAGOBJECT_H
@@ -45,24 +46,24 @@ class DragObject : public QLabel
      * \param parent the qwidget parent.
      */
     DragObject(QWidget *parent);
-    
+
     /**
      * \brief destructor
      */
     ~DragObject();
-    
+
     /**
      * \brief procedure to set the name from the dragged object.
      * \param _name the new name.
      */
     void setName(const std::string &_name);
-    
+
     /**
      * \brief function to get the dragged object name.
      * \return name
      */
     std::string getName();
-    
+
     /**
      * \brief destroy object from qwidget.
      */
@@ -73,7 +74,7 @@ class DragObject : public QLabel
      * \brief attribute which reprensent the name. 
      */
     std::string name;
-    
+
 };
 
 #endif /* END DRAGOBJECT_H */

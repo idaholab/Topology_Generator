@@ -17,8 +17,8 @@
  * 
  */
 /**
-* \file test.cpp
-* \brief The test runner class
+* \file test-Generator.cpp
+* \brief Unit test for Generator class
 * \author Pierre Weiss
 * \date 2009
 */
@@ -151,7 +151,6 @@ namespace tests
         this->gen->listLink.at(-1);
       }
   };
-
 } 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestGenerator);

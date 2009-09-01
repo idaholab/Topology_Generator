@@ -16,12 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 /**
-* \file TcpLargeTransfer.h
-* \brief The tcp large transfer echo class subclasse of Application.
-* \author Pierre Weiss
-* \date 2009
-*/
+ * \file TcpLargeTransfer.h
+ * \brief The tcp large transfer echo class subclass of Application.
+ * \author Pierre Weiss
+ * \date 2009
+ */
 
 #ifndef TCPLARGETRANSFER_H
 #define TCPLARGETRANSFER_H
@@ -34,47 +35,49 @@
 
 /**
  * \ingroup generator
- * \brief The tcp large transfer echo subclasse from Application.
+ * \brief The tcp large transfer echo subclass from Application.
  *
  * This class generate the code to tcp tranfer source to destination.
  */
 class TcpLargeTransfer : public Application
 {
-private:
-  size_t port;
-  
-public:
-  /**
-   * \brief Constructor which set default value.
-   * \param _indice
-   * \param _senderNode
-   * \param _receiverNode
-   * \param _startTime
-   * \param _endTime
-   * \param port
-   */
-  TcpLargeTransfer(const size_t &_indice, const std::string &_senderNode, const std::string &_receiverNode, const size_t &_startTime, const size_t &_endTime, const size_t &port);
-  
-  /**
-   * \brief Destructor
-   */
-  ~TcpLargeTransfer();
-  
-  /**
-   * \brief Function used to generate the headers.
-   * \return headers.
-   */
-  virtual std::vector<std::string> GenerateHeader();
-  
-  /**
-   * \brief Function used to generate the application.
-   * 
-   * \param netDeviceContainer
-   * \param numberIntoNetDevice
-   * \return application code.
-   */
-  virtual std::vector<std::string> GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice);
-  
+  private:
+    /**
+     * \brief TCP port.
+     */
+    size_t port;
+
+  public:
+    /**
+     * \brief Constructor which set default value.
+     * \param _indice
+     * \param _senderNode
+     * \param _receiverNode
+     * \param _startTime
+     * \param _endTime
+     * \param port
+     */
+    TcpLargeTransfer(const size_t &_indice, const std::string &_senderNode, const std::string &_receiverNode, const size_t &_startTime, const size_t &_endTime, const size_t &port);
+
+    /**
+     * \brief Destructor.
+     */
+    ~TcpLargeTransfer();
+
+    /**
+     * \brief Function used to generate the headers.
+     * \return headers.
+     */
+    virtual std::vector<std::string> GenerateHeader();
+
+    /**
+     * \brief Function used to generate the application.
+     * \param netDeviceContainer
+     * \param numberIntoNetDevice
+     * \return application code.
+     */
+    virtual std::vector<std::string> GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice);
 };
 
 #endif /* TCPLARGETRANSFER_H */
+
