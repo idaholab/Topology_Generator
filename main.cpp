@@ -37,7 +37,7 @@ using namespace std;
 #include "kern/Generator.h"
 #include "gui/MainWindow.h"
 
-void printState(Generator *gen)
+static void printState(Generator *gen)
 {
   std::cout << "Nodes :" << std::endl;
   for(int i = 0; (size_t) i < gen->listNode.size(); i++)
@@ -119,5 +119,4 @@ int main(int argc, char *argv[])
 
   delete gen;*/
 }
-
 
