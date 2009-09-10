@@ -27,12 +27,13 @@
 
 #include "Node.h"
 #include "Generator.h"
-#include <sstream>
+
+#include "utils.h"
 
 Node::Node(const size_t &_indice, const std::string &_type, const size_t &_machinesNumber)
 {
   this->indice = _indice;
-  this->nodeName = _type + Generator::toString(_indice);
+  this->nodeName = _type + utils::toString(_indice);
   this->ipInterfaceName = "iface_" + this->nodeName;
   this->nsc = "";	
   this->machinesNumber = _machinesNumber;
@@ -54,7 +55,7 @@ std::vector<std::string> Node::GenerateNode()
 {
   std::vector<std::string> nodes;
   nodes.push_back("NodeContainer " + this->getNodeName() + ";");
-  nodes.push_back(this->getNodeName() + ".Create(" + Generator::toString(this->machinesNumber) + ");");
+  nodes.push_back(this->getNodeName() + ".Create(" + utils::toString(this->machinesNumber) + ");");
 
   return nodes; 
 }
@@ -90,7 +91,7 @@ std::string Node::getNodeName()
 
 std::string Node::getNodeName(const size_t &number)
 {
-  return std::string("NodeContainer(" + this->nodeName + ".Get(" + Generator::toString(number) + "))");
+  return std::string("NodeContainer(" + this->nodeName + ".Get(" + utils::toString(number) + "))");
 }
 
 std::string Node::getIpInterfaceName()
@@ -100,7 +101,7 @@ std::string Node::getIpInterfaceName()
 
 std::string Node::getIndice()
 {
-  return Generator::toString(this->indice);
+  return utils::toString(this->indice);
 }
 
 std::string Node::getNsc()

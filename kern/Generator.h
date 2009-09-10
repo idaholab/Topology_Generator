@@ -518,14 +518,6 @@ class Generator
      * \param _line the line to be writted. 
      */
     void WritePython(const std::string &_line);
-
-  public :
-    /**
-     * \brief Function to convert size_t to string.
-     * \param nbr the number to convert.
-     * \return the string of the number.
-     */
-    static std::string toString(const size_t nbr);
 };
 
 #endif /* GENERATOR_H */

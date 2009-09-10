@@ -28,6 +28,8 @@
 #include "Bridge.h"
 #include "Generator.h"
 
+#include "utils.h"
+
 Bridge::Bridge(const size_t &_indice, const std::string &_nodeBridge) : Link(_indice)
 {
   this->linkName = "bridge_" + this->getIndice();
@@ -78,7 +80,7 @@ std::vector<std::string> Bridge::GenerateNetDevice()
   ndc.push_back("NetDeviceContainer terminalDevices_" + this->getLinkName() + ";");
   ndc.push_back("NetDeviceContainer BridgeDevices_" + this->getLinkName() + ";");
 
-  ndc.push_back("for (int i = 0; i < " + Generator::toString(allNodes.size() - 1) + "; i++)");
+  ndc.push_back("for (int i = 0; i < " + utils::toString(allNodes.size() - 1) + "; i++)");
   ndc.push_back("{");
   ndc.push_back(" NetDeviceContainer link = csma_" + this->getLinkName() + ".Install(NodeContainer(" + this->getAllNodeContainer() + ".Get(i), " + this->getNodeBridge() + "));");
   ndc.push_back(" terminalDevices_" + this->getLinkName() + ".Add (link.Get(0));");

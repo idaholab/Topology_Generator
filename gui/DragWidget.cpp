@@ -35,6 +35,8 @@
 #include "DragObject.h"
 #include "DragLines.h"
 
+#include "utils.h"
+
 DragWidget::DragWidget(QWidget *parent) : QWidget(parent)
 {
   setMinimumSize(400, 400);
@@ -635,7 +637,7 @@ void DragWidget::ShowGuiPing()
   QLineEdit *line_startTime = new QLineEdit(dialog);
   if(this->startTime != (size_t) - 1)
   {
-    line_startTime->insert(Generator::toString(this->startTime).c_str());
+    line_startTime->insert(utils::toString(this->startTime).c_str());
   }
   layout->addWidget(line_startTime, 5, 1);
 
@@ -645,7 +647,7 @@ void DragWidget::ShowGuiPing()
   QLineEdit *line_endTime = new QLineEdit(dialog);
   if(this->endTime != (size_t) - 1)
   {
-    line_endTime->insert(Generator::toString(this->endTime).c_str());
+    line_endTime->insert(utils::toString(this->endTime).c_str());
   }
   layout->addWidget(line_endTime, 6, 1);
 
@@ -781,7 +783,7 @@ void DragWidget::ShowGuiUdpEcho()
   QLineEdit *line_startTime = new QLineEdit(dialog);
   if(this->startTime != (size_t) - 1)
   {
-    line_startTime->insert(Generator::toString(this->startTime).c_str());
+    line_startTime->insert(utils::toString(this->startTime).c_str());
   }
   layout->addWidget(line_startTime, 5, 1);
 
@@ -791,7 +793,7 @@ void DragWidget::ShowGuiUdpEcho()
   QLineEdit *line_endTime = new QLineEdit(dialog);
   if(this->endTime != (size_t) - 1)
   {
-    line_endTime->insert(Generator::toString(this->endTime).c_str());
+    line_endTime->insert(utils::toString(this->endTime).c_str());
   }
   layout->addWidget(line_endTime, 6, 1);
 
@@ -801,7 +803,7 @@ void DragWidget::ShowGuiUdpEcho()
   QLineEdit *line_port = new QLineEdit(dialog);
   if(this->port != (size_t) - 1)
   {
-    line_port->insert(Generator::toString(this->port).c_str());
+    line_port->insert(utils::toString(this->port).c_str());
   }
   layout->addWidget(line_port, 7, 1);
 
@@ -920,7 +922,7 @@ void DragWidget::ShowGuiTcp()
   QLineEdit *line_startTime = new QLineEdit(dialog);
   if(this->startTime != (size_t) - 1)
   {
-    line_startTime->insert(Generator::toString(this->startTime).c_str());
+    line_startTime->insert(utils::toString(this->startTime).c_str());
   }
   layout->addWidget(line_startTime, 5, 1);
 
@@ -930,7 +932,7 @@ void DragWidget::ShowGuiTcp()
   QLineEdit *line_endTime = new QLineEdit(dialog);
   if(this->endTime != (size_t) - 1)
   {
-    line_endTime->insert(Generator::toString(this->endTime).c_str());
+    line_endTime->insert(utils::toString(this->endTime).c_str());
   }
   layout->addWidget(line_endTime, 6, 1);
 
@@ -940,7 +942,7 @@ void DragWidget::ShowGuiTcp()
   QLineEdit *line_port = new QLineEdit(dialog);
   if(this->port != (size_t) - 1)
   {
-    line_port->insert(Generator::toString(this->port).c_str());
+    line_port->insert(utils::toString(this->port).c_str());
   }
   layout->addWidget(line_port, 7, 1);
 

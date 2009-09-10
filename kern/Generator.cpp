@@ -25,7 +25,6 @@
  * \date 2009
  */
 
-#include <sstream>
 #include <iostream>
 #include <stdlib.h> 
 #include <stdexcept>
@@ -800,7 +799,7 @@ std::vector<std::string> Generator::GenerateIpAssign()
   size_t ipRange = 0;
   for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
   {
-    ipAssign.push_back("ipv4.SetBase (\"10.0." + Generator::toString(ipRange) + ".0\", \"255.255.255.0\");");
+    ipAssign.push_back("ipv4.SetBase (\"10.0." + utils::toString(ipRange) + ".0\", \"255.255.255.0\");");
     ipAssign.push_back("Ipv4InterfaceContainer iface_" + this->listLink.at(i)->getNdcName() + " = ipv4.Assign(" + this->listLink.at(i)->getNdcName() + ");");
     ipRange += 1;
   } 
@@ -849,7 +848,7 @@ std::vector<std::string> Generator::GenerateIpAssign()
   if(!otherConnection)
   {
   ipStart = 1;
-  ipAssign.push_back("ipv4.SetBase (\"10.0." + Generator::toString(ipRange) + ".0\", \"255.255.255.0\", \"0.0.0.1\");");
+  ipAssign.push_back("ipv4.SetBase (\"10.0." + utils::toString(ipRange) + ".0\", \"255.255.255.0\", \"0.0.0.1\");");
   ipAssign.push_back("Ipv4InterfaceContainer iface_" + this->listLink.at(i)->getNdcName() + " = ipv4.Assign(" + this->listLink.at(i)->getNdcName() + ");");
   ipRange += 1;
   }
@@ -863,7 +862,7 @@ std::vector<std::string> Generator::GenerateIpAssign()
   ipStart_trans += (this->listLink.at(l)->getNodes().size()) - ipStart + 1;// - 1; collision ...
   }
   }
-  ipAssign.push_back("ipv4.SetBase (\"10.0." + Generator::toString(ipRange) + ".0\", \"255.255.255.0\", \"0.0.0." + Generator::toString(ipStart) + "\");");
+  ipAssign.push_back("ipv4.SetBase (\"10.0." + utils::toString(ipRange) + ".0\", \"255.255.255.0\", \"0.0.0." + utils::toString(ipStart) + "\");");
   ipAssign.push_back("Ipv4InterfaceContainer iface_" + this->listLink.at(i)->getNdcName() + " = ipv4.Assign(" + this->listLink.at(i)->getNdcName() + ");");
   ipStart += ipStart_trans;
   }
@@ -1119,17 +1118,5 @@ std::string Generator::getPyFileName()
 void Generator::setPyFileName(const std::string &_pyFileName ) 
 {
   this->pyFileName = _pyFileName;
-}
-
-//
-//
-//
-
-std::string Generator::toString(const size_t nbr)
-{
-  std::ostringstream out;
-  out << nbr;
-
-  return out.str();
 }
 

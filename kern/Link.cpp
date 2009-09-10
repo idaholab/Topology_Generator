@@ -29,6 +29,8 @@
 #include "Generator.h"
 #include <stdexcept>
 
+#include "utils.h"
+
 Link::Link(const size_t &_indice)
 {
   this->indice = _indice;
@@ -45,7 +47,7 @@ Link::~Link()
 
 std::string Link::getIndice()
 {
-  return Generator::toString(this->indice);
+  return utils::toString(this->indice);
 }
 
 std::string Link::getLinkName()

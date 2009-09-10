@@ -28,6 +28,8 @@
 #include "TcpLargeTransfer.h"
 #include "Generator.h"
 
+#include "utils.h"
+
 TcpLargeTransfer::TcpLargeTransfer(const size_t &_indice, const std::string &_senderNode, const std::string &_receiverNode, const size_t &_startTime, const size_t &_endTime, const size_t &_port) : Application(_indice, _senderNode, _receiverNode, _startTime, _endTime)
 {
   this->port = _port;
@@ -48,7 +50,7 @@ std::vector<std::string> TcpLargeTransfer::GenerateApplication(std::string netDe
 {
   std::vector<std::string> apps;
 
-  apps.push_back("uint16_t port_" + this->getAppName() + " = " + Generator::toString(this->port) + ";");
+  apps.push_back("uint16_t port_" + this->getAppName() + " = " + utils::toString(this->port) + ";");
   apps.push_back("Address sinkLocalAddress_" + this->getAppName() + "(InetSocketAddress (Ipv4Address::GetAny (), port_" + this->getAppName() + "));");
   apps.push_back("PacketSinkHelper sinkHelper_" + this->getAppName() + " (\"ns3::TcpSocketFactory\", sinkLocalAddress_" + this->getAppName() + ");");
   apps.push_back("ApplicationContainer sinkApp_" + this->getAppName() + " = sinkHelper_" + this->getAppName() + ".Install (" + this->getReceiverNode() + ");");
@@ -60,7 +62,7 @@ std::vector<std::string> TcpLargeTransfer::GenerateApplication(std::string netDe
   apps.push_back("clientHelper_" + this->getAppName() + ".SetAttribute (\"OffTime\", RandomVariableValue (ConstantVariable (0)));");
 
   apps.push_back("ApplicationContainer clientApps_" + this->getAppName() + ";");
-  apps.push_back("AddressValue remoteAddress_" + this->getAppName() + "(InetSocketAddress (iface_" + netDeviceContainer + ".GetAddress (" + Generator::toString(numberIntoNetDevice) + "), port_" + this->getAppName() + "));");
+  apps.push_back("AddressValue remoteAddress_" + this->getAppName() + "(InetSocketAddress (iface_" + netDeviceContainer + ".GetAddress (" + utils::toString(numberIntoNetDevice) + "), port_" + this->getAppName() + "));");
   apps.push_back("clientHelper_" + this->getAppName() + ".SetAttribute (\"Remote\", remoteAddress_" + this->getAppName() + ");");
   apps.push_back("clientApps_" + this->getAppName() + ".Add(clientHelper_" + this->getAppName() + ".Install (" + this->getSenderNode() + "));");
 

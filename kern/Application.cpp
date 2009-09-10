@@ -28,6 +28,8 @@
 #include "Application.h"
 #include "Generator.h"
 
+#include "utils.h"
+
 Application::Application(const size_t &_indice, const std::string &_senderNode, const std::string &_receiverNode, const size_t &_startTime, const size_t &_endTime)
 {
   this->indice = _indice;
@@ -44,7 +46,7 @@ Application::~Application()
 
 std::string Application::getIndice()
 {
-  return Generator::toString(this->indice);
+  return utils::toString(this->indice);
 }
 
 void Application::setIndice(const size_t &_indice)
@@ -84,7 +86,7 @@ void Application::setReceiverNode(const std::string &_receiverNode)
 
 std::string Application::getStartTime()
 {
-  return Generator::toString(this->startTime);
+  return utils::toString(this->startTime);
 }
 
 void Application::setStartTime(const size_t &_startTime)
@@ -94,7 +96,7 @@ void Application::setStartTime(const size_t &_startTime)
 
 std::string Application::getEndTime()
 {
-  return Generator::toString(this->endTime);
+  return utils::toString(this->endTime);
 }
 
 size_t Application::getEndTimeNumber()
