@@ -162,7 +162,7 @@ void Generator::AddNode(const std::string &type)
   }
   else
   {
-    throw std::logic_error("Add Node failed! (" + type + ") unknow...\n");
+    throw std::logic_error("Add Node failed! (" + type + ") unknow.");
   }
 }
 
@@ -213,7 +213,7 @@ void Generator::AddNode(const std::string &type, const size_t &number)
   }
   else
   {
-    throw std::logic_error("Add Node failed! (" + type + ") unknow...\n");
+    throw std::logic_error("Add Node failed! (" + type + ") unknow.");
   }
 }
 
@@ -233,7 +233,7 @@ void Generator::RemoveNode(const std::string &name)
   size_t endNumber = this->listNode.size();
   if(startNumber == endNumber)
   {
-    throw std::logic_error("Node remove failed! (" + name + ") not found...\n");
+    throw std::logic_error("Node remove failed! (" + name + ") not found.");
   }
 }
 
@@ -241,7 +241,7 @@ void Generator::RemoveNode(size_t index)
 {
   if(this->listNode.size() < index)
   {
-    throw std::logic_error("Node remove failed ! (index not exists)\n");
+    throw std::logic_error("Node remove failed ! (index not exists).");
     return;
   }
   
@@ -270,7 +270,7 @@ void Generator::AddApplication(const std::string &type, const std::string &sende
   }
   else
   {
-    throw std::logic_error("Application add failed.\n");
+    throw std::logic_error("Application add failed.");
   }
 
 }
@@ -286,7 +286,7 @@ void Generator::AddApplication(const std::string &type, const std::string &sende
   }
   else
   {
-    throw std::logic_error("Application add failed.\n");
+    throw std::logic_error("Application add failed.");
   } 
 }
 
@@ -305,7 +305,7 @@ void Generator::RemoveApplication(const std::string &name)
   size_t endNumber = this->listApplication.size();
   if(startNumber == endNumber)
   {
-    throw std::logic_error("Application remove failed! (" + name + ") not found...\n");
+    throw std::logic_error("Application remove failed! (" + name + ") not found.");
   }
 }
 
@@ -329,7 +329,7 @@ void Generator::AddLink(const std::string &type)
   } 
   else
   {
-    throw std::logic_error("Add Link failed. ( " + type + ") not found.\n");
+    throw std::logic_error("Add Link failed. ( " + type + ") not found.");
   }
 }
 
@@ -349,7 +349,7 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode)
   } 
   else
   {
-    throw std::logic_error("Add Link failed. (" + type + ") not found.\n");
+    throw std::logic_error("Add Link failed. (" + type + ") not found.");
   }
 }
 
@@ -369,7 +369,7 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode, co
   } 
   else
   {
-    throw std::logic_error("Add Link failed. (" + type + ") not found.\n");
+    throw std::logic_error("Add Link failed. (" + type + ") not found.");
   }
 }
 
@@ -388,7 +388,7 @@ void Generator::RemoveLink(const std::string &name)
   size_t endNumber = this->listLink.size();
   if(startNumber == endNumber)
   {
-    throw std::logic_error("Link remove failed! (" + name + ") not found...\n");
+    throw std::logic_error("Link remove failed! (" + name + ") not found.");
   }
 }
 
@@ -396,7 +396,7 @@ void Generator::RemoveLink(size_t index)
 {
   if(this->listLink.size() < index)
   {
-    throw std::logic_error("Link remove failed! (index not exists)\n");
+    throw std::logic_error("Link remove failed! (index not exists).");
     return;
   }
 
