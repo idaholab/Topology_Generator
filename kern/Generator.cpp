@@ -41,6 +41,9 @@
 #include "TcpLargeTransfer.h"
 #include "Tap.h"
 #include "Emu.h"
+#include "utils.h"
+
+using utils::split;
 
 Generator::Generator(const std::string &_simulationName)
 {
@@ -919,11 +922,11 @@ std::vector<std::string> Generator::GenerateApplication()
       std::string oldReceiverName = receiverName;
       //NodeContainer(term_0.Get(1))
       std::vector<std::string> tab_name;
-      Generator::Split(tab_name, receiverName, '(');
+      split(tab_name, receiverName, '(');
       //NodeContainer and term_0.Get and 1))
       std::string str_get = tab_name.at(1);//name_[0-9]+.Get(...
       std::vector<std::string> tab_name2;
-      Generator::Split(tab_name2, str_get, '.');
+      split(tab_name2, str_get, '.');
       // term_0 and Get
       receiverName = tab_name2.at(0);
       for(size_t x = 0;  x < this->listLink.size(); x++)
@@ -944,7 +947,7 @@ std::vector<std::string> Generator::GenerateApplication()
         }
       }
       //std::vector<std::string> str_nbr;
-      //Generator::Split(str_nbr, tab_name.at(2), ')');
+      //split(str_nbr, tab_name.at(2), ')');
       //nodeNumber += atoi(str_nbr.at(0).c_str());
       std::vector<std::string> linksNode = this->listLink.at(linkNumber)->getNodes();
       for(size_t j = 0; j < linksNode.size(); j++)
@@ -1103,22 +1106,4 @@ std::string Generator::toString(const size_t nbr)
 
   return out.str();
 }
-
-size_t Generator::Split(std::vector<std::string> &res, std::string str, char separator)
-{
-  res.clear();
-
-  std::string::size_type stTemp = str.find(separator);
-
-  while(stTemp != std::string::npos)
-  {
-    res.push_back(str.substr(0, stTemp));
-    str = str.substr(stTemp + 1);
-    stTemp = str.find(separator);
-  }
-
-  res.push_back(str);
-
-  return res.size();
-} 
 

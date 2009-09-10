@@ -24,7 +24,8 @@ HEADERS += gui/DragLines.h \
            kern/PointToPoint.h \
            kern/Tap.h \
            kern/TcpLargeTransfer.h \
-           kern/UdpEcho.h
+           kern/UdpEcho.h \
+           kern/utils.h
 SOURCES += main.cpp \
            gui/DragLines.cpp \
            gui/DragObject.cpp \
@@ -42,5 +43,6 @@ SOURCES += main.cpp \
            kern/PointToPoint.cpp \
            kern/Tap.cpp \
            kern/TcpLargeTransfer.cpp \
-           kern/UdpEcho.cpp 
+           kern/UdpEcho.cpp \
+           kern/utils.cpp
 RESOURCES += gui/DragWidget.qrc
