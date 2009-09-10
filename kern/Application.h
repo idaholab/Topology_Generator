@@ -180,7 +180,7 @@ class Application
      */
     void setEndTime(const size_t &_endTime);
 
-    /* UPD ECHO PARAMS */
+    /* UDP ECHO PARAMS */
 
     /**
      * \brief procedure to set packet size (Udp Echo).
