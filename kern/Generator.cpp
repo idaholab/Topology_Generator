@@ -161,7 +161,7 @@ void Generator::AddNode(const std::string &type)
   }
   else
   {
-    throw std::logic_error("Add Node failed ! ("+type+") unknow. .\n");
+    throw std::logic_error("Add Node failed! (" + type + ") unknow...\n");
   }
 }
 
@@ -212,7 +212,7 @@ void Generator::AddNode(const std::string &type, const size_t &number)
   }
   else
   {
-    throw std::logic_error("Add Node failed ! ("+type+") unknow. .\n");
+    throw std::logic_error("Add Node failed! (" + type + ") unknow...\n");
   }
 }
 
@@ -232,9 +232,22 @@ void Generator::RemoveNode(const std::string &name)
   size_t endNumber = this->listNode.size();
   if(startNumber == endNumber)
   {
-    throw std::logic_error("Node remove failed ! ("+name+") not found ...\n");
+    throw std::logic_error("Node remove failed! (" + name + ") not found...\n");
   }
 }
+
+void Generator::RemoveNode(size_t index)
+{
+  if(this->listNode.size() < index)
+  {
+    throw std::logic_error("Node remove failed ! (index not exists)\n");
+    return;
+  }
+  
+  delete this->listNode[index];
+  this->listNode.erase(this->listNode.begin() + index);
+}
+
 //
 // Part of Application.
 //
@@ -291,7 +304,7 @@ void Generator::RemoveApplication(const std::string &name)
   size_t endNumber = this->listApplication.size();
   if(startNumber == endNumber)
   {
-    throw std::logic_error("Application remove failed ! ("+name+") not found ...\n");
+    throw std::logic_error("Application remove failed! (" + name + ") not found...\n");
   }
 }
 
@@ -315,7 +328,7 @@ void Generator::AddLink(const std::string &type)
   } 
   else
   {
-    throw std::logic_error("Add Link failed. ("+type+") not found.\n");
+    throw std::logic_error("Add Link failed. ( " + type + ") not found.\n");
   }
 }
 
@@ -335,7 +348,7 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode)
   } 
   else
   {
-    throw std::logic_error("Add Link failed. ("+type+") not found.\n");
+    throw std::logic_error("Add Link failed. (" + type + ") not found.\n");
   }
 }
 
@@ -355,7 +368,7 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode, co
   } 
   else
   {
-    throw std::logic_error("Add Link failed. ("+type+") not found.\n");
+    throw std::logic_error("Add Link failed. (" + type + ") not found.\n");
   }
 }
 
@@ -374,8 +387,20 @@ void Generator::RemoveLink(const std::string &name)
   size_t endNumber = this->listLink.size();
   if(startNumber == endNumber)
   {
-    throw std::logic_error("Link remove failed ! ("+name+") not found ...\n");
+    throw std::logic_error("Link remove failed! (" + name + ") not found...\n");
   }
+}
+
+void Generator::RemoveLink(size_t index)
+{
+  if(this->listLink.size() < index)
+  {
+    throw std::logic_error("Link remove failed! (index not exists)\n");
+    return;
+  }
+
+  delete this->listLink[index];
+  this->listLink.erase(this->listLink.begin() + index);
 }
 
 //
@@ -775,7 +800,7 @@ std::vector<std::string> Generator::GenerateIpAssign()
   for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
   {
     ipAssign.push_back("ipv4.SetBase (\"10.0."+Generator::toString(ipRange)+".0\", \"255.255.255.0\");");
-    ipAssign.push_back("Ipv4InterfaceContainer iface_"+this->listLink.at(i)->getNdcName()+" = ipv4.Assign("+this->listLink.at(i)->getNdcName()+");");
+    ipAssign.push_back("Ipv4InterfaceContainer iface_"+this->listLink.at(i)->getNdcName()+" = ipv4.Assign(" + this->listLink.at(i)->getNdcName()+");");
     ipRange += 1;
   } 
 
@@ -824,7 +849,7 @@ std::vector<std::string> Generator::GenerateIpAssign()
   {
   ipStart = 1;
   ipAssign.push_back("ipv4.SetBase (\"10.0."+Generator::toString(ipRange)+".0\", \"255.255.255.0\", \"0.0.0.1\");");
-  ipAssign.push_back("Ipv4InterfaceContainer iface_"+this->listLink.at(i)->getNdcName()+" = ipv4.Assign("+this->listLink.at(i)->getNdcName()+");");
+  ipAssign.push_back("Ipv4InterfaceContainer iface_"+this->listLink.at(i)->getNdcName()+" = ipv4.Assign(" + this->listLink.at(i)->getNdcName() + ");");
   ipRange += 1;
   }
   // they are other connections. 
@@ -838,7 +863,7 @@ std::vector<std::string> Generator::GenerateIpAssign()
   }
   }
   ipAssign.push_back("ipv4.SetBase (\"10.0."+Generator::toString(ipRange)+".0\", \"255.255.255.0\", \"0.0.0."+Generator::toString(ipStart)+"\");");
-  ipAssign.push_back("Ipv4InterfaceContainer iface_"+this->listLink.at(i)->getNdcName()+" = ipv4.Assign("+this->listLink.at(i)->getNdcName()+");");
+  ipAssign.push_back("Ipv4InterfaceContainer iface_"+this->listLink.at(i)->getNdcName()+" = ipv4.Assign(" + this->listLink.at(i)->getNdcName() + ");");
   ipStart += ipStart_trans;
   }
   }//for i
@@ -858,7 +883,7 @@ std::vector<std::string> Generator::GenerateRoute()
   /* if it is not a bridge you can add it. */
   //     if(nodeName.find("bridge_") != 0 )
   //     {
-  //route.push_back("allRoutes.Add("+nodeName+");");
+  //route.push_back("allRoutes.Add(" + nodeName + ");");
   //       route.push_back(nodeName);
   //     }
   //   }
@@ -892,7 +917,7 @@ std::vector<std::string> Generator::GenerateRoute()
   //     }
   //     if(nodeOk)
   //     {
-  //       allRoutes.push_back("allRoutes.Add("+route.at(i)+");");
+  //       allRoutes.push_back("allRoutes.Add(" + route.at(i) + ");");
   //     }
   //   }
 

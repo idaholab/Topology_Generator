@@ -38,8 +38,8 @@ namespace tests
   {
     CPPUNIT_TEST_SUITE(tests::TestGenerator);
     
-    CPPUNIT_TEST(testAddEquipement);
-    CPPUNIT_TEST(testRemoveEquipement);
+    CPPUNIT_TEST(testAddNode);
+    CPPUNIT_TEST(testRemoveNode);
     CPPUNIT_TEST_EXCEPTION(addWrongEquipement, std::exception);
     CPPUNIT_TEST_EXCEPTION(getWrongEquipement, std::out_of_range);
     
@@ -71,23 +71,23 @@ namespace tests
       /**
        * \brief test to add an equipement.
        */
-      void testAddEquipement()
+      void testAddNode()
       {
-        size_t initSize = gen->listEquipement.size();
-        this->gen->AddEquipement("Pc");
-        size_t finalSize = gen->listEquipement.size();
+        size_t initSize = gen->listNode.size();
+        this->gen->AddNode("Pc");
+        size_t finalSize = gen->listNode.size();
         CPPUNIT_ASSERT(initSize == (finalSize - 1));
       }
       
       /**
        * \brief test to remove an equipement.
        */
-      void testRemoveEquipement()
+      void testRemoveNode()
       {
-        size_t initSize = gen->listEquipement.size();
-        this->gen->AddEquipement("Pc");
-        this->gen->RemoveEquipement(gen->listEquipement.size()-1);
-        size_t finalSize = gen->listEquipement.size();
+        size_t initSize = gen->listNode.size();
+        this->gen->AddNode("Pc");
+        this->gen->RemoveNode(gen->listNode.size() - 1);
+        size_t finalSize = gen->listNode.size();
         CPPUNIT_ASSERT(initSize == finalSize);
       }
       
@@ -96,7 +96,7 @@ namespace tests
        */
       void addWrongEquipement()
       {
-        this->gen->AddEquipement("");
+        this->gen->AddNode("");
       }
       
       /**
@@ -104,9 +104,8 @@ namespace tests
        */
       void getWrongEquipement()
       {
-        this->gen->listEquipement.at(-1);
+        this->gen->listNode.at(-1);
       }
-      
       
       //
       // Links
@@ -130,7 +129,7 @@ namespace tests
       {
         size_t initSize = gen->listLink.size();
         this->gen->AddLink("Hub");
-        this->gen->RemoveLink(gen->listLink.size()-1);
+        this->gen->RemoveLink(gen->listLink.size() - 1);
         size_t finalSize = gen->listLink.size();
         CPPUNIT_ASSERT(initSize == finalSize);
       }

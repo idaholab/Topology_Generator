@@ -146,6 +146,12 @@ class Generator
      */
     void RemoveNode(const std::string &name);
 
+    /**
+     * \brief Procedure used to remove an Node elem.
+     * \param index index of the node to remove
+     */
+    void RemoveNode(size_t index);
+
     //
     // Part of Application.
     //
@@ -286,6 +292,12 @@ class Generator
      * \param name the link name to remove
      */
     void RemoveLink(const std::string &name);
+
+    /**
+     * \brief Procedure used to remove an link elem.
+     * \param index index of the link to remove
+     */
+    void RemoveLink(size_t index);
 
     //
     // Part around the code Generation.
