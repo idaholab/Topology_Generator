@@ -8,7 +8,6 @@ GUI
 - Show generation time;
 - Implementation of Menu;
 - Implement right click on object;
-- Handle Ctrl+C to memory clean;
 - Trace with good link;
 - On link use, icon from link must be pressed;
 - Fix the superimposed link;
