@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SOURCE="Ap.o Application.o Bridge.o Emu.o Generator.o Hub.o Link.o Node.o Ping.o PointToPoint.o Tap.o TcpLargeTransfer.o UdpEcho.o";
+SOURCE="Ap.o Application.o Bridge.o Emu.o Generator.o Hub.o Link.o Node.o Ping.o PointToPoint.o Tap.o TcpLargeTransfer.o UdpEcho.o utils.o";
 
 if [ $# -eq 0 ]
 then

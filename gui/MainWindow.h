@@ -1,6 +1,6 @@
 /* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
- * Copyright (c) 2009 Pierre Weiss <3weissp@gmail.com>
+ * Copyright (c) 2009 University of Strasbourg
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -14,7 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * 
+ *
+ * Author: Pierre Weiss <3weissp@gmail.com>
  */
 
 /**
@@ -91,7 +92,8 @@ class MainWindow : public QMainWindow
     void CleanIface();
 
     /**
-     * \brief procedure to connect node to linkNumber.
+     * \brief Procedure to connect node to linkNumber.
+     *
      * This procedure prevent mask overflow.
      * \param linkNumber the number of the link.
      * \param nodeName the node name tu be added.
@@ -100,92 +102,92 @@ class MainWindow : public QMainWindow
 
   private slots:
     /**
-     * \brief procedure called by the tool bar to create a pc.
+     * \brief Procedure called by the tool bar to create a pc.
      */
     void CreatePc();
 
     /**
-     * \brief procedure called by the tool bar to creat a pc group.
+     * \brief Procedure called by the tool bar to creat a pc group.
      */
     void CreatePcGroup();
 
     /**
-     * \brief procedure called by the tool bar to create an Emu link.
+     * \brief Procedure called by the tool bar to create an Emu link.
      */
     void CreateEmu();
 
     /**
-     * \brief procedure called by the tool bar to create a tap device.
+     * \brief Procedure called by the tool bar to create a tap device.
      */
     void CreateTap();
 
     /**
-     * \brief procedure called by the tool bar to create an access point.
+     * \brief Procedure called by the tool bar to create an access point.
      */
     void CreateAp();
 
     /**
-     * \brief procedure called by the tool bar to create a wifi station.
+     * \brief Procedure called by the tool bar to create a wifi station.
      */
     void CreateStation();
 
     /**
-     * \brief procedure called by the tool bar to create a hub (csma link)
+     * \brief Procedure called by the tool bar to create a hub (csma link)
      */
     void CreateHub();
 
     /**
-     * \brief procedure called by the tool bar to create a switch (bridge)
+     * \brief Procedure called by the tool bar to create a switch (bridge)
      */
     void CreateSwitch();
 
     /**
-     * \brief procedure called by the tool bar to create a router.
+     * \brief Procedure called by the tool bar to create a router.
      */
     void CreateRouter();
 
     /**
-     * \brief procedure to create a hard link from equipement to equipement.
+     * \brief Procedure to create a hard link from equipement to equipement.
      */
     void CreateHardLink();
 
     /**
-     * \brief procedure to create a link from station to ap.
+     * \brief Procedure to create a link from station to ap.
      */
     void CreateStationLink();
 
     /**
-     * \brief procedure to create a p2p link from equipement to equipement.
+     * \brief Procedure to create a p2p link from equipement to equipement.
      */
     void CreateP2pLink();
 
     /**
-     * \brief procedure called by the tool bar to delete an object.
+     * \brief Procedure called by the tool bar to delete an object.
      */
     void deleteObject();
 
     /**
-     * \brief procedure called by the tool bar to get the configuration pop up.
+     * \brief Procedure called by the tool bar to get the configuration pop up.
      */
     void ConfigurationMenu();
 
     /**
-     * \brief about gui.
+     * \brief About gui.
      */
     void About();
 
     /**
-     * \brief help gui/
+     * \brief Help.
      */
     void Help();
 
     /**
-     * \brief procedure to generate the cpp code.
+     * \brief Procedure to generate the cpp code.
      */
     void GenerateCpp();
 
     /**
-     * \brief procedure to create an application/
+     * \brief Procedure to create an application/
      */
     void CreateApps();
 };

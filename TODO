@@ -1,20 +1,30 @@
 TODO
 ====
 
+GUI
+---
 - Add multi-selection of object with ctrl or mouse cursor;
 - Window size (take care on out from zone object);
 - Show generation time;
 - Implementation of Menu;
 - Implement right click on object;
-- handle Ctrl+C to memory clean;
-- XML generation ;
+- Handle Ctrl+C to memory clean;
 - Trace with good link;
-- On link use, ico from link must be pressed;
+- On link use, icon from link must be pressed;
 - Fix the superimposed link;
-- Mapping to integrate Python;
 - Implement keyboard shortcut;
-- show a tooltip when the mouse are over an object;
-- show the selected object;
-- Add status bar;
+- Show a tooltip when the mouse are over an object;
+- Show the selected object;
+- Add status bar.
+
+Core
+-----
+- Mapping to integrate Python;
+- XML generation;
 - Add configuration into application.
+
+Code
+-----
+- Use one section of private, protected, public;
+- All files in my-class.cpp/h format ?
 

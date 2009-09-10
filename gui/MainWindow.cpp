@@ -1,6 +1,6 @@
 /* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
- * Copyright (c) 2009 Pierre Weiss <3weissp@gmail.com>
+ * Copyright (c) 2009 University of Strasbourg
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -14,7 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * 
+ *
+ * Author: Pierre Weiss <3weissp@gmail.com>
  */
 
 /**
@@ -55,18 +56,18 @@ MainWindow::MainWindow(const std::string &simulationName)
   QAction *menuSavePix = menuFichier->addAction("Save Picture");
   menuSavePix->setDisabled(true);
 
-  QAction *actionQuitter = menuFichier->addAction("Quit");
-  connect(actionQuitter, SIGNAL(triggered()), qApp, SLOT(quit()));
+  QAction *actionQuit = menuFichier->addAction("Quit");
+  connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
 
-  QMenu *menuEdition = menuBar()->addMenu("&Edit");
-  QAction *actionConfig = menuEdition->addAction("Configuration");
+  QMenu *menuEdit = menuBar()->addMenu("&Edit");
+  QAction *actionConfig = menuEdit->addAction("Configuration");
   actionConfig->setDisabled(true);
   connect(actionConfig, SIGNAL(triggered()), this, SLOT(ConfigurationMenu())); 
 
-  QMenu *menuAffichage = menuBar()->addMenu("&Generate");
-  QAction *actionCpp = menuAffichage->addAction("C++");
+  QMenu *menuView = menuBar()->addMenu("&Generate");
+  QAction *actionCpp = menuView->addAction("C++");
   connect(actionCpp, SIGNAL(triggered()), this, SLOT(GenerateCpp())); 
-  QAction *menuPython = menuAffichage->addAction("Python");
+  QAction *menuPython = menuView->addAction("Python");
   menuPython->setDisabled(true);
 
   QMenu *menuHelp = menuBar()->addMenu("&Help");

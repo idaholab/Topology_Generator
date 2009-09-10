@@ -25,8 +25,10 @@
 
 using namespace std;
 
+#include <cstdlib>
+#include <csignal>
+
 #include <iostream>
-#include <stdlib.h>
 #include <limits>
 #include <stdexcept>
 
@@ -36,6 +38,25 @@ using namespace std;
 
 #include "kern/Generator.h"
 #include "gui/MainWindow.h"
+
+/**
+ * \brief Signal handler.
+ * \param code signal code received
+ * \author Sebastien Vincent
+ */
+static void signalHandler(int code)
+{
+  switch(code)
+  {
+    case SIGTERM:
+    case SIGINT:
+      /* quit Qt application */
+      qApp->quit();
+      break;
+    default:
+      break;
+  }
+}
 
 static void printState(Generator *gen)
 {
@@ -69,7 +90,19 @@ int main(int argc, char *argv[])
 
   QApplication app(argc, argv);
  
-  MainWindow *win = new MainWindow(std::string("Simulation-Name"));
+
+  /* catch signals */
+  if(signal(SIGTERM, signalHandler) == SIG_ERR)
+  {
+    std::cerr << "SIGTERM will not be catched" << std::endl;
+  }
+
+  if(signal(SIGINT, signalHandler) == SIG_ERR)
+  {
+    std::cerr << "SIGINT will not be catched" << std::endl;
+  }
+
+  MainWindow* win = new MainWindow(std::string("Simulation-Name"));
   win->setWindowTitle("Generator");
   win->show();
     
