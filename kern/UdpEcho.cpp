@@ -31,7 +31,7 @@
 UdpEcho::UdpEcho(const size_t &_indice, const std::string &_senderNode, const std::string &_receiverNode, const size_t &_startTime, const size_t &_endTime, const size_t &_port) : Application(_indice, _senderNode, _receiverNode, _startTime, _endTime)
 {
   this->port = _port;
-  this->appName = "udpEcho_"+this->getIndice();
+  this->appName = "udpEcho_" + this->getIndice();
   /* default values */
   this->packetSize = 1024;
   this->maxPacketCount = 1;
@@ -52,20 +52,20 @@ std::vector<std::string> UdpEcho::GenerateApplication(std::string netDeviceConta
 {
   std::vector<std::string> apps;
 
-  apps.push_back("uint16_t port_"+this->getAppName()+" = "+Generator::toString(this->port)+";"); 
-  apps.push_back("UdpEchoServerHelper server_"+this->getAppName()+" (port_"+this->getAppName()+");");
-  apps.push_back("ApplicationContainer apps_"+this->getAppName()+" = server_"+this->getAppName()+".Install ("+this->getReceiverNode()+".Get(0));");
-  apps.push_back("apps_"+this->getAppName()+".Start (Seconds ("+this->getStartTime()+".0));");
-  apps.push_back("apps_"+this->getAppName()+".Stop (Seconds ("+this->getEndTime()+".0));");
+  apps.push_back("uint16_t port_" + this->getAppName() + " = " + Generator::toString(this->port) + ";"); 
+  apps.push_back("UdpEchoServerHelper server_" + this->getAppName() + " (port_" + this->getAppName() + ");");
+  apps.push_back("ApplicationContainer apps_" + this->getAppName() + " = server_" + this->getAppName() + ".Install (" + this->getReceiverNode() + ".Get(0));");
+  apps.push_back("apps_" + this->getAppName() + ".Start (Seconds (" + this->getStartTime() + ".0));");
+  apps.push_back("apps_" + this->getAppName() + ".Stop (Seconds (" + this->getEndTime() + ".0));");
 
-  apps.push_back("Time interPacketInterval_"+this->getAppName()+" = Seconds ("+this->packetIntervalTime+");");
-  apps.push_back("UdpEchoClientHelper client_"+this->getAppName()+" (iface_"+netDeviceContainer+".GetAddress("+Generator::toString(numberIntoNetDevice)+"), "+Generator::toString(this->port)+");");
-  apps.push_back("client_"+this->getAppName()+".SetAttribute (\"MaxPackets\", UintegerValue ("+Generator::toString(this->maxPacketCount)+"));");
-  apps.push_back("client_"+this->getAppName()+".SetAttribute (\"Interval\", TimeValue (interPacketInterval_"+this->getAppName()+"));");
-  apps.push_back("client_"+this->getAppName()+".SetAttribute (\"PacketSize\", UintegerValue ("+Generator::toString(this->packetSize)+"));");
-  apps.push_back("apps_"+this->getAppName()+" = client_"+this->getAppName()+".Install ("+this->getSenderNode()+".Get (0));");
-  apps.push_back("apps_"+this->getAppName()+".Start (Seconds ("+this->getStartTime()+".1));");
-  apps.push_back("apps_"+this->getAppName()+".Stop (Seconds ("+this->getEndTime()+".0));");
+  apps.push_back("Time interPacketInterval_" + this->getAppName() + " = Seconds (" + this->packetIntervalTime + ");");
+  apps.push_back("UdpEchoClientHelper client_" + this->getAppName() + " (iface_" + netDeviceContainer + ".GetAddress(" + Generator::toString(numberIntoNetDevice) + "), " + Generator::toString(this->port) + ");");
+  apps.push_back("client_" + this->getAppName() + ".SetAttribute (\"MaxPackets\", UintegerValue (" + Generator::toString(this->maxPacketCount) + "));");
+  apps.push_back("client_" + this->getAppName() + ".SetAttribute (\"Interval\", TimeValue (interPacketInterval_" + this->getAppName() + "));");
+  apps.push_back("client_" + this->getAppName() + ".SetAttribute (\"PacketSize\", UintegerValue (" + Generator::toString(this->packetSize) + "));");
+  apps.push_back("apps_" + this->getAppName() + " = client_" + this->getAppName() + ".Install (" + this->getSenderNode() + ".Get (0));");
+  apps.push_back("apps_" + this->getAppName() + ".Start (Seconds (" + this->getStartTime() + ".1));");
+  apps.push_back("apps_" + this->getAppName() + ".Stop (Seconds (" + this->getEndTime() + ".0));");
 
   return apps;
 }

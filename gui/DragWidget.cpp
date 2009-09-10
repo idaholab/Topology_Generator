@@ -595,7 +595,7 @@ void DragWidget::ShowGuiPing()
   std::string label_machineLeft("");
   if(this->appsServer != "")
   {
-    label_machineLeft = "Sender : "+this->appsServer;
+    label_machineLeft = "Sender : " + this->appsServer;
   }
   else
   {
@@ -614,7 +614,7 @@ void DragWidget::ShowGuiPing()
   std::string label_machineRight("");
   if(this->appsClient != "")
   {
-    label_machineRight = "Target : "+this->appsClient;
+    label_machineRight = "Target : " + this->appsClient;
   }
   else
   {
@@ -633,7 +633,7 @@ void DragWidget::ShowGuiPing()
   layout->addWidget(lab_startTime, 5, 0);
 
   QLineEdit *line_startTime = new QLineEdit(dialog);
-  if(this->startTime != (size_t) -1)
+  if(this->startTime != (size_t) - 1)
   {
     line_startTime->insert(Generator::toString(this->startTime).c_str());
   }
@@ -643,7 +643,7 @@ void DragWidget::ShowGuiPing()
   layout->addWidget(lab_endTime, 6, 0);
 
   QLineEdit *line_endTime = new QLineEdit(dialog);
-  if(this->endTime != (size_t) -1)
+  if(this->endTime != (size_t) - 1)
   {
     line_endTime->insert(Generator::toString(this->endTime).c_str());
   }
@@ -663,7 +663,7 @@ void DragWidget::ShowGuiPing()
     this->startTime = line_startTime->text().toInt();
     this->endTime = line_endTime->text().toInt();
 
-    if(this->appsServer != "" && this->appsClient != "" && this->startTime != (size_t) -1 && this->startTime != (size_t) -1)
+    if(this->appsServer != "" && this->appsClient != "" && this->startTime != (size_t) - 1 && this->startTime != (size_t) - 1)
     {
       if((this->startTime < this->endTime))
       {
@@ -685,7 +685,7 @@ void DragWidget::ShowGuiPing()
       }
       else
       {
-        if(this->startTime == (size_t) -1 || this->endTime == (size_t) -1)
+        if(this->startTime == (size_t) - 1 || this->endTime == (size_t) - 1)
         {
           QMessageBox::about(this, "Ping", "Sorry, start time and end time can't be null.");
           this->ShowGuiPing();
@@ -741,7 +741,7 @@ void DragWidget::ShowGuiUdpEcho()
   std::string label_machineLeft("");
   if(this->appsServer != "")
   {
-    label_machineLeft = "Server : "+this->appsServer;
+    label_machineLeft = "Server : " + this->appsServer;
   }
   else
   {
@@ -760,7 +760,7 @@ void DragWidget::ShowGuiUdpEcho()
   std::string label_machineRight("");
   if(this->appsClient != "")
   {
-    label_machineRight = "Client : "+this->appsClient;
+    label_machineRight = "Client : " + this->appsClient;
   }
   else
   {
@@ -779,7 +779,7 @@ void DragWidget::ShowGuiUdpEcho()
   layout->addWidget(lab_startTime, 5, 0);
 
   QLineEdit *line_startTime = new QLineEdit(dialog);
-  if(this->startTime != (size_t) -1)
+  if(this->startTime != (size_t) - 1)
   {
     line_startTime->insert(Generator::toString(this->startTime).c_str());
   }
@@ -789,7 +789,7 @@ void DragWidget::ShowGuiUdpEcho()
   layout->addWidget(lab_endTime, 6, 0);
 
   QLineEdit *line_endTime = new QLineEdit(dialog);
-  if(this->endTime != (size_t) -1)
+  if(this->endTime != (size_t) - 1)
   {
     line_endTime->insert(Generator::toString(this->endTime).c_str());
   }
@@ -799,7 +799,7 @@ void DragWidget::ShowGuiUdpEcho()
   layout->addWidget(lab_port, 7, 0);
 
   QLineEdit *line_port = new QLineEdit(dialog);
-  if(this->port != (size_t) -1)
+  if(this->port != (size_t) - 1)
   {
     line_port->insert(Generator::toString(this->port).c_str());
   }
@@ -820,7 +820,7 @@ void DragWidget::ShowGuiUdpEcho()
     this->endTime = line_endTime->text().toInt();
     this->port = line_port->text().toInt();
 
-    if(this->appsServer != "" && this->appsClient != "" && this->startTime != (size_t) -1 && this->startTime != (size_t) -1 && this->port != (size_t) -1)
+    if(this->appsServer != "" && this->appsClient != "" && this->startTime != (size_t) - 1 && this->startTime != (size_t) - 1 && this->port != (size_t) - 1)
     {
       if((this->startTime < this->endTime))
       {
@@ -842,14 +842,14 @@ void DragWidget::ShowGuiUdpEcho()
       }
       else
       {
-        if(this->startTime == (size_t) -1 || this->endTime == (size_t) -1)
+        if(this->startTime == (size_t) - 1 || this->endTime == (size_t) - 1)
         {
           QMessageBox::about(this, "Udp Echo", "Sorry, start time and end time can't be null.");
           this->ShowGuiUdpEcho();
         }
         else
         {
-          if(this->port == (size_t) -1)
+          if(this->port == (size_t) - 1)
           {
             QMessageBox::about(this, "Udp Echo", "Sorry, port field can't be null.");
             this->ShowGuiUdpEcho();
@@ -880,7 +880,7 @@ void DragWidget::ShowGuiTcp()
   std::string label_machineLeft("");
   if(this->appsServer != "")
   {
-    label_machineLeft = "Server : "+this->appsServer;
+    label_machineLeft = "Server : " + this->appsServer;
   }
   else
   {
@@ -899,7 +899,7 @@ void DragWidget::ShowGuiTcp()
   std::string label_machineRight("");
   if(this->appsClient != "")
   {
-    label_machineRight = "Client : "+this->appsClient;
+    label_machineRight = "Client : " + this->appsClient;
   }
   else
   {
@@ -918,7 +918,7 @@ void DragWidget::ShowGuiTcp()
   layout->addWidget(lab_startTime, 5, 0);
 
   QLineEdit *line_startTime = new QLineEdit(dialog);
-  if(this->startTime != (size_t) -1)
+  if(this->startTime != (size_t) - 1)
   {
     line_startTime->insert(Generator::toString(this->startTime).c_str());
   }
@@ -928,7 +928,7 @@ void DragWidget::ShowGuiTcp()
   layout->addWidget(lab_endTime, 6, 0);
 
   QLineEdit *line_endTime = new QLineEdit(dialog);
-  if(this->endTime != (size_t) -1)
+  if(this->endTime != (size_t) - 1)
   {
     line_endTime->insert(Generator::toString(this->endTime).c_str());
   }
@@ -938,7 +938,7 @@ void DragWidget::ShowGuiTcp()
   layout->addWidget(lab_port, 7, 0);
 
   QLineEdit *line_port = new QLineEdit(dialog);
-  if(this->port != (size_t) -1)
+  if(this->port != (size_t) - 1)
   {
     line_port->insert(Generator::toString(this->port).c_str());
   }
@@ -959,7 +959,7 @@ void DragWidget::ShowGuiTcp()
     this->endTime = line_endTime->text().toInt();
     this->port = line_port->text().toInt();
 
-    if(this->appsServer != "" && this->appsClient != "" && this->startTime != (size_t) -1 && this->startTime != (size_t) -1 && this->port != (size_t) -1)
+    if(this->appsServer != "" && this->appsClient != "" && this->startTime != (size_t) - 1 && this->startTime != (size_t) - 1 && this->port != (size_t) - 1)
     {
       if((this->startTime < this->endTime))
       {
@@ -981,14 +981,14 @@ void DragWidget::ShowGuiTcp()
       }
       else
       {
-        if(this->startTime == (size_t) -1 || this->endTime == (size_t) -1)
+        if(this->startTime == (size_t) - 1 || this->endTime == (size_t) - 1)
         {
           QMessageBox::about(this, "Tcp Large Transfer", "Sorry, start time and end time can't be null.");
           this->ShowGuiTcp();
         }
         else
         {
-          if(this->port == (size_t) -1)
+          if(this->port == (size_t) - 1)
           {
             QMessageBox::about(this, "Tcp Large Transfer", "Sorry, port field can't be null.");
             this->ShowGuiTcp();

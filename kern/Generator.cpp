@@ -675,7 +675,7 @@ std::vector<std::string> Generator::GenerateVars()
   {
     if( (this->listNode.at(i))->getNsc() != "")
     {
-      allVars.push_back("std::string nscStack = \""+(this->listNode.at(i))->getNsc()+"\";");
+      allVars.push_back("std::string nscStack = \"" + (this->listNode.at(i))->getNsc() + "\";");
     }
   }
   return allVars;
@@ -800,8 +800,8 @@ std::vector<std::string> Generator::GenerateIpAssign()
   size_t ipRange = 0;
   for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
   {
-    ipAssign.push_back("ipv4.SetBase (\"10.0."+Generator::toString(ipRange)+".0\", \"255.255.255.0\");");
-    ipAssign.push_back("Ipv4InterfaceContainer iface_"+this->listLink.at(i)->getNdcName()+" = ipv4.Assign(" + this->listLink.at(i)->getNdcName()+");");
+    ipAssign.push_back("ipv4.SetBase (\"10.0." + Generator::toString(ipRange) + ".0\", \"255.255.255.0\");");
+    ipAssign.push_back("Ipv4InterfaceContainer iface_" + this->listLink.at(i)->getNdcName() + " = ipv4.Assign(" + this->listLink.at(i)->getNdcName() + ");");
     ipRange += 1;
   } 
 
@@ -849,8 +849,8 @@ std::vector<std::string> Generator::GenerateIpAssign()
   if(!otherConnection)
   {
   ipStart = 1;
-  ipAssign.push_back("ipv4.SetBase (\"10.0."+Generator::toString(ipRange)+".0\", \"255.255.255.0\", \"0.0.0.1\");");
-  ipAssign.push_back("Ipv4InterfaceContainer iface_"+this->listLink.at(i)->getNdcName()+" = ipv4.Assign(" + this->listLink.at(i)->getNdcName() + ");");
+  ipAssign.push_back("ipv4.SetBase (\"10.0." + Generator::toString(ipRange) + ".0\", \"255.255.255.0\", \"0.0.0.1\");");
+  ipAssign.push_back("Ipv4InterfaceContainer iface_" + this->listLink.at(i)->getNdcName() + " = ipv4.Assign(" + this->listLink.at(i)->getNdcName() + ");");
   ipRange += 1;
   }
   // they are other connections. 
@@ -863,8 +863,8 @@ std::vector<std::string> Generator::GenerateIpAssign()
   ipStart_trans += (this->listLink.at(l)->getNodes().size()) - ipStart + 1;// - 1; collision ...
   }
   }
-  ipAssign.push_back("ipv4.SetBase (\"10.0."+Generator::toString(ipRange)+".0\", \"255.255.255.0\", \"0.0.0."+Generator::toString(ipStart)+"\");");
-  ipAssign.push_back("Ipv4InterfaceContainer iface_"+this->listLink.at(i)->getNdcName()+" = ipv4.Assign(" + this->listLink.at(i)->getNdcName() + ");");
+  ipAssign.push_back("ipv4.SetBase (\"10.0." + Generator::toString(ipRange) + ".0\", \"255.255.255.0\", \"0.0.0." + Generator::toString(ipStart) + "\");");
+  ipAssign.push_back("Ipv4InterfaceContainer iface_" + this->listLink.at(i)->getNdcName() + " = ipv4.Assign(" + this->listLink.at(i)->getNdcName() + ");");
   ipStart += ipStart_trans;
   }
   }//for i

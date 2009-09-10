@@ -467,6 +467,7 @@ void MainWindow::ValidLink()
   {
     size_t number = -1;
     size_t number2 = -1;
+
     for(size_t i = 0; i < (size_t) this->gen->listLink.size(); i++)
     {
       if(equi.at(0) == this->gen->listLink.at(i)->getLinkName())
@@ -480,11 +481,11 @@ void MainWindow::ValidLink()
         break;
       }
     }
-    if(number != (size_t) -1 )
+    if(number != (size_t) - 1)
     {
       this->ConnectNode(number, equi.at(1));
     }
-    else if(number2 != (size_t) -1)
+    else if(number2 != (size_t) - 1)
     {
       this->ConnectNode(number2, equi.at(0));
     }

@@ -30,7 +30,7 @@
 
 Ping::Ping(const size_t &_indice, const std::string &_senderNode, const std::string &_receiverNode, const size_t &_startTime, const size_t &_endTime) : Application(_indice, _senderNode, _receiverNode, _startTime, _endTime)
 {
-  this->appName = "ping_"+this->getIndice();
+  this->appName = "ping_" + this->getIndice();
 }
 
 Ping::~Ping()
@@ -49,24 +49,24 @@ std::vector<std::string> Ping::GenerateApplication(std::string netDeviceContaine
 {
   std::vector<std::string> apps;
 
-  apps.push_back("InetSocketAddress dst_"+this->getAppName()+" = InetSocketAddress (iface_"+netDeviceContainer+".GetAddress("+Generator::toString(numberIntoNetDevice)+"));");
-  apps.push_back("OnOffHelper onoff_"+this->getAppName()+" = OnOffHelper (\"ns3::Ipv4RawSocketFactory\", dst_"+this->getAppName()+");");
-  apps.push_back("onoff_"+this->getAppName()+".SetAttribute (\"OnTime\", RandomVariableValue (ConstantVariable (1.0)));");
-  apps.push_back("onoff_"+this->getAppName()+".SetAttribute (\"OffTime\", RandomVariableValue (ConstantVariable (0.0)));");
+  apps.push_back("InetSocketAddress dst_" + this->getAppName() + " = InetSocketAddress (iface_" + netDeviceContainer + ".GetAddress(" + Generator::toString(numberIntoNetDevice) + "));");
+  apps.push_back("OnOffHelper onoff_" + this->getAppName() + " = OnOffHelper (\"ns3::Ipv4RawSocketFactory\", dst_" + this->getAppName() + ");");
+  apps.push_back("onoff_" + this->getAppName() + ".SetAttribute (\"OnTime\", RandomVariableValue (ConstantVariable (1.0)));");
+  apps.push_back("onoff_" + this->getAppName() + ".SetAttribute (\"OffTime\", RandomVariableValue (ConstantVariable (0.0)));");
 
-  apps.push_back("ApplicationContainer apps_"+this->getAppName()+" = onoff_"+this->getAppName()+".Install("+this->getSenderNode()+".Get(0));");
-  apps.push_back("apps_"+this->getAppName()+".Start (Seconds ("+this->getStartTime()+".1));");
-  apps.push_back("apps_"+this->getAppName()+".Stop (Seconds ("+this->getEndTime()+".1));");
+  apps.push_back("ApplicationContainer apps_" + this->getAppName() + " = onoff_" + this->getAppName() + ".Install(" + this->getSenderNode() + ".Get(0));");
+  apps.push_back("apps_" + this->getAppName() + ".Start (Seconds (" + this->getStartTime() + ".1));");
+  apps.push_back("apps_" + this->getAppName() + ".Stop (Seconds (" + this->getEndTime() + ".1));");
 
-  apps.push_back("PacketSinkHelper sink_"+this->getAppName()+" = PacketSinkHelper (\"ns3::Ipv4RawSocketFactory\", dst_"+this->getAppName()+");");
-  apps.push_back("apps_"+this->getAppName()+" = sink_"+this->getAppName()+".Install ("+this->getReceiverNode()+".Get(0));");
-  apps.push_back("apps_"+this->getAppName()+".Start (Seconds ("+this->getStartTime()+".0));");
-  apps.push_back("apps_"+this->getAppName()+".Stop (Seconds ("+this->getEndTime()+".2));");
+  apps.push_back("PacketSinkHelper sink_" + this->getAppName() + " = PacketSinkHelper (\"ns3::Ipv4RawSocketFactory\", dst_" + this->getAppName() + ");");
+  apps.push_back("apps_" + this->getAppName() + " = sink_" + this->getAppName() + ".Install (" + this->getReceiverNode() + ".Get(0));");
+  apps.push_back("apps_" + this->getAppName() + ".Start (Seconds (" + this->getStartTime() + ".0));");
+  apps.push_back("apps_" + this->getAppName() + ".Stop (Seconds (" + this->getEndTime() + ".2));");
 
-  apps.push_back("V4PingHelper ping_"+this->getAppName()+" = V4PingHelper(iface_"+netDeviceContainer+".GetAddress("+Generator::toString(numberIntoNetDevice)+"));");
-  apps.push_back("apps_"+this->getAppName()+" = ping_"+this->getAppName()+".Install("+this->getSenderNode()+".Get(0));");
-  apps.push_back("apps_"+this->getAppName()+".Start (Seconds ("+this->getStartTime()+".2));");
-  apps.push_back("apps_"+this->getAppName()+".Stop (Seconds ("+this->getEndTime()+".0));");
+  apps.push_back("V4PingHelper ping_" + this->getAppName() + " = V4PingHelper(iface_" + netDeviceContainer + ".GetAddress(" + Generator::toString(numberIntoNetDevice) + "));");
+  apps.push_back("apps_" + this->getAppName() + " = ping_" + this->getAppName() + ".Install(" + this->getSenderNode() + ".Get(0));");
+  apps.push_back("apps_" + this->getAppName() + ".Start (Seconds (" + this->getStartTime() + ".2));");
+  apps.push_back("apps_" + this->getAppName() + ".Stop (Seconds (" + this->getEndTime() + ".0));");
 
   return apps;
 }

@@ -29,9 +29,9 @@
 
 PointToPoint::PointToPoint(const size_t &_indice) : Link(_indice)
 {
-  this->linkName = "p2p_"+this->getIndice();
-  this->ndcName = "ndc_"+this->getLinkName();
-  this->allNodeContainer = "all_"+this->getLinkName();
+  this->linkName = "p2p_" + this->getIndice();
+  this->ndcName = "ndc_" + this->getLinkName();
+  this->allNodeContainer = "all_" + this->getLinkName();
 }
 
 PointToPoint::~PointToPoint()
@@ -49,9 +49,9 @@ std::vector<std::string> PointToPoint::GenerateHeader()
 std::vector<std::string> PointToPoint::GenerateLink()
 {
   std::vector<std::string> generatedLink;
-  generatedLink.push_back("PointToPointHelper p2p_"+this->getLinkName()+";");
-  generatedLink.push_back("p2p_"+this->getLinkName()+".SetDeviceAttribute (\"DataRate\", StringValue (\""+this->getDataRate()+"\"));");
-  generatedLink.push_back("p2p_"+this->getLinkName()+".SetChannelAttribute (\"Delay\", TimeValue (MilliSeconds ("+this->getLinkDelay()+")));");
+  generatedLink.push_back("PointToPointHelper p2p_" + this->getLinkName() + ";");
+  generatedLink.push_back("p2p_" + this->getLinkName() + ".SetDeviceAttribute (\"DataRate\", StringValue (\"" + this->getDataRate() + "\"));");
+  generatedLink.push_back("p2p_" + this->getLinkName() + ".SetChannelAttribute (\"Delay\", TimeValue (MilliSeconds (" + this->getLinkDelay() + ")));");
 
   return generatedLink;
 }
@@ -64,7 +64,7 @@ std::vector<std::string> PointToPoint::GenerateNetDevice()
   {
     ndc.push_back(allNodes.at(i));
   }
-  ndc.push_back("NetDeviceContainer "+this->getNdcName()+" = p2p_"+this->getLinkName()+".Install ("+this->getAllNodeContainer()+");");
+  ndc.push_back("NetDeviceContainer " + this->getNdcName() + " = p2p_" + this->getLinkName() + ".Install (" + this->getAllNodeContainer() + ");");
 
   return ndc;
 }
@@ -75,7 +75,7 @@ std::vector<std::string> PointToPoint::GenerateTrace()
 
   if(this->enableTrace)
   {
-    trace.push_back("PointToPointHelper::EnablePcapAll (\""+this->getLinkName()+"\");");
+    trace.push_back("PointToPointHelper::EnablePcapAll (\"" + this->getLinkName() + "\");");
   }
 
   return trace;

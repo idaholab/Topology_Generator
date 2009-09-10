@@ -29,9 +29,9 @@
 
 Hub::Hub(const size_t &_indice) : Link(_indice)
 {
-  this->linkName = "hub_"+this->getIndice();
-  this->ndcName = "ndc_"+this->getLinkName();
-  this->allNodeContainer = "all_"+this->getLinkName();
+  this->linkName = "hub_" + this->getIndice();
+  this->ndcName = "ndc_" + this->getLinkName();
+  this->allNodeContainer = "all_" + this->getLinkName();
 }
 
 Hub::~Hub()
@@ -49,9 +49,9 @@ std::vector<std::string> Hub::GenerateHeader()
 std::vector<std::string> Hub::GenerateLink()
 {
   std::vector<std::string> generatedLink;
-  generatedLink.push_back("CsmaHelper csma_"+this->getLinkName()+";");
-  generatedLink.push_back("csma_"+this->getLinkName()+".SetChannelAttribute (\"DataRate\", StringValue (\""+this->getDataRate()+"\"));");
-  generatedLink.push_back("csma_"+this->getLinkName()+".SetChannelAttribute (\"Delay\",  StringValue (\""+this->getLinkDelay()+"\"));");
+  generatedLink.push_back("CsmaHelper csma_" + this->getLinkName() + ";");
+  generatedLink.push_back("csma_" + this->getLinkName() + ".SetChannelAttribute (\"DataRate\", StringValue (\"" + this->getDataRate() + "\"));");
+  generatedLink.push_back("csma_" + this->getLinkName() + ".SetChannelAttribute (\"Delay\",  StringValue (\"" + this->getLinkDelay() + "\"));");
 
   return generatedLink;
 }
@@ -64,7 +64,7 @@ std::vector<std::string> Hub::GenerateNetDevice()
   {
     ndc.push_back(allNodes.at(i));
   }
-  ndc.push_back("NetDeviceContainer "+this->getNdcName()+" = csma_"+this->getLinkName()+".Install ("+this->getAllNodeContainer()+");");
+  ndc.push_back("NetDeviceContainer " + this->getNdcName() + " = csma_" + this->getLinkName() + ".Install (" + this->getAllNodeContainer() + ");");
 
   return ndc;
 }
@@ -77,11 +77,11 @@ std::vector<std::string> Hub::GenerateTrace()
   {
     if(this->tracePromisc)
     {
-      trace.push_back("csma_"+this->getLinkName()+".EnablePcapAll (\"csma_"+this->getLinkName()+"\", true);");
+      trace.push_back("csma_" + this->getLinkName() + ".EnablePcapAll (\"csma_" + this->getLinkName() + "\", true);");
     }
     else
     {
-      trace.push_back("csma_"+this->getLinkName()+".EnablePcapAll (\"csma_"+this->getLinkName()+"\", false);");
+      trace.push_back("csma_" + this->getLinkName() + ".EnablePcapAll (\"csma_" + this->getLinkName() + "\", false);");
     }
   }
 

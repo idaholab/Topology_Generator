@@ -30,9 +30,9 @@
 
 Bridge::Bridge(const size_t &_indice, const std::string &_nodeBridge) : Link(_indice)
 {
-  this->linkName = "bridge_"+this->getIndice();
-  this->ndcName = "ndc_"+this->getLinkName();
-  this->allNodeContainer = "all_"+this->getLinkName();
+  this->linkName = "bridge_" + this->getIndice();
+  this->ndcName = "ndc_" + this->getLinkName();
+  this->allNodeContainer = "all_" + this->getLinkName();
   this->nodeBridge = _nodeBridge;
 }
 
@@ -57,9 +57,9 @@ std::vector<std::string> Bridge::GenerateLink()
 {
   std::vector<std::string> generatedLink;
   /* creation of the link. */
-  generatedLink.push_back("CsmaHelper csma_"+this->getLinkName()+";");
-  generatedLink.push_back("csma_"+this->getLinkName()+".SetChannelAttribute (\"DataRate\", StringValue (\""+this->getDataRate()+"\"));");
-  generatedLink.push_back("csma_"+this->getLinkName()+".SetChannelAttribute (\"Delay\",  StringValue (\""+this->getLinkDelay()+"\"));");
+  generatedLink.push_back("CsmaHelper csma_" + this->getLinkName() + ";");
+  generatedLink.push_back("csma_" + this->getLinkName() + ".SetChannelAttribute (\"DataRate\", StringValue (\"" + this->getDataRate() + "\"));");
+  generatedLink.push_back("csma_" + this->getLinkName() + ".SetChannelAttribute (\"Delay\",  StringValue (\"" + this->getLinkDelay() + "\"));");
 
   return generatedLink;
 }
@@ -67,7 +67,7 @@ std::vector<std::string> Bridge::GenerateLink()
 std::vector<std::string> Bridge::GenerateNetDevice()
 {
   std::vector<std::string> ndc;
-  //ndc.push_back("NetDeviceContainer "+this->getNdcName()+" = csma_"+this->getLinkName()+".Install ("+this->getAllNodeContainer()+");");
+  //ndc.push_back("NetDeviceContainer " + this->getNdcName() + " = csma_" + this->getLinkName() + ".Install (" + this->getAllNodeContainer() + ");");
 
   std::vector<std::string> allNodes = this->GroupAsNodeContainer();
   for(size_t i = 0; i < (size_t) allNodes.size(); i++)
@@ -75,20 +75,20 @@ std::vector<std::string> Bridge::GenerateNetDevice()
     ndc.push_back(allNodes.at(i));
   }
 
-  ndc.push_back("NetDeviceContainer terminalDevices_"+this->getLinkName()+";");
-  ndc.push_back("NetDeviceContainer BridgeDevices_"+this->getLinkName()+";");
+  ndc.push_back("NetDeviceContainer terminalDevices_" + this->getLinkName() + ";");
+  ndc.push_back("NetDeviceContainer BridgeDevices_" + this->getLinkName() + ";");
 
-  ndc.push_back("for (int i = 0; i < "+Generator::toString(allNodes.size()-1)+"; i++)");
+  ndc.push_back("for (int i = 0; i < " + Generator::toString(allNodes.size() - 1) + "; i++)");
   ndc.push_back("{");
-  ndc.push_back(" NetDeviceContainer link = csma_"+this->getLinkName()+".Install(NodeContainer("+this->getAllNodeContainer()+".Get(i), "+this->getNodeBridge()+"));");
-  ndc.push_back(" terminalDevices_"+this->getLinkName()+".Add (link.Get(0));");
-  ndc.push_back(" BridgeDevices_"+this->getLinkName()+".Add (link.Get(1));");
+  ndc.push_back(" NetDeviceContainer link = csma_" + this->getLinkName() + ".Install(NodeContainer(" + this->getAllNodeContainer() + ".Get(i), " + this->getNodeBridge() + "));");
+  ndc.push_back(" terminalDevices_" + this->getLinkName() + ".Add (link.Get(0));");
+  ndc.push_back(" BridgeDevices_" + this->getLinkName() + ".Add (link.Get(1));");
   ndc.push_back("}");
 
-  ndc.push_back("BridgeHelper bridge_"+this->getLinkName()+";");
-  ndc.push_back("bridge_"+this->getLinkName()+".Install ("+this->getNodeBridge()+".Get(0), BridgeDevices_"+this->getLinkName()+");");
+  ndc.push_back("BridgeHelper bridge_" + this->getLinkName() + ";");
+  ndc.push_back("bridge_" + this->getLinkName() + ".Install (" + this->getNodeBridge() + ".Get(0), BridgeDevices_" + this->getLinkName() + ");");
 
-  ndc.push_back("NetDeviceContainer ndc_"+this->getLinkName()+" = terminalDevices_"+this->getLinkName()+";"); 
+  ndc.push_back("NetDeviceContainer ndc_" + this->getLinkName() + " = terminalDevices_" + this->getLinkName() + ";"); 
 
   return ndc;
 }
@@ -101,11 +101,11 @@ std::vector<std::string> Bridge::GenerateTrace()
   {
     if(this->tracePromisc)
     {
-      trace.push_back("csma_"+this->getLinkName()+".EnablePcapAll (\"csma_"+this->getLinkName()+"\", true);");
+      trace.push_back("csma_" + this->getLinkName() + ".EnablePcapAll (\"csma_" + this->getLinkName() + "\", true);");
     }
     else
     {
-      trace.push_back("csma_"+this->getLinkName()+".EnablePcapAll (\"csma_"+this->getLinkName()+"\", false);");
+      trace.push_back("csma_" + this->getLinkName() + ".EnablePcapAll (\"csma_" + this->getLinkName() + "\", false);");
     }
   }
 

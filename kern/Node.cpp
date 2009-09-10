@@ -33,7 +33,7 @@ Node::Node(const size_t &_indice, const std::string &_type, const size_t &_machi
 {
   this->indice = _indice;
   this->nodeName = _type + Generator::toString(_indice);
-  this->ipInterfaceName = "iface_"+this->nodeName;
+  this->ipInterfaceName = "iface_" + this->nodeName;
   this->nsc = "";	
   this->machinesNumber = _machinesNumber;
 }
@@ -53,8 +53,8 @@ std::vector<std::string> Node::GenerateHeader()
 std::vector<std::string> Node::GenerateNode()
 {
   std::vector<std::string> nodes;
-  nodes.push_back("NodeContainer "+this->getNodeName()+";");
-  nodes.push_back(this->getNodeName()+".Create("+Generator::toString(this->machinesNumber)+");");
+  nodes.push_back("NodeContainer " + this->getNodeName() + ";");
+  nodes.push_back(this->getNodeName() + ".Create(" + Generator::toString(this->machinesNumber) + ");");
 
   return nodes; 
 }
@@ -62,13 +62,13 @@ std::vector<std::string> Node::GenerateNode()
 std::vector<std::string> Node::GenerateIpStack()
 {
   std::vector<std::string> stack;
-  //stack.push_back("InternetStackHelper net_"+this->getNodeName()+";");
+  //stack.push_back("InternetStackHelper net_" + this->getNodeName() + ";");
   if(this->getNsc() != "")
   {
-    //stack.push_back("net_"+this->getNodeName()+".SetNscStack (nscStack);");
+    //stack.push_back("net_" + this->getNodeName() + ".SetNscStack (nscStack);");
     stack.push_back("internetStackH.SetTcp (\"ns3::NscTcpL4Protocol\",\"Library\",StringValue(nscStack));");
   }
-  stack.push_back("internetStackH.Install ("+this->getNodeName()+");");
+  stack.push_back("internetStackH.Install (" + this->getNodeName() + ");");
 
   return stack; 
 }
@@ -90,7 +90,7 @@ std::string Node::getNodeName()
 
 std::string Node::getNodeName(const size_t &number)
 {
-  return std::string("NodeContainer("+this->nodeName+".Get("+Generator::toString(number)+"))");
+  return std::string("NodeContainer(" + this->nodeName + ".Get(" + Generator::toString(number) + "))");
 }
 
 std::string Node::getIpInterfaceName()

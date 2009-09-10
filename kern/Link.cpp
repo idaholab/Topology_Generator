@@ -124,12 +124,12 @@ std::string Link::getAllNodeContainer()
 std::vector<std::string> Link::GroupAsNodeContainer()
 {
   std::vector<std::string> res;
-  res.push_back("NodeContainer "+this->getAllNodeContainer()+";");
+  res.push_back("NodeContainer " + this->getAllNodeContainer() + ";");
   for(size_t i = 0; i < (size_t) this->nodes.size(); i++)
   {
     if((this->nodes.at(i)).find("ap_") != 0)
     {
-      res.push_back(this->getAllNodeContainer()+".Add("+this->nodes.at(i)+");");
+      res.push_back(this->getAllNodeContainer() + ".Add(" + this->nodes.at(i) + ");");
     }
   }
 
