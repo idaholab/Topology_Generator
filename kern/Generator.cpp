@@ -241,7 +241,7 @@ void Generator::RemoveNode(size_t index)
 {
   if(this->listNode.size() < index)
   {
-    throw std::logic_error("Node remove failed ! (index not exists).");
+    throw std::out_of_range("Node remove failed ! (index not exists).");
     return;
   }
   
@@ -396,7 +396,7 @@ void Generator::RemoveLink(size_t index)
 {
   if(this->listLink.size() < index)
   {
-    throw std::logic_error("Link remove failed! (index not exists).");
+    throw std::out_of_range("Link remove failed! (index not exists).");
     return;
   }
 
