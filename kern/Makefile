@@ -1,6 +1,6 @@
 CXX = g++
 CFLAGS = -std=c++98 -Wall -W -pedantic -Wredundant-decls -Wshadow -Werror -O2 -g
-OBJS = ../Generator.o ../Equipement.o ../Link.o ../Hub.o ../PointToPoint.o ../Bridge.o ../Wifi.o ../Application.o ../Ping.o ../UdpEcho.o ../TcpLargeTransfer.o ../Tap.o ../Emu.o
+OBJS = ../generator.o ../link.o ../hub.o ../point-to-point.o ../bridge.o ../ap.o ../application.o ../ping.o ../udp-echo.o ../tcp-large-transfer.o ../tap.o ../emu.o
 
 all: main
 

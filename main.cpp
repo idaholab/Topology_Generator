@@ -37,8 +37,8 @@ using namespace std;
 #include <QtGui>
 #include <QHBoxLayout>
 
-#include "kern/Generator.h"
-#include "gui/MainWindow.h"
+#include "kern/generator.h"
+#include "gui/main-window.h"
 
 /**
  * \brief Signal handler.

@@ -8,41 +8,41 @@ DEPENDPATH += . gui kern test kern/examples
 INCLUDEPATH += . kern gui
 
 # Input
-HEADERS += gui/DragLines.h \
-           gui/DragObject.h \
-           gui/DragWidget.h \
-           gui/MainWindow.h \
-           kern/Ap.h \
-           kern/Application.h \
-           kern/Bridge.h \
-           kern/Emu.h \
-           kern/Generator.h \
-           kern/Hub.h \
-           kern/Link.h \
-           kern/Node.h \
-           kern/Ping.h \
-           kern/PointToPoint.h \
-           kern/Tap.h \
-           kern/TcpLargeTransfer.h \
-           kern/UdpEcho.h \
+HEADERS += gui/drag-lines.h \
+           gui/drag-object.h \
+           gui/drag-widget.h \
+           gui/main-window.h \
+           kern/ap.h \
+           kern/application.h \
+           kern/bridge.h \
+           kern/emu.h \
+           kern/generator.h \
+           kern/hub.h \
+           kern/link.h \
+           kern/node.h \
+           kern/ping.h \
+           kern/point-to-point.h \
+           kern/tap.h \
+           kern/tcp-large-transfer.h \
+           kern/udp-echo.h \
            kern/utils.h
 SOURCES += main.cpp \
-           gui/DragLines.cpp \
-           gui/DragObject.cpp \
-           gui/DragWidget.cpp \
-           gui/MainWindow.cpp \
-           kern/Ap.cpp \
-           kern/Application.cpp \
-           kern/Bridge.cpp \
-           kern/Emu.cpp \
-           kern/Generator.cpp \
-           kern/Hub.cpp \
-           kern/Link.cpp \
-           kern/Node.cpp \
-           kern/Ping.cpp \
-           kern/PointToPoint.cpp \
-           kern/Tap.cpp \
-           kern/TcpLargeTransfer.cpp \
-           kern/UdpEcho.cpp \
+           gui/drag-lines.cpp \
+           gui/drag-object.cpp \
+           gui/drag-widget.cpp \
+           gui/main-window.cpp \
+           kern/ap.cpp \
+           kern/application.cpp \
+           kern/bridge.cpp \
+           kern/emu.cpp \
+           kern/generator.cpp \
+           kern/hub.cpp \
+           kern/link.cpp \
+           kern/node.cpp \
+           kern/ping.cpp \
+           kern/point-to-point.cpp \
+           kern/tap.cpp \
+           kern/tcp-large-transfer.cpp \
+           kern/udp-echo.cpp \
            kern/utils.cpp
-RESOURCES += gui/DragWidget.qrc
+RESOURCES += gui/drag-widget.qrc
