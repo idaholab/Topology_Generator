@@ -27,7 +27,7 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <stdexcept>
-#include "../kern/Generator.h"
+#include "../kern/generator.h"
 
 namespace tests
 {

@@ -47,7 +47,7 @@
  *    - Create an ap with generator object.
  *    - Install nodes (wifi station) with install method.
  */
-class ap : public Link
+class Ap : public Link
 {
   public:
     /**
