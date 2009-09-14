@@ -25,8 +25,8 @@
  * \date 2009
  */
 
+#include <cstdlib> 
 #include <iostream>
-#include <stdlib.h> 
 #include <stdexcept>
 
 #include "generator.h"

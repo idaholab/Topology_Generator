@@ -29,8 +29,9 @@
 
 using namespace std;
 
+#include <cstdlib>
 #include <iostream>
-#include <stdlib.h>
+
 #include "../generator.h"
 
 int main(int argc, char *argv[])
