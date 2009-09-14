@@ -19,7 +19,7 @@
  */
 
 /**
- * \file DragLines.h
+ * \file drag-lines.h
  * \brief The dragged lines.
  * \author Pierre Weiss
  * \date 2009

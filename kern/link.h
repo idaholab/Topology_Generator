@@ -50,7 +50,7 @@
  *  To add a new link, please see the subclass for example.
  *  example of .h file :
  *
- *  #include "link.h"
+ *  include "link.h"
  *  class new-class : public Link
  *  {
  *    new-class(...);

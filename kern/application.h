@@ -46,7 +46,7 @@
  *  To add a new application, please see the subclasse for example.
  *  example of .h file :
  *
- *    #include "application.h"
+ *    include "application.h"
  *    class new-class : public Application
  *    {
  *      new-class(...);
@@ -115,7 +115,7 @@ class Application
      * \brief function used to generate the application code.
      * \param netDeviceContainer is the ns3 net device containe
      * \param numberIntoNetDevice is the place from the sender node in the assigned ip network.
-     * \parem numberIntoNetDevice example sender node is 192.168.0.5, then the number is 5.
+     * \param numberIntoNetDevice example sender node is 192.168.0.5, then the number is 5.
      * \return the code from the application.
      */
     virtual std::vector<std::string> GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice) = 0;

@@ -19,8 +19,8 @@
  */
 
 /**
- * \file Node.cpp
- * \brief Node Base Class.
+ * \file node.cpp
+ * \brief node base class.
  * \author Pierre Weiss
  * \date 2009
  */

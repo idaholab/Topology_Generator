@@ -19,7 +19,7 @@
  */
 
 /**
- * \file DragWidget.h
+ * \file drag-widget.h
  * \brief The drag n drop zone file.
  * \author Pierre Weiss
  * \date 2009

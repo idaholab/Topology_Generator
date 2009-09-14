@@ -19,7 +19,7 @@
  */
 
 /**
- * \file MainWindow.cpp
+ * \file main-window.cpp
  * \brief The main windows file.
  * \author Pierre Weiss
  * \date 2009

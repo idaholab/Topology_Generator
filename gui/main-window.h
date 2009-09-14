@@ -19,7 +19,7 @@
  */
 
 /**
- * \file MainWindow.h
+ * \file main-window.h
  * \brief The main windows file.
  * \author Pierre Weiss
  * \date 2009

@@ -19,7 +19,7 @@
  */
 
 /**
- * \file DragWidget.cpp
+ * \file drag-widget.cpp
  * \brief The drag'n'drop zone file.
  * \author Pierre Weiss
  * \date 2009

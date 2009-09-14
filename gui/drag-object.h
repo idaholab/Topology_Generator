@@ -19,7 +19,7 @@
  */
 
 /**
- * \file DragObject.h
+ * \file drag-object.h
  * \brief The dragged object file.
  * \author Pierre Weiss
  * \date 2009

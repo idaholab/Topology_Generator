@@ -19,8 +19,8 @@
  */
 
 /**
- * \file TcpLargeTransfer.cpp
- * \brief Tcp Large Transfer Class.
+ * \file tcp-large-transfer.cpp
+ * \brief tcp large transfer class.
  * \author Pierre Weiss
  * \date 2009
  */

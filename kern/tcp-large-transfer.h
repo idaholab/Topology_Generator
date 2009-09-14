@@ -19,8 +19,8 @@
  */
 
 /**
- * \file TcpLargeTransfer.h
- * \brief The tcp large transfer echo class subclass of Application.
+ * \file tcp-large-transfer.h
+ * \brief the tcp large transfer echo class subclass of Application.
  * \author Pierre Weiss
  * \date 2009
  */
