@@ -21,6 +21,9 @@
  * \brief Utils functions.
  */
 
+#ifndef UTILS_H
+#define UTILS_H
+
 #include <vector>
 #include <string>
 
@@ -48,4 +51,6 @@ size_t split(std::vector<std::string> &res, std::string str, char separator);
 std::string toString(const size_t nb);
 
 } /* namespace utils */
+
+#endif /* UTILS_H */
 
