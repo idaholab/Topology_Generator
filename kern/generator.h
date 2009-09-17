@@ -64,26 +64,26 @@ class Generator
 {
   public:
     /**
-     * \brief the simulation name.
+     * \brief simulation name.
      */
     std::string simulationName;
 
     /**
-     * \brief the configuration list.
+     * \brief configuration list.
      */
     std::vector<std::string> listConfiguration;
 
     /**
-     * \brief procedure to add a config line.
-     * \param config is a new config to add to config list.
+     * \brief add a config line.
+     * \param config new config to add to config list.
      */
     void AddConfig(const std::string &config);
 
     /**
      * \brief constructor.
-     * \param _simulationName is the simulation name.
+     * \param m_simulationName simulation name.
      */
-    Generator(const std::string &_simulationName);
+    Generator(const std::string &m_simulationName);
 
     /**
      * \brief destructor.
@@ -95,75 +95,75 @@ class Generator
     //
   private:
     /**
-     * \brief number attribute of Pc Node created.
+     * \brief number attribute of term node created.
      */
     size_t indiceNodePc;
 
     /**
-     * \brief number attribute of Router Node created.
+     * \brief number attribute of router node created.
      */
     size_t indiceNodeRouter;
 
     /**
-     * \brief number attribute of Ap Node created.
+     * \brief number attribute of ap node created.
      */
     size_t indiceNodeAp;
 
     /**
-     * \brief number attribute of Station Node created.
+     * \brief number attribute of station node created.
      */
     size_t indiceNodeStation;
 
     /**
-     * \brief number attribute of Bridge Node created.
+     * \brief number attribute of bridge node created.
      */
     size_t indiceNodeBridge;
 
     /**
-     * \brief number attribute of Tap Node created.
+     * \brief number attribute of tap node created.
      */
     size_t indiceNodeTap;
 
     /**
-     * \brief number attribute of Emu Node created.
+     * \brief number attribute of emu node created.
      */
     size_t indiceNodeEmu;
 
   public: 
     /**
-     * \brief list of Node created instance.
+     * \brief list of node created instance.
      * 
-     * This attribute is the list of the created instance of Node.
+     * This attribute is the list of the created instance of node.
      * 
      */
     std::vector<Node*> listNode;
 
     /**
-     * \brief procedure used to add an Node.
+     * \brief add an node.
      * 
-     * This procedure is used to add an Node. It add the Node to the
-     * vector listNode and increment the number of Node.
+     * This used to add an node. It add the node to the
+     * vector listNode and increment the number of node.
      * 
-     * \param type the type of the Node. (Pc, Hub, Switch,...)
+     * \param type node type. (pc, hub, switch,...)
      */
     void AddNode(const std::string &type);
 
     /**
-     * \brief procedure used to add an Node group.
-     * \param type the node type.
-     * \param number the nuber which will be added.
+     * \brief add an node group.
+     * \param type node type.
+     * \param number number which will be added.
      */
     void AddNode(const std::string &type, const size_t &number);
 
     /**
-     * \brief procedure used to remove an Node element.
-     * \param name the Node name to remove.
+     * \brief remove an node element.
+     * \param name node name to remove.
      */
     void RemoveNode(const std::string &name);
 
     /**
-     * \brief procedure used to remove an Node elem.
-     * \param index of the node to remove.
+     * \brief remove an node element.
+     * \param index node index to be removed.
      */
     void RemoveNode(size_t index);
 
@@ -172,61 +172,61 @@ class Generator
     //
   private:
     /**
-     * \brief number attribute of Ping application created.
+     * \brief number attribute of ping application created.
      */
     size_t indiceApplicationPing; 
 
     /**
-     * \brief number attribute of Tcp large transfert application created.
+     * \brief number attribute of tcp large transfert application created.
      */
     size_t indiceApplicationTcpLargeTransfer;
 
     /**
-     * \brief number attribute of Udp echo application created.
+     * \brief number attribute of udp echo application created.
      */
     size_t indiceApplicationUdpEcho;
 
   public:
 
     /**
-     * \brief list of application created instace.
+     * \brief list of application created instance.
      * 
      * This attribute is the list of the created instance of application.
      */
     std::vector<Application*> listApplication;
 
     /**
-     * \brief procedure used to add an appplication.
+     * \brief add an appplication.
      * 
      * This procedure is used to add an procedure. It add the application to the
      * vector listApplication and increment the number of application.
      * 
-     * \param type the type of the application. (Ping, TcpLargeTransfert, Udp_Echo ...)
-     * \param senderNode
-     * \param receiverNode
-     * \param startTime
-     * \param endTime
-     * \param port
+     * \param type type of the application. (ping, tcp-large-transfert, udp-echo ...)
+     * \param senderNode sender node.
+     * \param receiverNode receiver node.
+     * \param startTime start time.
+     * \param endTime end time.
+     * \param port port.
      */
     void AddApplication(const std::string &type, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime, const size_t &port);
 
     /**
-     * \brief procedure used to add an application.
+     * \brief add an application.
      * 
      * This procedure is used to add an procedure. It add the application to the
      * vector listApplication and increment the number of application.
      * 
-     * \param type the type of the application. (Ping, TcpLargeTransfert, Udp_Echo ...)
-     * \param senderNode
-     * \param receiverNode
-     * \param startTime
-     * \param endTime
+     * \param type the type of the application. (ping, tcp-large-transfert, udp-echo ...)
+     * \param senderNode sender node.
+     * \param receiverNode receiver node.
+     * \param startTime start time.
+     * \param endTime end time.
      */
     void AddApplication(const std::string &type, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime);
 
     /**
-     * \brief procedure used to remove an application elem.
-     * \param name the application name to remove
+     * \brief remove an application element.
+     * \param name application name to remove
      */
     void RemoveApplication(const std::string &name);
 
@@ -235,32 +235,32 @@ class Generator
     //
   private:
     /**
-     * \brief number attribute of Ap link created.
+     * \brief number attribute of ap link created.
      */
     size_t indiceLinkAp;
 
     /**
-     * \brief number attribute of Emu link created.
+     * \brief number attribute of emu link created.
      */
     size_t indiceLinkEmu;
 
     /**
-     * \brief number attribute of PointToPoint link created.
+     * \brief number attribute of point-to-point link created.
      */
     size_t indiceLinkPointToPoint;
 
     /**
-     * \brief number attribute of Tap link created.
+     * \brief number attribute of tap link created.
      */
     size_t indiceLinkTap;
 
     /**
-     * \brief number attribute of Hub link created.
+     * \brief number attribute of hub link created.
      */
     size_t indiceLinkHub;
 
     /**
-     * \brief number attribute of Bridge link created.
+     * \brief number attribute of bridge link created.
      */
     size_t indiceLinkBridge; 
 
@@ -274,42 +274,42 @@ class Generator
     std::vector<Link*> listLink;
 
     /**
-     * \brief procedure used to add an link.
+     * \brief add an link.
      * 
      * This procedure is used to add an link. It add the link to the
      * vector listLink and increment the number of link.
      * 
-     * \param type the type of the link. (PointToPoint, Csma,...)
+     * \param type type of the link. (point-to-point, csma,...)
      */
     void AddLink(const std::string &type);
 
     /**
-     * \brief procedure used to add link and his linkNode.
+     * \brief add link and his linkNode.
      * 
      *  Example, an Ap, must have an ap node to be generated.  
      *
-     * \param type
-     * \param linkNode
+     * \param type link type.
+     * \param linkNode node name.
      */
     void AddLink(const std::string &type, const std::string &linkNode);
 
     /**
-     * \brief procedure to add link with her linkNode and ifaceName.
+     * \brief add link with her linkNode and ifaceName.
      * 
-     * \param type
-     * \param linkNode
-     * \param ifaceName
+     * \param type link type.
+     * \param linkNode node name.
+     * \param ifaceName iface name.
      */
     void AddLink(const std::string &type, const std::string &linkNode, const std::string &ifaceName);
 
     /**
-     * \brief procedure used to remove an link elem.
-     * \param name the link name to remove
+     * \brief remove an link element.
+     * \param name link name to remove.
      */
     void RemoveLink(const std::string &name);
 
     /**
-     * \brief procedure used to remove an link elem.
+     * \brief remove an link element.
      * \param index index of the link to remove
      */
     void RemoveLink(size_t index);
@@ -318,9 +318,9 @@ class Generator
     // Part around the code Generation.
     // This part is looking about the code to write.
     // 
-  public:
+    
     /**
-     * \brief procedure wich are the main code generator.
+     * \brief generate ns3 code.
      * 
      * This procedure is the main procedure to generate the code from the simulation.
      * It also go to use all the procedure on the bottom like generate all headers, ...
@@ -330,113 +330,112 @@ class Generator
 
   private:
     /**
-     * \brief function which return all headers to use.
+     * \brief generate headers code.
      * 
      * This function return a string wich contain all c++ header without duplicate.
      * 
-     * \return the header 
+     * \return headers code. 
      */
     std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief function which return all variables used.
+     * \brief generate vars code.
      * 
      * This function return a string wich contain all c++ vars.
      * 
-     * \return this header 
+     * \return vars code. 
      */
     std::vector<std::string> GenerateVars();
 
 
     /**
-     * \brief function which return all command line c++ code.
+     * \brief generate command line code.
      * 
-     * \return the command line 
+     * \return commend line code.
      */
     std::vector<std::string> GenerateCmdLine();
 
 
     /**
-     * \brief function which return a string with the config option.
+     * \brief generate config code.
      * 
-     * \return the generated config
+     * \return config code.
      */
     std::vector<std::string> GenerateConfig();
 
 
     /**
-     * \brief function which return a string with all c++ node code.
+     * \brief generate node declaration code.
      *
-     * \return the generated node
+     * \return declaration code.
      */
     std::vector<std::string> GenerateNode();
 
 
     /**
-     * \brief function which return a string with all c++ link code.
+     * \brief generate link code.
      * 
-     * \return the generated link
+     * \return link code.
      */
     std::vector<std::string> GenerateLink();
 
 
     /**
-     * \brief function which return a string with all c++ net device code.
+     * \brief generate net device code.
      * 
-     * \return the generated net device
+     * \return net device code.
      */
     std::vector<std::string> GenerateNetDevice();
 
 
     /**
-     * \brief function which return a string with all c++ ip stack code.
+     * \brief generate ip stack declaration.
      * 
-     * \return the generated ip stack 
+     * \return ip stack code.
      */
     std::vector<std::string> GenerateIpStack();
 
 
     /**
-     * \brief function which return a string with all c++ ip assign code.
+     * \brief generate ip assign code.
      * 
-     * \return the generated ip assign
+     * \return ip assign code.
      */
     std::vector<std::string> GenerateIpAssign();
 
     /**
-     * \brief function which return a string with all c++ tap bridge code.
+     * \brief generate tap bridge code.
      * 
-     * \return the generated tab bridge
+     * \return tab bridge code.
      */
     std::vector<std::string> GenerateTapBridge();
 
 
     /**
-     * \brief function which return string with all c++ route code.
+     * \brief generate route code.
      * 
-     * \return the generated route
+     * \return route code.
      */
     std::vector<std::string> GenerateRoute();
 
 
     /**
-     * \brief function which return string with all c++ application code.
+     * \brief generate application code.
      * 
-     * \return the generated application
+     * \return application code.
      */
     std::vector<std::string> GenerateApplication();
 
     /**
-     * \brief function to generate the pcap trace application code.
+     * \brief generate trace code.
      * 
-     * \return the generate trace
+     * \return trace code.
      */
     std::vector<std::string> GenerateTrace();
 
     //
     // XML generation operation part.
     //
-  private: 
 
     /**
      * \brief xml file name atribute.
@@ -474,7 +473,6 @@ class Generator
     //
     // Cpp generation operation part.
     //
-  private:
 
     /**
      * \brief attribute which are the name of the c++ output file name.
@@ -505,7 +503,6 @@ class Generator
     //
     // Python generation operation part.
     //
-  private:  
 
     /**
      * \brief Attribute which are the name of the python output file.

@@ -30,12 +30,12 @@
 
 #include "utils.h"
 
-Bridge::Bridge(const size_t &_indice, const std::string &_nodeBridge) : Link(_indice)
+Bridge::Bridge(const size_t &m_indice, const std::string &m_nodeBridge) : Link(m_indice)
 {
-  this->linkName = "bridge_" + this->getIndice();
-  this->ndcName = "ndc_" + this->getLinkName();
-  this->allNodeContainer = "all_" + this->getLinkName();
-  this->nodeBridge = _nodeBridge;
+  this->setLinkName(std::string("bridge_" + this->getIndice()));
+  this->setNdcName(std::string("ndc_" + this->getLinkName()));
+  this->setAllNodeContainer(std::string("all_" + this->getLinkName()));
+  this->setNodeBridge(m_nodeBridge);
 }
 
 Bridge::~Bridge()
@@ -45,6 +45,11 @@ Bridge::~Bridge()
 std::string Bridge::getNodeBridge()
 {
   return this->nodeBridge;
+}
+
+void Bridge::setNodeBridge(const std::string &m_nodeBridge)
+{
+  this->nodeBridge = m_nodeBridge;
 }
 
 std::vector<std::string> Bridge::GenerateHeader()
@@ -99,9 +104,9 @@ std::vector<std::string> Bridge::GenerateTrace()
 {
   std::vector<std::string> trace;
 
-  if(this->enableTrace)
+  if(this->getTrace())
   {
-    if(this->tracePromisc)
+    if(this->getPromisc())
     {
       trace.push_back("csma_" + this->getLinkName() + ".EnablePcapAll (\"csma_" + this->getLinkName() + "\", true);");
     }

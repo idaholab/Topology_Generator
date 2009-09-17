@@ -30,14 +30,14 @@
 
 #include "utils.h"
 
-UdpEcho::UdpEcho(const size_t &_indice, const std::string &_senderNode, const std::string &_receiverNode, const size_t &_startTime, const size_t &_endTime, const size_t &_port) : Application(_indice, _senderNode, _receiverNode, _startTime, _endTime)
+UdpEcho::UdpEcho(const size_t &m_indice, const std::string &m_senderNode, const std::string &m_receiverNode, const size_t &m_startTime, const size_t &m_endTime, const size_t &m_port) : Application(m_indice, m_senderNode, m_receiverNode, m_startTime, m_endTime)
 {
-  this->port = _port;
-  this->appName = "udpEcho_" + this->getIndice();
+  this->setPort(m_port);
+  this->setAppName(std::string("udpEcho_" + this->getIndice()));
   /* default values */
-  this->packetSize = 1024;
-  this->maxPacketCount = 1;
-  this->packetIntervalTime = "1.0";
+  this->setPacketSize(1024);
+  this->setMaxPacketCount(1);
+  this->setPacketIntervalTime(std::string("1.0"));
 }
 
 UdpEcho::~UdpEcho()
@@ -72,9 +72,19 @@ std::vector<std::string> UdpEcho::GenerateApplication(std::string netDeviceConta
   return apps;
 }
 
-void UdpEcho::setPacketSize(const size_t &_packetSize)
+size_t UdpEcho::getPort()
 {
-  this->packetSize = _packetSize;
+  return this->port;
+}
+
+void UdpEcho::setPort(const size_t &m_port)
+{
+  this->port = m_port;
+}
+
+void UdpEcho::setPacketSize(const size_t &m_packetSize)
+{
+  this->packetSize = m_packetSize;
 }
 
 size_t UdpEcho::getPacketSize()
@@ -82,9 +92,9 @@ size_t UdpEcho::getPacketSize()
   return this->packetSize;
 }
 
-void UdpEcho::setMaxPacketCount(const size_t &_maxPacketCount)
+void UdpEcho::setMaxPacketCount(const size_t &m_maxPacketCount)
 {
-  this->maxPacketCount = _maxPacketCount;
+  this->maxPacketCount = m_maxPacketCount;
 }
 
 size_t UdpEcho::getMaxPacketCount()
@@ -92,9 +102,9 @@ size_t UdpEcho::getMaxPacketCount()
   return this->maxPacketCount;
 }
 
-void UdpEcho::setPacketIntervalTime(const std::string &_packetIntervalTime)
+void UdpEcho::setPacketIntervalTime(const std::string &m_packetIntervalTime)
 {
-  this->packetIntervalTime = _packetIntervalTime;
+  this->packetIntervalTime = m_packetIntervalTime;
 }
 
 std::string UdpEcho::getPacketIntervalTime()

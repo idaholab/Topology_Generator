@@ -27,11 +27,11 @@
 
 #include "point-to-point.h"
 
-PointToPoint::PointToPoint(const size_t &_indice) : Link(_indice)
+PointToPoint::PointToPoint(const size_t &m_indice) : Link(m_indice)
 {
-  this->linkName = "p2p_" + this->getIndice();
-  this->ndcName = "ndc_" + this->getLinkName();
-  this->allNodeContainer = "all_" + this->getLinkName();
+  this->setLinkName(std::string("p2p_" + this->getIndice()));
+  this->setNdcName(std::string("ndc_" + this->getLinkName()));
+  this->setAllNodeContainer(std::string("all_" + this->getLinkName()));
 }
 
 PointToPoint::~PointToPoint()
@@ -73,7 +73,7 @@ std::vector<std::string> PointToPoint::GenerateTrace()
 {
   std::vector<std::string> trace;
 
-  if(this->enableTrace)
+  if(this->getTrace())
   {
     trace.push_back("PointToPointHelper::EnablePcapAll (\"" + this->getLinkName() + "\");");
   }

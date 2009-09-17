@@ -49,7 +49,8 @@ int main(int argc, char *argv[])
   
   /* Add the bridge. */
   gen->AddLink("Ap", gen->listNode.at(0)->getNodeName());
-  gen->listLink.at(0)->setMobility(true);
+  Ap *ap = dynamic_cast<Ap*>(gen->listLink.at(0));
+  ap->setMobility(true);
   gen->listLink.at(0)->Install(gen->listNode.at(1)->getNodeName());
   gen->listLink.at(0)->Install(gen->listNode.at(2)->getNodeName());
   gen->listLink.at(0)->Install(gen->listNode.at(3)->getNodeName());
@@ -62,5 +63,6 @@ int main(int argc, char *argv[])
 
   gen->GenerateCode();
   
+  delete ap;
   delete gen;
 }

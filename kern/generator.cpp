@@ -45,9 +45,9 @@
 
 using utils::split;
 
-Generator::Generator(const std::string &_simulationName)
+Generator::Generator(const std::string &m_simulationName)
 {
-  this->simulationName = _simulationName;
+  this->simulationName = m_simulationName;
 
   /* Node. */
   this->indiceNodePc = 0;

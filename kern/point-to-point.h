@@ -51,38 +51,38 @@ class PointToPoint : public Link
 {
   public:
     /**
-     * \brief Constructor.
-     * \param _indice is the point-to-point number into the link generator vector.
+     * \brief constructor.
+     * \param m_indice point-to-point number into the link generator vector.
      */
-    PointToPoint(const size_t &_indice);
+    PointToPoint(const size_t &m_indice);
 
     /**
-     * \brief Destructor.
+     * \brief destructor.
      */
     virtual ~PointToPoint();
 
   private:
     /**
-     * \brief function which return the generated headers.
-     * \return the headers.
+     * \brief generated headers code.
+     * \return headers code.
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief function which generate the build link code.
-     * \return the build link code.
+     * \brief generate link code.
+     * \return link code.
      */
     virtual std::vector<std::string> GenerateLink();
 
     /**
-     * \brief function which return the build of the net device container.
-     * \return the net device container.
+     * \brief generate net device container.
+     * \return net device container code.
      */
     virtual std::vector<std::string> GenerateNetDevice();
 
     /**
-     * \brief function to generate the trace line.
-     * \return the trace line code.
+     * \brief generate trace line code.
+     * \return trace line code.
      */
     virtual std::vector<std::string> GenerateTrace();
 };

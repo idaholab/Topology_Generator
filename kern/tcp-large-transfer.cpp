@@ -30,10 +30,10 @@
 
 #include "utils.h"
 
-TcpLargeTransfer::TcpLargeTransfer(const size_t &_indice, const std::string &_senderNode, const std::string &_receiverNode, const size_t &_startTime, const size_t &_endTime, const size_t &_port) : Application(_indice, _senderNode, _receiverNode, _startTime, _endTime)
+TcpLargeTransfer::TcpLargeTransfer(const size_t &m_indice, const std::string &m_senderNode, const std::string &m_receiverNode, const size_t &m_startTime, const size_t &m_endTime, const size_t &m_port) : Application(m_indice, m_senderNode, m_receiverNode, m_startTime, m_endTime)
 {
-  this->port = _port;
-  this->appName = "tcp_" + this->getIndice();
+  this->setPort(m_port);
+  this->setAppName(std::string("tcp_" + this->getIndice()));
 }
 
 TcpLargeTransfer::~TcpLargeTransfer()
@@ -70,5 +70,15 @@ std::vector<std::string> TcpLargeTransfer::GenerateApplication(std::string netDe
   apps.push_back("clientApps_" + this->getAppName() + ".Stop (Seconds (" + this->getEndTime() + ".0));");
 
   return apps;
+}
+
+size_t TcpLargeTransfer::getPort()
+{
+  return this->port;
+}
+
+void TcpLargeTransfer::setPort(const size_t &m_port)
+{
+  this->port = m_port;
 }
 

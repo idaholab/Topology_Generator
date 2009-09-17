@@ -27,11 +27,11 @@
 
 #include "hub.h"
 
-Hub::Hub(const size_t &_indice) : Link(_indice)
+Hub::Hub(const size_t &m_indice) : Link(m_indice)
 {
-  this->linkName = "hub_" + this->getIndice();
-  this->ndcName = "ndc_" + this->getLinkName();
-  this->allNodeContainer = "all_" + this->getLinkName();
+  this->setLinkName(std::string("hub_" + this->getIndice()));
+  this->setNdcName(std::string("ndc_" + this->getLinkName()));
+  this->setAllNodeContainer(std::string("all_" + this->getLinkName()));
 }
 
 Hub::~Hub()
@@ -73,9 +73,9 @@ std::vector<std::string> Hub::GenerateTrace()
 {
   std::vector<std::string> trace;
 
-  if(this->enableTrace)
+  if(this->getTrace())
   {
-    if(this->tracePromisc)
+    if(this->getPromisc())
     {
       trace.push_back("csma_" + this->getLinkName() + ".EnablePcapAll (\"csma_" + this->getLinkName() + "\", true);");
     }

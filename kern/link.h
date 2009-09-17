@@ -68,212 +68,223 @@
  */
 class Link
 {
-  protected:
+  private:
     /**
      *\brief number of the link.
      */
     size_t indice;
 
     /**
-     * \brief attribute which represent the link name.
+     * \brief link name.
      */
     std::string linkName;
 
     /**
-     * \brief attribute which represent the data rate.
+     * \brief data rate.
      */
     std::string dataRate;
 
     /**
-     * \brief attribute which represent the link delay.
+     * \brief link delay.
      */
     std::string linkDelay;
 
     /**
-     * \brief attribute which represent the node device container name.
+     * \brief node device container name.
      */
     std::string ndcName;
 
     /**
-     * \brief attribute used to save the name of the node container group.
+     * \brief name of the node container group.
      */
     std::string allNodeContainer;
 
     /**
-     * \brief attribute which represent enable/disable trafic.
+     * \brief enable/disable trafic.
      */
     bool enableTrace;
 
     /**
-     * \brief attribute which represent the promisciuous trace.
+     * \brief promisciuous trace.
      */
     bool tracePromisc;
 
   public:
     /**
-     * \brief Constructor.
+     * \brief constructor.
      * 
-     * \param _indice is the number of the link
+     * \param m_indice number of the link
      */
-    Link(const size_t &_indice);
+    Link(const size_t &m_indice);
 
     /**
-     * \brief Destructor.
+     * \brief destructor.
      */
     virtual ~Link();
 
     /**
-     * \brief function used to generate the headers.
-     * \return the headers.
+     * \brief generate the headers code.
+     * \return headers code.
      */
     virtual std::vector<std::string> GenerateHeader() = 0;
 
     /**
-     * \brief function used to generate the c++ code of the link build.
-     * \return the build link.
+     * \brief generate link code.
+     * \return link code.
      */
     virtual std::vector<std::string> GenerateLink() = 0;
 
     /**
-     * \brief function used to generate the net device container.
+     * \brief generate net device container code.
      * The net device container contain all nodes installed by the link.
-     * \return the net device container.
+     * \return net device container code.
      */
     virtual std::vector<std::string> GenerateNetDevice() = 0;
 
     /**
-     * \brief function used to generate the tap bridge.
-     * \return the tap bridge code.
+     * \brief generate tap bridge code.
+     * \return tap bridge code.
      */
     virtual std::vector<std::string> GenerateTapBridge();
 
     /**
-     * \brief function used to generate the vars.
-     * \return the vars code.
+     * \brief generate vars code.
+     * \return vars code.
      */
     virtual std::vector<std::string> GenerateVars();
 
     /**
-     * \brief function used to generate the cmd lines.
-     * \return the cmd line code.
+     * \brief generate cmd line code.
+     * \return cmd line code.
      */
     virtual std::vector<std::string> GenerateCmdLine();
 
     /**
-     * \brief function to generate the trace line.
-     * \return the trace line.
+     * \brief generate trace line code.
+     * \return trace line code.
      */
     virtual std::vector<std::string> GenerateTrace();
 
     /**
-     * \brief function to get the link number.
-     * \return the link number.
+     * \brief get link number.
+     * \return link number.
      */
     std::string getIndice();
 
     /**
-     * \brief function to get link name.
-     * \return the link name.
+     * \brief set link number.
+     * \param m_indice new indice.
+     */
+    void setIndice(const size_t &m_indice);
+
+    /**
+     * \brief get link name.
+     * \return link name.
      */
     std::string getLinkName();
 
     /**
-     * \brief function to get the link data rate.
-     * \return the link data rate.
+     * \brief get link data rate.
+     * \return link data rate.
      */
     std::string getDataRate();
 
     /**
-     * \brief function to get the link delay.
-     * Represented in ms.
-     * \return the link delay.
+     * \brief get link delay.
+     *  (in ms)
+     * \return link delay.
      */
     std::string getLinkDelay();
 
     /**
-     * \brief function to get the Net device container name.
-     * \return the net device container name.
+     * \brief get net device container name.
+     * \return net device container name.
      */
     std::string getNdcName();
 
     /**
-     * \brief function to get the attached nodes list.
-     * \return the node list.
+     * \brief get attached nodes list.
+     * \return node list.
      */
     std::vector<std::string> getNodes();
 
     /**
-     * \brief procedure tu set the link rate.
-     * \param _linkName is the new link name.
+     * \brief set link rate.
+     * \param m_linkName new link name.
      */
-    void setLinkName(const std::string &_linkName);
+    void setLinkName(const std::string &m_linkName);
 
     /**
-     * \brief procedure to set the data rate.
-     * \param _dataRate is the new data rate.
+     * \brief set data rate.
+     * \param m_dataRate new data rate.
      */
-    void setDataRate(const std::string &_dataRate);
+    void setDataRate(const std::string &m_dataRate);
 
     /**
-     * \brief procedure to set the link delay.
-     * \param _linkDelay is the new link delay.
+     * \brief set link delay.
+     * \param m_linkDelay new link delay.
      */
-    void setLinkDelay(const std::string &_linkDelay);
+    void setLinkDelay(const std::string &m_linkDelay);
 
     /**
-     *\brief procedure to set the net device container name.
-     * \param _ndcName is the new net device container name.
+     *\brief set net device container name.
+     * \param m_ndcName new net device container name.
      */
-    void setNdcName(const std::string &_ndcName);
+    void setNdcName(const std::string &m_ndcName);
 
     /**
-     * \brief procedure to add attached to the link node.
-     * \param _node is the new node to add.
+     * \brief install node on link.
+     * \param m_node new node to add.
      */
-    void Install(const std::string &_node);
+    void Install(const std::string &m_node);
 
     /**
-     * \brief function to convert size_t to string.
-     * \param nbr is the number to convert.
-     * \return the string of the number.
-     */
-    std::string toString(const size_t &nbr);
-
-    /**
-     * \brief function use to group all the nodes.
-     * \return a vector with all nodes.
+     * \brief group all link installed nodes.
+     * \return all nodes.
      */
     std::vector<std::string> GroupAsNodeContainer();
 
     /**
-     * \brief function to get the node all node container name.
-     * \return the node container name.
+     * \brief get all node container name.
+     * \return node container name.
      */
     std::string getAllNodeContainer();
+    
+    /**
+     * \brief set name of all node container.
+     * \param m_allNodeContainer all node container.
+     */
+    void setAllNodeContainer(const std::string &m_allNodeContainer);
 
     /**
-     * \brief attribute which represent the node name which are connected to the link.
+     * \brief enable/disable tracing.
+     * \param m_state trace state.
+     */
+    void setTrace(const bool &m_state);
+
+    /**
+     * \brief get tracing mod.
+     * \return trace mod.
+     */
+    bool getTrace();
+
+    /**
+     * \brief enable/disable tracing in promiscious state.
+     * \param m_state promisc state.
+     */
+    void setPromisc(const bool &m_state);
+
+    /**
+     * \brief get promisc mod.
+     * \return promisc mod.
+     */
+    bool getPromisc();
+
+    /**
+     * \brief node name which are connected to the link.
      */
     std::vector<std::string> nodes;
 
-/* procedure to be removed from this class, it just be used in Ap class. */
-    /**
-     * \brief see Ap class for more info.
-     * \param _mobility
-     */
-    virtual void setMobility(const bool &_mobility);
-
-    /**
-     * \brief procedure to enable/disable tracing.
-     * \param _state
-     */
-    void setTrace(const bool &_state);
-
-    /**
-     * \brief procedure to enable/disable tracing in promiscious state.
-     * \param _state
-     */
-    void setPromisc(const bool &_state);
 };
 
 #endif /* LINK_H */

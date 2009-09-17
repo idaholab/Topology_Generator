@@ -30,13 +30,13 @@
 
 #include "utils.h"
 
-Application::Application(const size_t &_indice, const std::string &_senderNode, const std::string &_receiverNode, const size_t &_startTime, const size_t &_endTime)
+Application::Application(const size_t &m_indice, const std::string &m_senderNode, const std::string &m_receiverNode, const size_t &m_startTime, const size_t &m_endTime)
 {
-  this->indice = _indice;
-  this->senderNode = _senderNode;
-  this->receiverNode= _receiverNode;
-  this->startTime = _startTime;
-  this->endTime = _endTime;
+  this->setIndice(m_indice);
+  this->setSenderNode(m_senderNode);
+  this->setReceiverNode(m_receiverNode);
+  this->setStartTime(m_startTime);
+  this->setEndTime(m_endTime);
 }
 
 Application::~Application()
@@ -48,9 +48,9 @@ std::string Application::getIndice()
   return utils::toString(this->indice);
 }
 
-void Application::setIndice(const size_t &_indice)
+void Application::setIndice(const size_t &m_indice)
 {
-  this->indice = _indice;
+  this->indice = m_indice;
 }
 
 std::string Application::getAppName()
@@ -58,9 +58,9 @@ std::string Application::getAppName()
   return this->appName;
 }
 
-void Application::setAppName(const std::string &_appName)
+void Application::setAppName(const std::string &m_appName)
 {
-  this->appName = _appName;
+  this->appName = m_appName;
 }
 
 std::string Application::getSenderNode()
@@ -68,9 +68,9 @@ std::string Application::getSenderNode()
   return this->senderNode;
 }
 
-void Application::setSenderNode(const std::string &_senderNode)
+void Application::setSenderNode(const std::string &m_senderNode)
 {
-  this->senderNode = _senderNode;
+  this->senderNode = m_senderNode;
 }
 
 std::string Application::getReceiverNode()
@@ -78,9 +78,9 @@ std::string Application::getReceiverNode()
   return this->receiverNode;
 }
 
-void Application::setReceiverNode(const std::string &_receiverNode)
+void Application::setReceiverNode(const std::string &m_receiverNode)
 {
-  this->receiverNode = _receiverNode;
+  this->receiverNode = m_receiverNode;
 }
 
 std::string Application::getStartTime()
@@ -88,9 +88,9 @@ std::string Application::getStartTime()
   return utils::toString(this->startTime);
 }
 
-void Application::setStartTime(const size_t &_startTime)
+void Application::setStartTime(const size_t &m_startTime)
 {
-  this->startTime = _startTime;
+  this->startTime = m_startTime;
 }
 
 std::string Application::getEndTime()
@@ -103,46 +103,8 @@ size_t Application::getEndTimeNumber()
   return this->endTime;
 }
 
-void Application::setEndTime(const size_t &_endTime)
+void Application::setEndTime(const size_t &m_endTime)
 {
-  this->endTime = _endTime;
-}
-
-/* Udp Echo param */
-// Les déclarations qui suivent n'ont rien à faire ici.
-// Il faut trouver un moyen pour ne pas avoir besoin de les mettres ici
-// mais seulement dans udp_echo et de pouvoir les appellés avec un objet application
-
-void Application::setPacketSize(const size_t &_packetSize)
-{
-  size_t avoidWarns;
-  avoidWarns = _packetSize;
-}
-
-size_t Application::getPacketSize()
-{
-  return 0;
-}
-
-void Application::setMaxPacketCount(const size_t &_maxPacketCount)
-{
-  size_t avoidWarns;
-  avoidWarns = _maxPacketCount;
-}
-
-size_t Application::getMaxPacketCount()
-{
-  return 0;
-}
-
-void Application::setPacketIntervalTime(const std::string &_packetIntervalTime)
-{
-  std::string avoidWarns;
-  avoidWarns = _packetIntervalTime;
-}
-
-std::string Application::getPacketIntervalTime()
-{
-  return "";
+  this->endTime = m_endTime;
 }
 

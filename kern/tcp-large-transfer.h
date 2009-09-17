@@ -56,34 +56,46 @@ class TcpLargeTransfer : public Application
 
   public:
     /**
-     * \brief Constructor which set default value.
-     * \param _indice is the number of the application on the generator applicaiton vector
-     * \param _senderNode is the sender node
-     * \param _receiverNode is the receiver node
-     * \param _startTime is the application start time
-     * \param _endTime is the application end time
-     * \param port is the port which are sended the traffic
+     * \brief constructor.
+     * \param m_indice number of the application on the generator applicaiton vector
+     * \param m_senderNode sender node
+     * \param m_receiverNode receiver node
+     * \param m_startTime application start time
+     * \param m_endTime application end time
+     * \param port port which are sended the traffic
      */
-    TcpLargeTransfer(const size_t &_indice, const std::string &_senderNode, const std::string &_receiverNode, const size_t &_startTime, const size_t &_endTime, const size_t &port);
+    TcpLargeTransfer(const size_t &m_indice, const std::string &m_senderNode, const std::string &m_receiverNode, const size_t &m_startTime, const size_t &m_endTime, const size_t &port);
 
     /**
-     * \brief Destructor.
+     * \brief destructor.
      */
     ~TcpLargeTransfer();
 
     /**
-     * \brief function used to generate the headers.
-     * \return the headers.
+     * \brief generate headers code.
+     * \return headers code.
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief function used to generate the application.
-     * \param netDeviceContainer is the net device container
-     * \param numberIntoNetDevice is the number of the sender node into the net device container
+     * \brief generate application code.
+     * \param netDeviceContainer net device container
+     * \param numberIntoNetDevice number of the sender node into the net device container
      * \return the ns3 application code.
      */
     virtual std::vector<std::string> GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice);
+
+    /**
+     * \brief get port.
+     * \return port.
+     */
+    size_t getPort();
+
+    /**
+     * \brief set port.
+     * \param m_port new port.
+     */
+    void setPort(const size_t &m_port);
 };
 
 #endif /* TCPLARGETRANSFER_H */

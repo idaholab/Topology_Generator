@@ -27,14 +27,14 @@
 
 #include "tap.h"
 
-Tap::Tap(const size_t &_indice, const std::string &_tapNode, const std::string &_ifaceName) : Link(_indice)
+Tap::Tap(const size_t &m_indice, const std::string &m_tapNode, const std::string &m_ifaceName) : Link(m_indice)
 {
-  this->nodes.push_back(_tapNode);
-  this->tapNode = _tapNode;
-  this->ifaceName = _ifaceName;
-  this->linkName = "tap_" + this->getIndice();
-  this->ndcName = "ndc_" + this->getLinkName();
-  this->allNodeContainer = "all_" + this->getLinkName();
+  this->Install(m_tapNode);
+  this->setTapName(m_tapNode);
+  this->setIfaceName(m_ifaceName);
+  this->setLinkName(std::string("tap_" + this->getIndice()));
+  this->setNdcName(std::string("ndc_" + this->getLinkName()));
+  this->setAllNodeContainer(std::string("all_" + this->getLinkName()));
 }
 
 Tap::~Tap()
@@ -90,9 +90,19 @@ std::string Tap::getTapName()
   return this->tapNode;
 }
 
+void Tap::setTapName(const std::string &m_tapNode)
+{
+  this->tapNode = m_tapNode;
+}
+
 std::string Tap::getIfaceName()
 {
   return this->ifaceName;
+}
+
+void Tap::setIfaceName(const std::string &m_ifaceName)
+{
+  this->ifaceName = m_ifaceName;
 }
 
 std::vector<std::string> Tap::GenerateVars()

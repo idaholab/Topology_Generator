@@ -69,77 +69,88 @@
  */
 class Emu : public Link
 {
+  private:
+    /**
+     * \brief emu node name.
+     */
+    std::string emuNode;
+
+    /**
+     * \brief interface name.
+     */
+    std::string ifaceName;
+
   public:
     /**
      * \brief constructor.
-     * \param _indice is the tap number
-     * \param _emuNode is the link node name
-     * \param _ifaceName is the iface name
+     * \param m_indice tap number
+     * \param m_emuNode link node name
+     * \param m_ifaceName iface name
      */
-    Emu(const size_t &_indice, const std::string &_emuNode, const std::string &_ifaceName);
+    Emu(const size_t &m_indice, const std::string &m_emuNode, const std::string &m_ifaceName);
 
     /**
      * \brief destructor.
      */
     virtual ~Emu();
 
-  private:
     /**
-     * \brief emu node name attribute.
-     */
-    std::string emuNode;
-
-    /**
-     * \brief interface name attribute.
-     */
-    std::string ifaceName;
-
-  public:
-    /**
-     * \brief function to get the emu node name.
-     * \return the emu node name.
+     * \brief get emu node name.
+     * \return emu node name.
      */
     std::string getEmuName();
 
     /**
-     * \brief function to get the emu interface name.
-     * \return the interface name.
+     * \brief set emu node name.
+     * \param m_nodeName new emu node name.
+     */
+    void setEmuName(const std::string &m_nodeName);
+
+    /**
+     * \brief get emu interface name.
+     * \return interface name.
      */
     std::string getIfaceName();
 
     /**
-     * \brief function which return the generated headers.
-     * \return the generated headers.
+     * \brief set emu iface name.
+     * \param m_ifaceName new emu iface name.
+     */
+    void setIfaceName(const std::string &m_ifaceName);
+
+    /**
+     * \brief generate headers code.
+     * \return headers code.
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief function which generate the build link code.
-     * \return the build link code.
+     * \brief generate build link code.
+     * \return build link code.
      */
     virtual std::vector<std::string> GenerateLink();
 
     /**
-     * \brief function which return the build of the net device container.
-     * \return the net device container.
+     * \brief generate build of the net device container.
+     * \return net device container code.
      */
     virtual std::vector<std::string> GenerateNetDevice();
 
     /**
-     * \brief function rewritted from main class. Please see main class.
-     * \return the vars code.
+     * \brief rewritted from main class. Please see main class.
+     * \return vars code.
      */
     std::vector<std::string> GenerateVars();
 
     /**
-     * \brief function rewritted from main class. Please see main class.
-     * \return the cmd line code.
+     * \brief rewritted from main class. Please see main class.
+     * \return cmd line code.
      */
     std::vector<std::string> GenerateCmdLine();
 
     /**
-     * \brief function to generate the trace line.
-     * \return the trace line.
+     * \brief generate the trace line.
+     * \return trace line.
      */
     virtual std::vector<std::string> GenerateTrace();
 };

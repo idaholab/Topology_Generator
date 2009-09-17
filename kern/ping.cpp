@@ -30,9 +30,9 @@
 
 #include "utils.h"
 
-Ping::Ping(const size_t &_indice, const std::string &_senderNode, const std::string &_receiverNode, const size_t &_startTime, const size_t &_endTime) : Application(_indice, _senderNode, _receiverNode, _startTime, _endTime)
+Ping::Ping(const size_t &m_indice, const std::string &m_senderNode, const std::string &m_receiverNode, const size_t &m_startTime, const size_t &m_endTime) : Application(m_indice, m_senderNode, m_receiverNode, m_startTime, m_endTime)
 {
-  this->appName = "ping_" + this->getIndice();
+  this->setAppName(std::string("ping_" + this->getIndice()));
 }
 
 Ping::~Ping()

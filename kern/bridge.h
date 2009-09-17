@@ -49,52 +49,58 @@
  */
 class Bridge : public Link
 {
+  private:
+    /**
+     * \brief bridge node name.
+     */
+    std::string nodeBridge;
+
   public:
     /**
      * \brief constructor.
-     * \param _indice is the Bridge number
-     * \param _nodeBridge is the node name.
+     * \param m_indice bridge number
+     * \param m_nodeBridge node name.
      */
-    Bridge(const size_t &_indice, const std::string &_nodeBridge);
+    Bridge(const size_t &m_indice, const std::string &m_nodeBridge);
 
     /**
      * \brief destructor.
      */
     virtual ~Bridge();
 
-  private:
     /**
-     * \brief this attribute represent the bridge node name.
-     */
-    std::string nodeBridge;
-
-    /**
-     * \brief function used to get the bridge node name.
-     * \return the node name.
+     * \brief get bridge node name.
+     * \return node name.
      */
     std::string getNodeBridge();
+    
+    /**
+     * \brief set bridge node name.
+     * \param m_nodeBridge new node name.
+     */
+    void setNodeBridge(const std::string &m_nodeBridge);
 
     /**
-     * \brief function which generate the headers.
-     * \return the headers.
+     * \brief generate headers.
+     * \return headers code.
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief function which generate the build link code.
-     * \return the build link code.
+     * \brief generate build link code.
+     * \return build link code.
      */
     virtual std::vector<std::string> GenerateLink();
 
     /**
-     * \brief function which return the build of the net device container.
-     * \return the net device container.
+     * \brief generate build of the net device container.
+     * \return net device container code.
      */
     virtual std::vector<std::string> GenerateNetDevice();
 
     /**
-     * \brief function to generate the trace line.
-     * \return the trace line.
+     * \brief generate trace line.
+     * \return trace line code.
      */
     virtual std::vector<std::string> GenerateTrace();
 };

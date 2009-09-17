@@ -29,6 +29,7 @@ using namespace std;
 #include <iostream>
 
 #include "../generator.h"
+#include "../udp-echo.h"
 
 int main(int argc, char *argv[])
 {
@@ -53,9 +54,12 @@ int main(int argc, char *argv[])
 
   /* Add Udp echo application from pc to pc on PORT 6666 */
   gen->AddApplication("UdpEcho", gen->listNode.at(0)->getNodeName(), gen->listNode.at(1)->getNodeName(), 0, 5, 6666);// 0 start time - 5 end time
-  gen->listApplication.at(0)->setPacketSize(512);
+  
+  UdpEcho *app = dynamic_cast<UdpEcho*>(gen->listApplication.at(0));
+  app->setPacketSize(512);
 
   gen->GenerateCode();
   
+  delete app;
   delete gen;
 }

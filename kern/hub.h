@@ -52,9 +52,9 @@ class Hub : public Link
   public:
     /**
      * \brief constructor.
-     * \param _indice is the hub number
+     * \param m_indice hub number
      */
-    Hub(const size_t &_indice);
+    Hub(const size_t &m_indice);
 
     /**
      * \brief destructor.
@@ -63,26 +63,26 @@ class Hub : public Link
 
   private:
     /**
-     * \brief function which return the generated headers.
-     * \return the headers.
+     * \brief generate headers code.
+     * \return headers code.
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief function which generate the build link code.
-     * \return the build link code.
+     * \brief generate link code.
+     * \return link code.
      */
     virtual std::vector<std::string> GenerateLink();
 
     /**
-     * \brief function which return the build of the net device container.
-     * \return the net device container.
+     * \brief generate net device container code.
+     * \return net device container code.
      */
     virtual std::vector<std::string> GenerateNetDevice();
 
     /**
-     * \brief function to generate the trace line.
-     * \return the trace line.
+     * \brief generate trace line code.
+     * \return trace line code.
      */
     virtual std::vector<std::string> GenerateTrace();
 };

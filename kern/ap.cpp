@@ -27,15 +27,15 @@
 
 #include "ap.h"
 
-Ap::Ap(const size_t &_indice, const std::string &_apNode) : Link(_indice)
+Ap::Ap(const size_t &m_indice, const std::string &m_apNode) : Link(m_indice)
 {
-  this->nodes.push_back(_apNode);
-  this->linkName = "ap_" + this->getIndice();
-  this->ndcName = "ndc_" + this->getLinkName();
-  this->allNodeContainer = "all_" + this->getLinkName();
-  this->apNode = _apNode;
-  this->mobility = false;
-  this->apName = "wifi-default-" + this->getIndice();
+  this->Install(m_apNode);
+  this->setLinkName(std::string("ap_" + this->getIndice()));
+  this->setNdcName(std::string("ndc_" + this->getLinkName()));
+  this->setAllNodeContainer(std::string("all_" + this->getLinkName()));
+  this->apNode = m_apNode;
+  this->setMobility(false);
+  this->setApName(std::string("wifi-default-" + this->getIndice()));
 }
 
 Ap::~Ap()
@@ -107,21 +107,21 @@ std::vector<std::string> Ap::GenerateNetDevice()
   return ndc;
 }
 
-void Ap::setMobility(const bool &_mobility)
+void Ap::setMobility(const bool &m_mobility)
 {
-  this->mobility = _mobility;
+  this->mobility = m_mobility;
 }
 
-void Ap::setApName(const std::string &_apName)
+void Ap::setApName(const std::string &m_apName)
 {
-  this->apName = _apName;
+  this->apName = m_apName;
 }
 
 std::vector<std::string> Ap::GenerateTrace()
 {
   std::vector<std::string> trace;
 
-  if(this->enableTrace)
+  if(this->getTrace())
   {
     trace.push_back("wifiPhy_" + this->getLinkName() + ".EnablePcap (\"" + this->getLinkName() + "\", " + this->getNdcName() + ".Get(0));");
   }

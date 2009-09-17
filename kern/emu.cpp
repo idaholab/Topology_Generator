@@ -27,14 +27,14 @@
 
 #include "emu.h"
 
-Emu::Emu(const size_t &_indice, const std::string &_emuNode, const std::string &_ifaceName) : Link(_indice)
+Emu::Emu(const size_t &m_indice, const std::string &m_emuNode, const std::string &m_ifaceName) : Link(m_indice)
 {
-  this->nodes.push_back(_emuNode);
-  this->emuNode = _emuNode;
-  this->ifaceName = _ifaceName;
-  this->linkName = "emu_" + this->getIndice();
-  this->ndcName = "ndc_" + this->getLinkName();
-  this->allNodeContainer = "all_" + this->getLinkName();
+  this->Install(m_emuNode);
+  this->setEmuName(m_emuNode);
+  this->setIfaceName(m_ifaceName);
+  this->setLinkName(std::string("emu_" + this->getIndice()));
+  this->setNdcName(std::string("ndc_" + this->getLinkName()));
+  this->setAllNodeContainer(std::string("all_" + this->getLinkName()));
 }
 
 Emu::~Emu()
@@ -72,16 +72,6 @@ std::vector<std::string> Emu::GenerateNetDevice()
   return ndc;
 }
 
-std::string Emu::getEmuName()
-{
-  return this->emuNode;
-}
-
-std::string Emu::getIfaceName()
-{
-  return this->ifaceName;
-}
-
 std::vector<std::string> Emu::GenerateVars()
 {
   std::vector<std::string> vars;
@@ -100,9 +90,9 @@ std::vector<std::string> Emu::GenerateTrace()
 {
   std::vector<std::string> trace;
 
-  if(this->enableTrace)
+  if(this->getTrace())
   {
-    if(this->tracePromisc)
+    if(this->getPromisc())
     {
       trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->getLinkName() + "\",\"" + this->getIfaceName() + "\", true);");
     }
@@ -113,5 +103,25 @@ std::vector<std::string> Emu::GenerateTrace()
   }
 
   return trace;
+}
+
+std::string Emu::getEmuName()
+{
+  return this->emuNode;
+}
+
+void Emu::setEmuName(const std::string &m_emuNode)
+{
+  this->emuNode = m_emuNode;
+}
+
+std::string Emu::getIfaceName()
+{
+  return this->ifaceName;
+}
+
+void Emu::setIfaceName(const std::string &m_ifaceName)
+{
+  this->ifaceName = m_ifaceName;
 }
 

@@ -61,20 +61,6 @@
  */
 class Tap : public Link
 {
-  public:
-    /**
-     * \brief Constructor.
-     * \param _indice is the tap number
-     * \param _tapNode is the external linux host
-     * \param _ifaceName is the iface name
-     */
-    Tap(const size_t &_indice, const std::string &_tapNode, const std::string &_ifaceName);
-
-    /**
-     * \brief Destructor.
-     */
-    virtual ~Tap();
-
   private:
     /**
      * \brief tap name attribute.
@@ -88,50 +74,75 @@ class Tap : public Link
 
   public:
     /**
-     * \brief function to get the tap node name.
-     * \return the tap name
+     * \brief constructor.
+     * \param m_indice tap number
+     * \param m_tapNode external linux host
+     * \param m_ifaceName iface name
+     */
+    Tap(const size_t &m_indice, const std::string &m_tapNode, const std::string &m_ifaceName);
+
+    /**
+     * \brief destructor.
+     */
+    virtual ~Tap();
+
+    /**
+     * \brief get tap node name.
+     * \return tap name
      */   
     std::string getTapName();
 
     /**
-     * \brief function to get the interface name.
-     * \return the interface name. 
+     * \brief set tap node name.
+     * \param m_tapNode new tap name.
+     */
+    void setTapName(const std::string &m_tapNode);
+
+    /**
+     * \brief get interface name.
+     * \return interface name. 
      */
     std::string getIfaceName();
 
     /**
-     * \brief function which return the generated headers.
-     * \return the headers.
+     * \brief set interface name.
+     * \param m_ifaceName new interface name.
+     */
+    void setIfaceName(const std::string &m_ifaceName);
+
+    /**
+     * \brief generate headers code.
+     * \return headers code.
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief function which generate the build link code.
-     * \return the build link code.
+     * \brief generate link code.
+     * \return link code.
      */
     virtual std::vector<std::string> GenerateLink();
 
     /**
-     * \brief function which return the build of the net device container.
-     * \return the net device container.
+     * \brief generate net device container code.
+     * \return net device container code.
      */
     virtual std::vector<std::string> GenerateNetDevice();
 
     /**
      * \brief function re-writted from link main class.
-     * \return the tap bridge code.
+     * \return tap bridge code.
      */
     std::vector<std::string> GenerateTapBridge();
 
     /**
      * \brief function re-writted from link main class.
-     * \return the vars code.
+     * \return vars code.
      */
     std::vector<std::string> GenerateVars();
 
     /**
      * \brief function re-wrotted from link main class.
-     * \return the cmd line code.
+     * \return cmd line code.
      */
     std::vector<std::string> GenerateCmdLine();
 };

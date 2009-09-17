@@ -52,14 +52,14 @@ class Ping : public Application
 {
   public:
     /**
-     * \brief Constructor which set default value.
-     * \param _indice is the indice in the generator vector.
-     * \param _senderNode is the sender node.
-     * \param _receiverNode is the receiver node.
-     * \param _startTime is the application start time.
-     * \param _endTime is the application end time.
+     * \brief constructor.
+     * \param m_indice indice in the generator vector.
+     * \param m_senderNode sender node.
+     * \param m_receiverNode receiver node.
+     * \param m_startTime application start time.
+     * \param m_endTime application end time.
      */
-    Ping(const size_t &_indice, const std::string &_senderNode, const std::string &_receiverNode, const size_t &_startTime, const size_t &_endTime);
+    Ping(const size_t &m_indice, const std::string &m_senderNode, const std::string &m_receiverNode, const size_t &m_startTime, const size_t &m_endTime);
 
     /**
      * \brief destructor.
@@ -67,16 +67,16 @@ class Ping : public Application
     ~Ping();
 
     /**
-     * \brief function used to generate the headers.
-     * \return the headers.
+     * \brief generate the headers code.
+     * \return headers code.
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief function used to generate the application.
-     * \param netDeviceContainer is the net device container name which are contain the sender node.
-     * \param numberIntoNetDevice is the place of the machine into the net device container.
-     * \return the application code.
+     * \brief generate the application.
+     * \param netDeviceContainer net device container name which are contain the sender node.
+     * \param numberIntoNetDevice place of the machine into the net device container.
+     * \return application code.
      */
     virtual std::vector<std::string> GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice);
 };

@@ -53,129 +53,134 @@ class Node
 {
   private:
     /**
-     * \brief attribute which represent the node number.
+     * \brief node number.
      */
     size_t indice;
 
     /**
-     * \brief attribute which represent the node name.
+     * \brief node name.
      */
     std::string nodeName;
 
     /**
-     * \brief attribute which represent the ip interface name. 
+     * \brief ip interface name. 
      */
     std::string ipInterfaceName;
 
     /**
-     * \brief attribute which represent the nsc use.
+     * \brief nsc use.
      */
     std::string nsc;
 
     /**
-     * \brief attribute which represent the number of machines.
+     * \brief number of machines.
      */
     size_t machinesNumber;
 
   public:
 
     /**
-     * \brief Constructor.
-     * \param _indice is the number of the node.
-     * \param _type is the type of the node (pc, router, ...)
-     * \param _machinesNumber is the number of machine to create
+     * \brief constructor.
+     * \param m_indice number of the node.
+     * \param m_type type of the node (pc, router, ...)
+     * \param m_machinesNumber number of machine to create
      */
-    Node(const size_t &_indice, const std::string &_type, const size_t &_machinesNumber);
+    Node(const size_t &m_indice, const std::string &m_type, const size_t &m_machinesNumber);
 
     /**
-     * \brief Destructor.
+     * \brief destructor.
      */
     ~Node();
 
     /**
-     * \brief function wich return the c++ header code from node.
+     * \brief generate headers code.
      * This function return a vector which contain the header lines from the specified object.
-     * \return the header.
+     * \return headers code.
      */
     std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief function wich return the c++ code from node.
+     * \brief generate node code.
      * This function return a vector which contain the declaration and instanciation of the node.
-     * \return the node code.
+     * \return node code.
      */
     std::vector<std::string> GenerateNode();
 
     /**
-     * \brief function wich return the c++ code from IpStack.
+     * \brief generate ip stack code.
      * This function return a vector which contain the c++ code from the Ipv4 stack declaration and instanciation.
-     * \return the ipStack code.
+     * \return ip stack code.
      */
     std::vector<std::string> GenerateIpStack();
 
     /**
-     * \brief procedure to set the node name.
-     * \param _nodeName is the string which contain the node name.
+     * \brief set node name.
+     * \param m_nodeName node name.
      */
-    void setNodeName(const std::string &_nodeName);
-
+    void setNodeName(const std::string &m_nodeName);
 
     /**
-     * \brief procedure to set the Ip interface name.
+     * \brief set ip interface name.
      * This procedure is used to the the ipInterfaceName. 
      * Sometimes this var is used in application like as UdpEcho.
-     * \param _ipInterfaceName is the ip interface name.
+     * \param m_ipInterfaceName ip interface name.
      */
-    void setIpInterfaceName(const std::string &_ipInterfaceName);
+    void setIpInterfaceName(const std::string &m_ipInterfaceName);
 
     /**
-     * \brief function wich return the node name.
-     * \return the node name.
+     * \brief get node name.
+     * \return node name.
      */
     std::string getNodeName();
 
     /**
-     * \brief function wich return the node name.
-     * \param number
-     * \return the node name.
+     * \brief get node name.
+     * \param number machine number.
+     * \return node name.
      */
     std::string getNodeName(const size_t &number);
 
     /**
-     * \brief function wich return the name of the Ip interface.
-     * \return the ip interface name.
+     * \brief get ip interface name.
+     * \return ip interface name.
      */
     std::string getIpInterfaceName();
 
     /**
-     * \brief function wich return the node number.
-     * \return the node number in type string.
+     * \brief get indice.
+     * \return indice.
      */
     std::string getIndice();
 
     /**
-     * \brief function to get the NSC (Network Simulation Cradle) use.
-     * \return the nsc string declaration
+     * \brief set indice.
+     * \param m_indice new indice.
+     */
+    void setIndice(const size_t &m_indice);
+
+    /**
+     * \brief get NSC (Network Simulation Cradle) code.
+     * \return nsc code.
      */
     std::string getNsc();
 
     /**
-     * \brief procedure to set the NSC (Network Simulation Cradle) use.
-     * \param _nsc is the new nsc declaration
+     * \brief set NSC (Network Simulation Cradle) code.
+     * \param m_nsc new nsc code
      */
-    void setNsc(const std::string &_nsc);
+    void setNsc(const std::string &m_nsc);
 
     /**
-     * \brief function to get the number of machines contained in the node.
-     * \return the number of machines
+     * \brief get machines number.
+     * \return machines number.
      */
     size_t getMachinesNumber();
 
     /**
-     * \brief procedure to set the machines number.
-     * \param _machinesNumber is the new machines number.
+     * \brief set machines number.
+     * \param m_machinesNumber new machines number.
      */
-    void setMachinesNumber(const size_t &_machinesNumber);
+    void setMachinesNumber(const size_t &m_machinesNumber);
 };
 
 #endif /* NODE_H */
