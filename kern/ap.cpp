@@ -20,20 +20,20 @@
 
 /**
  * \file ap.cpp
- * \brief ap link subclass.
+ * \brief Ap link subclass.
  * \author Pierre Weiss
  * \date 2009
  */
 
 #include "ap.h"
 
-Ap::Ap(const size_t &m_indice, const std::string &m_apNode) : Link(m_indice)
+Ap::Ap(const size_t &indice, const std::string &apNode) : Link(indice)
 {
-  this->Install(m_apNode);
+  this->Install(apNode);
   this->setLinkName(std::string("ap_" + this->getIndice()));
   this->setNdcName(std::string("ndc_" + this->getLinkName()));
   this->setAllNodeContainer(std::string("all_" + this->getLinkName()));
-  this->apNode = m_apNode;
+  this->setApNode(apNode);
   this->setMobility(false);
   this->setApName(std::string("wifi-default-" + this->getIndice()));
 }
@@ -44,7 +44,12 @@ Ap::~Ap()
 
 std::string Ap::getApNode()
 {
-  return this->apNode;
+  return this->m_apNode;
+}
+
+void Ap::setApNode(const std::string &apNode)
+{
+  this->m_apNode = apNode;
 }
 
 std::vector<std::string> Ap::GenerateHeader()
@@ -78,7 +83,7 @@ std::vector<std::string> Ap::GenerateNetDevice()
     ndc.push_back(allNodes.at(i));
   }
   ndc.push_back("NetDeviceContainer " + this->getNdcName() + ";");
-  ndc.push_back("Ssid ssid_" + this->getLinkName() + " = Ssid (\"" + this->apName + "\");");
+  ndc.push_back("Ssid ssid_" + this->getLinkName() + " = Ssid (\"" + this->getApName() + "\");");
   ndc.push_back("WifiHelper wifi_" + this->getLinkName() + " = WifiHelper::Default ();");
   ndc.push_back("NqosWifiMacHelper wifiMac_" + this->getLinkName() + " = NqosWifiMacHelper::Default ();");
   ndc.push_back("wifi_" + this->getLinkName() + ".SetRemoteStationManager (\"ns3::ArfWifiManager\");");
@@ -98,7 +103,7 @@ std::vector<std::string> Ap::GenerateNetDevice()
   ndc.push_back("mobility_" + this->getLinkName() + ".SetMobilityModel (\"ns3::ConstantPositionMobilityModel\");");
   ndc.push_back("mobility_" + this->getLinkName() + ".Install(" + this->getApNode() + ");"); 
 
-  if(this->mobility)//if random walk is activated.
+  if(this->getMobility())//if random walk is activated.
   {
     ndc.push_back("mobility_" + this->getLinkName() + ".SetMobilityModel (\"ns3::RandomWalk2dMobilityModel\",\"Bounds\", RectangleValue (Rectangle (-50, 50, -50, 50)));");
   }
@@ -107,14 +112,24 @@ std::vector<std::string> Ap::GenerateNetDevice()
   return ndc;
 }
 
-void Ap::setMobility(const bool &m_mobility)
+void Ap::setMobility(const bool &mobility)
 {
-  this->mobility = m_mobility;
+  this->m_mobility = mobility;
 }
 
-void Ap::setApName(const std::string &m_apName)
+bool Ap::getMobility()
 {
-  this->apName = m_apName;
+  return this->m_mobility;
+}
+
+void Ap::setApName(const std::string &apName)
+{
+  this->m_apName = apName;
+}
+
+std::string Ap::getApName()
+{
+  return this->m_apName;
 }
 
 std::vector<std::string> Ap::GenerateTrace()

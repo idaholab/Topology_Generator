@@ -20,7 +20,7 @@
 
 /**
  * \file application.cpp
- * \brief application base class.
+ * \brief Application base class.
  * \author Pierre Weiss
  * \date 2009
  */
@@ -30,13 +30,13 @@
 
 #include "utils.h"
 
-Application::Application(const size_t &m_indice, const std::string &m_senderNode, const std::string &m_receiverNode, const size_t &m_startTime, const size_t &m_endTime)
+Application::Application(const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime)
 {
-  this->setIndice(m_indice);
-  this->setSenderNode(m_senderNode);
-  this->setReceiverNode(m_receiverNode);
-  this->setStartTime(m_startTime);
-  this->setEndTime(m_endTime);
+  this->setIndice(indice);
+  this->setSenderNode(senderNode);
+  this->setReceiverNode(receiverNode);
+  this->setStartTime(startTime);
+  this->setEndTime(endTime);
 }
 
 Application::~Application()
@@ -45,66 +45,66 @@ Application::~Application()
 
 std::string Application::getIndice()
 {
-  return utils::toString(this->indice);
+  return utils::toString(this->m_indice);
 }
 
-void Application::setIndice(const size_t &m_indice)
+void Application::setIndice(const size_t &indice)
 {
-  this->indice = m_indice;
+  this->m_indice = indice;
 }
 
 std::string Application::getAppName()
 {
-  return this->appName;
+  return this->m_appName;
 }
 
-void Application::setAppName(const std::string &m_appName)
+void Application::setAppName(const std::string &appName)
 {
-  this->appName = m_appName;
+  this->m_appName = appName;
 }
 
 std::string Application::getSenderNode()
 {
-  return this->senderNode;
+  return this->m_senderNode;
 }
 
-void Application::setSenderNode(const std::string &m_senderNode)
+void Application::setSenderNode(const std::string &senderNode)
 {
-  this->senderNode = m_senderNode;
+  this->m_senderNode = senderNode;
 }
 
 std::string Application::getReceiverNode()
 {
-  return this->receiverNode;
+  return this->m_receiverNode;
 }
 
-void Application::setReceiverNode(const std::string &m_receiverNode)
+void Application::setReceiverNode(const std::string &receiverNode)
 {
-  this->receiverNode = m_receiverNode;
+  this->m_receiverNode = receiverNode;
 }
 
 std::string Application::getStartTime()
 {
-  return utils::toString(this->startTime);
+  return utils::toString(this->m_startTime);
 }
 
-void Application::setStartTime(const size_t &m_startTime)
+void Application::setStartTime(const size_t &startTime)
 {
-  this->startTime = m_startTime;
+  this->m_startTime = startTime;
 }
 
 std::string Application::getEndTime()
 {
-  return utils::toString(this->endTime);
+  return utils::toString(this->m_endTime);
 }
 
 size_t Application::getEndTimeNumber()
 {
-  return this->endTime;
+  return this->m_endTime;
 }
 
-void Application::setEndTime(const size_t &m_endTime)
+void Application::setEndTime(const size_t &endTime)
 {
-  this->endTime = m_endTime;
+  this->m_endTime = endTime;
 }
 

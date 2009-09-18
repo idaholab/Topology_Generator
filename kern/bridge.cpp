@@ -20,7 +20,7 @@
 
 /**
  * \file bridge.cpp
- * \brief bridge link subclass.
+ * \brief Bridge link subclass.
  * \author Pierre Weiss
  * \date 2009
  */
@@ -30,12 +30,12 @@
 
 #include "utils.h"
 
-Bridge::Bridge(const size_t &m_indice, const std::string &m_nodeBridge) : Link(m_indice)
+Bridge::Bridge(const size_t &indice, const std::string &nodeBridge) : Link(indice)
 {
   this->setLinkName(std::string("bridge_" + this->getIndice()));
   this->setNdcName(std::string("ndc_" + this->getLinkName()));
   this->setAllNodeContainer(std::string("all_" + this->getLinkName()));
-  this->setNodeBridge(m_nodeBridge);
+  this->setNodeBridge(nodeBridge);
 }
 
 Bridge::~Bridge()
@@ -44,12 +44,12 @@ Bridge::~Bridge()
 
 std::string Bridge::getNodeBridge()
 {
-  return this->nodeBridge;
+  return this->m_nodeBridge;
 }
 
-void Bridge::setNodeBridge(const std::string &m_nodeBridge)
+void Bridge::setNodeBridge(const std::string &nodeBridge)
 {
-  this->nodeBridge = m_nodeBridge;
+  this->m_nodeBridge = nodeBridge;
 }
 
 std::vector<std::string> Bridge::GenerateHeader()

@@ -20,7 +20,7 @@
 
 /**
  * \file ping.cpp
- * \brief ping Class.
+ * \brief Ping Class.
  * \author Pierre Weiss
  * \date 2009
  */
@@ -30,7 +30,7 @@
 
 #include "utils.h"
 
-Ping::Ping(const size_t &m_indice, const std::string &m_senderNode, const std::string &m_receiverNode, const size_t &m_startTime, const size_t &m_endTime) : Application(m_indice, m_senderNode, m_receiverNode, m_startTime, m_endTime)
+Ping::Ping(const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime) : Application(indice, senderNode, receiverNode, startTime, endTime)
 {
   this->setAppName(std::string("ping_" + this->getIndice()));
 }

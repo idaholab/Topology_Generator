@@ -20,18 +20,18 @@
 
 /**
  * \file tap.cpp
- * \brief tap link subclass.
+ * \brief Tap link subclass.
  * \author Pierre Weiss
  * \date 2009
  */
 
 #include "tap.h"
 
-Tap::Tap(const size_t &m_indice, const std::string &m_tapNode, const std::string &m_ifaceName) : Link(m_indice)
+Tap::Tap(const size_t &indice, const std::string &tapNode, const std::string &ifaceName) : Link(indice)
 {
-  this->Install(m_tapNode);
-  this->setTapName(m_tapNode);
-  this->setIfaceName(m_ifaceName);
+  this->Install(tapNode);
+  this->setTapName(tapNode);
+  this->setIfaceName(ifaceName);
   this->setLinkName(std::string("tap_" + this->getIndice()));
   this->setNdcName(std::string("ndc_" + this->getLinkName()));
   this->setAllNodeContainer(std::string("all_" + this->getLinkName()));
@@ -87,22 +87,22 @@ std::vector<std::string> Tap::GenerateTapBridge()
 
 std::string Tap::getTapName()
 {
-  return this->tapNode;
+  return this->m_tapNode;
 }
 
-void Tap::setTapName(const std::string &m_tapNode)
+void Tap::setTapName(const std::string &tapNode)
 {
-  this->tapNode = m_tapNode;
+  this->m_tapNode = tapNode;
 }
 
 std::string Tap::getIfaceName()
 {
-  return this->ifaceName;
+  return this->m_ifaceName;
 }
 
-void Tap::setIfaceName(const std::string &m_ifaceName)
+void Tap::setIfaceName(const std::string &ifaceName)
 {
-  this->ifaceName = m_ifaceName;
+  this->m_ifaceName = ifaceName;
 }
 
 std::vector<std::string> Tap::GenerateVars()

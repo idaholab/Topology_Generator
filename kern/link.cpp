@@ -20,7 +20,7 @@
 
 /**
  * \file link.cpp
- * \brief link base class.
+ * \brief Link base class.
  * \author Pierre Weiss
  * \date 2009
  */
@@ -31,9 +31,9 @@
 
 #include "utils.h"
 
-Link::Link(const size_t &m_indice)
+Link::Link(const size_t &indice)
 {
-  this->setIndice(m_indice);
+  this->setIndice(indice);
   this->setDataRate(std::string("100Mbps"));
   this->setLinkDelay(std::string("10ms"));
 
@@ -47,32 +47,32 @@ Link::~Link()
 
 std::string Link::getIndice()
 {
-  return utils::toString(this->indice);
+  return utils::toString(this->m_indice);
 }
 
-void Link::setIndice(const size_t &m_indice)
+void Link::setIndice(const size_t &indice)
 {
-  this->indice = m_indice;
+  this->m_indice = indice;
 }
 
 std::string Link::getLinkName()
 {
-  return this->linkName;
+  return this->m_linkName;
 }
 
 std::string Link::getDataRate()
 {
-  return this->dataRate;
+  return this->m_dataRate;
 }
 
 std::string Link::getLinkDelay()
 {
-  return this->linkDelay;
+  return this->m_linkDelay;
 }
 
 std::string Link::getNdcName()
 {
-  return this->ndcName;
+  return this->m_ndcName;
 }
 
 std::vector<std::string> Link::getNodes()
@@ -80,29 +80,29 @@ std::vector<std::string> Link::getNodes()
   return this->nodes;
 }
 
-void Link::setLinkName(const std::string &m_linkName)
+void Link::setLinkName(const std::string &linkName)
 {
-  this->linkName = m_linkName;
+  this->m_linkName = linkName;
 }
 
-void Link::setDataRate(const std::string &m_dataRate)
+void Link::setDataRate(const std::string &dataRate)
 {
-  this->dataRate = m_dataRate;
+  this->m_dataRate = dataRate;
 }
 
-void Link::setLinkDelay(const std::string &m_linkDelay)
+void Link::setLinkDelay(const std::string &linkDelay)
 {
-  this->linkDelay = m_linkDelay;
+  this->m_linkDelay = linkDelay;
 }
 
-void Link::setNdcName(const std::string &m_ndcName)
+void Link::setNdcName(const std::string &ndcName)
 {
-  this->ndcName = m_ndcName;
+  this->m_ndcName = ndcName;
 }
 
-void Link::Install(const std::string &m_node)
+void Link::Install(const std::string &node)
 {
-  this->nodes.push_back(m_node);
+  this->nodes.push_back(node);
   std::vector<std::string> trans;
   std::vector<std::string> transWhitoutRouter;
   for(size_t i = 0; i < (size_t) this->nodes.size(); i++)
@@ -125,12 +125,12 @@ void Link::Install(const std::string &m_node)
 
 std::string Link::getAllNodeContainer()
 {
-  return this->allNodeContainer;
+  return this->m_allNodeContainer;
 }
 
-void Link::setAllNodeContainer(const std::string &m_allNodeContainer)
+void Link::setAllNodeContainer(const std::string &allNodeContainer)
 {
-  this->allNodeContainer = m_allNodeContainer;
+  this->m_allNodeContainer = allNodeContainer;
 }
 
 std::vector<std::string> Link::GroupAsNodeContainer()
@@ -172,23 +172,23 @@ std::vector<std::string> Link::GenerateTrace()
   return res;
 }
 
-void Link::setTrace(const bool &m_state)
+void Link::setTrace(const bool &state)
 {
-  this->enableTrace = m_state;
+  this->m_enableTrace = state;
 }
 
 bool Link::getTrace()
 {
-  return this->enableTrace;
+  return this->m_enableTrace;
 }
 
-void Link::setPromisc(const bool &m_state)
+void Link::setPromisc(const bool &state)
 {
-  this->tracePromisc = m_state;
+  this->m_tracePromisc = state;
 }
 
 bool Link::getPromisc()
 {
-  return this->tracePromisc;
+  return this->m_tracePromisc;
 }
 

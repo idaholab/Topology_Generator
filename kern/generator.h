@@ -64,29 +64,29 @@ class Generator
 {
   public:
     /**
-     * \brief simulation name.
+     * \brief Simulation name.
      */
-    std::string simulationName;
+    std::string m_simulationName;
 
     /**
-     * \brief configuration list.
+     * \brief Configuration list.
      */
     std::vector<std::string> listConfiguration;
 
     /**
-     * \brief add a config line.
+     * \brief Add a config line.
      * \param config new config to add to config list.
      */
     void AddConfig(const std::string &config);
 
     /**
-     * \brief constructor.
-     * \param m_simulationName simulation name.
+     * \brief Constructor.
+     * \param simulationName simulation name.
      */
-    Generator(const std::string &m_simulationName);
+    Generator(const std::string &simulationName);
 
     /**
-     * \brief destructor.
+     * \brief Destructor.
      */
     ~Generator();	
 
@@ -95,43 +95,43 @@ class Generator
     //
   private:
     /**
-     * \brief number attribute of term node created.
+     * \brief Number attribute of term node created.
      */
-    size_t indiceNodePc;
+    size_t m_indiceNodePc;
 
     /**
-     * \brief number attribute of router node created.
+     * \brief Number attribute of router node created.
      */
-    size_t indiceNodeRouter;
+    size_t m_indiceNodeRouter;
 
     /**
-     * \brief number attribute of ap node created.
+     * \brief Number attribute of ap node created.
      */
-    size_t indiceNodeAp;
+    size_t m_indiceNodeAp;
 
     /**
-     * \brief number attribute of station node created.
+     * \brief Number attribute of station node created.
      */
-    size_t indiceNodeStation;
+    size_t m_indiceNodeStation;
 
     /**
-     * \brief number attribute of bridge node created.
+     * \brief Number attribute of bridge node created.
      */
-    size_t indiceNodeBridge;
+    size_t m_indiceNodeBridge;
 
     /**
-     * \brief number attribute of tap node created.
+     * \brief Number attribute of tap node created.
      */
-    size_t indiceNodeTap;
+    size_t m_indiceNodeTap;
 
     /**
-     * \brief number attribute of emu node created.
+     * \brief Number attribute of emu node created.
      */
-    size_t indiceNodeEmu;
+    size_t m_indiceNodeEmu;
 
   public: 
     /**
-     * \brief list of node created instance.
+     * \brief List of node created instance.
      * 
      * This attribute is the list of the created instance of node.
      * 
@@ -139,7 +139,7 @@ class Generator
     std::vector<Node*> listNode;
 
     /**
-     * \brief add an node.
+     * \brief Add an node.
      * 
      * This used to add an node. It add the node to the
      * vector listNode and increment the number of node.
@@ -149,54 +149,54 @@ class Generator
     void AddNode(const std::string &type);
 
     /**
-     * \brief add an node group.
+     * \brief Add an node group.
      * \param type node type.
      * \param number number which will be added.
      */
     void AddNode(const std::string &type, const size_t &number);
 
     /**
-     * \brief remove an node element.
+     * \brief Remove an node element.
      * \param name node name to remove.
      */
     void RemoveNode(const std::string &name);
 
     /**
-     * \brief remove an node element.
+     * \brief Remove an node element.
      * \param index node index to be removed.
      */
-    void RemoveNode(size_t index);
+    void RemoveNode(const size_t &index);
 
     //
     // Part of Application.
     //
   private:
     /**
-     * \brief number attribute of ping application created.
+     * \brief Number attribute of ping application created.
      */
-    size_t indiceApplicationPing; 
+    size_t m_indiceApplicationPing; 
 
     /**
-     * \brief number attribute of tcp large transfert application created.
+     * \brief Number attribute of tcp large transfert application created.
      */
-    size_t indiceApplicationTcpLargeTransfer;
+    size_t m_indiceApplicationTcpLargeTransfer;
 
     /**
-     * \brief number attribute of udp echo application created.
+     * \brief Number attribute of udp echo application created.
      */
-    size_t indiceApplicationUdpEcho;
+    size_t m_indiceApplicationUdpEcho;
 
   public:
 
     /**
-     * \brief list of application created instance.
+     * \brief List of application created instance.
      * 
      * This attribute is the list of the created instance of application.
      */
     std::vector<Application*> listApplication;
 
     /**
-     * \brief add an appplication.
+     * \brief Add an appplication.
      * 
      * This procedure is used to add an procedure. It add the application to the
      * vector listApplication and increment the number of application.
@@ -211,7 +211,7 @@ class Generator
     void AddApplication(const std::string &type, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime, const size_t &port);
 
     /**
-     * \brief add an application.
+     * \brief Add an application.
      * 
      * This procedure is used to add an procedure. It add the application to the
      * vector listApplication and increment the number of application.
@@ -225,7 +225,7 @@ class Generator
     void AddApplication(const std::string &type, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime);
 
     /**
-     * \brief remove an application element.
+     * \brief Remove an application element.
      * \param name application name to remove
      */
     void RemoveApplication(const std::string &name);
@@ -235,38 +235,38 @@ class Generator
     //
   private:
     /**
-     * \brief number attribute of ap link created.
+     * \brief Number attribute of ap link created.
      */
-    size_t indiceLinkAp;
+    size_t m_indiceLinkAp;
 
     /**
-     * \brief number attribute of emu link created.
+     * \brief Number attribute of emu link created.
      */
-    size_t indiceLinkEmu;
+    size_t m_indiceLinkEmu;
 
     /**
-     * \brief number attribute of point-to-point link created.
+     * \brief Number attribute of point-to-point link created.
      */
-    size_t indiceLinkPointToPoint;
+    size_t m_indiceLinkPointToPoint;
 
     /**
-     * \brief number attribute of tap link created.
+     * \brief Number attribute of tap link created.
      */
-    size_t indiceLinkTap;
+    size_t m_indiceLinkTap;
 
     /**
-     * \brief number attribute of hub link created.
+     * \brief Number attribute of hub link created.
      */
-    size_t indiceLinkHub;
+    size_t m_indiceLinkHub;
 
     /**
-     * \brief number attribute of bridge link created.
+     * \brief Number attribute of bridge link created.
      */
-    size_t indiceLinkBridge; 
+    size_t m_indiceLinkBridge; 
 
   public:
     /**
-     * \brief list of link created instace.
+     * \brief List of link created instace.
      * 
      * This attribute is the list of the created instance of link.
      * 
@@ -274,7 +274,7 @@ class Generator
     std::vector<Link*> listLink;
 
     /**
-     * \brief add an link.
+     * \brief Add an link.
      * 
      * This procedure is used to add an link. It add the link to the
      * vector listLink and increment the number of link.
@@ -284,7 +284,7 @@ class Generator
     void AddLink(const std::string &type);
 
     /**
-     * \brief add link and his linkNode.
+     * \brief Add link and his linkNode.
      * 
      *  Example, an Ap, must have an ap node to be generated.  
      *
@@ -294,7 +294,7 @@ class Generator
     void AddLink(const std::string &type, const std::string &linkNode);
 
     /**
-     * \brief add link with her linkNode and ifaceName.
+     * \brief Add link with her linkNode and ifaceName.
      * 
      * \param type link type.
      * \param linkNode node name.
@@ -303,13 +303,13 @@ class Generator
     void AddLink(const std::string &type, const std::string &linkNode, const std::string &ifaceName);
 
     /**
-     * \brief remove an link element.
+     * \brief Remove an link element.
      * \param name link name to remove.
      */
     void RemoveLink(const std::string &name);
 
     /**
-     * \brief remove an link element.
+     * \brief Remove an link element.
      * \param index index of the link to remove
      */
     void RemoveLink(size_t index);
@@ -320,7 +320,7 @@ class Generator
     // 
     
     /**
-     * \brief generate ns3 code.
+     * \brief Fenerate ns3 code.
      * 
      * This procedure is the main procedure to generate the code from the simulation.
      * It also go to use all the procedure on the bottom like generate all headers, ...
@@ -330,7 +330,7 @@ class Generator
 
   private:
     /**
-     * \brief generate headers code.
+     * \brief Generate headers code.
      * 
      * This function return a string wich contain all c++ header without duplicate.
      * 
@@ -339,7 +339,7 @@ class Generator
     std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief generate vars code.
+     * \brief Generate vars code.
      * 
      * This function return a string wich contain all c++ vars.
      * 
@@ -349,7 +349,7 @@ class Generator
 
 
     /**
-     * \brief generate command line code.
+     * \brief Generate command line code.
      * 
      * \return commend line code.
      */
@@ -357,7 +357,7 @@ class Generator
 
 
     /**
-     * \brief generate config code.
+     * \brief Generate config code.
      * 
      * \return config code.
      */
@@ -365,7 +365,7 @@ class Generator
 
 
     /**
-     * \brief generate node declaration code.
+     * \brief Generate node declaration code.
      *
      * \return declaration code.
      */
@@ -373,7 +373,7 @@ class Generator
 
 
     /**
-     * \brief generate link code.
+     * \brief Generate link code.
      * 
      * \return link code.
      */
@@ -381,7 +381,7 @@ class Generator
 
 
     /**
-     * \brief generate net device code.
+     * \brief Generate net device code.
      * 
      * \return net device code.
      */
@@ -389,7 +389,7 @@ class Generator
 
 
     /**
-     * \brief generate ip stack declaration.
+     * \brief Generate ip stack declaration.
      * 
      * \return ip stack code.
      */
@@ -397,14 +397,14 @@ class Generator
 
 
     /**
-     * \brief generate ip assign code.
+     * \brief Generate ip assign code.
      * 
      * \return ip assign code.
      */
     std::vector<std::string> GenerateIpAssign();
 
     /**
-     * \brief generate tap bridge code.
+     * \brief Generate tap bridge code.
      * 
      * \return tab bridge code.
      */
@@ -412,7 +412,7 @@ class Generator
 
 
     /**
-     * \brief generate route code.
+     * \brief Generate route code.
      * 
      * \return route code.
      */
@@ -420,14 +420,14 @@ class Generator
 
 
     /**
-     * \brief generate application code.
+     * \brief Generate application code.
      * 
      * \return application code.
      */
     std::vector<std::string> GenerateApplication();
 
     /**
-     * \brief generate trace code.
+     * \brief Generate trace code.
      * 
      * \return trace code.
      */
@@ -438,35 +438,35 @@ class Generator
     //
 
     /**
-     * \brief xml file name atribute.
+     * \brief Xml file name atribute.
      * 
      * This file name is used to export the current simulation into xml to save it.
      */
-    std::string xmlFileName;
+    std::string m_xmlFileName;
 
     /**
-     * \brief function which return the attribute xml file name.
+     * \brief Function which return the attribute xml file name.
      *
      * \return xml file name
      */
     std::string getXmlFileName();
 
     /**
-     * \brief procedure which set the xml file name.
+     * \brief Procedure which set the xml file name.
      *
-     * \param _xmlFileName the new xml file name.
+     * \param xmlFileName the new xml file name.
      */
-    void setXmlFileName(const std::string &_xmlFileName );
+    void setXmlFileName(const std::string &xmlFileName );
 
     /**
      * \brief Procedure wich write the simulation into xml file.
      * 
-     * \param _line the line to add to the xml file.
+     * \param line the line to add to the xml file.
      */
-    void WriteXml(const std::string &_line);
+    void WriteXml(const std::string &line);
 
     /**
-     * \brief procedure wich open and print graphicaly the xml file.
+     * \brief Procedure wich open and print graphicaly the xml file.
      */
     void OpenXml();
 
@@ -475,30 +475,30 @@ class Generator
     //
 
     /**
-     * \brief attribute which are the name of the c++ output file name.
+     * \brief Attribute which are the name of the c++ output file name.
      */  
-    std::string cppFileName;
+    std::string m_cppFileName;
 
     /**
-     * \brief function which return the c++ output file name.
+     * \brief Function which return the c++ output file name.
      * 
      * \return c++ file name
      */
     std::string getCppFileName();
 
     /**
-     * \brief procedure to set the c++ file name.
+     * \brief Procedure to set the c++ file name.
      * 
-     * \param _cppFileName the new c++ file name
+     * \param cppFileName the new c++ file name
      */
-    void setCppFileName(const std::string &_cppFileName);
+    void setCppFileName(const std::string &cppFileName);
 
     /**
      * \brief Procedure to write c++ code into the attribute file name.
      * 
-     * \param _line the new line to add to the attribute file name.
+     * \param line the new line to add to the attribute file name.
      */
-    void WriteCpp(const std::string &_line);
+    void WriteCpp(const std::string &line);
 
     //
     // Python generation operation part.
@@ -507,7 +507,7 @@ class Generator
     /**
      * \brief Attribute which are the name of the python output file.
      */
-    std::string pyFileName;
+    std::string m_pyFileName;
 
     /**
      * \brief Function which return the python artribute name.
@@ -519,16 +519,16 @@ class Generator
     /**
      * \brief Procedure used to set the python file name attribute.
      * 
-     * \param _pyFileName the new python file name.
+     * \param pyFileName the new python file name.
      */
-    void setPyFileName(const std::string &_pyFileName);
+    void setPyFileName(const std::string &pyFileName);
 
     /**
      * \brief Procedure to write python code into the attribute file name.
      * 
-     * \param _line the line to be writted. 
+     * \param line the line to be writted. 
      */
-    void WritePython(const std::string &_line);
+    void WritePython(const std::string &line);
 };
 
 #endif /* GENERATOR_H */

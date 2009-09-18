@@ -20,7 +20,7 @@
 
 /**
  * \file generator.cpp
- * \brief the main class of the generator.
+ * \brief The main class of the generator.
  * \author Pierre Weiss
  * \date 2009
  */
@@ -45,31 +45,31 @@
 
 using utils::split;
 
-Generator::Generator(const std::string &m_simulationName)
+Generator::Generator(const std::string &simulationName)
 {
-  this->simulationName = m_simulationName;
+  this->m_simulationName = simulationName;
 
   /* Node. */
-  this->indiceNodePc = 0;
-  this->indiceNodeRouter = 0;
-  this->indiceNodeAp = 0;
-  this->indiceNodeStation = 0;
-  this->indiceNodeBridge = 0;
-  this->indiceNodeTap = 0;
-  this->indiceNodeEmu = 0;
+  this->m_indiceNodePc = 0;
+  this->m_indiceNodeRouter = 0;
+  this->m_indiceNodeAp = 0;
+  this->m_indiceNodeStation = 0;
+  this->m_indiceNodeBridge = 0;
+  this->m_indiceNodeTap = 0;
+  this->m_indiceNodeEmu = 0;
 
   /* Link */
-  this->indiceLinkAp = 0;
-  this->indiceLinkEmu = 0;
-  this->indiceLinkPointToPoint = 0;
-  this->indiceLinkTap = 0;
-  this->indiceLinkHub = 0;
-  this->indiceLinkBridge = 0;
+  this->m_indiceLinkAp = 0;
+  this->m_indiceLinkEmu = 0;
+  this->m_indiceLinkPointToPoint = 0;
+  this->m_indiceLinkTap = 0;
+  this->m_indiceLinkHub = 0;
+  this->m_indiceLinkBridge = 0;
 
   /* Application */
-  this->indiceApplicationPing = 0; 
-  this->indiceApplicationTcpLargeTransfer = 0;
-  this->indiceApplicationUdpEcho = 0;
+  this->m_indiceApplicationPing = 0; 
+  this->m_indiceApplicationTcpLargeTransfer = 0;
+  this->m_indiceApplicationUdpEcho = 0;
 
 }
 
@@ -121,38 +121,38 @@ void Generator::AddNode(const std::string &type)
   // call to the right type constructor. 
   if(type == "Pc")
   {
-    equi = new Node(this->indiceNodePc, std::string("term_"), number);
-    this->indiceNodePc += 1;
+    equi = new Node(this->m_indiceNodePc, std::string("term_"), number);
+    this->m_indiceNodePc += 1;
   } 
   else if(type == "Router")
   {
-    equi = new Node(this->indiceNodeRouter, std::string("router_"), number);
-    this->indiceNodeRouter += 1;
+    equi = new Node(this->m_indiceNodeRouter, std::string("router_"), number);
+    this->m_indiceNodeRouter += 1;
   } 
   else if(type == "Ap")
   {
-    equi = new Node(this->indiceNodeAp, std::string("ap_"), number);
-    this->indiceNodeAp += 1;
+    equi = new Node(this->m_indiceNodeAp, std::string("ap_"), number);
+    this->m_indiceNodeAp += 1;
   } 
   else if(type == "Station")
   {
-    equi = new Node(this->indiceNodeStation, std::string("station_"), number);
-    this->indiceNodeStation += 1;
+    equi = new Node(this->m_indiceNodeStation, std::string("station_"), number);
+    this->m_indiceNodeStation += 1;
   } 
   else if(type == "Bridge")
   {
-    equi = new Node(this->indiceNodeBridge, std::string("bridge_"), number);
-    this->indiceNodeBridge += 1;
+    equi = new Node(this->m_indiceNodeBridge, std::string("bridge_"), number);
+    this->m_indiceNodeBridge += 1;
   } 
   else if(type == "Tap")
   {
-    equi = new Node(this->indiceNodeTap, std::string("tap_"), number);
-    this->indiceNodeTap += 1;
+    equi = new Node(this->m_indiceNodeTap, std::string("tap_"), number);
+    this->m_indiceNodeTap += 1;
   } 
   else if(type == "Emu")
   {
-    equi = new Node(this->indiceNodeEmu, std::string("emu_"), number);
-    this->indiceNodeEmu += 1;
+    equi = new Node(this->m_indiceNodeEmu, std::string("emu_"), number);
+    this->m_indiceNodeEmu += 1;
   }
 
   if(equi)
@@ -172,38 +172,38 @@ void Generator::AddNode(const std::string &type, const size_t &number)
   // call to the right type constructor. 
   if(type == "Pc")
   {
-    equi = new Node(this->indiceNodePc, std::string("term_"), number);
-    this->indiceNodePc += 1;
+    equi = new Node(this->m_indiceNodePc, std::string("term_"), number);
+    this->m_indiceNodePc += 1;
   } 
   else if(type == "Router")
   {
-    equi = new Node(this->indiceNodeRouter, std::string("router_"), number);
-    this->indiceNodeRouter += 1;
+    equi = new Node(this->m_indiceNodeRouter, std::string("router_"), number);
+    this->m_indiceNodeRouter += 1;
   } 
   else if(type == "Ap")
   {
-    equi = new Node(this->indiceNodeAp, std::string("ap_"), number);
-    this->indiceNodeAp += 1;
+    equi = new Node(this->m_indiceNodeAp, std::string("ap_"), number);
+    this->m_indiceNodeAp += 1;
   } 
   else if(type == "Station")
   {
-    equi = new Node(this->indiceNodeStation, std::string("station_"), number);
-    this->indiceNodeStation += 1;
+    equi = new Node(this->m_indiceNodeStation, std::string("station_"), number);
+    this->m_indiceNodeStation += 1;
   } 
   else if(type == "Bridge")
   {
-    equi = new Node(this->indiceNodeBridge, std::string("bridge_"), number);
-    this->indiceNodeBridge += 1;
+    equi = new Node(this->m_indiceNodeBridge, std::string("bridge_"), number);
+    this->m_indiceNodeBridge += 1;
   } 
   else if(type == "Tap")
   {
-    equi = new Node(this->indiceNodeTap, std::string("tap_"), number);
-    this->indiceNodeTap += 1;
+    equi = new Node(this->m_indiceNodeTap, std::string("tap_"), number);
+    this->m_indiceNodeTap += 1;
   }
   else if(type == "Emu")
   {
-    equi = new Node(this->indiceNodeEmu, std::string("emu_"), number);
-    this->indiceNodeEmu += 1;
+    equi = new Node(this->m_indiceNodeEmu, std::string("emu_"), number);
+    this->m_indiceNodeEmu += 1;
   }
 
   if(equi)
@@ -236,7 +236,7 @@ void Generator::RemoveNode(const std::string &name)
   }
 }
 
-void Generator::RemoveNode(size_t index)
+void Generator::RemoveNode(const size_t &index)
 {
   if(this->listNode.size() < index)
   {
@@ -257,14 +257,14 @@ void Generator::AddApplication(const std::string &type, const std::string &sende
 {
   if(type == "UdpEcho")
   {
-    UdpEcho *app = new UdpEcho(this->indiceApplicationUdpEcho, senderNode, receiverNode, startTime, endTime, port);
-    this->indiceApplicationUdpEcho += 1;
+    UdpEcho *app = new UdpEcho(this->m_indiceApplicationUdpEcho, senderNode, receiverNode, startTime, endTime, port);
+    this->m_indiceApplicationUdpEcho += 1;
     this->listApplication.push_back(app);
   }
   else if(type == "TcpLargeTransfer")
   {
-    TcpLargeTransfer *app = new TcpLargeTransfer(this->indiceApplicationTcpLargeTransfer, senderNode, receiverNode, startTime, endTime, port);
-    this->indiceApplicationTcpLargeTransfer += 1;
+    TcpLargeTransfer *app = new TcpLargeTransfer(this->m_indiceApplicationTcpLargeTransfer, senderNode, receiverNode, startTime, endTime, port);
+    this->m_indiceApplicationTcpLargeTransfer += 1;
     this->listApplication.push_back(app);
   }
   else
@@ -279,8 +279,8 @@ void Generator::AddApplication(const std::string &type, const std::string &sende
 {
   if(type == "Ping")
   {
-    Ping *app = new Ping(this->indiceApplicationPing, senderNode, receiverNode, startTime, endTime);
-    this->indiceApplicationPing += 1;
+    Ping *app = new Ping(this->m_indiceApplicationPing, senderNode, receiverNode, startTime, endTime);
+    this->m_indiceApplicationPing += 1;
     this->listApplication.push_back(app);
   }
   else
@@ -316,14 +316,14 @@ void Generator::AddLink(const std::string &type)
   // call to the right type constructor. 
   if(type == "Hub")
   {
-    Hub *link = new Hub(this->indiceLinkHub);
-    this->indiceLinkHub += 1;
+    Hub *link = new Hub(this->m_indiceLinkHub);
+    this->m_indiceLinkHub += 1;
     this->listLink.push_back(link);
   } 
   else if(type == "PointToPoint")
   {
-    PointToPoint *link = new PointToPoint(this->indiceLinkPointToPoint);
-    this->indiceLinkPointToPoint += 1;
+    PointToPoint *link = new PointToPoint(this->m_indiceLinkPointToPoint);
+    this->m_indiceLinkPointToPoint += 1;
     this->listLink.push_back(link);
   } 
   else
@@ -336,14 +336,14 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode)
 {
   if(type == "Bridge")
   {
-    Bridge *link = new Bridge(this->indiceLinkBridge, linkNode);
-    this->indiceLinkBridge += 1;
+    Bridge *link = new Bridge(this->m_indiceLinkBridge, linkNode);
+    this->m_indiceLinkBridge += 1;
     this->listLink.push_back(link);
   } 
   else if(type == "Ap")
   {
-    Ap *link = new Ap(this->indiceLinkAp, linkNode);
-    this->indiceLinkAp += 1;
+    Ap *link = new Ap(this->m_indiceLinkAp, linkNode);
+    this->m_indiceLinkAp += 1;
     this->listLink.push_back(link);
   } 
   else
@@ -356,14 +356,14 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode, co
 { 
   if(type == "Emu")
   {
-    Emu *link = new Emu(this->indiceLinkEmu, linkNode, ifaceName);
-    this->indiceLinkEmu += 1;
+    Emu *link = new Emu(this->m_indiceLinkEmu, linkNode, ifaceName);
+    this->m_indiceLinkEmu += 1;
     this->listLink.push_back(link);
   } 
   else if(type == "Tap")
   {
-    Tap *link = new Tap(this->indiceLinkTap, linkNode, ifaceName);
-    this->indiceLinkTap += 1;
+    Tap *link = new Tap(this->m_indiceLinkTap, linkNode, ifaceName);
+    this->m_indiceLinkTap += 1;
     this->listLink.push_back(link);
   } 
   else
@@ -954,17 +954,17 @@ void Generator::OpenXml()
 
 std::string Generator::getXmlFileName() 
 {
-  return this->xmlFileName;
+  return this->m_xmlFileName;
 }
 
-void Generator::WriteXml(const std::string &_line) 
+void Generator::WriteXml(const std::string &line) 
 {
-  std::cout << _line << std::endl;
+  std::cout << line << std::endl;
 }
 
-void Generator::setXmlFileName(const std::string &_xmlFileName) 
+void Generator::setXmlFileName(const std::string &xmlFileName) 
 {
-  this->xmlFileName = _xmlFileName;
+  this->m_xmlFileName = xmlFileName;
 }
 
 //
@@ -973,35 +973,35 @@ void Generator::setXmlFileName(const std::string &_xmlFileName)
 
 std::string Generator::getCppFileName() 
 {
-  return this->cppFileName;
+  return this->m_cppFileName;
 }
 
-void Generator::setCppFileName(const std::string &_cppFileName ) 
+void Generator::setCppFileName(const std::string &cppFileName ) 
 {
-  this->cppFileName = _cppFileName;
+  this->m_cppFileName = cppFileName;
 }
 
-void Generator::WriteCpp(const std::string &_line) 
+void Generator::WriteCpp(const std::string &line) 
 {
-  std::cout << _line << std::endl;
+  std::cout << line << std::endl;
 }
 
 //
 // Python generation operation part.
 //
 
-void Generator::WritePython(const std::string &_line)
+void Generator::WritePython(const std::string &line)
 {
-  std::cout << _line << std::endl;
+  std::cout << line << std::endl;
 }
 
 std::string Generator::getPyFileName() 
 {
-  return this->pyFileName;
+  return this->m_pyFileName;
 }
 
-void Generator::setPyFileName(const std::string &_pyFileName ) 
+void Generator::setPyFileName(const std::string &pyFileName ) 
 {
-  this->pyFileName = _pyFileName;
+  this->m_pyFileName = pyFileName;
 }
 

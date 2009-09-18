@@ -35,7 +35,7 @@ namespace utils
 {
 
 /**
- * \brief split function as boost::split(...)
+ * \brief Split function as boost::split(...)
  * \param res the vector wich contain the splitted vector.
  * \param str the string to split
  * \param separator the split separator

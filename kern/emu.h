@@ -20,7 +20,7 @@
 
 /**
  * \file emu.h
- * \brief emu link subclass.
+ * \brief Emu link subclass.
  * \author Pierre Weiss
  * \date 2009
  */
@@ -36,7 +36,7 @@
 
 /**
  * \ingroup generator
- * \brief emu link subclass.
+ * \brief Emu link subclass.
  *
  *  The emu class is a subclass of link.
  *
@@ -71,85 +71,85 @@ class Emu : public Link
 {
   private:
     /**
-     * \brief emu node name.
+     * \brief Emu node name.
      */
-    std::string emuNode;
+    std::string m_emuNode;
 
     /**
-     * \brief interface name.
+     * \brief Interface name.
      */
-    std::string ifaceName;
+    std::string m_ifaceName;
 
   public:
     /**
-     * \brief constructor.
-     * \param m_indice tap number
-     * \param m_emuNode link node name
-     * \param m_ifaceName iface name
+     * \brief Constructor.
+     * \param indice tap number
+     * \param emuNode link node name
+     * \param ifaceName iface name
      */
-    Emu(const size_t &m_indice, const std::string &m_emuNode, const std::string &m_ifaceName);
+    Emu(const size_t &indice, const std::string &emuNode, const std::string &ifaceName);
 
     /**
-     * \brief destructor.
+     * \brief Destructor.
      */
     virtual ~Emu();
 
     /**
-     * \brief get emu node name.
+     * \brief Get emu node name.
      * \return emu node name.
      */
     std::string getEmuName();
 
     /**
-     * \brief set emu node name.
-     * \param m_nodeName new emu node name.
+     * \brief Set emu node name.
+     * \param nodeName new emu node name.
      */
-    void setEmuName(const std::string &m_nodeName);
+    void setEmuName(const std::string &nodeName);
 
     /**
-     * \brief get emu interface name.
+     * \brief Get emu interface name.
      * \return interface name.
      */
     std::string getIfaceName();
 
     /**
-     * \brief set emu iface name.
-     * \param m_ifaceName new emu iface name.
+     * \brief Set emu iface name.
+     * \param ifaceName new emu iface name.
      */
-    void setIfaceName(const std::string &m_ifaceName);
+    void setIfaceName(const std::string &ifaceName);
 
     /**
-     * \brief generate headers code.
+     * \brief Generate headers code.
      * \return headers code.
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief generate build link code.
+     * \brief Generate build link code.
      * \return build link code.
      */
     virtual std::vector<std::string> GenerateLink();
 
     /**
-     * \brief generate build of the net device container.
+     * \brief Generate build of the net device container.
      * \return net device container code.
      */
     virtual std::vector<std::string> GenerateNetDevice();
 
     /**
-     * \brief rewritted from main class. Please see main class.
+     * \brief Rewritted from main class. Please see main class.
      * \return vars code.
      */
     std::vector<std::string> GenerateVars();
 
     /**
-     * \brief rewritted from main class. Please see main class.
+     * \brief Rewritted from main class. Please see main class.
      * \return cmd line code.
      */
     std::vector<std::string> GenerateCmdLine();
 
     /**
-     * \brief generate the trace line.
+     * \brief Generate the trace line.
      * \return trace line.
      */
     virtual std::vector<std::string> GenerateTrace();

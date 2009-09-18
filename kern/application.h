@@ -20,7 +20,7 @@
 
 /**
  * \file application.h
- * \brief application base class.
+ * \brief Application base class.
  * \author Pierre Weiss
  * \date 2009
  */
@@ -60,59 +60,59 @@ class Application
 {
   private:
     /**
-     * \brief application number.
+     * \brief Application number.
      */
-    size_t indice;
+    size_t m_indice;
 
     /**
-     * \brief application name.
+     * \brief Application name.
      */
-    std::string appName;
+    std::string m_appName;
 
     /**
-     * \brief pinger sender node.
+     * \brief Pinger sender node.
      */
-    std::string senderNode;
+    std::string m_senderNode;
 
     /**
-     * \brief pinger receiver node.
+     * \brief Pinger receiver node.
      */
-    std::string receiverNode;
+    std::string m_receiverNode;
 
     /**
-     * \brief application start time.
+     * \brief Application start time.
      */
-    size_t startTime;
+    size_t m_startTime;
 
     /**
-     * \brief application end time.
+     * \brief Application end time.
      */
-    size_t endTime;
+    size_t m_endTime;
 
   public:
     /**
-     * \brief constructor.
-     * \param m_indice application number
-     * \param m_senderNode sender node
-     * \param m_receiverNode receiver node
-     * \param m_startTime application start time
-     * \param m_endTime application end time
+     * \brief Constructor.
+     * \param indice application number
+     * \param senderNode sender node
+     * \param receiverNode receiver node
+     * \param startTime application start time
+     * \param endTime application end time
      */
-    Application(const size_t &m_indice, const std::string &m_senderNode, const std::string &m_receiverNode, const size_t &m_startTime, const size_t &m_endTime);
+    Application(const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime);
 
     /**
-     * \brief destructor.
+     * \brief Destructor.
      */
     virtual ~Application();
 
     /**
-     * \brief generate the headers.
+     * \brief Generate the headers.
      * \return headers.
      */
     virtual std::vector<std::string> GenerateHeader() = 0;
 
     /**
-     * \brief generate the application code.
+     * \brief Generate the application code.
      * \param netDeviceContainer is the ns3 net device containe
      * \param numberIntoNetDevice is the place from the sender node in the assigned ip network.
      * \param numberIntoNetDevice example sender node is 192.168.0.5, then the number is 5.
@@ -121,79 +121,79 @@ class Application
     virtual std::vector<std::string> GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice) = 0;
 
     /**
-     * \brief get application number.
+     * \brief Get application number.
      * \return application number.
      */
     std::string getIndice();
 
     /**
-     * \brief set application number.
-     * \param m_indice new indice.
+     * \brief Get application number.
+     * \param indice new indice.
      */
-    void setIndice(const size_t &m_indice);
+    void setIndice(const size_t &indice);
 
     /**
-     * \brief get application node name.
+     * \brief Get application node name.
      * \return application node name.
      */
     std::string getAppName();
 
     /**
-     * \brief set application name.
-     * \param m_appName new application name.
+     * \brief Set application name.
+     * \param appName new application name.
      */
-    void setAppName(const std::string &m_appName);
+    void setAppName(const std::string &appName);
 
     /**
-     * \brief get sender node name.
+     * \brief Get sender node name.
      * \return sender node name.
      */
     std::string getSenderNode();
 
     /**
-     * \brief set sender node name.
-     * \param m_senderNode new sender node name.
+     * \brief Set sender node name.
+     * \param senderNode new sender node name.
      */
-    void setSenderNode(const std::string &m_senderNode);
+    void setSenderNode(const std::string &senderNode);
 
     /**
-     * \brief get receiver node name.
+     * \brief Get receiver node name.
      * \return receiver node name.
      */
     std::string getReceiverNode();
 
     /**
-     * \brief set receiver node name.
-     * \param m_receiverNode new receiver node name.
+     * \brief Set receiver node name.
+     * \param receiverNode new receiver node name.
      */
-    void setReceiverNode(const std::string &m_receiverNode);
+    void setReceiverNode(const std::string &receiverNode);
 
     /**
-     * \brief get application start time.
+     * \brief Get application start time.
      * \return application start time.
      */
     std::string getStartTime();
 
     /**
-     * \brief set application start time.
-     * \param m_startTime application start time.
+     * \brief Set application start time.
+     * \param startTime application start time.
      */
-    void setStartTime(const size_t &m_startTime);
+    void setStartTime(const size_t &startTime);
 
     /**
-     * \brief get application end time.
+     * \brief Get application end time.
      * \return application end time.
      */
     std::string getEndTime();
 
     /**
-     * \brief get application end time.
+     * \brief Get application end time.
      * \return end time formatted into number.
      */
     size_t getEndTimeNumber();
 
     /**
-     * \brief set application end time.
+     * \brief Set application end time.
      * \param m_endTime application end time.
      */
     void setEndTime(const size_t &m_endTime);

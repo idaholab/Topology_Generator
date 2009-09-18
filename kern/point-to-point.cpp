@@ -20,14 +20,14 @@
 
 /**
  * \file point-to-point.cpp
- * \brief point-to-point link subclass.
+ * \brief Point-to-point link subclass.
  * \author Pierre Weiss
  * \date 2009
  */
 
 #include "point-to-point.h"
 
-PointToPoint::PointToPoint(const size_t &m_indice) : Link(m_indice)
+PointToPoint::PointToPoint(const size_t &indice) : Link(indice)
 {
   this->setLinkName(std::string("p2p_" + this->getIndice()));
   this->setNdcName(std::string("ndc_" + this->getLinkName()));

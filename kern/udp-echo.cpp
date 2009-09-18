@@ -20,7 +20,7 @@
 
 /**
  * \file udp-echo.cpp
- * \brief udp-echo Class.
+ * \brief Udp-echo Class.
  * \author Pierre Weiss
  * \date 2009
  */
@@ -30,9 +30,9 @@
 
 #include "utils.h"
 
-UdpEcho::UdpEcho(const size_t &m_indice, const std::string &m_senderNode, const std::string &m_receiverNode, const size_t &m_startTime, const size_t &m_endTime, const size_t &m_port) : Application(m_indice, m_senderNode, m_receiverNode, m_startTime, m_endTime)
+UdpEcho::UdpEcho(const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime, const size_t &port) : Application(indice, senderNode, receiverNode, startTime, endTime)
 {
-  this->setPort(m_port);
+  this->setPort(port);
   this->setAppName(std::string("udpEcho_" + this->getIndice()));
   /* default values */
   this->setPacketSize(1024);
@@ -54,17 +54,17 @@ std::vector<std::string> UdpEcho::GenerateApplication(std::string netDeviceConta
 {
   std::vector<std::string> apps;
 
-  apps.push_back("uint16_t port_" + this->getAppName() + " = " + utils::toString(this->port) + ";"); 
+  apps.push_back("uint16_t port_" + this->getAppName() + " = " + utils::toString(this->getPort()) + ";"); 
   apps.push_back("UdpEchoServerHelper server_" + this->getAppName() + " (port_" + this->getAppName() + ");");
   apps.push_back("ApplicationContainer apps_" + this->getAppName() + " = server_" + this->getAppName() + ".Install (" + this->getReceiverNode() + ".Get(0));");
   apps.push_back("apps_" + this->getAppName() + ".Start (Seconds (" + this->getStartTime() + ".0));");
   apps.push_back("apps_" + this->getAppName() + ".Stop (Seconds (" + this->getEndTime() + ".0));");
 
-  apps.push_back("Time interPacketInterval_" + this->getAppName() + " = Seconds (" + this->packetIntervalTime + ");");
-  apps.push_back("UdpEchoClientHelper client_" + this->getAppName() + " (iface_" + netDeviceContainer + ".GetAddress(" + utils::toString(numberIntoNetDevice) + "), " + utils::toString(this->port) + ");");
-  apps.push_back("client_" + this->getAppName() + ".SetAttribute (\"MaxPackets\", UintegerValue (" + utils::toString(this->maxPacketCount) + "));");
+  apps.push_back("Time interPacketInterval_" + this->getAppName() + " = Seconds (" + this->getPacketIntervalTime() + ");");
+  apps.push_back("UdpEchoClientHelper client_" + this->getAppName() + " (iface_" + netDeviceContainer + ".GetAddress(" + utils::toString(numberIntoNetDevice) + "), " + utils::toString(this->getPort()) + ");");
+  apps.push_back("client_" + this->getAppName() + ".SetAttribute (\"MaxPackets\", UintegerValue (" + utils::toString(this->getMaxPacketCount()) + "));");
   apps.push_back("client_" + this->getAppName() + ".SetAttribute (\"Interval\", TimeValue (interPacketInterval_" + this->getAppName() + "));");
-  apps.push_back("client_" + this->getAppName() + ".SetAttribute (\"PacketSize\", UintegerValue (" + utils::toString(this->packetSize) + "));");
+  apps.push_back("client_" + this->getAppName() + ".SetAttribute (\"PacketSize\", UintegerValue (" + utils::toString(this->getPacketSize()) + "));");
   apps.push_back("apps_" + this->getAppName() + " = client_" + this->getAppName() + ".Install (" + this->getSenderNode() + ".Get (0));");
   apps.push_back("apps_" + this->getAppName() + ".Start (Seconds (" + this->getStartTime() + ".1));");
   apps.push_back("apps_" + this->getAppName() + ".Stop (Seconds (" + this->getEndTime() + ".0));");
@@ -74,41 +74,41 @@ std::vector<std::string> UdpEcho::GenerateApplication(std::string netDeviceConta
 
 size_t UdpEcho::getPort()
 {
-  return this->port;
+  return this->m_port;
 }
 
-void UdpEcho::setPort(const size_t &m_port)
+void UdpEcho::setPort(const size_t &port)
 {
-  this->port = m_port;
+  this->m_port = port;
 }
 
-void UdpEcho::setPacketSize(const size_t &m_packetSize)
+void UdpEcho::setPacketSize(const size_t &packetSize)
 {
-  this->packetSize = m_packetSize;
+  this->m_packetSize = packetSize;
 }
 
 size_t UdpEcho::getPacketSize()
 {
-  return this->packetSize;
+  return this->m_packetSize;
 }
 
-void UdpEcho::setMaxPacketCount(const size_t &m_maxPacketCount)
+void UdpEcho::setMaxPacketCount(const size_t &maxPacketCount)
 {
-  this->maxPacketCount = m_maxPacketCount;
+  this->m_maxPacketCount = maxPacketCount;
 }
 
 size_t UdpEcho::getMaxPacketCount()
 {
-  return this->maxPacketCount;
+  return this->m_maxPacketCount;
 }
 
-void UdpEcho::setPacketIntervalTime(const std::string &m_packetIntervalTime)
+void UdpEcho::setPacketIntervalTime(const std::string &packetIntervalTime)
 {
-  this->packetIntervalTime = m_packetIntervalTime;
+  this->m_packetIntervalTime = packetIntervalTime;
 }
 
 std::string UdpEcho::getPacketIntervalTime()
 {
-  return this->packetIntervalTime;
+  return this->m_packetIntervalTime;
 }
 

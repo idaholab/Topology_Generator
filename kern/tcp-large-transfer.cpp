@@ -20,7 +20,7 @@
 
 /**
  * \file tcp-large-transfer.cpp
- * \brief tcp large transfer class.
+ * \brief Tcp large transfer class.
  * \author Pierre Weiss
  * \date 2009
  */
@@ -30,9 +30,9 @@
 
 #include "utils.h"
 
-TcpLargeTransfer::TcpLargeTransfer(const size_t &m_indice, const std::string &m_senderNode, const std::string &m_receiverNode, const size_t &m_startTime, const size_t &m_endTime, const size_t &m_port) : Application(m_indice, m_senderNode, m_receiverNode, m_startTime, m_endTime)
+TcpLargeTransfer::TcpLargeTransfer(const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime, const size_t &port) : Application(indice, senderNode, receiverNode, startTime, endTime)
 {
-  this->setPort(m_port);
+  this->setPort(port);
   this->setAppName(std::string("tcp_" + this->getIndice()));
 }
 
@@ -50,7 +50,7 @@ std::vector<std::string> TcpLargeTransfer::GenerateApplication(std::string netDe
 {
   std::vector<std::string> apps;
 
-  apps.push_back("uint16_t port_" + this->getAppName() + " = " + utils::toString(this->port) + ";");
+  apps.push_back("uint16_t port_" + this->getAppName() + " = " + utils::toString(this->getPort()) + ";");
   apps.push_back("Address sinkLocalAddress_" + this->getAppName() + "(InetSocketAddress (Ipv4Address::GetAny (), port_" + this->getAppName() + "));");
   apps.push_back("PacketSinkHelper sinkHelper_" + this->getAppName() + " (\"ns3::TcpSocketFactory\", sinkLocalAddress_" + this->getAppName() + ");");
   apps.push_back("ApplicationContainer sinkApp_" + this->getAppName() + " = sinkHelper_" + this->getAppName() + ".Install (" + this->getReceiverNode() + ");");
@@ -74,11 +74,11 @@ std::vector<std::string> TcpLargeTransfer::GenerateApplication(std::string netDe
 
 size_t TcpLargeTransfer::getPort()
 {
-  return this->port;
+  return this->m_port;
 }
 
-void TcpLargeTransfer::setPort(const size_t &m_port)
+void TcpLargeTransfer::setPort(const size_t &port)
 {
-  this->port = m_port;
+  this->m_port = port;
 }
 

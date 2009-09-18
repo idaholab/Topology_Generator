@@ -20,7 +20,7 @@
 
 /**
  * \file hub.h
- * \brief hub link subclass.
+ * \brief Hub link subclass.
  * \author Pierre Weiss
  * \date 2009
  */
@@ -36,7 +36,7 @@
 
 /**
  * \ingroup generator
- * \brief hub link subclass.
+ * \brief Hub link subclass.
  *
  *  The hub class is a subclass of link.
  *
@@ -51,37 +51,37 @@ class Hub : public Link
 {
   public:
     /**
-     * \brief constructor.
-     * \param m_indice hub number
+     * \brief Constructor.
+     * \param indice hub number
      */
-    Hub(const size_t &m_indice);
+    Hub(const size_t &indice);
 
     /**
-     * \brief destructor.
+     * \brief Destructor.
      */
     virtual ~Hub();
 
   private:
     /**
-     * \brief generate headers code.
+     * \brief Generate headers code.
      * \return headers code.
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief generate link code.
+     * \brief Generate link code.
      * \return link code.
      */
     virtual std::vector<std::string> GenerateLink();
 
     /**
-     * \brief generate net device container code.
+     * \brief Generate net device container code.
      * \return net device container code.
      */
     virtual std::vector<std::string> GenerateNetDevice();
 
     /**
-     * \brief generate trace line code.
+     * \brief Generate trace line code.
      * \return trace line code.
      */
     virtual std::vector<std::string> GenerateTrace();

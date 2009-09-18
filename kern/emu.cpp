@@ -20,18 +20,18 @@
 
 /**
  * \file emu.cpp
- * \brief emu link subclass.
+ * \brief Emu link subclass.
  * \author Pierre Weiss
  * \date 2009
  */
 
 #include "emu.h"
 
-Emu::Emu(const size_t &m_indice, const std::string &m_emuNode, const std::string &m_ifaceName) : Link(m_indice)
+Emu::Emu(const size_t &indice, const std::string &emuNode, const std::string &ifaceName) : Link(indice)
 {
-  this->Install(m_emuNode);
-  this->setEmuName(m_emuNode);
-  this->setIfaceName(m_ifaceName);
+  this->Install(emuNode);
+  this->setEmuName(emuNode);
+  this->setIfaceName(ifaceName);
   this->setLinkName(std::string("emu_" + this->getIndice()));
   this->setNdcName(std::string("ndc_" + this->getLinkName()));
   this->setAllNodeContainer(std::string("all_" + this->getLinkName()));
@@ -107,21 +107,21 @@ std::vector<std::string> Emu::GenerateTrace()
 
 std::string Emu::getEmuName()
 {
-  return this->emuNode;
+  return this->m_emuNode;
 }
 
-void Emu::setEmuName(const std::string &m_emuNode)
+void Emu::setEmuName(const std::string &emuNode)
 {
-  this->emuNode = m_emuNode;
+  this->m_emuNode = emuNode;
 }
 
 std::string Emu::getIfaceName()
 {
-  return this->ifaceName;
+  return this->m_ifaceName;
 }
 
-void Emu::setIfaceName(const std::string &m_ifaceName)
+void Emu::setIfaceName(const std::string &ifaceName)
 {
-  this->ifaceName = m_ifaceName;
+  this->m_ifaceName = ifaceName;
 }
 

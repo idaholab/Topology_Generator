@@ -20,7 +20,7 @@
 
 /**
  * \file bridge.h
- * \brief bridge link subclass.
+ * \brief Bridge link subclass.
  * \author Pierre Weiss
  * \date 2009
  */
@@ -36,7 +36,7 @@
 
 /**
  * \ingroup generator
- * \brief bridge link subclass.
+ * \brief Bridge link subclass.
  *
  *  The bridge class is a subclass of link.
  *
@@ -51,55 +51,55 @@ class Bridge : public Link
 {
   private:
     /**
-     * \brief bridge node name.
+     * \brief Bridge node name.
      */
-    std::string nodeBridge;
+    std::string m_nodeBridge;
 
   public:
     /**
-     * \brief constructor.
-     * \param m_indice bridge number
-     * \param m_nodeBridge node name.
+     * \brief Constructor.
+     * \param indice bridge number
+     * \param nodeBridge node name.
      */
-    Bridge(const size_t &m_indice, const std::string &m_nodeBridge);
+    Bridge(const size_t &indice, const std::string &nodeBridge);
 
     /**
-     * \brief destructor.
+     * \brief Destructor.
      */
     virtual ~Bridge();
 
     /**
-     * \brief get bridge node name.
+     * \brief Get bridge node name.
      * \return node name.
      */
     std::string getNodeBridge();
     
     /**
-     * \brief set bridge node name.
-     * \param m_nodeBridge new node name.
+     * \brief Set bridge node name.
+     * \param nodeBridge new node name.
      */
-    void setNodeBridge(const std::string &m_nodeBridge);
+    void setNodeBridge(const std::string &nodeBridge);
 
     /**
-     * \brief generate headers.
+     * \brief Generate headers.
      * \return headers code.
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief generate build link code.
+     * \brief Generate build link code.
      * \return build link code.
      */
     virtual std::vector<std::string> GenerateLink();
 
     /**
-     * \brief generate build of the net device container.
+     * \brief Generate build of the net device container.
      * \return net device container code.
      */
     virtual std::vector<std::string> GenerateNetDevice();
 
     /**
-     * \brief generate trace line.
+     * \brief Generate trace line.
      * \return trace line code.
      */
     virtual std::vector<std::string> GenerateTrace();

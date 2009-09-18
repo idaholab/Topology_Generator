@@ -51,50 +51,50 @@ class UdpEcho : public Application
 {
   private:
     /**
-     * \brief application port.
+     * \brief Application port.
      */
-    size_t port;
+    size_t m_port;
 
     /**
-     * \brief packet size.
+     * \brief Packet size.
      */
-    size_t packetSize;
+    size_t m_packetSize;
 
     /**
-     * \brief max packet count.
+     * \brief Max packet count.
      */
-    size_t maxPacketCount;
+    size_t m_maxPacketCount;
 
     /**
-     * \brief packet interval time
+     * \brief Packet interval time
      */
-    std::string packetIntervalTime;
+    std::string m_packetIntervalTime;
 
   public:
     /**
-     * \brief constructor.
-     * \param m_indice application number.
-     * \param m_senderNode sender node.
-     * \param m_receiverNode receiver node.
-     * \param m_startTime start time.
-     * \param m_endTime end time.
+     * \brief Constructor.
+     * \param indice application number.
+     * \param senderNode sender node.
+     * \param receiverNode receiver node.
+     * \param startTime start time.
+     * \param endTime end time.
      * \param port port.
      */
-    UdpEcho(const size_t &m_indice, const std::string &m_senderNode, const std::string &m_receiverNode, const size_t &m_startTime, const size_t &m_endTime, const size_t &port);
+    UdpEcho(const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime, const size_t &port);
 
     /**
-     * \brief destructor.
+     * \brief Destructor.
      */
     ~UdpEcho();
 
     /**
-     * \brief generate headers code.
+     * \brief Generate headers code.
      * \return headers code.
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief generate application code.
+     * \brief Generate application code.
      * \param netDeviceContainer net device container.
      * \param numberIntoNetDevice number into net device.
      * \return application code.
@@ -102,49 +102,49 @@ class UdpEcho : public Application
     virtual std::vector<std::string> GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice);
 
     /**
-     * \brief get port.
+     * \brief Get port.
      * \return port.
      */
     size_t getPort();
 
     /**
-     * \brief set port.
-     * \param m_port new port.
+     * \brief Set port.
+     * \param port new port.
      */
-    void setPort(const size_t &m_port);
+    void setPort(const size_t &port);
 
     /**
-     * \brief set packet size.
-     * \param m_packetSize new packet size.
+     * \brief Set packet size.
+     * \param packetSize new packet size.
      */
-    void setPacketSize(const size_t &m_packetSize);
+    void setPacketSize(const size_t &packetSize);
 
     /**
-     * \brief get packet size.
+     * \brief Get packet size.
      * \return packet size.
      */
     size_t getPacketSize();
 
     /**
-     * \brief set max packet count.
-     * \param m_maxPacketCount max packet count.
+     * \brief Set max packet count.
+     * \param maxPacketCount max packet count.
      */
-    void setMaxPacketCount(const size_t &m_maxPacketCount);
+    void setMaxPacketCount(const size_t &maxPacketCount);
 
     /**
-     * \brief get max packet count.
+     * \brief Get max packet count.
      * \return max packet count.
      */
     size_t getMaxPacketCount();
 
     /**
-     * \brief set packet interval time.
-     * \param m_packetIntervalTime packet interval time.
+     * \brief Set packet interval time.
+     * \param packetIntervalTime packet interval time.
      */
-    void setPacketIntervalTime(const std::string &m_packetIntervalTime);
+    void setPacketIntervalTime(const std::string &packetIntervalTime);
 
     /**
-     * \brief get packet interval time.
+     * \brief Get packet interval time.
      * \return packet interval time.
      */
     std::string getPacketIntervalTime();

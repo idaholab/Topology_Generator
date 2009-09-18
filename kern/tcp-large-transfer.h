@@ -20,7 +20,7 @@
 
 /**
  * \file tcp-large-transfer.h
- * \brief the tcp large transfer echo class subclass of Application.
+ * \brief The tcp large transfer echo class subclass of Application.
  * \author Pierre Weiss
  * \date 2009
  */
@@ -52,33 +52,33 @@ class TcpLargeTransfer : public Application
     /**
      * \brief TCP port.
      */
-    size_t port;
+    size_t m_port;
 
   public:
     /**
-     * \brief constructor.
-     * \param m_indice number of the application on the generator applicaiton vector
-     * \param m_senderNode sender node
-     * \param m_receiverNode receiver node
-     * \param m_startTime application start time
-     * \param m_endTime application end time
+     * \brief Constructor.
+     * \param indice number of the application on the generator applicaiton vector
+     * \param senderNode sender node
+     * \param receiverNode receiver node
+     * \param startTime application start time
+     * \param endTime application end time
      * \param port port which are sended the traffic
      */
-    TcpLargeTransfer(const size_t &m_indice, const std::string &m_senderNode, const std::string &m_receiverNode, const size_t &m_startTime, const size_t &m_endTime, const size_t &port);
+    TcpLargeTransfer(const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime, const size_t &port);
 
     /**
-     * \brief destructor.
+     * \brief Destructor.
      */
     ~TcpLargeTransfer();
 
     /**
-     * \brief generate headers code.
+     * \brief Generate headers code.
      * \return headers code.
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief generate application code.
+     * \brief Generate application code.
      * \param netDeviceContainer net device container
      * \param numberIntoNetDevice number of the sender node into the net device container
      * \return the ns3 application code.
@@ -86,16 +86,16 @@ class TcpLargeTransfer : public Application
     virtual std::vector<std::string> GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice);
 
     /**
-     * \brief get port.
+     * \brief Get port.
      * \return port.
      */
     size_t getPort();
 
     /**
-     * \brief set port.
-     * \param m_port new port.
+     * \brief Get port.
+     * \param port new port.
      */
-    void setPort(const size_t &m_port);
+    void setPort(const size_t &port);
 };
 
 #endif /* TCPLARGETRANSFER_H */

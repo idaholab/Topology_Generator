@@ -20,7 +20,7 @@
 
 /**
  * \file point-to-point.h
- * \brief point-to-point link subclass.
+ * \brief Point-to-point link subclass.
  * \author Pierre Weiss
  * \date 2009
  */
@@ -36,7 +36,7 @@
 
 /**
  * \ingroup generator
- * \brief point-to-point link subclass.
+ * \brief Point-to-point link subclass.
  *
  *  The point-to-point class is a subclass of link.
  *
@@ -51,37 +51,37 @@ class PointToPoint : public Link
 {
   public:
     /**
-     * \brief constructor.
-     * \param m_indice point-to-point number into the link generator vector.
+     * \brief Constructor.
+     * \param indice point-to-point number into the link generator vector.
      */
-    PointToPoint(const size_t &m_indice);
+    PointToPoint(const size_t &indice);
 
     /**
-     * \brief destructor.
+     * \brief Destructor.
      */
     virtual ~PointToPoint();
 
   private:
     /**
-     * \brief generated headers code.
+     * \brief Generated headers code.
      * \return headers code.
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief generate link code.
+     * \brief Generate link code.
      * \return link code.
      */
     virtual std::vector<std::string> GenerateLink();
 
     /**
-     * \brief generate net device container.
+     * \brief Generate net device container.
      * \return net device container code.
      */
     virtual std::vector<std::string> GenerateNetDevice();
 
     /**
-     * \brief generate trace line code.
+     * \brief Generate trace line code.
      * \return trace line code.
      */
     virtual std::vector<std::string> GenerateTrace();

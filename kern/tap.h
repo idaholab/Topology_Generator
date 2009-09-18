@@ -20,7 +20,7 @@
 
 /**
  * \file tap.h
- * \brief tap link subclass.
+ * \brief Tap link subclass.
  * \author Pierre Weiss
  * \date 2009
  */
@@ -36,7 +36,7 @@
 
 /**
  * \ingroup generator
- * \brief tap link subclass.
+ * \brief Tap link subclass.
  *
  *  The tap class is a subclass of link.
  *
@@ -63,85 +63,85 @@ class Tap : public Link
 {
   private:
     /**
-     * \brief tap name attribute.
+     * \brief Tap name attribute.
      */
-    std::string tapNode;
+    std::string m_tapNode;
 
     /**
-     * \brief tap interface name.
+     * \brief Tap interface name.
      */
-    std::string ifaceName;
+    std::string m_ifaceName;
 
   public:
     /**
-     * \brief constructor.
-     * \param m_indice tap number
-     * \param m_tapNode external linux host
-     * \param m_ifaceName iface name
+     * \brief Constructor.
+     * \param indice tap number
+     * \param tapNode external linux host
+     * \param ifaceName iface name
      */
-    Tap(const size_t &m_indice, const std::string &m_tapNode, const std::string &m_ifaceName);
+    Tap(const size_t &indice, const std::string &tapNode, const std::string &ifaceName);
 
     /**
-     * \brief destructor.
+     * \brief Destructor.
      */
     virtual ~Tap();
 
     /**
-     * \brief get tap node name.
+     * \brief Get tap node name.
      * \return tap name
      */   
     std::string getTapName();
 
     /**
-     * \brief set tap node name.
-     * \param m_tapNode new tap name.
+     * \brief Set tap node name.
+     * \param tapNode new tap name.
      */
-    void setTapName(const std::string &m_tapNode);
+    void setTapName(const std::string &tapNode);
 
     /**
-     * \brief get interface name.
+     * \brief Get interface name.
      * \return interface name. 
      */
     std::string getIfaceName();
 
     /**
-     * \brief set interface name.
-     * \param m_ifaceName new interface name.
+     * \brief Set interface name.
+     * \param ifaceName new interface name.
      */
-    void setIfaceName(const std::string &m_ifaceName);
+    void setIfaceName(const std::string &ifaceName);
 
     /**
-     * \brief generate headers code.
+     * \brief Generate headers code.
      * \return headers code.
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief generate link code.
+     * \brief Generate link code.
      * \return link code.
      */
     virtual std::vector<std::string> GenerateLink();
 
     /**
-     * \brief generate net device container code.
+     * \brief Generate net device container code.
      * \return net device container code.
      */
     virtual std::vector<std::string> GenerateNetDevice();
 
     /**
-     * \brief function re-writted from link main class.
+     * \brief Function re-writted from link main class.
      * \return tap bridge code.
      */
     std::vector<std::string> GenerateTapBridge();
 
     /**
-     * \brief function re-writted from link main class.
+     * \brief Function re-writted from link main class.
      * \return vars code.
      */
     std::vector<std::string> GenerateVars();
 
     /**
-     * \brief function re-wrotted from link main class.
+     * \brief Function re-wrotted from link main class.
      * \return cmd line code.
      */
     std::vector<std::string> GenerateCmdLine();

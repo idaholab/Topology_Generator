@@ -20,7 +20,7 @@
 
 /**
  * \file ping.h
- * \brief the ping class is subclass of Application.
+ * \brief The ping class is subclass of Application.
  * \author Pierre Weiss
  * \date 2009
  */
@@ -52,28 +52,28 @@ class Ping : public Application
 {
   public:
     /**
-     * \brief constructor.
-     * \param m_indice indice in the generator vector.
-     * \param m_senderNode sender node.
-     * \param m_receiverNode receiver node.
-     * \param m_startTime application start time.
-     * \param m_endTime application end time.
+     * \brief Constructor.
+     * \param indice indice in the generator vector.
+     * \param senderNode sender node.
+     * \param receiverNode receiver node.
+     * \param startTime application start time.
+     * \param endTime application end time.
      */
-    Ping(const size_t &m_indice, const std::string &m_senderNode, const std::string &m_receiverNode, const size_t &m_startTime, const size_t &m_endTime);
+    Ping(const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime);
 
     /**
-     * \brief destructor.
+     * \brief Destructor.
      */
     ~Ping();
 
     /**
-     * \brief generate the headers code.
+     * \brief Generate the headers code.
      * \return headers code.
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief generate the application.
+     * \brief Generate the application.
      * \param netDeviceContainer net device container name which are contain the sender node.
      * \param numberIntoNetDevice place of the machine into the net device container.
      * \return application code.
