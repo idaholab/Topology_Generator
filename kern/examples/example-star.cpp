@@ -18,14 +18,15 @@
  * Author: Pierre Weiss <3weissp@gmail.com>
  */
 
-//  Topology Generated :
+/*  Topology Generated :
 //
 //     n6   n5   n4
 //        \ |  /
 //    n7 -- n0 -- n3
-//        / |  \
+//        / | \ 
 //     n8   n1   n2
 //
+*/
 
 using namespace std;
 

@@ -27,7 +27,7 @@
 
 #include "hub.h"
 
-Hub::Hub(const size_t &m_indice) : Link(m_indice)
+Hub::Hub(const size_t &indice) : Link(indice)
 {
   this->setLinkName(std::string("hub_" + this->getIndice()));
   this->setNdcName(std::string("ndc_" + this->getLinkName()));

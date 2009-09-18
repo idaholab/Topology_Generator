@@ -45,10 +45,10 @@ int main(int argc, char *argv[])
   gen->AddNode("Bridge");//2
   
   /* Add the bridge. */
-  gen->AddLink("Bridge", gen->listNode.at(2)->getNodeName());
+  gen->AddLink("Bridge", gen->GetNode(2)->getNodeName());
   /* Add equipement to bridge */
-  gen->listLink.at(0)->Install(gen->listNode.at(0)->getNodeName());
-  gen->listLink.at(0)->Install(gen->listNode.at(1)->getNodeName());
+  gen->GetLink(0)->Install(gen->GetNode(0)->getNodeName());
+  gen->GetLink(0)->Install(gen->GetNode(1)->getNodeName());
   
   /* Enable trace... */
   gen->GetLink(0)->setTrace(true);
