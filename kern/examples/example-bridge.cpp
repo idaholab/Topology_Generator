@@ -51,10 +51,10 @@ int main(int argc, char *argv[])
   gen->listLink.at(0)->Install(gen->listNode.at(1)->getNodeName());
   
   /* Enable trace... */
-  gen->listLink.at(0)->setTrace(true);
+  gen->GetLink(0)->setTrace(true);
   
   /* Add an application */
-  gen->AddApplication("Ping", gen->listNode.at(0)->getNodeName(), gen->listNode.at(1)->getNodeName(), 0, 5);// 0 start time - 5 end time
+  gen->AddApplication("Ping", gen->GetNode(0)->getNodeName(), gen->GetNode(1)->getNodeName(), 0, 5);// 0 start time - 5 end time
 
   gen->GenerateCode();
   

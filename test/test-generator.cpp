@@ -74,9 +74,9 @@ namespace tests
      */
     void testAddNode()
     {
-      size_t initSize = gen->listNode.size();
+      size_t initSize = gen->GetNNodes();
       this->gen->AddNode("Pc");
-      size_t finalSize = gen->listNode.size();
+      size_t finalSize = gen->GetNNodes();
       CPPUNIT_ASSERT(initSize == (finalSize - 1));
     }
 
@@ -85,10 +85,10 @@ namespace tests
      */
     void testRemoveNode()
     {
-      size_t initSize = gen->listNode.size();
+      size_t initSize = gen->GetNNodes();
       this->gen->AddNode("Pc");
-      this->gen->RemoveNode(gen->listNode.size() - 1);
-      size_t finalSize = gen->listNode.size();
+      this->gen->RemoveNode(gen->GetNNodes() - 1);
+      size_t finalSize = gen->GetNNodes();
       CPPUNIT_ASSERT(initSize == finalSize);
     }
 
@@ -105,7 +105,7 @@ namespace tests
      */
     void getWrongEquipement()
     {
-      this->gen->listNode.at(-1);
+      this->gen->GetNode(-1);
     }
 
     //
@@ -117,9 +117,9 @@ namespace tests
      */
     void testAddLink()
     {
-      size_t initSize = gen->listLink.size();
+      size_t initSize = gen->GetNLinks();
       this->gen->AddLink("Hub");
-      size_t finalSize = gen->listLink.size();
+      size_t finalSize = gen->GetNLinks();
       CPPUNIT_ASSERT(initSize == (finalSize - 1));
     }
 
@@ -128,10 +128,10 @@ namespace tests
      */
     void testRemoveLink()
     {
-      size_t initSize = gen->listLink.size();
+      size_t initSize = gen->GetNLinks();
       this->gen->AddLink("Hub");
-      this->gen->RemoveLink(gen->listLink.size() - 1);
-      size_t finalSize = gen->listLink.size();
+      this->gen->RemoveLink(gen->GetNLinks() - 1);
+      size_t finalSize = gen->GetNLinks();
       CPPUNIT_ASSERT(initSize == finalSize);
     }
 
@@ -148,7 +148,7 @@ namespace tests
      */
     void getWrongLink()
     {
-      this->gen->listLink.at(-1);
+      this->gen->GetLink(-1);
     }
   };
 } 

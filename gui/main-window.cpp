@@ -188,7 +188,7 @@ MainWindow::~MainWindow()
 void MainWindow::CreatePc()
 {
   this->gen->AddNode("Pc");
-  dw->CreateObject("Pc", this->gen->listNode.at(this->gen->listNode.size() - 1)->getNodeName());
+  dw->CreateObject("Pc", this->gen->GetNode(this->gen->GetNNodes() - 1)->getNodeName());
 }
 
 void MainWindow::CreatePcGroup()
@@ -216,7 +216,7 @@ void MainWindow::CreatePcGroup()
   }
 
   this->gen->AddNode("Pc",number);
-  dw->CreateObject("Pc-group", this->gen->listNode.at(this->gen->listNode.size() - 1)->getNodeName());
+  dw->CreateObject("Pc-group", this->gen->GetNode(this->gen->GetNNodes() - 1)->getNodeName());
 }
 
 void MainWindow::CreateEmu()
@@ -248,8 +248,8 @@ void MainWindow::CreateEmu()
   }
 
   this->gen->AddNode("Pc");
-  this->gen->AddLink("Emu", this->gen->listNode.at(this->gen->listNode.size() - 1)->getNodeName(), text.toStdString());
-  dw->CreateObject("Emu",this->gen->listLink.at(this->gen->listLink.size() - 1)->getLinkName());
+  this->gen->AddLink("Emu", this->gen->GetNode(this->gen->GetNNodes() - 1)->getNodeName(), text.toStdString());
+  dw->CreateObject("Emu",this->gen->GetLink(this->gen->GetNLinks() - 1)->getLinkName());
 }
 
 void MainWindow::CreateTap()
@@ -280,8 +280,8 @@ void MainWindow::CreateTap()
   }
 
   this->gen->AddNode("Tap");
-  this->gen->AddLink("Tap", this->gen->listNode.at(this->gen->listNode.size() - 1)->getNodeName(), text.toStdString());
-  dw->CreateObject("Tap",this->gen->listLink.at(this->gen->listLink.size() - 1)->getLinkName());
+  this->gen->AddLink("Tap", this->gen->GetNode(this->gen->GetNNodes() - 1)->getNodeName(), text.toStdString());
+  dw->CreateObject("Tap",this->gen->GetLink(this->gen->GetNLinks() - 1)->getLinkName());
 }
 
 void MainWindow::CleanIface()
@@ -291,19 +291,19 @@ void MainWindow::CleanIface()
   for(size_t i = 0; i < (size_t) this->listIface.size(); i++)
   {
     used = false;
-    for(size_t j = 0; j < this->gen->listLink.size(); j++)
+    for(size_t j = 0; j < this->gen->GetNLinks(); j++)
     {
-      if( (this->gen->listLink.at(j)->getLinkName()).find("tap_") == 0)
+      if( (this->gen->GetLink(j)->getLinkName()).find("tap_") == 0)
       {
-        if( this->listIface.at(i) == static_cast<Tap*>(this->gen->listLink.at(j))->getIfaceName())
+        if( this->listIface.at(i) == static_cast<Tap*>(this->gen->GetLink(j))->getIfaceName())
         {
           used = true;
           break;
         }
       }
-      if( (this->gen->listLink.at(j)->getLinkName()).find("emu_") == 0 ) 
+      if( (this->gen->GetLink(j)->getLinkName()).find("emu_") == 0 ) 
       {
-        if( this->listIface.at(i) == static_cast<Emu*>(this->gen->listLink.at(j))->getIfaceName())
+        if( this->listIface.at(i) == static_cast<Emu*>(this->gen->GetLink(j))->getIfaceName())
         {
           used = true;
           break;
@@ -320,33 +320,33 @@ void MainWindow::CleanIface()
 void MainWindow::CreateAp()
 {  
   this->gen->AddNode("Ap");
-  this->gen->AddLink("Ap", this->gen->listNode.at(this->gen->listNode.size() - 1)->getNodeName());
-  dw->CreateObject("Ap", this->gen->listLink.at(this->gen->listLink.size() - 1)->getLinkName() );
+  this->gen->AddLink("Ap", this->gen->GetNode(this->gen->GetNNodes() - 1)->getNodeName());
+  dw->CreateObject("Ap", this->gen->GetLink(this->gen->GetNLinks() - 1)->getLinkName() );
 }
 
 void MainWindow::CreateStation()
 {
   this->gen->AddNode("Station");
-  dw->CreateObject("Station", this->gen->listNode.at(this->gen->listNode.size() - 1)->getNodeName());
+  dw->CreateObject("Station", this->gen->GetNode(this->gen->GetNNodes() - 1)->getNodeName());
 }
 
 void MainWindow::CreateHub()
 {
   this->gen->AddLink("Hub");
-  dw->CreateObject("Hub", this->gen->listLink.at(this->gen->listLink.size() - 1)->getLinkName());
+  dw->CreateObject("Hub", this->gen->GetLink(this->gen->GetNLinks() - 1)->getLinkName());
 }
 
 void MainWindow::CreateSwitch()
 {
   this->gen->AddNode("Bridge");
-  this->gen->AddLink("Bridge", this->gen->listNode.at(this->gen->listNode.size() - 1)->getNodeName());
-  dw->CreateObject("Switch",this->gen->listLink.at(this->gen->listLink.size() - 1)->getLinkName());
+  this->gen->AddLink("Bridge", this->gen->GetNode(this->gen->GetNNodes() - 1)->getNodeName());
+  dw->CreateObject("Switch",this->gen->GetLink(this->gen->GetNLinks() - 1)->getLinkName());
 }
 
 void MainWindow::CreateRouter()
 {
   this->gen->AddNode("Router");
-  dw->CreateObject("Router", this->gen->listNode.at(this->gen->listNode.size() - 1)->getNodeName());
+  dw->CreateObject("Router", this->gen->GetNode(this->gen->GetNNodes() - 1)->getNodeName());
 }
 
 void MainWindow::CreateHardLink()
@@ -441,9 +441,9 @@ void MainWindow::ValidLink()
       (equi.at(0)).find("emu_") == 0 || (equi.at(0).find("tap_") == 0 ))
   {
     indic = 0;
-    for(size_t i = 0; i < (size_t) this->gen->listLink.size(); i++)
+    for(size_t i = 0; i < (size_t) this->gen->GetNLinks(); i++)
     { 
-      if( this->gen->listLink.at(i)->getLinkName() == equi.at(0))
+      if( this->gen->GetLink(i)->getLinkName() == equi.at(0))
       {
         indic = i;
       }
@@ -454,9 +454,9 @@ void MainWindow::ValidLink()
       (equi.at(1)).find("emu_") == 0 || (equi.at(1).find("tap_") == 0 ))
   {
     indic = 0;
-    for(size_t i = 0; i < (size_t) this->gen->listLink.size(); i++)
+    for(size_t i = 0; i < (size_t) this->gen->GetNLinks(); i++)
     { 
-      if( this->gen->listLink.at(i)->getLinkName() == equi.at(1))
+      if( this->gen->GetLink(i)->getLinkName() == equi.at(1))
       {
         indic = i;
       }
@@ -468,14 +468,14 @@ void MainWindow::ValidLink()
     size_t number = -1;
     size_t number2 = -1;
 
-    for(size_t i = 0; i < (size_t) this->gen->listLink.size(); i++)
+    for(size_t i = 0; i < (size_t) this->gen->GetNLinks(); i++)
     {
-      if(equi.at(0) == this->gen->listLink.at(i)->getLinkName())
+      if(equi.at(0) == this->gen->GetLink(i)->getLinkName())
       {
         number = i;
         break;
       }
-      if(equi.at(1) == this->gen->listLink.at(i)->getLinkName())
+      if(equi.at(1) == this->gen->GetLink(i)->getLinkName())
       {
         number2 = i;
         break;
@@ -495,14 +495,14 @@ void MainWindow::ValidLink()
       if(equi.at(2) == "HardLink")
       {
         this->gen->AddLink("Hub");
-        this->ConnectNode((this->gen->listLink.size() - 1), equi.at(0));
-        this->ConnectNode((this->gen->listLink.size() - 1), equi.at(1));
+        this->ConnectNode((this->gen->GetNLinks() - 1), equi.at(0));
+        this->ConnectNode((this->gen->GetNLinks() - 1), equi.at(1));
       }
       else if(equi.at(2) == "P2pLink")
       {
         this->gen->AddLink("PointToPoint");
-        this->ConnectNode((this->gen->listLink.size() - 1), equi.at(0));
-        this->ConnectNode((this->gen->listLink.size() - 1), equi.at(1));
+        this->ConnectNode((this->gen->GetNLinks() - 1), equi.at(0));
+        this->ConnectNode((this->gen->GetNLinks() - 1), equi.at(1));
       }
       else
       {
@@ -586,15 +586,15 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
   /* test if the link exist. */
   try
   {
-    this->gen->listLink.at(linkNumber);
+    this->gen->GetLink(linkNumber);
   }
   catch(const std::out_of_range &e)
   {
     QMessageBox::about(this, "Error", "This link doesn't exist.");
     for(size_t i = 0; i < (size_t) this->dw->drawLines.size(); i++)
     {
-      if( (nodeName == this->dw->drawLines.at(i).begin && this->gen->listLink.at(linkNumber)->getLinkName() == this->dw->drawLines.at(i).end) ||
-          (this->gen->listLink.at(linkNumber)->getLinkName() == this->dw->drawLines.at(i).begin && nodeName == this->dw->drawLines.at(i).end) )
+      if( (nodeName == this->dw->drawLines.at(i).begin && this->gen->GetLink(linkNumber)->getLinkName() == this->dw->drawLines.at(i).end) ||
+          (this->gen->GetLink(linkNumber)->getLinkName() == this->dw->drawLines.at(i).begin && nodeName == this->dw->drawLines.at(i).end) )
       {
         this->dw->drawLines.erase(this->dw->drawLines.begin() + i);
       }
@@ -610,24 +610,24 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
   }
   else
   {
-    for(size_t i = 0; i < (size_t) this->gen->listNode.size(); i++)
+    for(size_t i = 0; i < (size_t) this->gen->GetNNodes(); i++)
     {
-      if(nodeName == this->gen->listNode.at(i)->getNodeName())
+      if(nodeName == this->gen->GetNode(i)->getNodeName())
       {
-        numberOfConnectedMachines += MainWindow::gen->listNode.at(i)->getMachinesNumber();
+        numberOfConnectedMachines += MainWindow::gen->GetNode(i)->getMachinesNumber();
       }
     }
   }
 
   /* get the number of machines also connected. */
-  std::vector<std::string> nodes = this->gen->listLink.at(linkNumber)->getNodes();
+  std::vector<std::string> nodes = this->gen->GetLink(linkNumber)->getNodes();
   for(size_t i = 0; i < (size_t) nodes.size(); i++)
   {
-    for(size_t j = 0; j < (size_t) this->gen->listNode.size(); j++)
+    for(size_t j = 0; j < (size_t) this->gen->GetNNodes(); j++)
     {
-      if(nodes.at(i) == this->gen->listNode.at(j)->getNodeName())
+      if(nodes.at(i) == this->gen->GetNode(j)->getNodeName())
       {
-        numberOfConnectedMachines += this->gen->listNode.at(j)->getMachinesNumber();
+        numberOfConnectedMachines += this->gen->GetNode(j)->getMachinesNumber();
       }
     }
   }
@@ -636,15 +636,15 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
     QMessageBox::about(this, "Error", "Limit of machines exceeded.");
     for(size_t i = 0; i < (size_t) this->dw->drawLines.size(); i++)
     {
-      if( (nodeName == this->dw->drawLines.at(i).begin && this->gen->listLink.at(linkNumber)->getLinkName() == this->dw->drawLines.at(i).end) ||
-          (this->gen->listLink.at(linkNumber)->getLinkName() == this->dw->drawLines.at(i).begin && nodeName == this->dw->drawLines.at(i).end) )
+      if( (nodeName == this->dw->drawLines.at(i).begin && this->gen->GetLink(linkNumber)->getLinkName() == this->dw->drawLines.at(i).end) ||
+          (this->gen->GetLink(linkNumber)->getLinkName() == this->dw->drawLines.at(i).begin && nodeName == this->dw->drawLines.at(i).end) )
       {
         this->dw->drawLines.erase(this->dw->drawLines.begin() + i);
       }
     }
     return;
   }
-  this->gen->listLink.at(linkNumber)->Install(nodeName);
+  this->gen->GetLink(linkNumber)->Install(nodeName);
 }
 
 void MainWindow::GenerateCpp()

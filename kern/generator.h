@@ -128,8 +128,7 @@ class Generator
      * \brief Number attribute of emu node created.
      */
     size_t m_indiceNodeEmu;
-
-  public: 
+    
     /**
      * \brief List of node created instance.
      * 
@@ -137,6 +136,21 @@ class Generator
      */
     std::vector<Node*> listNode;
 
+    /**
+     * \brief List of application created instance.
+     * 
+     * This attribute is the list of the created instance of application.
+     */
+    std::vector<Application*> listApplication;
+
+    /**
+     * \brief List of link created instace.
+     * 
+     * This attribute is the list of the created instance of link.
+     */
+    std::vector<Link*> listLink;
+
+  public: 
     /**
      * \brief Add an node.
      * 
@@ -152,7 +166,7 @@ class Generator
      * \param type node type
      * \param number number which will be added
      */
-    void AddNode(const std::string &type, const size_t &number);
+    void AddNode(const std::string &type, const size_t number);
 
     /**
      * \brief Remove an node element.
@@ -164,7 +178,20 @@ class Generator
      * \brief Remove an node element.
      * \param index node index to be removed
      */
-    void RemoveNode(const size_t &index);
+    void RemoveNode(const size_t index);
+
+    /**
+     * \brief Get node at specified index.
+     * \param index index
+     * \return node pointer
+     */
+    Node* GetNode(const size_t index);
+
+    /**
+     * \brief Get number of nodes.
+     * \return number of nodes.
+     */
+    size_t GetNNodes() const;
 
     //
     // Part of Application.
@@ -186,14 +213,6 @@ class Generator
     size_t m_indiceApplicationUdpEcho;
 
   public:
-
-    /**
-     * \brief List of application created instance.
-     * 
-     * This attribute is the list of the created instance of application.
-     */
-    std::vector<Application*> listApplication;
-
     /**
      * \brief Add an appplication.
      * 
@@ -228,6 +247,19 @@ class Generator
      * \param name application name to remove
      */
     void RemoveApplication(const std::string &name);
+
+    /**
+     * \brief Get application element at specified index.
+     * \param index index
+     * \return application pointer
+     */
+    Application* GetApplication(const size_t index);
+
+    /**
+     * \brief Get number of applications.
+     * \return number of applications
+     */
+   size_t GetNApplications() const; 
 
     //
     // Part of Link.
@@ -264,13 +296,6 @@ class Generator
     size_t m_indiceLinkBridge; 
 
   public:
-    /**
-     * \brief List of link created instace.
-     * 
-     * This attribute is the list of the created instance of link.
-     */
-    std::vector<Link*> listLink;
-
     /**
      * \brief Add an link.
      * 
@@ -310,7 +335,20 @@ class Generator
      * \brief Remove an link element.
      * \param index index of the link to remove
      */
-    void RemoveLink(size_t index);
+    void RemoveLink(const size_t index);
+
+    /**
+     * \brief Get link at specified index.
+     * \param index index
+     * \return link pointer
+     */
+    Link* GetLink(const size_t index);
+
+    /**
+     * \brief Get number of links.
+     * \return number of links
+     */
+    size_t GetNLinks() const;
 
     //
     // Part around the code Generation.

@@ -165,7 +165,7 @@ void Generator::AddNode(const std::string &type)
   }
 }
 
-void Generator::AddNode(const std::string &type, const size_t &number) 
+void Generator::AddNode(const std::string &type, const size_t number) 
 {
   Node *equi = NULL;
 
@@ -236,7 +236,7 @@ void Generator::RemoveNode(const std::string &name)
   }
 }
 
-void Generator::RemoveNode(const size_t &index)
+void Generator::RemoveNode(const size_t index)
 {
   if(this->listNode.size() < index)
   {
@@ -247,6 +247,23 @@ void Generator::RemoveNode(const size_t &index)
   delete this->listNode[index];
   this->listNode.erase(this->listNode.begin() + index);
 }
+
+Node* Generator::GetNode(const size_t index)
+{
+  if(this->listNode.size() < index)
+  {
+    throw std::out_of_range("Index does not exist.");
+    return 0;
+  }
+
+  return this->listNode.at(index);
+}
+
+size_t Generator::GetNNodes() const
+{
+  return this->listNode.size();
+}
+
 
 //
 // Part of Application.
@@ -306,6 +323,22 @@ void Generator::RemoveApplication(const std::string &name)
   {
     throw std::logic_error("Application remove failed! (" + name + ") not found.");
   }
+}
+
+Application* Generator::GetApplication(const size_t index)
+{
+  if(this->listApplication.size() < index)
+  {
+    throw std::out_of_range("Index does not exist");
+    return 0;
+  }
+
+  return this->listApplication.at(index);
+}
+
+size_t Generator::GetNApplications() const
+{
+  return this->listApplication.size();
 }
 
 //
@@ -391,7 +424,7 @@ void Generator::RemoveLink(const std::string &name)
   }
 }
 
-void Generator::RemoveLink(size_t index)
+void Generator::RemoveLink(const size_t index)
 {
   if(this->listLink.size() < index)
   {
@@ -401,6 +434,22 @@ void Generator::RemoveLink(size_t index)
 
   delete this->listLink[index];
   this->listLink.erase(this->listLink.begin() + index);
+}
+
+Link* Generator::GetLink(const size_t index)
+{
+  if(this->listLink.size() < index)
+  {
+    throw std::out_of_range("Index does not exist.");
+    return 0;
+  }
+ 
+  return this->listLink.at(index);
+}
+
+size_t Generator::GetNLinks() const
+{
+  return this->listLink.size();
 }
 
 //

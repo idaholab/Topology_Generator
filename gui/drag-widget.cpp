@@ -337,18 +337,18 @@ void DragWidget::deleteSelected()
 
   /* delete connections */
   std::vector<std::string> objDelLink;
-  for(size_t i = 0; i < (size_t) this->mw->gen->listLink.size(); i++)
+  for(size_t i = 0; i < (size_t) this->mw->gen->GetNLinks(); i++)
   {
-    std::vector<std::string> nodes = this->mw->gen->listLink.at(i)->getNodes();
+    std::vector<std::string> nodes = this->mw->gen->GetLink(i)->getNodes();
     for(size_t j = 0; j < (size_t) nodes.size(); j++)
     {
       /* if the child to be deleted is connected ... we must remove it. */
       if(child->getName() == nodes.at(j))
       {
-        objDelLink.push_back(this->mw->gen->listLink.at(i)->getLinkName());
+        objDelLink.push_back(this->mw->gen->GetLink(i)->getLinkName());
         try
         {
-          this->mw->gen->listLink.at(i)->nodes.erase(this->mw->gen->listLink.at(i)->nodes.begin() + j);
+          this->mw->gen->GetLink(i)->nodes.erase(this->mw->gen->GetLink(i)->nodes.begin() + j);
         }
         catch(const std::out_of_range &e)
         {
@@ -362,11 +362,11 @@ void DragWidget::deleteSelected()
   bool isHide = true;
   for(size_t i = 0; i < (size_t) objDelLink.size(); i++)
   {
-    for(size_t j = 0; j < (size_t) this->mw->gen->listLink.size(); j++)
+    for(size_t j = 0; j < (size_t) this->mw->gen->GetNLinks(); j++)
     {
-      if( objDelLink.at(i) == this->mw->gen->listLink.at(j)->getLinkName() )
+      if( objDelLink.at(i) == this->mw->gen->GetLink(j)->getLinkName() )
       {
-        if(this->mw->gen->listLink.at(j)->getNodes().size() <= 1)
+        if(this->mw->gen->GetLink(j)->getNodes().size() <= 1)
         {
           // the link where the deleted object 
           // check if the link is hide. 
@@ -375,7 +375,7 @@ void DragWidget::deleteSelected()
           {
             if(dynamic_cast<DragObject*>((this->children().at(k))))
             {
-              if( dynamic_cast<DragObject*>((this->children().at(k)))->getName() == this->mw->gen->listLink.at(j)->getLinkName())
+              if( dynamic_cast<DragObject*>((this->children().at(k)))->getName() == this->mw->gen->GetLink(j)->getLinkName())
               {
                 isHide = false;
               }
@@ -383,7 +383,7 @@ void DragWidget::deleteSelected()
           }
           if(isHide)
           {
-            this->mw->gen->RemoveLink(this->mw->gen->listLink.at(j)->getLinkName());
+            this->mw->gen->RemoveLink(this->mw->gen->GetLink(j)->getLinkName());
           }
         }
       }
@@ -417,12 +417,12 @@ void DragWidget::deleteSelected()
   /* remove application. */
   std::string sender("");
   std::string receiver("");
-  for(size_t i = 0; i < (size_t) this->mw->gen->listApplication.size(); i++)
+  for(size_t i = 0; i < (size_t) this->mw->gen->GetNApplications(); i++)
   {
     if((child->getName()).find("nodesGroup_") == 0)
     {
-      sender = this->mw->gen->listApplication.at(i)->getSenderNode();
-      receiver = this->mw->gen->listApplication.at(i)->getReceiverNode();
+      sender = this->mw->gen->GetApplication(i)->getSenderNode();
+      receiver = this->mw->gen->GetApplication(i)->getReceiverNode();
 
       if(sender.find("NodeContainer") == 0)
       {
@@ -435,14 +435,14 @@ void DragWidget::deleteSelected()
     }
     else
     {
-      sender = this->mw->gen->listApplication.at(i)->getSenderNode();
-      receiver = this->mw->gen->listApplication.at(i)->getReceiverNode(); 
+      sender = this->mw->gen->GetApplication(i)->getSenderNode();
+      receiver = this->mw->gen->GetApplication(i)->getReceiverNode(); 
     }
 
     if(child->getName() == sender ||
         child->getName() == receiver )
     {
-      this->mw->gen->RemoveApplication(this->mw->gen->listApplication.at(i)->getAppName());
+      this->mw->gen->RemoveApplication(this->mw->gen->GetApplication(i)->getAppName());
     }
   }
 
