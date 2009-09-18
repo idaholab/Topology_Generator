@@ -36,17 +36,17 @@ namespace utils
 
 /**
  * \brief Split function as boost::split(...)
- * \param res the vector wich contain the splitted vector.
+ * \param res the vector wich contain the splitted vector
  * \param str the string to split
  * \param separator the split separator
- * \return size_t the res vector size.
+ * \return res vector size
  */
 size_t split(std::vector<std::string> &res, std::string str, char separator);
 
 /**
- * \brief Function to convert size_t to string.
- * \param nb the number to convert.
- * \return the string of the number.
+ * \brief Convert size_t to string.
+ * \param nb the number to convert
+ * \return number in string format
  */
 std::string toString(const size_t nb);
 

@@ -107,97 +107,96 @@ class Application
 
     /**
      * \brief Generate the headers.
-     * \return headers.
+     * \return headers
      */
     virtual std::vector<std::string> GenerateHeader() = 0;
 
     /**
      * \brief Generate the application code.
      * \param netDeviceContainer is the ns3 net device containe
-     * \param numberIntoNetDevice is the place from the sender node in the assigned ip network.
-     * \param numberIntoNetDevice example sender node is 192.168.0.5, then the number is 5.
-     * \return code from the application.
+     * \param numberIntoNetDevice is the place from the sender node in the assigned ip network
+     * \param numberIntoNetDevice example sender node is 192.168.0.5, then the number is 5
+     * \return code from the application
      */
     virtual std::vector<std::string> GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice) = 0;
 
     /**
      * \brief Get application number.
-     * \return application number.
+     * \return application number
      */
     std::string getIndice();
 
     /**
      * \brief Get application number.
-     * \param indice new indice.
+     * \param indice new indice
      */
     void setIndice(const size_t &indice);
 
     /**
      * \brief Get application node name.
-     * \return application node name.
+     * \return application node name
      */
     std::string getAppName();
 
     /**
      * \brief Set application name.
-     * \param appName new application name.
+     * \param appName new application name
      */
     void setAppName(const std::string &appName);
 
     /**
      * \brief Get sender node name.
-     * \return sender node name.
+     * \return sender node name
      */
     std::string getSenderNode();
 
     /**
      * \brief Set sender node name.
-     * \param senderNode new sender node name.
+     * \param senderNode new sender node name
      */
     void setSenderNode(const std::string &senderNode);
 
     /**
      * \brief Get receiver node name.
-     * \return receiver node name.
+     * \return receiver node name
      */
     std::string getReceiverNode();
 
     /**
      * \brief Set receiver node name.
-     * \param receiverNode new receiver node name.
+     * \param receiverNode new receiver node name
      */
     void setReceiverNode(const std::string &receiverNode);
 
     /**
      * \brief Get application start time.
-     * \return application start time.
+     * \return application start time
      */
     std::string getStartTime();
 
     /**
      * \brief Set application start time.
-     * \param startTime application start time.
+     * \param startTime application start time
      */
     void setStartTime(const size_t &startTime);
 
     /**
      * \brief Get application end time.
-     * \return application end time.
+     * \return application end time
      */
     std::string getEndTime();
 
     /**
      * \brief Get application end time.
-     * \return end time formatted into number.
+     * \return end time formatted into number
      */
     size_t getEndTimeNumber();
 
     /**
      * \brief Set application end time.
-     * \param m_endTime application end time.
+     * \param m_endTime application end time
      */
     void setEndTime(const size_t &m_endTime);
-
 };
 
 #endif /* APPLICATION_H */

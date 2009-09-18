@@ -40,9 +40,9 @@ DragObject::~DragObject()
 {
 }
 
-void DragObject::setName(const std::string &_name)
+void DragObject::setName(const std::string &name)
 {
-  this->name = _name;
+  this->name = name;
 }
 
 std::string DragObject::getName()

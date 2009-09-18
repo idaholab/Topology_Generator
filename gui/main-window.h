@@ -25,8 +25,8 @@
  * \date 2009
  */
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef MAIN_WINDOW_H
+#define MAIN_WINDOW_H
 
 #include <QtGui>
 
@@ -37,7 +37,7 @@
  * \ingroup generator
  * \brief The main window.
  *
- * This class create the menu, tool bar and the drag n drop zone.
+ * This class create the menu, tool bar and the drag'n'drop zone.
  */
 class MainWindow : public QMainWindow
 {
@@ -45,39 +45,40 @@ class MainWindow : public QMainWindow
 
   public:
     /**
-     * \brief Constructor
+     * \brief Constructor.
      */
     MainWindow(const std::string &simulationName);
 
     /**
-     * \brief Destructor
+     * \brief Destructor.
      */
     ~MainWindow();
 
     /**
-     * \brief attribute used tu delete object.
+     * \brief Action to delete object.
+     *
      * Is attribute to setDisable ...
      */
     QAction *delAction;
 
     /**
-     * \brief attribute which represent the core object. 
+     * \brief Generator.
      */
     Generator *gen;
 
     /**
-     * \brief procedure to valid hard link.
+     * \brief Valid links.
      */
     void ValidLink();
 
     /**
-     * \brief prodcedure to valid apps install.
+     * \brief Valid applications install.
      */
     void ValidApps();
 
   private:
     /**
-     * \brief attribute which represent the drag n drop zone.
+     * \brief The drag'n'drop zone.
      */
     DragWidget *dw;
 
@@ -102,57 +103,57 @@ class MainWindow : public QMainWindow
 
   private slots:
     /**
-     * \brief Procedure called by the tool bar to create a pc.
+     * \brief Create PC.
      */
     void CreatePc();
 
     /**
-     * \brief Procedure called by the tool bar to creat a pc group.
+     * \brief Create group of PCs.
      */
     void CreatePcGroup();
 
     /**
-     * \brief Procedure called by the tool bar to create an Emu link.
+     * \brief Create an "Emu" link.
      */
     void CreateEmu();
 
     /**
-     * \brief Procedure called by the tool bar to create a tap device.
+     * \brief Create a tap device.
      */
     void CreateTap();
 
     /**
-     * \brief Procedure called by the tool bar to create an access point.
+     * \brief Create an access point (AP).
      */
     void CreateAp();
 
     /**
-     * \brief Procedure called by the tool bar to create a wifi station.
+     * \brief Create a WI-FI station.
      */
     void CreateStation();
 
     /**
-     * \brief Procedure called by the tool bar to create a hub (csma link)
+     * \brief Create a hub (csma link)
      */
     void CreateHub();
 
     /**
-     * \brief Procedure called by the tool bar to create a switch (bridge)
+     * \brief Create a switch (bridge)
      */
     void CreateSwitch();
 
     /**
-     * \brief Procedure called by the tool bar to create a router.
+     * \brief Create a router.
      */
     void CreateRouter();
 
     /**
-     * \brief Procedure to create a hard link from equipement to equipement.
+     * \brief Create a wired link from equipement to equipement.
      */
     void CreateHardLink();
 
     /**
-     * \brief Procedure to create a link from station to ap.
+     * \brief Create a link from station to AP.
      */
     void CreateStationLink();
 
@@ -172,25 +173,25 @@ class MainWindow : public QMainWindow
     void ConfigurationMenu();
 
     /**
-     * \brief About gui.
+     * \brief Show about UI.
      */
     void About();
 
     /**
-     * \brief Help.
+     * \brief Show help UI.
      */
     void Help();
 
     /**
-     * \brief Procedure to generate the cpp code.
+     * \brief Generate the cpp code.
      */
     void GenerateCpp();
 
     /**
-     * \brief Procedure to create an application/
+     * \brief Create an application for a simulation node.
      */
     void CreateApps();
 };
 
-#endif /* END MAINWINDOW_H */
+#endif /* MAIN_WINDOW_H */
 

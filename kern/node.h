@@ -81,7 +81,7 @@ class Node
 
     /**
      * \brief Constructor.
-     * \param indice number of the node.
+     * \param indice number of the node
      * \param type type of the node (pc, router, ...)
      * \param machinesNumber number of machine to create
      */
@@ -94,73 +94,74 @@ class Node
 
     /**
      * \brief Generate headers code.
-     * This function return a vector which contain the header lines from the specified object.
-     * \return headers code.
+     * This function return a vector which contain the header lines from the specified object
+     * \return headers code
      */
     std::vector<std::string> GenerateHeader();
 
     /**
      * \brief Generate node code.
-     * This function return a vector which contain the declaration and instanciation of the node.
-     * \return node code.
+     * This function return a vector which contain the declaration and instanciation of the node
+     * \return node code
      */
     std::vector<std::string> GenerateNode();
 
     /**
-     * \brief Generate ip stack code.
-     * This function return a vector which contain the c++ code from the Ipv4 stack declaration and instanciation.
-     * \return ip stack code.
+     * \brief Generate IP stack code.
+     * This function return a vector which contain the c++ code from the Ipv4 stack declaration and instanciation
+     * \return IP stack code.
      */
     std::vector<std::string> GenerateIpStack();
 
     /**
      * \brief Set node name.
-     * \param nodeName node name.
+     * \param nodeName node name
      */
     void setNodeName(const std::string &nodeName);
 
     /**
      * \brief Set ip interface name.
-     * This procedure is used to the the ipInterfaceName. 
+     *
+     * This procedure is used to the the ipInterfaceName.
      * Sometimes this var is used in application like as UdpEcho.
-     * \param ipInterfaceName ip interface name.
+     * \param ipInterfaceName ip interface name
      */
     void setIpInterfaceName(const std::string &ipInterfaceName);
 
     /**
      * \brief Get node name.
-     * \return node name.
+     * \return node name
      */
     std::string getNodeName();
 
     /**
      * \brief Get node name.
-     * \param number machine number.
-     * \return node name.
+     * \param number machine number
+     * \return node name
      */
     std::string getNodeName(const size_t &number);
 
     /**
      * \brief Get ip interface name.
-     * \return ip interface name.
+     * \return IP interface name
      */
     std::string getIpInterfaceName();
 
     /**
      * \brief Get indice.
-     * \return indice.
+     * \return indice
      */
     std::string getIndice();
 
     /**
      * \brief Set indice.
-     * \param indice new indice.
+     * \param indice new indice
      */
     void setIndice(const size_t &indice);
 
     /**
      * \brief Get NSC (Network Simulation Cradle) code.
-     * \return nsc code.
+     * \return nsc code
      */
     std::string getNsc();
 
@@ -172,13 +173,13 @@ class Node
 
     /**
      * \brief Get machines number.
-     * \return machines number.
+     * \return machines number
      */
     size_t getMachinesNumber();
 
     /**
      * \brief Set machines number.
-     * \param machinesNumber new machines number.
+     * \param machinesNumber new machines number
      */
     void setMachinesNumber(const size_t &machinesNumber);
 };

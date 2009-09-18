@@ -73,7 +73,7 @@ class TcpLargeTransfer : public Application
 
     /**
      * \brief Generate headers code.
-     * \return headers code.
+     * \return headers code
      */
     virtual std::vector<std::string> GenerateHeader();
 
@@ -81,7 +81,7 @@ class TcpLargeTransfer : public Application
      * \brief Generate application code.
      * \param netDeviceContainer net device container
      * \param numberIntoNetDevice number of the sender node into the net device container
-     * \return the ns3 application code.
+     * \return the ns3 application code
      */
     virtual std::vector<std::string> GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice);
 
@@ -92,8 +92,8 @@ class TcpLargeTransfer : public Application
     size_t getPort();
 
     /**
-     * \brief Get port.
-     * \param port new port.
+     * \brief Set port.
+     * \param port new port
      */
     void setPort(const size_t &port);
 };

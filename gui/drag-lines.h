@@ -25,8 +25,8 @@
  * \date 2009
  */
 
-#ifndef DRAGLINES_H
-#define DRAGLINES_H
+#ifndef DRAG_LINES_H
+#define DRAG_LINES_H
 
 #include <vector>
 #include <QtGui>
@@ -41,25 +41,25 @@ class DragLines
 {
   public:
     /**
-     * \brief Constructor
+     * \brief Constructor.
      */
     DragLines();
 
     /**
-     * \brief begin
+     * \brief Begin.
      */
     std::string begin;
 
     /**
-     * \brief end
+     * \brief End.
      */
     std::string end;
     
     /**
-     * \brief type
+     * \brief Type.
      */
     std::string type;
 };
 
-#endif /* END DRAGLINES_H */
+#endif /* DRAG_LINES_H */
 

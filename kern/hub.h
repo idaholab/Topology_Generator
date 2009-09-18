@@ -64,25 +64,25 @@ class Hub : public Link
   private:
     /**
      * \brief Generate headers code.
-     * \return headers code.
+     * \return headers code
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
      * \brief Generate link code.
-     * \return link code.
+     * \return link code
      */
     virtual std::vector<std::string> GenerateLink();
 
     /**
      * \brief Generate net device container code.
-     * \return net device container code.
+     * \return net device container code
      */
     virtual std::vector<std::string> GenerateNetDevice();
 
     /**
      * \brief Generate trace line code.
-     * \return trace line code.
+     * \return trace line code
      */
     virtual std::vector<std::string> GenerateTrace();
 };

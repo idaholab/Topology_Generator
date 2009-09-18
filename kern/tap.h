@@ -94,55 +94,55 @@ class Tap : public Link
 
     /**
      * \brief Set tap node name.
-     * \param tapNode new tap name.
+     * \param tapNode new tap name
      */
     void setTapName(const std::string &tapNode);
 
     /**
      * \brief Get interface name.
-     * \return interface name. 
+     * \return interface name
      */
     std::string getIfaceName();
 
     /**
      * \brief Set interface name.
-     * \param ifaceName new interface name.
+     * \param ifaceName new interface name
      */
     void setIfaceName(const std::string &ifaceName);
 
     /**
      * \brief Generate headers code.
-     * \return headers code.
+     * \return headers code
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
      * \brief Generate link code.
-     * \return link code.
+     * \return link code
      */
     virtual std::vector<std::string> GenerateLink();
 
     /**
      * \brief Generate net device container code.
-     * \return net device container code.
+     * \return net device container code
      */
     virtual std::vector<std::string> GenerateNetDevice();
 
     /**
      * \brief Function re-writted from link main class.
-     * \return tap bridge code.
+     * \return tap bridge code
      */
     std::vector<std::string> GenerateTapBridge();
 
     /**
      * \brief Function re-writted from link main class.
-     * \return vars code.
+     * \return vars code
      */
     std::vector<std::string> GenerateVars();
 
     /**
      * \brief Function re-wrotted from link main class.
-     * \return cmd line code.
+     * \return cmd line code
      */
     std::vector<std::string> GenerateCmdLine();
 };

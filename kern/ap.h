@@ -69,7 +69,7 @@ class Ap : public Link
     /**
      * \brief Constructor.
      * \param indice the Ap number
-     * \param apNode the node which is the ap name.
+     * \param apNode the node which is the ap name
      */
     Ap(const size_t &indice, const std::string &apNode);
 
@@ -80,31 +80,31 @@ class Ap : public Link
 
     /**
      * \brief Switch mobility on the connected station.
-     * \param mobility bool to apply mobility or not.
+     * \param mobility bool to apply mobility or not
      */
     void setMobility(const bool &mobility);
 
     /**
      * \brief Get mobility.
-     * \return mobility.
+     * \return mobility
      */
     bool getMobility();
 
     /**
      * \brief Get the ap node name.
-     * \return ap node name.
+     * \return ap node name
      */
     std::string getApNode();
 
     /**
      * \brief Set ap node.
-     * \param apNode new ap node.
+     * \param apNode new ap node
      */
     void setApNode(const std::string &apNode);
 
     /**
      * \brief Get ap name.
-     * \return ap name.
+     * \return ap name
      */
     std::string getApName();
 
@@ -116,7 +116,7 @@ class Ap : public Link
 
     /**
      * \brief Generate headers.
-     * \return headers.
+     * \return headers
      */
     virtual std::vector<std::string> GenerateHeader();
 
@@ -128,16 +128,15 @@ class Ap : public Link
 
     /**
      * \brief Generate build of the net device container.
-     * \return net device container.
+     * \return net device container
      */
     virtual std::vector<std::string> GenerateNetDevice();
 
     /**
      * \brief Generate the trace line.
-     * \return trace line.
+     * \return trace line
      */
     virtual std::vector<std::string> GenerateTrace();
-
 };
 
 #endif /* AP_H */

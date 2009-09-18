@@ -25,8 +25,8 @@
  * \date 2009
  */
 
-#ifndef DRAGOBJECT_H
-#define DRAGOBJECT_H
+#ifndef DRAG_OBJECT_H
+#define DRAG_OBJECT_H
 
 #include <vector>
 #include <QtGui>
@@ -35,47 +35,47 @@
 
 /**
  * \ingroup generator
- * \brief The dragged object.
+ * \brief Dragged object.
  *
- * This class represent the dragged object.
+ * This class represents a dragged object.
  */
 class DragObject : public QLabel
 {
   public:
     /**
-     * \brief Constructor
+     * \brief Constructor.
      * \param parent the qwidget parent.
      */
     DragObject(QWidget *parent);
 
     /**
-     * \brief destructor
+     * \brief Dstructor.
      */
     ~DragObject();
 
     /**
-     * \brief procedure to set the name from the dragged object.
-     * \param _name the new name.
+     * \brief Set the name for the dragged object.
+     * \param name the new name
      */
-    void setName(const std::string &_name);
+    void setName(const std::string &name);
 
     /**
-     * \brief function to get the dragged object name.
+     * \brief Get the dragged object name.
      * \return name
      */
     std::string getName();
 
     /**
-     * \brief destroy object from qwidget.
+     * \brief Destroy object from qwidget.
      */
     void Destroy();
 
   private:
     /**
-     * \brief attribute which reprensent the name. 
+     * \brief Name of the dragged object. 
      */
     std::string name;
-
 };
 
-#endif /* END DRAGOBJECT_H */
+#endif /* DRAG_OBJECT_H */
+

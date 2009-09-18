@@ -96,61 +96,63 @@ class Emu : public Link
 
     /**
      * \brief Get emu node name.
-     * \return emu node name.
+     * \return emu node name
      */
     std::string getEmuName();
 
     /**
      * \brief Set emu node name.
-     * \param nodeName new emu node name.
+     * \param nodeName new emu node name
      */
     void setEmuName(const std::string &nodeName);
 
     /**
      * \brief Get emu interface name.
-     * \return interface name.
+     * \return interface name
      */
     std::string getIfaceName();
 
     /**
      * \brief Set emu iface name.
-     * \param ifaceName new emu iface name.
+     * \param ifaceName new emu iface name
      */
     void setIfaceName(const std::string &ifaceName);
 
     /**
      * \brief Generate headers code.
-     * \return headers code.
+     * \return headers code
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
      * \brief Generate build link code.
-     * \return build link code.
+     * \return build link code
      */
     virtual std::vector<std::string> GenerateLink();
 
     /**
      * \brief Generate build of the net device container.
-     * \return net device container code.
+     * \return net device container code
      */
     virtual std::vector<std::string> GenerateNetDevice();
 
     /**
-     * \brief Rewritted from main class. Please see main class.
-     * \return vars code.
+     * \brief Rewritted from base class.
+     * \return vars code
+     * \see Link
      */
     std::vector<std::string> GenerateVars();
 
     /**
-     * \brief Rewritted from main class. Please see main class.
-     * \return cmd line code.
+     * \brief Rewritted from base class.
+     * \return cmd line code
+     * \see Link
      */
     std::vector<std::string> GenerateCmdLine();
 
     /**
      * \brief Generate the trace line.
-     * \return trace line.
+     * \return trace line
      */
     virtual std::vector<std::string> GenerateTrace();
 };

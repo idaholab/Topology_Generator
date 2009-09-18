@@ -75,13 +75,13 @@ class Generator
 
     /**
      * \brief Add a config line.
-     * \param config new config to add to config list.
+     * \param config new config to add to config list
      */
     void AddConfig(const std::string &config);
 
     /**
      * \brief Constructor.
-     * \param simulationName simulation name.
+     * \param simulationName simulation name
      */
     Generator(const std::string &simulationName);
 
@@ -134,7 +134,6 @@ class Generator
      * \brief List of node created instance.
      * 
      * This attribute is the list of the created instance of node.
-     * 
      */
     std::vector<Node*> listNode;
 
@@ -150,20 +149,20 @@ class Generator
 
     /**
      * \brief Add an node group.
-     * \param type node type.
-     * \param number number which will be added.
+     * \param type node type
+     * \param number number which will be added
      */
     void AddNode(const std::string &type, const size_t &number);
 
     /**
      * \brief Remove an node element.
-     * \param name node name to remove.
+     * \param name node name to remove
      */
     void RemoveNode(const std::string &name);
 
     /**
      * \brief Remove an node element.
-     * \param index node index to be removed.
+     * \param index node index to be removed
      */
     void RemoveNode(const size_t &index);
 
@@ -202,11 +201,11 @@ class Generator
      * vector listApplication and increment the number of application.
      * 
      * \param type type of the application. (ping, tcp-large-transfert, udp-echo ...)
-     * \param senderNode sender node.
-     * \param receiverNode receiver node.
-     * \param startTime start time.
-     * \param endTime end time.
-     * \param port port.
+     * \param senderNode sender node
+     * \param receiverNode receiver node
+     * \param startTime start time
+     * \param endTime end time
+     * \param port port
      */
     void AddApplication(const std::string &type, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime, const size_t &port);
 
@@ -217,10 +216,10 @@ class Generator
      * vector listApplication and increment the number of application.
      * 
      * \param type the type of the application. (ping, tcp-large-transfert, udp-echo ...)
-     * \param senderNode sender node.
-     * \param receiverNode receiver node.
-     * \param startTime start time.
-     * \param endTime end time.
+     * \param senderNode sender node
+     * \param receiverNode receiver node
+     * \param startTime start time
+     * \param endTime end time
      */
     void AddApplication(const std::string &type, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime);
 
@@ -269,7 +268,6 @@ class Generator
      * \brief List of link created instace.
      * 
      * This attribute is the list of the created instance of link.
-     * 
      */
     std::vector<Link*> listLink;
 
@@ -288,23 +286,23 @@ class Generator
      * 
      *  Example, an Ap, must have an ap node to be generated.  
      *
-     * \param type link type.
-     * \param linkNode node name.
+     * \param type link type
+     * \param linkNode node name
      */
     void AddLink(const std::string &type, const std::string &linkNode);
 
     /**
      * \brief Add link with her linkNode and ifaceName.
      * 
-     * \param type link type.
-     * \param linkNode node name.
-     * \param ifaceName iface name.
+     * \param type link type
+     * \param linkNode node name
+     * \param ifaceName iface name
      */
     void AddLink(const std::string &type, const std::string &linkNode, const std::string &ifaceName);
 
     /**
      * \brief Remove an link element.
-     * \param name link name to remove.
+     * \param name link name to remove
      */
     void RemoveLink(const std::string &name);
 
@@ -324,7 +322,6 @@ class Generator
      * 
      * This procedure is the main procedure to generate the code from the simulation.
      * It also go to use all the procedure on the bottom like generate all headers, ...
-     * 
      */
     void GenerateCode();
 
@@ -334,7 +331,7 @@ class Generator
      * 
      * This function return a string wich contain all c++ header without duplicate.
      * 
-     * \return headers code. 
+     * \return headers code
      */
     std::vector<std::string> GenerateHeader();
 
@@ -343,7 +340,7 @@ class Generator
      * 
      * This function return a string wich contain all c++ vars.
      * 
-     * \return vars code. 
+     * \return vars code
      */
     std::vector<std::string> GenerateVars();
 
@@ -351,7 +348,7 @@ class Generator
     /**
      * \brief Generate command line code.
      * 
-     * \return commend line code.
+     * \return commend line code
      */
     std::vector<std::string> GenerateCmdLine();
 
@@ -359,7 +356,7 @@ class Generator
     /**
      * \brief Generate config code.
      * 
-     * \return config code.
+     * \return config code
      */
     std::vector<std::string> GenerateConfig();
 
@@ -367,7 +364,7 @@ class Generator
     /**
      * \brief Generate node declaration code.
      *
-     * \return declaration code.
+     * \return declaration code
      */
     std::vector<std::string> GenerateNode();
 
@@ -375,7 +372,7 @@ class Generator
     /**
      * \brief Generate link code.
      * 
-     * \return link code.
+     * \return link code
      */
     std::vector<std::string> GenerateLink();
 
@@ -383,7 +380,7 @@ class Generator
     /**
      * \brief Generate net device code.
      * 
-     * \return net device code.
+     * \return net device code
      */
     std::vector<std::string> GenerateNetDevice();
 
@@ -391,7 +388,7 @@ class Generator
     /**
      * \brief Generate ip stack declaration.
      * 
-     * \return ip stack code.
+     * \return IP stack code
      */
     std::vector<std::string> GenerateIpStack();
 
@@ -399,14 +396,14 @@ class Generator
     /**
      * \brief Generate ip assign code.
      * 
-     * \return ip assign code.
+     * \return IP assign code
      */
     std::vector<std::string> GenerateIpAssign();
 
     /**
      * \brief Generate tap bridge code.
      * 
-     * \return tab bridge code.
+     * \return tab bridge code
      */
     std::vector<std::string> GenerateTapBridge();
 
@@ -414,7 +411,7 @@ class Generator
     /**
      * \brief Generate route code.
      * 
-     * \return route code.
+     * \return route code
      */
     std::vector<std::string> GenerateRoute();
 
@@ -422,14 +419,14 @@ class Generator
     /**
      * \brief Generate application code.
      * 
-     * \return application code.
+     * \return application code
      */
     std::vector<std::string> GenerateApplication();
 
     /**
      * \brief Generate trace code.
      * 
-     * \return trace code.
+     * \return trace code
      */
     std::vector<std::string> GenerateTrace();
 
@@ -438,35 +435,35 @@ class Generator
     //
 
     /**
-     * \brief Xml file name atribute.
+     * \brief XML file name atribute.
      * 
-     * This file name is used to export the current simulation into xml to save it.
+     * This file name is used to export the current simulation into XML to save it.
      */
     std::string m_xmlFileName;
 
     /**
-     * \brief Function which return the attribute xml file name.
+     * \brief Get XML file name.
      *
      * \return xml file name
      */
     std::string getXmlFileName();
 
     /**
-     * \brief Procedure which set the xml file name.
+     * \brief Set xml file name.
      *
-     * \param xmlFileName the new xml file name.
+     * \param xmlFileName the new XML file name
      */
     void setXmlFileName(const std::string &xmlFileName );
 
     /**
-     * \brief Procedure wich write the simulation into xml file.
+     * \brief Write simulation into XML file.
      * 
-     * \param line the line to add to the xml file.
+     * \param line the line to add to the XML file
      */
     void WriteXml(const std::string &line);
 
     /**
-     * \brief Procedure wich open and print graphicaly the xml file.
+     * \brief Open and print graphicaly the XML file.
      */
     void OpenXml();
 
@@ -475,28 +472,25 @@ class Generator
     //
 
     /**
-     * \brief Attribute which are the name of the c++ output file name.
+     * \brief Name of the C++ output file name.
      */  
     std::string m_cppFileName;
 
     /**
-     * \brief Function which return the c++ output file name.
-     * 
-     * \return c++ file name
+     * \brief Get the C++ output file name.
+     * \return C++ file name
      */
     std::string getCppFileName();
 
     /**
-     * \brief Procedure to set the c++ file name.
-     * 
-     * \param cppFileName the new c++ file name
+     * \brief Set C++ output file name.
+     * \param cppFileName the new C++ file name
      */
     void setCppFileName(const std::string &cppFileName);
 
     /**
-     * \brief Procedure to write c++ code into the attribute file name.
-     * 
-     * \param line the new line to add to the attribute file name.
+     * \brief Write C++ code into the attribute file name.
+     * \param line the new line to add to the attribute file name
      */
     void WriteCpp(const std::string &line);
 
@@ -505,28 +499,25 @@ class Generator
     //
 
     /**
-     * \brief Attribute which are the name of the python output file.
+     * \brief Name of the python output file name.
      */
     std::string m_pyFileName;
 
     /**
-     * \brief Function which return the python artribute name.
-     * 
+     * \brief Get python output file name.
      * \return python file name
      */
     std::string getPyFileName();
 
     /**
-     * \brief Procedure used to set the python file name attribute.
-     * 
-     * \param pyFileName the new python file name.
+     * \brief Set the python output file name.
+     * \param pyFileName the new python file name
      */
     void setPyFileName(const std::string &pyFileName);
 
     /**
-     * \brief Procedure to write python code into the attribute file name.
-     * 
-     * \param line the line to be writted. 
+     * \brief Write python code into the output file name.
+     * \param line the line to be writted 
      */
     void WritePython(const std::string &line);
 };

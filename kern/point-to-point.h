@@ -25,8 +25,8 @@
  * \date 2009
  */
 
-#ifndef POINTTOPOINT_H
-#define POINTTOPOINT_H
+#ifndef POINT_TO_POINT_H
+#define POINT_TO_POINT_H
 
 #include "link.h"
 
@@ -52,7 +52,7 @@ class PointToPoint : public Link
   public:
     /**
      * \brief Constructor.
-     * \param indice point-to-point number into the link generator vector.
+     * \param indice point-to-point number into the link generator vector
      */
     PointToPoint(const size_t &indice);
 
@@ -64,28 +64,28 @@ class PointToPoint : public Link
   private:
     /**
      * \brief Generated headers code.
-     * \return headers code.
+     * \return headers code
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
      * \brief Generate link code.
-     * \return link code.
+     * \return link code
      */
     virtual std::vector<std::string> GenerateLink();
 
     /**
      * \brief Generate net device container.
-     * \return net device container code.
+     * \return net device container code
      */
     virtual std::vector<std::string> GenerateNetDevice();
 
     /**
      * \brief Generate trace line code.
-     * \return trace line code.
+     * \return trace line code
      */
     virtual std::vector<std::string> GenerateTrace();
 };
 
-#endif /* POINTTOPOINT_H */
+#endif /* POINT_TO_POINT_H */
 

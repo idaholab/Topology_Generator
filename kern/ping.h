@@ -53,11 +53,11 @@ class Ping : public Application
   public:
     /**
      * \brief Constructor.
-     * \param indice indice in the generator vector.
-     * \param senderNode sender node.
-     * \param receiverNode receiver node.
-     * \param startTime application start time.
-     * \param endTime application end time.
+     * \param indice indice in the generator vector
+     * \param senderNode sender node
+     * \param receiverNode receiver node
+     * \param startTime application start time
+     * \param endTime application end time
      */
     Ping(const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime);
 
@@ -68,15 +68,15 @@ class Ping : public Application
 
     /**
      * \brief Generate the headers code.
-     * \return headers code.
+     * \return headers code
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
      * \brief Generate the application.
-     * \param netDeviceContainer net device container name which are contain the sender node.
-     * \param numberIntoNetDevice place of the machine into the net device container.
-     * \return application code.
+     * \param netDeviceContainer net device container name which are contain the sender node
+     * \param numberIntoNetDevice place of the machine into the net device container
+     * \return application code
      */
     virtual std::vector<std::string> GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice);
 };

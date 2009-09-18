@@ -25,8 +25,8 @@
  * \date 2009
  */
 
-#ifndef DRAGWIDGET_H
-#define DRAGWIDGET_H
+#ifndef DRAG_WIDGET_H
+#define DRAG_WIDGET_H
 
 #include <QFrame>
 #include <vector>
@@ -52,212 +52,213 @@ class QDropEvent;
 class DragWidget : public QWidget
 {
   Q_OBJECT
+
   public:
     /**
-     * \brief constructor.
+     * \brief Constructor.
      * \param parent 
      */
     DragWidget(QWidget *parent=0);
 
     /**
-     * \brief Destructor
+     * \brief Destructor.
      */
     ~DragWidget();
 
     /**
-     * \brief Procedure to create object which are on the tool bar.
-     * \param type the type of the object to create.
-     * \param name his name.
+     * \brief Create object which are on the tool bar.
+     * \param type the type of the object to create
+     * \param name his name
      */
     void CreateObject(const std::string &type, const std::string &name);
 
     /**
-     * \brief Procedure to delete the last selecte elem.
+     * \brief Delete the last selected element.
      */
     void deleteSelected();
 
     /**
-     * \brief function to return the name of the last selected equipement.
+     * \brief Get name of the last selected equipment.
      * \return last selected name.
      */
     std::vector<std::string> getLastSelected();
 
     /**
-     * \brief procedure to reset lastSelected.
+     * \brief Reset lastSelected equipment.
      */
     void ResetSelected();
 
     /**
-     * \brief procedure to draw the link.
+     * \brief Draw the link.
      */
     void DrawLine();
 
     /**
-     * \brief procedure to draw lines.
-     * \param event
+     * \brief Paint widget.
+     * \param event event from Qt
      */
     void paintEvent(QPaintEvent *event);
 
     /**
-     * \brief attribute to say if we trace link or not
+     * \brief If we trace link or not.
      */
     bool traceLink;
 
     /**
-     * \brief procedure to set the mainwindow attribute.
+     * \brief Set the MainWindow.
      * \param _mw
      */
     void setMainWindow(MainWindow *_mw);
 
     /**
-     * \brief link type.
+     * \brief Link type.
      */
     std::string linkType;
 
     /**
-     * \brief the link end.
+     * \brief Link end.
      */
     std::string linkEnd;
 
     /**
-     * \brief DrawLines class attribute.
+     * \brief Lines.
      */
     DragLines lines;
 
     /**
-     * \brief the attribute which containt the attribute name to draw lines.
+     * \brief Vector of lines (which represent links).
      */
     std::vector<DragLines> drawLines;
 
     /**
-     * \brief timer to refresh a line draw.
+     * \brief Timer to refresh a line draw.
      */
     QTimer *timer;
 
     /**
-     * \brief the apps server node name.
+     * \brief Application server node name.
      */
     std::string appsServer;
 
     /**
-     * \brief the apps client node name.
+     * \brief Application client node name.
      */
     std::string appsClient;
 
     /**
-     * \brief the apps type ping.
+     * \brief Application type ping.
      */
     bool appsPing;
 
     /**
-     * \brief the apps type udp echo.
+     * \brief Application type udp-echo.
      */
     bool appsUdpEcho;
 
     /**
-     * \brief the apps type tcp large transfer. 
+     * \brief Application type tcp-large-transfer. 
      */
     bool appsTcp;
 
     /**
-     * \brief the start time.
+     * \brief Start time.
      */
     size_t startTime;
 
     /**
-     * \brief the end Time.
+     * \brief End Time.
      */
     size_t endTime;
 
     /**
-     * \brief port attribute. 
+     * \brief Port attribute. 
      */
     size_t port;
 
     /**
-     * \brief procedure to show the ping gui.
+     * \brief Show the ping UI.
      */
     void ShowGuiPing();
 
     /**
-     * \brief procedure to show the udp echo gui.
+     * \brief Show the udp-echo UI.
      */
     void ShowGuiUdpEcho();
 
     /**
-     * \brief procedure to show the tcp large transfer gui.  
+     * \brief Show the tcp-large-transfer UI.
      */
     void ShowGuiTcp();
 
     /**
-     * \brief attribute which represent thea application dialog box.
+     * \brief Application dialog box.
      */
     QDialog *dialog;
 
     /**
-     * \brief attribute which show if the apps is at this time in use or not.
+     * \brief Show if applications are at this time in use or not.
      */
     bool appsEnable;
 
   private:
     /**
-     * \brief attribute to save the Position from the last object which moved.
+     * \brief last position of last object which moved.
      */ 
     QPoint lastPosition;
 
     /**
-     * \brief the link begin.
+     * \brief Link begin.
      */
     std::string linkBegin;
 
     /**
-     * \brief function to get the child object from his name.
+     * \brief Get the child object from his name.
      * \param name name of the object to find
      */
     DragObject* getChildFromName(const std::string &name);
 
     /**
-     * \brief the main window attribute.
+     * \brief Main window.
      */
     MainWindow *mw;
 
   protected:
     /**
-     * \brief function which have been rewritted. see Qt doc.
+     * \brief See Qt doc.
      */
     void dragEnterEvent(QDragEnterEvent *event);
 
     /**
-     * \brief function which have been rewritted. see Qt doc.
+     * \brief See Qt doc.
      */
     void dropEvent(QDropEvent *event);
 
     /**
-     * \brief function which have been rewritted. see Qt doc.
+     * \brief See Qt doc.
      */
     void mousePressEvent(QMouseEvent *event);
 
     /**
-     * \brief function which have been rewritted. see Qt doc.
+     * \brief See Qt doc.
      */
     void mouseMoveEvent(QMouseEvent *event);
 
   public slots:
     /**
-     * \brief procedure to choose the new server node.
+     * \brief Choose the new server node.
      */
     void ChooseServer();
 
     /**
-     * \brief procedure to choose the new client node.
+     * \brief Choose the new client node.
      */
     void ChooseClient();
 
     /**
-     * \brief procedure called by cancel button.
+     * \brief Cancel button.
      */
     void Cancel();
 };
 
-#endif /* END DRAGWIDGET_H */
+#endif /*DRAG_WIDGET_H */
 

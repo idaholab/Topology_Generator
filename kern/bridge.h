@@ -59,7 +59,7 @@ class Bridge : public Link
     /**
      * \brief Constructor.
      * \param indice bridge number
-     * \param nodeBridge node name.
+     * \param nodeBridge node name
      */
     Bridge(const size_t &indice, const std::string &nodeBridge);
 
@@ -70,37 +70,37 @@ class Bridge : public Link
 
     /**
      * \brief Get bridge node name.
-     * \return node name.
+     * \return node name
      */
     std::string getNodeBridge();
     
     /**
      * \brief Set bridge node name.
-     * \param nodeBridge new node name.
+     * \param nodeBridge new node name
      */
     void setNodeBridge(const std::string &nodeBridge);
 
     /**
      * \brief Generate headers.
-     * \return headers code.
+     * \return headers code
      */
     virtual std::vector<std::string> GenerateHeader();
 
     /**
      * \brief Generate build link code.
-     * \return build link code.
+     * \return build link code
      */
     virtual std::vector<std::string> GenerateLink();
 
     /**
      * \brief Generate build of the net device container.
-     * \return net device container code.
+     * \return net device container code
      */
     virtual std::vector<std::string> GenerateNetDevice();
 
     /**
      * \brief Generate trace line.
-     * \return trace line code.
+     * \return trace line code
      */
     virtual std::vector<std::string> GenerateTrace();
 };
