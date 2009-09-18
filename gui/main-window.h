@@ -150,7 +150,7 @@ class MainWindow : public QMainWindow
     /**
      * \brief Create a wired link from equipement to equipement.
      */
-    void CreateHardLink();
+    void CreateWiredLink();
 
     /**
      * \brief Create a link from station to AP.

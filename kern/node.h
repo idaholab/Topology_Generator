@@ -78,7 +78,6 @@ class Node
     size_t m_machinesNumber;
 
   public:
-
     /**
      * \brief Constructor.
      * \param indice number of the node

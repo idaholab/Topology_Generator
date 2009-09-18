@@ -22,8 +22,3 @@ Core
 - XML generation;
 - Add configuration into application.
 
-Code
------
-- Use one section of private, protected, public;
-- All files in my-class.cpp/h format ?
-

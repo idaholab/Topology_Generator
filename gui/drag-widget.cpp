@@ -224,9 +224,9 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
         {
           linkEnd = child->getName();
           DragLines lig;
-          lig.begin = this->linkBegin;
-          lig.end = this->linkEnd;
-          lig.type = this->linkType;
+          lig.setFirst(this->linkBegin);
+          lig.setSecond(this->linkEnd);
+          lig.setLinkType(this->linkType);
           this->drawLines.push_back(lig);
 
           this->mw->ValidLink();
@@ -401,7 +401,7 @@ void DragWidget::deleteSelected()
   }
   for(size_t i = 0; i < (size_t) this->drawLines.size(); i++)
   {
-    if(child->getName() == this->getChildFromName(this->drawLines.at(i).begin)->getName() || child->getName() == this->getChildFromName(this->drawLines.at(i).end)->getName())
+    if(child->getName() == this->getChildFromName(this->drawLines.at(i).getFirst())->getName() || child->getName() == this->getChildFromName(this->drawLines.at(i).getSecond())->getName())
     {
       try
       {
@@ -514,25 +514,26 @@ void DragWidget::paintEvent(QPaintEvent * /*event*/)
 
   for(size_t i = 0; i < (size_t) this->drawLines.size(); i++)
   {
-    if(this->getChildFromName(this->drawLines.at(i).begin)->getName() != "" && this->getChildFromName(this->drawLines.at(i).end)->getName() != "")
+    if(this->getChildFromName(this->drawLines.at(i).getFirst())->getName() != "" && this->getChildFromName(this->drawLines.at(i).getSecond())->getName() != "")
     {
-      if(this->drawLines.at(i).type == "HardLink")
+      std::string type = this->drawLines.at(i).getLinkType();
+
+      if(type == "WiredLink")
       {
         paint.setPen(pen);
       }
-      else if(this->drawLines.at(i).type == "WifiLink")
+      else if(type == "WifiLink")
       {
         paint.setPen(point);
       }
-      else if(this->drawLines.at(i).type == "P2pLink")
+      else if(type == "P2pLink")
       {
         paint.setPen(p2p);
       }
-      DragObject *begin = this->getChildFromName(this->drawLines.at(i).begin);
-      DragObject *end = this->getChildFromName(this->drawLines.at(i).end);
-      paint.drawLine( (begin->pos().x() + (begin->width() / 2)), (begin->pos().y() + (begin->height() / 2)),
-          (end->pos().x() + (end->width() / 2)), (end->pos().y() + (end->height() / 2))
-          );
+      DragObject *begin = this->getChildFromName(this->drawLines.at(i).getFirst());
+      DragObject *end = this->getChildFromName(this->drawLines.at(i).getSecond());
+      paint.drawLine((begin->pos().x() + (begin->width() / 2)), (begin->pos().y() + (begin->height() / 2)),
+                     (end->pos().x() + (end->width() / 2)), (end->pos().y() + (end->height() / 2)));
     }
   }
   if(this->traceLink)
@@ -540,7 +541,7 @@ void DragWidget::paintEvent(QPaintEvent * /*event*/)
 
     if(this->linkBegin != "" && this->linkEnd == "")
     {
-      if(this->linkType == "HardLink")
+      if(this->linkType == "WiredLink")
       {
         paint.setPen(pen);
       }

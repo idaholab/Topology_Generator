@@ -29,5 +29,37 @@
 
 DragLines::DragLines()
 {
+  this->first = "";
+  this->second = "";
+}
+
+void DragLines::setFirst(const std::string& name)
+{
+  this->first = name;
+}
+
+std::string DragLines::getFirst() const
+{
+  return this->first;
+}
+
+void DragLines::setSecond(const std::string& name)
+{
+  this->second = name;
+}
+
+std::string DragLines::getSecond() const
+{
+  return this->second;
+}
+
+void DragLines::setLinkType(const std::string& linkType)
+{
+  this->linkType = linkType;
+}
+
+std::string DragLines::getLinkType() const
+{
+  return this->linkType;
 }
 

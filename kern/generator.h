@@ -64,22 +64,6 @@ class Generator
 {
   public:
     /**
-     * \brief Simulation name.
-     */
-    std::string m_simulationName;
-
-    /**
-     * \brief Configuration list.
-     */
-    std::vector<std::string> listConfiguration;
-
-    /**
-     * \brief Add a config line.
-     * \param config new config to add to config list
-     */
-    void AddConfig(const std::string &config);
-
-    /**
      * \brief Constructor.
      * \param simulationName simulation name
      */
@@ -90,67 +74,12 @@ class Generator
      */
     ~Generator();	
 
-    //
-    // Part of Node.
-    //
-  private:
     /**
-     * \brief Number attribute of term node created.
+     * \brief Add a config line.
+     * \param config new config to add to config list
      */
-    size_t m_indiceNodePc;
+    void AddConfig(const std::string &config);
 
-    /**
-     * \brief Number attribute of router node created.
-     */
-    size_t m_indiceNodeRouter;
-
-    /**
-     * \brief Number attribute of ap node created.
-     */
-    size_t m_indiceNodeAp;
-
-    /**
-     * \brief Number attribute of station node created.
-     */
-    size_t m_indiceNodeStation;
-
-    /**
-     * \brief Number attribute of bridge node created.
-     */
-    size_t m_indiceNodeBridge;
-
-    /**
-     * \brief Number attribute of tap node created.
-     */
-    size_t m_indiceNodeTap;
-
-    /**
-     * \brief Number attribute of emu node created.
-     */
-    size_t m_indiceNodeEmu;
-    
-    /**
-     * \brief List of node created instance.
-     * 
-     * This attribute is the list of the created instance of node.
-     */
-    std::vector<Node*> listNode;
-
-    /**
-     * \brief List of application created instance.
-     * 
-     * This attribute is the list of the created instance of application.
-     */
-    std::vector<Application*> listApplication;
-
-    /**
-     * \brief List of link created instace.
-     * 
-     * This attribute is the list of the created instance of link.
-     */
-    std::vector<Link*> listLink;
-
-  public: 
     /**
      * \brief Add an node.
      * 
@@ -193,26 +122,6 @@ class Generator
      */
     size_t GetNNodes() const;
 
-    //
-    // Part of Application.
-    //
-  private:
-    /**
-     * \brief Number attribute of ping application created.
-     */
-    size_t m_indiceApplicationPing; 
-
-    /**
-     * \brief Number attribute of tcp large transfert application created.
-     */
-    size_t m_indiceApplicationTcpLargeTransfer;
-
-    /**
-     * \brief Number attribute of udp echo application created.
-     */
-    size_t m_indiceApplicationUdpEcho;
-
-  public:
     /**
      * \brief Add an appplication.
      * 
@@ -259,43 +168,8 @@ class Generator
      * \brief Get number of applications.
      * \return number of applications
      */
-   size_t GetNApplications() const; 
+    size_t GetNApplications() const; 
 
-    //
-    // Part of Link.
-    //
-  private:
-    /**
-     * \brief Number attribute of ap link created.
-     */
-    size_t m_indiceLinkAp;
-
-    /**
-     * \brief Number attribute of emu link created.
-     */
-    size_t m_indiceLinkEmu;
-
-    /**
-     * \brief Number attribute of point-to-point link created.
-     */
-    size_t m_indiceLinkPointToPoint;
-
-    /**
-     * \brief Number attribute of tap link created.
-     */
-    size_t m_indiceLinkTap;
-
-    /**
-     * \brief Number attribute of hub link created.
-     */
-    size_t m_indiceLinkHub;
-
-    /**
-     * \brief Number attribute of bridge link created.
-     */
-    size_t m_indiceLinkBridge; 
-
-  public:
     /**
      * \brief Add an link.
      * 
@@ -350,11 +224,6 @@ class Generator
      */
     size_t GetNLinks() const;
 
-    //
-    // Part around the code Generation.
-    // This part is looking about the code to write.
-    // 
-    
     /**
      * \brief Fenerate ns3 code.
      * 
@@ -364,6 +233,121 @@ class Generator
     void GenerateCode();
 
   private:
+    /**
+     * \brief Simulation name.
+     */
+    std::string m_simulationName;
+
+    /**
+     * \brief Configuration list.
+     */
+    std::vector<std::string> listConfiguration;
+
+    /**
+     * \brief Number attribute of term node created.
+     */
+    size_t m_indiceNodePc;
+
+    /**
+     * \brief Number attribute of router node created.
+     */
+    size_t m_indiceNodeRouter;
+
+    /**
+     * \brief Number attribute of ap node created.
+     */
+    size_t m_indiceNodeAp;
+
+    /**
+     * \brief Number attribute of station node created.
+     */
+    size_t m_indiceNodeStation;
+
+    /**
+     * \brief Number attribute of bridge node created.
+     */
+    size_t m_indiceNodeBridge;
+
+    /**
+     * \brief Number attribute of tap node created.
+     */
+    size_t m_indiceNodeTap;
+
+    /**
+     * \brief Number attribute of emu node created.
+     */
+    size_t m_indiceNodeEmu;
+
+    /**
+     * \brief List of node created instance.
+     * 
+     * This attribute is the list of the created instance of node.
+     */
+    std::vector<Node*> listNode;
+
+    /**
+     * \brief List of application created instance.
+     * 
+     * This attribute is the list of the created instance of application.
+     */
+    std::vector<Application*> listApplication;
+
+    /**
+     * \brief List of link created instace.
+     * 
+     * This attribute is the list of the created instance of link.
+     */
+    std::vector<Link*> listLink;
+
+    /**
+     * \brief Number attribute of ping application created.
+     */
+    size_t m_indiceApplicationPing; 
+
+    /**
+     * \brief Number attribute of tcp large transfert application created.
+     */
+    size_t m_indiceApplicationTcpLargeTransfer;
+
+    /**
+     * \brief Number attribute of udp echo application created.
+     */
+    size_t m_indiceApplicationUdpEcho;
+
+    /**
+     * \brief Number attribute of ap link created.
+     */
+    size_t m_indiceLinkAp;
+
+    /**
+     * \brief Number attribute of emu link created.
+     */
+    size_t m_indiceLinkEmu;
+
+    /**
+     * \brief Number attribute of point-to-point link created.
+     */
+    size_t m_indiceLinkPointToPoint;
+
+    /**
+     * \brief Number attribute of tap link created.
+     */
+    size_t m_indiceLinkTap;
+
+    /**
+     * \brief Number attribute of hub link created.
+     */
+    size_t m_indiceLinkHub;
+
+    /**
+     * \brief Number attribute of bridge link created.
+     */
+    size_t m_indiceLinkBridge; 
+
+    //
+    // Code generation operation part
+    //
+
     /**
      * \brief Generate headers code.
      * 
@@ -382,14 +366,12 @@ class Generator
      */
     std::vector<std::string> GenerateVars();
 
-
     /**
      * \brief Generate command line code.
      * 
      * \return commend line code
      */
     std::vector<std::string> GenerateCmdLine();
-
 
     /**
      * \brief Generate config code.
@@ -398,14 +380,12 @@ class Generator
      */
     std::vector<std::string> GenerateConfig();
 
-
     /**
      * \brief Generate node declaration code.
      *
      * \return declaration code
      */
     std::vector<std::string> GenerateNode();
-
 
     /**
      * \brief Generate link code.
@@ -414,7 +394,6 @@ class Generator
      */
     std::vector<std::string> GenerateLink();
 
-
     /**
      * \brief Generate net device code.
      * 
@@ -422,14 +401,12 @@ class Generator
      */
     std::vector<std::string> GenerateNetDevice();
 
-
     /**
      * \brief Generate ip stack declaration.
      * 
      * \return IP stack code
      */
     std::vector<std::string> GenerateIpStack();
-
 
     /**
      * \brief Generate ip assign code.
@@ -445,14 +422,12 @@ class Generator
      */
     std::vector<std::string> GenerateTapBridge();
 
-
     /**
      * \brief Generate route code.
      * 
      * \return route code
      */
     std::vector<std::string> GenerateRoute();
-
 
     /**
      * \brief Generate application code.
@@ -506,7 +481,7 @@ class Generator
     void OpenXml();
 
     //
-    // Cpp generation operation part.
+    // C++ generation operation part.
     //
 
     /**

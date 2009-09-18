@@ -131,11 +131,11 @@ MainWindow::MainWindow(const std::string &simulationName)
   connect(routerAction, SIGNAL(triggered()), this, SLOT(CreateRouter()));
   //separator
   toolBarFichier->addSeparator();
-  // Hard Link
-  QIcon linkIcon(":/Ico/HardLink.png");
-  QString linkString("Hard Link");  
+  // Wired Link
+  QIcon linkIcon(":/Ico/WiredLink.png");
+  QString linkString("Wired Link");  
   QAction *linkAction = toolBarFichier->addAction(linkIcon, linkString);
-  connect(linkAction, SIGNAL(triggered()), this, SLOT(CreateHardLink()));
+  connect(linkAction, SIGNAL(triggered()), this, SLOT(CreateWiredLink()));
   // Station link
   QIcon stasLinkIcon(":/Ico/Link.png");
   QString stasLinkString("Station Link");  
@@ -349,7 +349,7 @@ void MainWindow::CreateRouter()
   dw->CreateObject("Router", this->gen->GetNode(this->gen->GetNNodes() - 1)->getNodeName());
 }
 
-void MainWindow::CreateHardLink()
+void MainWindow::CreateWiredLink()
 {
   /*
    * The differents link :
@@ -371,7 +371,7 @@ void MainWindow::CreateHardLink()
     return;
   }
   this->dw->traceLink = true;
-  this->dw->linkType = "HardLink";
+  this->dw->linkType = "WiredLink";
 }
 
 void MainWindow::ValidLink()
@@ -388,8 +388,8 @@ void MainWindow::ValidLink()
     QMessageBox::about(this, "Error", "You don't have selected two equipement.");
     for(size_t i = 0; i < (size_t) this->dw->drawLines.size(); i++)
     {
-      if( (equi.at(0) == this->dw->drawLines.at(i).begin && equi.at(1) == this->dw->drawLines.at(i).end) ||
-          (equi.at(1) == this->dw->drawLines.at(i).begin && equi.at(0) == this->dw->drawLines.at(i).end) )
+      if( (equi.at(0) == this->dw->drawLines.at(i).getFirst() && equi.at(1) == this->dw->drawLines.at(i).getSecond()) ||
+          (equi.at(1) == this->dw->drawLines.at(i).getFirst() && equi.at(0) == this->dw->drawLines.at(i).getSecond()) )
       {
         this->dw->drawLines.erase(this->dw->drawLines.begin() + i);
       }
@@ -403,8 +403,8 @@ void MainWindow::ValidLink()
     QMessageBox::about(this, "Error", "You can't connect object to itself.");
     for(size_t i = 0; i < (size_t) this->dw->drawLines.size(); i++)
     {
-      if( (equi.at(0) == this->dw->drawLines.at(i).begin && equi.at(1) == this->dw->drawLines.at(i).end) ||
-          (equi.at(1) == this->dw->drawLines.at(i).begin && equi.at(0) == this->dw->drawLines.at(i).end) )
+      if( (equi.at(0) == this->dw->drawLines.at(i).getFirst() && equi.at(1) == this->dw->drawLines.at(i).getSecond()) ||
+          (equi.at(1) == this->dw->drawLines.at(i).getFirst() && equi.at(0) == this->dw->drawLines.at(i).getSecond()) )
       {
         this->dw->drawLines.erase(this->dw->drawLines.begin() + i);
       }
@@ -425,8 +425,8 @@ void MainWindow::ValidLink()
     QMessageBox::about(this, "Error", "This link can't be etablished. Please use a Pc or a Router.");
     for(size_t i = 0; i < (size_t) this->dw->drawLines.size(); i++)
     {
-      if( (equi.at(0) == this->dw->drawLines.at(i).begin && equi.at(1) == this->dw->drawLines.at(i).end) ||
-          (equi.at(1) == this->dw->drawLines.at(i).begin && equi.at(0) == this->dw->drawLines.at(i).end) )
+      if( (equi.at(0) == this->dw->drawLines.at(i).getFirst() && equi.at(1) == this->dw->drawLines.at(i).getSecond()) ||
+          (equi.at(1) == this->dw->drawLines.at(i).getFirst() && equi.at(0) == this->dw->drawLines.at(i).getSecond()) )
       {
         this->dw->drawLines.erase(this->dw->drawLines.begin() + i);
       }
@@ -492,7 +492,7 @@ void MainWindow::ValidLink()
     else
     {
       /* you can't connect for example two terminals without an csma network so ... */
-      if(equi.at(2) == "HardLink")
+      if(equi.at(2) == "WiredLink")
       {
         this->gen->AddLink("Hub");
         this->ConnectNode((this->gen->GetNLinks() - 1), equi.at(0));
@@ -510,7 +510,7 @@ void MainWindow::ValidLink()
         /* delete the two equi .... */
         for(size_t i = 0; i < (size_t) this->dw->drawLines.size(); i++)
         {
-          if(equi.at(0) == this->dw->drawLines.at(i).begin || equi.at(1) == this->dw->drawLines.at(i).begin )
+          if(equi.at(0) == this->dw->drawLines.at(i).getFirst() || equi.at(1) == this->dw->drawLines.at(i).getFirst() )
           {
             this->dw->drawLines.erase(this->dw->drawLines.begin() + i);
           }
@@ -593,8 +593,8 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
     QMessageBox::about(this, "Error", "This link doesn't exist.");
     for(size_t i = 0; i < (size_t) this->dw->drawLines.size(); i++)
     {
-      if( (nodeName == this->dw->drawLines.at(i).begin && this->gen->GetLink(linkNumber)->getLinkName() == this->dw->drawLines.at(i).end) ||
-          (this->gen->GetLink(linkNumber)->getLinkName() == this->dw->drawLines.at(i).begin && nodeName == this->dw->drawLines.at(i).end) )
+      if( (nodeName == this->dw->drawLines.at(i).getFirst() && this->gen->GetLink(linkNumber)->getLinkName() == this->dw->drawLines.at(i).getSecond()) ||
+          (this->gen->GetLink(linkNumber)->getLinkName() == this->dw->drawLines.at(i).getFirst() && nodeName == this->dw->drawLines.at(i).getSecond()) )
       {
         this->dw->drawLines.erase(this->dw->drawLines.begin() + i);
       }
@@ -636,8 +636,8 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
     QMessageBox::about(this, "Error", "Limit of machines exceeded.");
     for(size_t i = 0; i < (size_t) this->dw->drawLines.size(); i++)
     {
-      if( (nodeName == this->dw->drawLines.at(i).begin && this->gen->GetLink(linkNumber)->getLinkName() == this->dw->drawLines.at(i).end) ||
-          (this->gen->GetLink(linkNumber)->getLinkName() == this->dw->drawLines.at(i).begin && nodeName == this->dw->drawLines.at(i).end) )
+      if( (nodeName == this->dw->drawLines.at(i).getFirst() && this->gen->GetLink(linkNumber)->getLinkName() == this->dw->drawLines.at(i).getSecond()) ||
+          (this->gen->GetLink(linkNumber)->getLinkName() == this->dw->drawLines.at(i).getFirst() && nodeName == this->dw->drawLines.at(i).getSecond()) )
       {
         this->dw->drawLines.erase(this->dw->drawLines.begin() + i);
       }

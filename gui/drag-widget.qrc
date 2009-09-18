@@ -12,7 +12,7 @@
     	<file>Ico/Switch.png</file>
     	<file>Ico/Tap.png</file>
     	<file>Ico/Link.png</file>
-    	<file>Ico/HardLink.png</file>
+    	<file>Ico/WiredLink.png</file>
     	<file>Ico/P2pLink.png</file>
  	</qresource>
 </RCC>

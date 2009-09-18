@@ -20,7 +20,7 @@
 
 /**
  * \file drag-lines.h
- * \brief The dragged lines.
+ * \brief The dragged lines between two equipments.
  * \author Pierre Weiss
  * \date 2009
  */
@@ -46,19 +46,56 @@ class DragLines
     DragLines();
 
     /**
-     * \brief Begin.
+     * \brief Set first equipment.
+     * \param name equipment name
      */
-    std::string begin;
+    void setFirst(const std::string& name);
 
     /**
-     * \brief End.
+     * \brief Get first equipment.
+     * \return equipment name
      */
-    std::string end;
+    std::string getFirst() const;
+
+    /**
+     * \brief Set second equipment.
+     * \param name equipment name
+     */
+    void setSecond(const std::string& name);
+
+    /**
+     * \brief Get second equipment.
+     * \return equipment name
+     */
+    std::string getSecond() const;
+
+    /**
+     * \brief Set link type.
+     * \param linkType link type
+     */
+    void setLinkType(const std::string& linkType);
+
+    /**
+     * \brief Get link type.
+     * \return link type
+     */
+    std::string getLinkType() const;
+
+  private:
+    /**
+     * \brief Name of the first equipment.
+     */
+    std::string first;
+
+    /**
+     * \brief Name of the second equipment.
+     */
+    std::string second;
     
     /**
-     * \brief Type.
+     * \brief Type of link (wired, Wi-Fi, ...).
      */
-    std::string type;
+    std::string linkType;
 };
 
 #endif /* DRAG_LINES_H */

@@ -32,7 +32,6 @@
 #include <string>
 #include <vector>
 
-
 /**
  * \ingroup generator
  * \brief This is the link class.
@@ -70,7 +69,7 @@ class Link
 {
   private:
     /**
-     *\brief Number of the link.
+     * \brief Number of the link.
      */
     size_t m_indice;
 
@@ -112,7 +111,6 @@ class Link
   public:
     /**
      * \brief Constructor.
-     * 
      * \param indice number of the link
      */
     Link(const size_t &indice);
