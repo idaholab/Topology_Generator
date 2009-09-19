@@ -108,6 +108,11 @@ class Link
      */
     bool m_tracePromisc;
 
+    /**
+     * \brief Node name which are connected to the link.
+     */
+    std::vector<std::string> m_nodes;
+
   public:
     /**
      * \brief Constructor.
@@ -204,7 +209,19 @@ class Link
      * \brief Get attached nodes list.
      * \return node list
      */
-    std::vector<std::string> getNodes();
+    std::vector<std::string> getInstalledNodes();
+
+    /**
+     * \brief Get n node.
+     * \param i index from get node
+     */
+    std::string getNInstalledNodes(const size_t &i);
+
+    /**
+     * \brief Remove installed selected node.
+     * \param nb remove node index
+     */
+    void removeInstalledNodes(const size_t &nb);
 
     /**
      * \brief Set link rate.
@@ -278,10 +295,6 @@ class Link
      */
     bool getPromisc();
 
-    /**
-     * \brief Node name which are connected to the link.
-     */
-    std::vector<std::string> nodes;
 };
 
 #endif /* LINK_H */

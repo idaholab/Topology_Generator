@@ -339,7 +339,7 @@ void DragWidget::deleteSelected()
   std::vector<std::string> objDelLink;
   for(size_t i = 0; i < (size_t) this->mw->gen->GetNLinks(); i++)
   {
-    std::vector<std::string> nodes = this->mw->gen->GetLink(i)->getNodes();
+    std::vector<std::string> nodes = this->mw->gen->GetLink(i)->getInstalledNodes();
     for(size_t j = 0; j < (size_t) nodes.size(); j++)
     {
       /* if the child to be deleted is connected ... we must remove it. */
@@ -348,7 +348,7 @@ void DragWidget::deleteSelected()
         objDelLink.push_back(this->mw->gen->GetLink(i)->getLinkName());
         try
         {
-          this->mw->gen->GetLink(i)->nodes.erase(this->mw->gen->GetLink(i)->nodes.begin() + j);
+          this->mw->gen->GetLink(i)->removeInstalledNodes(j);
         }
         catch(const std::out_of_range &e)
         {
@@ -366,7 +366,7 @@ void DragWidget::deleteSelected()
     {
       if( objDelLink.at(i) == this->mw->gen->GetLink(j)->getLinkName() )
       {
-        if(this->mw->gen->GetLink(j)->getNodes().size() <= 1)
+        if(this->mw->gen->GetLink(j)->getInstalledNodes().size() <= 1)
         {
           // the link where the deleted object 
           // check if the link is hide. 

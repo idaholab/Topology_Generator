@@ -894,9 +894,9 @@ std::vector<std::string> Generator::GenerateApplication()
       for(size_t x = 0;  x < this->listLink.size(); x++)
       {
         nodeNumber = 0;
-        for(size_t y = 0; y < this->listLink.at(x)->getNodes().size(); y++)
+        for(size_t y = 0; y < this->listLink.at(x)->getInstalledNodes().size(); y++)
         {
-          if(this->listLink.at(x)->getNodes().at(y) == receiverName || this->listLink.at(x)->getNodes().at(y) == oldReceiverName)
+          if(this->listLink.at(x)->getInstalledNodes().at(y) == receiverName || this->listLink.at(x)->getInstalledNodes().at(y) == oldReceiverName)
           {
             ndcName = (this->listLink.at(x))->getNdcName();
             linkNumber = x;
@@ -908,7 +908,7 @@ std::vector<std::string> Generator::GenerateApplication()
           }
         }
       }
-      std::vector<std::string> linksNode = this->listLink.at(linkNumber)->getNodes();
+      std::vector<std::string> linksNode = this->listLink.at(linkNumber)->getInstalledNodes();
       for(size_t j = 0; j < linksNode.size(); j++)
       {
         if(linksNode.at(j) == oldReceiverName)
@@ -924,7 +924,7 @@ std::vector<std::string> Generator::GenerateApplication()
       {
         nodeNumber = 0;
         linkNumber = 0;
-        std::vector<std::string> nodes = (this->listLink.at(j))->getNodes();
+        std::vector<std::string> nodes = (this->listLink.at(j))->getInstalledNodes();
         for(size_t k = 0; k < (size_t) nodes.size(); k++)
         {
           if( nodes.at(k) == receiverName)

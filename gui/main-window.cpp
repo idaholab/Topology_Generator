@@ -620,7 +620,7 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
   }
 
   /* get the number of machines also connected. */
-  std::vector<std::string> nodes = this->gen->GetLink(linkNumber)->getNodes();
+  std::vector<std::string> nodes = this->gen->GetLink(linkNumber)->getInstalledNodes();
   for(size_t i = 0; i < (size_t) nodes.size(); i++)
   {
     for(size_t j = 0; j < (size_t) this->gen->GetNNodes(); j++)

@@ -75,9 +75,27 @@ std::string Link::getNdcName()
   return this->m_ndcName;
 }
 
-std::vector<std::string> Link::getNodes()
+std::vector<std::string> Link::getInstalledNodes()
 {
-  return this->nodes;
+  return this->m_nodes;
+}
+
+std::string Link::getNInstalledNodes(const size_t &i)
+{
+  return this->m_nodes.at(i);
+}
+
+void Link::removeInstalledNodes(const size_t &nb)
+{
+  try
+  {
+    this->m_nodes.erase(this->m_nodes.begin() + nb);
+  }
+  catch(const std::out_of_range &e)
+  {
+    throw std::out_of_range(e);
+    return;
+  }
 }
 
 void Link::setLinkName(const std::string &linkName)
@@ -102,25 +120,25 @@ void Link::setNdcName(const std::string &ndcName)
 
 void Link::Install(const std::string &node)
 {
-  this->nodes.push_back(node);
+  this->m_nodes.push_back(node);
   std::vector<std::string> trans;
   std::vector<std::string> transWhitoutRouter;
-  for(size_t i = 0; i < (size_t) this->nodes.size(); i++)
+  for(size_t i = 0; i < (size_t) this->getInstalledNodes().size(); i++)
   {
-    if((this->nodes.at(i)).find("router_") == 0)
+    if((this->m_nodes.at(i)).find("router_") == 0)
     {
-      trans.push_back(this->nodes.at(i));
+      trans.push_back(this->getNInstalledNodes(i));
     }
     else
     {
-      transWhitoutRouter.push_back(this->nodes.at(i));
+      transWhitoutRouter.push_back(this->getNInstalledNodes(i));
     }
   }
   for(size_t i = 0; i < (size_t) transWhitoutRouter.size(); i++)
   {
     trans.push_back(transWhitoutRouter.at(i));
   }
-  this->nodes = trans;
+  this->m_nodes = trans;
 }
 
 std::string Link::getAllNodeContainer()
@@ -137,11 +155,11 @@ std::vector<std::string> Link::GroupAsNodeContainer()
 {
   std::vector<std::string> res;
   res.push_back("NodeContainer " + this->getAllNodeContainer() + ";");
-  for(size_t i = 0; i < (size_t) this->nodes.size(); i++)
+  for(size_t i = 0; i < (size_t) this->getInstalledNodes().size(); i++)
   {
-    if((this->nodes.at(i)).find("ap_") != 0)
+    if((this->getNInstalledNodes(i)).find("ap_") != 0)
     {
-      res.push_back(this->getAllNodeContainer() + ".Add(" + this->nodes.at(i) + ");");
+      res.push_back(this->getAllNodeContainer() + ".Add(" + this->getNInstalledNodes(i) + ");");
     }
   }
 

@@ -71,9 +71,9 @@ static void printState(Generator *gen)
   for(int i = 0; (size_t) i < gen->GetNLinks(); i++)
   {
     std::cout << "- " << gen->GetLink(i)->getLinkName() << std::endl;
-    for(int j = 0; (size_t) j < gen->GetLink(i)->getNodes().size(); j++)
+    for(int j = 0; (size_t) j < gen->GetLink(i)->getInstalledNodes().size(); j++)
     {
-      std::cout << "  -- " << gen->GetLink(i)->getNodes().at(j) << std::endl;
+      std::cout << "  -- " << gen->GetLink(i)->getInstalledNodes().at(j) << std::endl;
     }
   }
 }
