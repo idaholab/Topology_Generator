@@ -55,18 +55,6 @@ class MainWindow : public QMainWindow
     ~MainWindow();
 
     /**
-     * \brief Action to delete object.
-     *
-     * Is attribute to setDisable ...
-     */
-    QAction *delAction;
-
-    /**
-     * \brief Generator.
-     */
-    Generator *gen;
-
-    /**
      * \brief Valid links.
      */
     void ValidLink();
@@ -76,17 +64,6 @@ class MainWindow : public QMainWindow
      */
     void ValidApps();
 
-  private:
-    /**
-     * \brief The drag'n'drop zone.
-     */
-    DragWidget *dw;
-
-    /**
-     * \brief interface which are used.
-     */ 
-    std::vector<std::string> listIface;
-
     /**
      * \brief Procedure to erase the unused iface. 
      */
@@ -94,12 +71,36 @@ class MainWindow : public QMainWindow
 
     /**
      * \brief Procedure to connect node to linkNumber.
-     *
      * This procedure prevent mask overflow.
-     * \param linkNumber the number of the link.
-     * \param nodeName the node name tu be added.
+     * \param linkNumber the number of the link
+     * \param nodeName the node name tu be added
      */
     void ConnectNode(const size_t &linkNumber, const std::string &nodeName);
+
+/* to be set private ... but ... */
+  //private:
+    /**
+     * \brief Generator.
+     */
+    Generator *m_gen;
+
+    /**
+     * \brief Action to delete object.
+     *
+     * Is attribute to setDisable ...
+     */
+    QAction *m_delAction;
+
+  private:
+    /**
+     * \brief The drag'n'drop zone.
+     */
+    DragWidget *m_dw;
+
+    /**
+     * \brief interface which are used.
+     */ 
+    std::vector<std::string> m_listIface;
 
   private slots:
     /**
@@ -165,7 +166,7 @@ class MainWindow : public QMainWindow
     /**
      * \brief Procedure called by the tool bar to delete an object.
      */
-    void deleteObject();
+    void DeleteObject();
 
     /**
      * \brief Procedure called by the tool bar to get the configuration pop up.

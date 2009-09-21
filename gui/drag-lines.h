@@ -49,53 +49,53 @@ class DragLines
      * \brief Set first equipment.
      * \param name equipment name
      */
-    void setFirst(const std::string& name);
+    void SetFirst(const std::string& name);
 
     /**
      * \brief Get first equipment.
      * \return equipment name
      */
-    std::string getFirst() const;
+    std::string GetFirst() const;
 
     /**
      * \brief Set second equipment.
      * \param name equipment name
      */
-    void setSecond(const std::string& name);
+    void SetSecond(const std::string& name);
 
     /**
      * \brief Get second equipment.
      * \return equipment name
      */
-    std::string getSecond() const;
+    std::string GetSecond() const;
 
     /**
      * \brief Set link type.
      * \param linkType link type
      */
-    void setLinkType(const std::string& linkType);
+    void SetLinkType(const std::string& linkType);
 
     /**
      * \brief Get link type.
      * \return link type
      */
-    std::string getLinkType() const;
+    std::string GetLinkType() const;
 
   private:
     /**
      * \brief Name of the first equipment.
      */
-    std::string first;
+    std::string m_first;
 
     /**
      * \brief Name of the second equipment.
      */
-    std::string second;
+    std::string m_second;
     
     /**
      * \brief Type of link (wired, Wi-Fi, ...).
      */
-    std::string linkType;
+    std::string m_linkType;
 };
 
 #endif /* DRAG_LINES_H */

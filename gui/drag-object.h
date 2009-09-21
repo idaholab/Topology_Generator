@@ -44,12 +44,12 @@ class DragObject : public QLabel
   public:
     /**
      * \brief Constructor.
-     * \param parent the qwidget parent.
+     * \param parent the qwidget parent
      */
     DragObject(QWidget *parent);
 
     /**
-     * \brief Dstructor.
+     * \brief Destructor.
      */
     ~DragObject();
 
@@ -57,13 +57,25 @@ class DragObject : public QLabel
      * \brief Set the name for the dragged object.
      * \param name the new name
      */
-    void setName(const std::string &name);
+    void SetName(const std::string &name);
 
     /**
      * \brief Get the dragged object name.
      * \return name
      */
-    std::string getName();
+    std::string GetName();
+
+    /**
+     * \brief Set tool tip text.
+     * \param str new tool tip text
+     */
+    void SetToolTipText(const QString &str);
+
+    /**
+     * \brief Get tool tip text.
+     * \return tool tip text
+     */
+    QString GetToolTipText();
 
     /**
      * \brief Destroy object from qwidget.
@@ -74,7 +86,12 @@ class DragObject : public QLabel
     /**
      * \brief Name of the dragged object. 
      */
-    std::string name;
+    std::string m_name;
+
+    /**
+     * \brief tool tip text attribute.
+     */
+    QString m_tooltip;
 };
 
 #endif /* DRAG_OBJECT_H */

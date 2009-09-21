@@ -29,37 +29,37 @@
 
 DragLines::DragLines()
 {
-  this->first = "";
-  this->second = "";
+  this->m_first = "";
+  this->m_second = "";
 }
 
-void DragLines::setFirst(const std::string& name)
+void DragLines::SetFirst(const std::string& name)
 {
-  this->first = name;
+  this->m_first = name;
 }
 
-std::string DragLines::getFirst() const
+std::string DragLines::GetFirst() const
 {
-  return this->first;
+  return this->m_first;
 }
 
-void DragLines::setSecond(const std::string& name)
+void DragLines::SetSecond(const std::string& name)
 {
-  this->second = name;
+  this->m_second = name;
 }
 
-std::string DragLines::getSecond() const
+std::string DragLines::GetSecond() const
 {
-  return this->second;
+  return this->m_second;
 }
 
-void DragLines::setLinkType(const std::string& linkType)
+void DragLines::SetLinkType(const std::string& linkType)
 {
-  this->linkType = linkType;
+  this->m_linkType = linkType;
 }
 
-std::string DragLines::getLinkType() const
+std::string DragLines::GetLinkType() const
 {
-  return this->linkType;
+  return this->m_linkType;
 }
 

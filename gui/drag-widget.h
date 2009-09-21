@@ -75,13 +75,13 @@ class DragWidget : public QWidget
     /**
      * \brief Delete the last selected element.
      */
-    void deleteSelected();
+    void DeleteSelected();
 
     /**
      * \brief Get name of the last selected equipment.
      * \return last selected name.
      */
-    std::vector<std::string> getLastSelected();
+    std::vector<std::string> GetLastSelected();
 
     /**
      * \brief Reset lastSelected equipment.
@@ -100,80 +100,10 @@ class DragWidget : public QWidget
     void paintEvent(QPaintEvent *event);
 
     /**
-     * \brief If we trace link or not.
-     */
-    bool traceLink;
-
-    /**
      * \brief Set the MainWindow.
      * \param _mw
      */
-    void setMainWindow(MainWindow *_mw);
-
-    /**
-     * \brief Link type.
-     */
-    std::string linkType;
-
-    /**
-     * \brief Link end.
-     */
-    std::string linkEnd;
-
-    /**
-     * \brief Lines.
-     */
-    DragLines lines;
-
-    /**
-     * \brief Vector of lines (which represent links).
-     */
-    std::vector<DragLines> drawLines;
-
-    /**
-     * \brief Timer to refresh a line draw.
-     */
-    QTimer *timer;
-
-    /**
-     * \brief Application server node name.
-     */
-    std::string appsServer;
-
-    /**
-     * \brief Application client node name.
-     */
-    std::string appsClient;
-
-    /**
-     * \brief Application type ping.
-     */
-    bool appsPing;
-
-    /**
-     * \brief Application type udp-echo.
-     */
-    bool appsUdpEcho;
-
-    /**
-     * \brief Application type tcp-large-transfer. 
-     */
-    bool appsTcp;
-
-    /**
-     * \brief Start time.
-     */
-    size_t startTime;
-
-    /**
-     * \brief End Time.
-     */
-    size_t endTime;
-
-    /**
-     * \brief Port attribute. 
-     */
-    size_t port;
+    void SetMainWindow(MainWindow *_mw);
 
     /**
      * \brief Show the ping UI.
@@ -191,36 +121,107 @@ class DragWidget : public QWidget
     void ShowGuiTcp();
 
     /**
-     * \brief Application dialog box.
+     * \brief Get the child object from his name.
+     * \param name name of the object to find
      */
-    QDialog *dialog;
+    DragObject* GetChildFromName(const std::string &name);
 
-    /**
-     * \brief Show if applications are at this time in use or not.
-     */
-    bool appsEnable;
-
-  private:
+/* to be made private ... but ... */ 
+  //private:
     /**
      * \brief last position of last object which moved.
      */ 
-    QPoint lastPosition;
+    QPoint m_lastPosition;
 
     /**
      * \brief Link begin.
      */
-    std::string linkBegin;
-
-    /**
-     * \brief Get the child object from his name.
-     * \param name name of the object to find
-     */
-    DragObject* getChildFromName(const std::string &name);
+    std::string m_linkBegin;
 
     /**
      * \brief Main window.
      */
-    MainWindow *mw;
+    MainWindow *m_mw;
+
+    /**
+     * \brief If we trace link or not.
+     */
+    bool m_traceLink;
+
+     /**
+     * \brief Link type.
+     */
+    std::string m_linkType;
+
+    /**
+     * \brief Link end.
+     */
+    std::string m_linkEnd;
+
+    /**
+     * \brief Lines.
+     */
+    DragLines m_lines;
+
+    /**
+     * \brief Vector of lines (which represent links).
+     */
+    std::vector<DragLines> m_drawLines;
+
+    /**
+     * \brief Timer to refresh a line draw.
+     */
+    QTimer *m_timer;
+
+    /**
+     * \brief Application server node name.
+     */
+    std::string m_appsServer;
+
+    /**
+     * \brief Application client node name.
+     */
+    std::string m_appsClient;
+
+    /**
+     * \brief Application type ping.
+     */
+    bool m_appsPing;
+
+    /**
+     * \brief Application type udp-echo.
+     */
+    bool m_appsUdpEcho;
+
+    /**
+     * \brief Application type tcp-large-transfer. 
+     */
+    bool m_appsTcp;
+
+    /**
+     * \brief Start time.
+     */
+    size_t m_startTime;
+
+    /**
+     * \brief End Time.
+     */
+    size_t m_endTime;
+
+    /**
+     * \brief Port attribute. 
+     */
+    size_t m_port;
+
+    /**
+     * \brief Application dialog box.
+     */
+    QDialog *m_dialog;
+
+    /**
+     * \brief Show if applications are at this time in use or not.
+     */
+    bool m_appsEnable;
 
   protected:
     /**
