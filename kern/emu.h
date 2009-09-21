@@ -54,7 +54,7 @@
  *   |   |      |
  *   ----|-------
  *       |
- *     (device on host system, set to promiscuous mode)
+ *     (device on host system, Set to promiscuous mode)
  *       |
  *      --------- (Interface network) -------
  *
@@ -98,25 +98,25 @@ class Emu : public Link
      * \brief Get emu node name.
      * \return emu node name
      */
-    std::string getEmuName();
+    std::string GetEmuName();
 
     /**
      * \brief Set emu node name.
      * \param nodeName new emu node name
      */
-    void setEmuName(const std::string &nodeName);
+    void SetEmuName(const std::string &nodeName);
 
     /**
      * \brief Get emu interface name.
      * \return interface name
      */
-    std::string getIfaceName();
+    std::string GetIfaceName();
 
     /**
      * \brief Set emu iface name.
      * \param ifaceName new emu iface name
      */
-    void setIfaceName(const std::string &ifaceName);
+    void SetIfaceName(const std::string &ifaceName);
 
     /**
      * \brief Generate headers code.

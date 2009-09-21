@@ -339,13 +339,13 @@ void DragWidget::deleteSelected()
   std::vector<std::string> objDelLink;
   for(size_t i = 0; i < (size_t) this->mw->gen->GetNLinks(); i++)
   {
-    std::vector<std::string> nodes = this->mw->gen->GetLink(i)->getInstalledNodes();
+    std::vector<std::string> nodes = this->mw->gen->GetLink(i)->GetInstalledNodes();
     for(size_t j = 0; j < (size_t) nodes.size(); j++)
     {
       /* if the child to be deleted is connected ... we must remove it. */
       if(child->getName() == nodes.at(j))
       {
-        objDelLink.push_back(this->mw->gen->GetLink(i)->getLinkName());
+        objDelLink.push_back(this->mw->gen->GetLink(i)->GetLinkName());
         try
         {
           this->mw->gen->GetLink(i)->removeInstalledNodes(j);
@@ -364,9 +364,9 @@ void DragWidget::deleteSelected()
   {
     for(size_t j = 0; j < (size_t) this->mw->gen->GetNLinks(); j++)
     {
-      if( objDelLink.at(i) == this->mw->gen->GetLink(j)->getLinkName() )
+      if( objDelLink.at(i) == this->mw->gen->GetLink(j)->GetLinkName() )
       {
-        if(this->mw->gen->GetLink(j)->getInstalledNodes().size() <= 1)
+        if(this->mw->gen->GetLink(j)->GetInstalledNodes().size() <= 1)
         {
           // the link where the deleted object 
           // check if the link is hide. 
@@ -375,7 +375,7 @@ void DragWidget::deleteSelected()
           {
             if(dynamic_cast<DragObject*>((this->children().at(k))))
             {
-              if( dynamic_cast<DragObject*>((this->children().at(k)))->getName() == this->mw->gen->GetLink(j)->getLinkName())
+              if( dynamic_cast<DragObject*>((this->children().at(k)))->getName() == this->mw->gen->GetLink(j)->GetLinkName())
               {
                 isHide = false;
               }
@@ -383,7 +383,7 @@ void DragWidget::deleteSelected()
           }
           if(isHide)
           {
-            this->mw->gen->RemoveLink(this->mw->gen->GetLink(j)->getLinkName());
+            this->mw->gen->RemoveLink(this->mw->gen->GetLink(j)->GetLinkName());
           }
         }
       }
@@ -421,8 +421,8 @@ void DragWidget::deleteSelected()
   {
     if((child->getName()).find("nodesGroup_") == 0)
     {
-      sender = this->mw->gen->GetApplication(i)->getSenderNode();
-      receiver = this->mw->gen->GetApplication(i)->getReceiverNode();
+      sender = this->mw->gen->GetApplication(i)->GetSenderNode();
+      receiver = this->mw->gen->GetApplication(i)->GetReceiverNode();
 
       if(sender.find("NodeContainer") == 0)
       {
@@ -435,14 +435,14 @@ void DragWidget::deleteSelected()
     }
     else
     {
-      sender = this->mw->gen->GetApplication(i)->getSenderNode();
-      receiver = this->mw->gen->GetApplication(i)->getReceiverNode(); 
+      sender = this->mw->gen->GetApplication(i)->GetSenderNode();
+      receiver = this->mw->gen->GetApplication(i)->GetReceiverNode(); 
     }
 
     if(child->getName() == sender ||
         child->getName() == receiver )
     {
-      this->mw->gen->RemoveApplication(this->mw->gen->GetApplication(i)->getAppName());
+      this->mw->gen->RemoveApplication(this->mw->gen->GetApplication(i)->GetAppName());
     }
   }
 
@@ -638,7 +638,7 @@ void DragWidget::ShowGuiPing()
   QLineEdit *line_startTime = new QLineEdit(dialog);
   if(this->startTime != (size_t) - 1)
   {
-    line_startTime->insert(utils::toString(this->startTime).c_str());
+    line_startTime->insert(utils::integerToString(this->startTime).c_str());
   }
   layout->addWidget(line_startTime, 5, 1);
 
@@ -648,7 +648,7 @@ void DragWidget::ShowGuiPing()
   QLineEdit *line_endTime = new QLineEdit(dialog);
   if(this->endTime != (size_t) - 1)
   {
-    line_endTime->insert(utils::toString(this->endTime).c_str());
+    line_endTime->insert(utils::integerToString(this->endTime).c_str());
   }
   layout->addWidget(line_endTime, 6, 1);
 
@@ -784,7 +784,7 @@ void DragWidget::ShowGuiUdpEcho()
   QLineEdit *line_startTime = new QLineEdit(dialog);
   if(this->startTime != (size_t) - 1)
   {
-    line_startTime->insert(utils::toString(this->startTime).c_str());
+    line_startTime->insert(utils::integerToString(this->startTime).c_str());
   }
   layout->addWidget(line_startTime, 5, 1);
 
@@ -794,7 +794,7 @@ void DragWidget::ShowGuiUdpEcho()
   QLineEdit *line_endTime = new QLineEdit(dialog);
   if(this->endTime != (size_t) - 1)
   {
-    line_endTime->insert(utils::toString(this->endTime).c_str());
+    line_endTime->insert(utils::integerToString(this->endTime).c_str());
   }
   layout->addWidget(line_endTime, 6, 1);
 
@@ -804,7 +804,7 @@ void DragWidget::ShowGuiUdpEcho()
   QLineEdit *line_port = new QLineEdit(dialog);
   if(this->port != (size_t) - 1)
   {
-    line_port->insert(utils::toString(this->port).c_str());
+    line_port->insert(utils::integerToString(this->port).c_str());
   }
   layout->addWidget(line_port, 7, 1);
 
@@ -923,7 +923,7 @@ void DragWidget::ShowGuiTcp()
   QLineEdit *line_startTime = new QLineEdit(dialog);
   if(this->startTime != (size_t) - 1)
   {
-    line_startTime->insert(utils::toString(this->startTime).c_str());
+    line_startTime->insert(utils::integerToString(this->startTime).c_str());
   }
   layout->addWidget(line_startTime, 5, 1);
 
@@ -933,7 +933,7 @@ void DragWidget::ShowGuiTcp()
   QLineEdit *line_endTime = new QLineEdit(dialog);
   if(this->endTime != (size_t) - 1)
   {
-    line_endTime->insert(utils::toString(this->endTime).c_str());
+    line_endTime->insert(utils::integerToString(this->endTime).c_str());
   }
   layout->addWidget(line_endTime, 6, 1);
 
@@ -943,7 +943,7 @@ void DragWidget::ShowGuiTcp()
   QLineEdit *line_port = new QLineEdit(dialog);
   if(this->port != (size_t) - 1)
   {
-    line_port->insert(utils::toString(this->port).c_str());
+    line_port->insert(utils::integerToString(this->port).c_str());
   }
   layout->addWidget(line_port, 7, 1);
 

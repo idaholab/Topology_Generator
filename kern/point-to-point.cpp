@@ -29,9 +29,9 @@
 
 PointToPoint::PointToPoint(const size_t &indice) : Link(indice)
 {
-  this->setLinkName(std::string("p2p_" + this->getIndice()));
-  this->setNdcName(std::string("ndc_" + this->getLinkName()));
-  this->setAllNodeContainer(std::string("all_" + this->getLinkName()));
+  this->SetLinkName(std::string("p2p_" + this->GetIndice()));
+  this->SetNdcName(std::string("ndc_" + this->GetLinkName()));
+  this->SetAllNodeContainer(std::string("all_" + this->GetLinkName()));
 }
 
 PointToPoint::~PointToPoint()
@@ -49,9 +49,9 @@ std::vector<std::string> PointToPoint::GenerateHeader()
 std::vector<std::string> PointToPoint::GenerateLink()
 {
   std::vector<std::string> generatedLink;
-  generatedLink.push_back("PointToPointHelper p2p_" + this->getLinkName() + ";");
-  generatedLink.push_back("p2p_" + this->getLinkName() + ".SetDeviceAttribute (\"DataRate\", StringValue (\"" + this->getDataRate() + "\"));");
-  generatedLink.push_back("p2p_" + this->getLinkName() + ".SetChannelAttribute (\"Delay\", TimeValue (MilliSeconds (" + this->getLinkDelay() + ")));");
+  generatedLink.push_back("PointToPointHelper p2p_" + this->GetLinkName() + ";");
+  generatedLink.push_back("p2p_" + this->GetLinkName() + ".SetDeviceAttribute (\"DataRate\", StringValue (\"" + this->GetDataRate() + "\"));");
+  generatedLink.push_back("p2p_" + this->GetLinkName() + ".SetChannelAttribute (\"Delay\", TimeValue (MilliSeconds (" + this->GetLinkDelay() + ")));");
 
   return generatedLink;
 }
@@ -64,7 +64,7 @@ std::vector<std::string> PointToPoint::GenerateNetDevice()
   {
     ndc.push_back(allNodes.at(i));
   }
-  ndc.push_back("NetDeviceContainer " + this->getNdcName() + " = p2p_" + this->getLinkName() + ".Install (" + this->getAllNodeContainer() + ");");
+  ndc.push_back("NetDeviceContainer " + this->GetNdcName() + " = p2p_" + this->GetLinkName() + ".Install (" + this->GetAllNodeContainer() + ");");
 
   return ndc;
 }
@@ -73,9 +73,9 @@ std::vector<std::string> PointToPoint::GenerateTrace()
 {
   std::vector<std::string> trace;
 
-  if(this->getTrace())
+  if(this->GetTrace())
   {
-    trace.push_back("PointToPointHelper::EnablePcapAll (\"" + this->getLinkName() + "\");");
+    trace.push_back("PointToPointHelper::EnablePcapAll (\"" + this->GetLinkName() + "\");");
   }
 
   return trace;

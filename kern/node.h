@@ -116,7 +116,7 @@ class Node
      * \brief Set node name.
      * \param nodeName node name
      */
-    void setNodeName(const std::string &nodeName);
+    void SetNodeName(const std::string &nodeName);
 
     /**
      * \brief Set ip interface name.
@@ -125,62 +125,62 @@ class Node
      * Sometimes this var is used in application like as UdpEcho.
      * \param ipInterfaceName ip interface name
      */
-    void setIpInterfaceName(const std::string &ipInterfaceName);
+    void SetIpInterfaceName(const std::string &ipInterfaceName);
 
     /**
      * \brief Get node name.
      * \return node name
      */
-    std::string getNodeName();
+    std::string GetNodeName();
 
     /**
      * \brief Get node name.
      * \param number machine number
      * \return node name
      */
-    std::string getNodeName(const size_t &number);
+    std::string GetNodeName(const size_t &number);
 
     /**
      * \brief Get ip interface name.
      * \return IP interface name
      */
-    std::string getIpInterfaceName();
+    std::string GetIpInterfaceName();
 
     /**
      * \brief Get indice.
      * \return indice
      */
-    std::string getIndice();
+    std::string GetIndice();
 
     /**
      * \brief Set indice.
      * \param indice new indice
      */
-    void setIndice(const size_t &indice);
+    void SetIndice(const size_t &indice);
 
     /**
      * \brief Get NSC (Network Simulation Cradle) code.
      * \return nsc code
      */
-    std::string getNsc();
+    std::string GetNsc();
 
     /**
      * \brief Set NSC (Network Simulation Cradle) code.
      * \param nsc new nsc code
      */
-    void setNsc(const std::string &nsc);
+    void SetNsc(const std::string &nsc);
 
     /**
      * \brief Get machines number.
      * \return machines number
      */
-    size_t getMachinesNumber();
+    size_t GetMachinesNumber();
 
     /**
      * \brief Set machines number.
      * \param machinesNumber new machines number
      */
-    void setMachinesNumber(const size_t &machinesNumber);
+    void SetMachinesNumber(const size_t machinesNumber);
 };
 
 #endif /* NODE_H */

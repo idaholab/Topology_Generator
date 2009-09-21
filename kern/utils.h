@@ -48,7 +48,7 @@ size_t split(std::vector<std::string> &res, std::string str, char separator);
  * \param nb the number to convert
  * \return number in string format
  */
-std::string toString(const size_t nb);
+std::string integerToString(const size_t nb);
 
 } /* namespace utils */
 

@@ -30,11 +30,11 @@
 Tap::Tap(const size_t &indice, const std::string &tapNode, const std::string &ifaceName) : Link(indice)
 {
   this->Install(tapNode);
-  this->setTapName(tapNode);
-  this->setIfaceName(ifaceName);
-  this->setLinkName(std::string("tap_" + this->getIndice()));
-  this->setNdcName(std::string("ndc_" + this->getLinkName()));
-  this->setAllNodeContainer(std::string("all_" + this->getLinkName()));
+  this->SetTapName(tapNode);
+  this->SetIfaceName(ifaceName);
+  this->SetLinkName(std::string("tap_" + this->GetIndice()));
+  this->SetNdcName(std::string("ndc_" + this->GetLinkName()));
+  this->SetAllNodeContainer(std::string("all_" + this->GetLinkName()));
 }
 
 Tap::~Tap()
@@ -53,9 +53,9 @@ std::vector<std::string> Tap::GenerateHeader()
 std::vector<std::string> Tap::GenerateLink()
 {
   std::vector<std::string> generatedLink;
-  generatedLink.push_back("CsmaHelper csma_" + this->getLinkName() + ";");
-  generatedLink.push_back("csma_" + this->getLinkName() + ".SetChannelAttribute (\"DataRate\", StringValue (\"" + this->getDataRate() + "\"));");
-  generatedLink.push_back("csma_" + this->getLinkName() + ".SetChannelAttribute (\"Delay\", StringValue (\"" + this->getLinkDelay() + "\"));");
+  generatedLink.push_back("CsmaHelper csma_" + this->GetLinkName() + ";");
+  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute (\"DataRate\", StringValue (\"" + this->GetDataRate() + "\"));");
+  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute (\"Delay\", StringValue (\"" + this->GetLinkDelay() + "\"));");
 
   return generatedLink;
 }
@@ -68,7 +68,7 @@ std::vector<std::string> Tap::GenerateNetDevice()
   {
     ndc.push_back(allNodes.at(i));
   }
-  ndc.push_back("NetDeviceContainer " + this->getNdcName() + " = csma_" + this->getLinkName() + ".Install (" + this->getAllNodeContainer() + ");");
+  ndc.push_back("NetDeviceContainer " + this->GetNdcName() + " = csma_" + this->GetLinkName() + ".Install (" + this->GetAllNodeContainer() + ");");
 
   return ndc;
 }
@@ -77,30 +77,30 @@ std::vector<std::string> Tap::GenerateTapBridge()
 {
   std::vector<std::string> tapBridge;
 
-  tapBridge.push_back("TapBridgeHelper tapBridge_" + this->getLinkName() + " (iface_" + this->getNdcName() + ".GetAddress(1));");
-  tapBridge.push_back("tapBridge_" + this->getLinkName() + ".SetAttribute (\"Mode\", StringValue (mode_" + this->getLinkName() + "));");
-  tapBridge.push_back("tapBridge_" + this->getLinkName() + ".SetAttribute (\"DeviceName\", StringValue (tapName_" + this->getLinkName() + "));");
-  tapBridge.push_back("tapBridge_" + this->getLinkName() + ".Install (" + this->getTapName() + ".Get(0), " + this->getNdcName() + ".Get(0));");
+  tapBridge.push_back("TapBridgeHelper tapBridge_" + this->GetLinkName() + " (iface_" + this->GetNdcName() + ".GetAddress(1));");
+  tapBridge.push_back("tapBridge_" + this->GetLinkName() + ".SetAttribute (\"Mode\", StringValue (mode_" + this->GetLinkName() + "));");
+  tapBridge.push_back("tapBridge_" + this->GetLinkName() + ".SetAttribute (\"DeviceName\", StringValue (tapName_" + this->GetLinkName() + "));");
+  tapBridge.push_back("tapBridge_" + this->GetLinkName() + ".Install (" + this->GetTapName() + ".Get(0), " + this->GetNdcName() + ".Get(0));");
 
   return tapBridge;
 }
 
-std::string Tap::getTapName()
+std::string Tap::GetTapName()
 {
   return this->m_tapNode;
 }
 
-void Tap::setTapName(const std::string &tapNode)
+void Tap::SetTapName(const std::string &tapNode)
 {
   this->m_tapNode = tapNode;
 }
 
-std::string Tap::getIfaceName()
+std::string Tap::GetIfaceName()
 {
   return this->m_ifaceName;
 }
 
-void Tap::setIfaceName(const std::string &ifaceName)
+void Tap::SetIfaceName(const std::string &ifaceName)
 {
   this->m_ifaceName = ifaceName;
 }
@@ -108,15 +108,15 @@ void Tap::setIfaceName(const std::string &ifaceName)
 std::vector<std::string> Tap::GenerateVars()
 {
   std::vector<std::string> vars;
-  vars.push_back("std::string mode_" + this->getLinkName() + " = \"ConfigureLocal\";");
-  vars.push_back("std::string tapName_" + this->getLinkName() + " = \"" + this->getIfaceName() + "\";");
+  vars.push_back("std::string mode_" + this->GetLinkName() + " = \"ConfigureLocal\";");
+  vars.push_back("std::string tapName_" + this->GetLinkName() + " = \"" + this->GetIfaceName() + "\";");
   return vars;
 }
 std::vector<std::string> Tap::GenerateCmdLine()
 {
   std::vector<std::string> cmdLine;
-  cmdLine.push_back("cmd.AddValue(\"mode_" + this->getLinkName() + "\", \"Mode setting of TapBridge\", mode_" + this->getLinkName() + ");");
-  cmdLine.push_back("cmd.AddValue(\"tapName_" + this->getLinkName() + "\", \"Name of the OS tap device\", tapName_" + this->getLinkName() + ");");
+  cmdLine.push_back("cmd.AddValue(\"mode_" + this->GetLinkName() + "\", \"Mode Setting of TapBridge\", mode_" + this->GetLinkName() + ");");
+  cmdLine.push_back("cmd.AddValue(\"tapName_" + this->GetLinkName() + "\", \"Name of the OS tap device\", tapName_" + this->GetLinkName() + ");");
   return cmdLine;
 }
 

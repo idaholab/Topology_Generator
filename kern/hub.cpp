@@ -29,9 +29,9 @@
 
 Hub::Hub(const size_t &indice) : Link(indice)
 {
-  this->setLinkName(std::string("hub_" + this->getIndice()));
-  this->setNdcName(std::string("ndc_" + this->getLinkName()));
-  this->setAllNodeContainer(std::string("all_" + this->getLinkName()));
+  this->SetLinkName(std::string("hub_" + this->GetIndice()));
+  this->SetNdcName(std::string("ndc_" + this->GetLinkName()));
+  this->SetAllNodeContainer(std::string("all_" + this->GetLinkName()));
 }
 
 Hub::~Hub()
@@ -49,9 +49,9 @@ std::vector<std::string> Hub::GenerateHeader()
 std::vector<std::string> Hub::GenerateLink()
 {
   std::vector<std::string> generatedLink;
-  generatedLink.push_back("CsmaHelper csma_" + this->getLinkName() + ";");
-  generatedLink.push_back("csma_" + this->getLinkName() + ".SetChannelAttribute (\"DataRate\", StringValue (\"" + this->getDataRate() + "\"));");
-  generatedLink.push_back("csma_" + this->getLinkName() + ".SetChannelAttribute (\"Delay\",  StringValue (\"" + this->getLinkDelay() + "\"));");
+  generatedLink.push_back("CsmaHelper csma_" + this->GetLinkName() + ";");
+  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute (\"DataRate\", StringValue (\"" + this->GetDataRate() + "\"));");
+  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute (\"Delay\",  StringValue (\"" + this->GetLinkDelay() + "\"));");
 
   return generatedLink;
 }
@@ -64,7 +64,7 @@ std::vector<std::string> Hub::GenerateNetDevice()
   {
     ndc.push_back(allNodes.at(i));
   }
-  ndc.push_back("NetDeviceContainer " + this->getNdcName() + " = csma_" + this->getLinkName() + ".Install (" + this->getAllNodeContainer() + ");");
+  ndc.push_back("NetDeviceContainer " + this->GetNdcName() + " = csma_" + this->GetLinkName() + ".Install (" + this->GetAllNodeContainer() + ");");
 
   return ndc;
 }
@@ -73,15 +73,15 @@ std::vector<std::string> Hub::GenerateTrace()
 {
   std::vector<std::string> trace;
 
-  if(this->getTrace())
+  if(this->GetTrace())
   {
-    if(this->getPromisc())
+    if(this->GetPromisc())
     {
-      trace.push_back("csma_" + this->getLinkName() + ".EnablePcapAll (\"csma_" + this->getLinkName() + "\", true);");
+      trace.push_back("csma_" + this->GetLinkName() + ".EnablePcapAll (\"csma_" + this->GetLinkName() + "\", true);");
     }
     else
     {
-      trace.push_back("csma_" + this->getLinkName() + ".EnablePcapAll (\"csma_" + this->getLinkName() + "\", false);");
+      trace.push_back("csma_" + this->GetLinkName() + ".EnablePcapAll (\"csma_" + this->GetLinkName() + "\", false);");
     }
   }
 

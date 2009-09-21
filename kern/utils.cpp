@@ -46,7 +46,7 @@ size_t split(std::vector<std::string> &res, std::string str, char separator)
   return res.size();
 }
 
-std::string toString(const size_t nb)
+std::string integerToString(const size_t nb)
 {
   std::ostringstream out;
   out << nb;

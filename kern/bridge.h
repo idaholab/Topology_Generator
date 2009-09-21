@@ -72,13 +72,13 @@ class Bridge : public Link
      * \brief Get bridge node name.
      * \return node name
      */
-    std::string getNodeBridge();
+    std::string GetNodeBridge();
     
     /**
      * \brief Set bridge node name.
      * \param nodeBridge new node name
      */
-    void setNodeBridge(const std::string &nodeBridge);
+    void SetNodeBridge(const std::string &nodeBridge);
 
     /**
      * \brief Generate headers.

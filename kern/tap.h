@@ -90,25 +90,25 @@ class Tap : public Link
      * \brief Get tap node name.
      * \return tap name
      */   
-    std::string getTapName();
+    std::string GetTapName();
 
     /**
      * \brief Set tap node name.
      * \param tapNode new tap name
      */
-    void setTapName(const std::string &tapNode);
+    void SetTapName(const std::string &tapNode);
 
     /**
      * \brief Get interface name.
      * \return interface name
      */
-    std::string getIfaceName();
+    std::string GetIfaceName();
 
     /**
      * \brief Set interface name.
      * \param ifaceName new interface name
      */
-    void setIfaceName(const std::string &ifaceName);
+    void SetIfaceName(const std::string &ifaceName);
 
     /**
      * \brief Generate headers code.

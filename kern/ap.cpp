@@ -30,24 +30,24 @@
 Ap::Ap(const size_t &indice, const std::string &apNode) : Link(indice)
 {
   this->Install(apNode);
-  this->setLinkName(std::string("ap_" + this->getIndice()));
-  this->setNdcName(std::string("ndc_" + this->getLinkName()));
-  this->setAllNodeContainer(std::string("all_" + this->getLinkName()));
-  this->setApNode(apNode);
-  this->setMobility(false);
-  this->setApName(std::string("wifi-default-" + this->getIndice()));
+  this->SetLinkName(std::string("ap_" + this->GetIndice()));
+  this->SetNdcName(std::string("ndc_" + this->GetLinkName()));
+  this->SetAllNodeContainer(std::string("all_" + this->GetLinkName()));
+  this->SetApNode(apNode);
+  this->SetMobility(false);
+  this->SetApName(std::string("wifi-default-" + this->GetIndice()));
 }
 
 Ap::~Ap()
 {
 }
 
-std::string Ap::getApNode()
+std::string Ap::GetApNode()
 {
   return this->m_apNode;
 }
 
-void Ap::setApNode(const std::string &apNode)
+void Ap::SetApNode(const std::string &apNode)
 {
   this->m_apNode = apNode;
 }
@@ -66,9 +66,9 @@ std::vector<std::string> Ap::GenerateLink()
 {
   std::vector<std::string> generatedLink;
   /* creation of the link. */
-  generatedLink.push_back("YansWifiPhyHelper wifiPhy_" + this->getLinkName() + " = YansWifiPhyHelper::Default ();");
-  generatedLink.push_back("YansWifiChannelHelper wifiChannel_" + this->getLinkName() + " = YansWifiChannelHelper::Default ();");
-  generatedLink.push_back("wifiPhy_" + this->getLinkName() + ".SetChannel (wifiChannel_" + this->getLinkName() + ".Create ());");
+  generatedLink.push_back("YansWifiPhyHelper wifiPhy_" + this->GetLinkName() + " = YansWifiPhyHelper::Default ();");
+  generatedLink.push_back("YansWifiChannelHelper wifiChannel_" + this->GetLinkName() + " = YansWifiChannelHelper::Default ();");
+  generatedLink.push_back("wifiPhy_" + this->GetLinkName() + ".SetChannel (wifiChannel_" + this->GetLinkName() + ".Create ());");
 
   return generatedLink;
 }
@@ -82,52 +82,52 @@ std::vector<std::string> Ap::GenerateNetDevice()
   {
     ndc.push_back(allNodes.at(i));
   }
-  ndc.push_back("NetDeviceContainer " + this->getNdcName() + ";");
-  ndc.push_back("Ssid ssid_" + this->getLinkName() + " = Ssid (\"" + this->getApName() + "\");");
-  ndc.push_back("WifiHelper wifi_" + this->getLinkName() + " = WifiHelper::Default ();");
-  ndc.push_back("NqosWifiMacHelper wifiMac_" + this->getLinkName() + " = NqosWifiMacHelper::Default ();");
-  ndc.push_back("wifi_" + this->getLinkName() + ".SetRemoteStationManager (\"ns3::ArfWifiManager\");");
+  ndc.push_back("NetDeviceContainer " + this->GetNdcName() + ";");
+  ndc.push_back("Ssid ssid_" + this->GetLinkName() + " = Ssid (\"" + this->GetApName() + "\");");
+  ndc.push_back("WifiHelper wifi_" + this->GetLinkName() + " = WifiHelper::Default ();");
+  ndc.push_back("NqosWifiMacHelper wifiMac_" + this->GetLinkName() + " = NqosWifiMacHelper::Default ();");
+  ndc.push_back("wifi_" + this->GetLinkName() + ".SetRemoteStationManager (\"ns3::ArfWifiManager\");");
 
-  ndc.push_back("wifiMac_" + this->getLinkName() + ".SetType (\"ns3::NqapWifiMac\", ");
-  ndc.push_back("   \"Ssid\", SsidValue (ssid_" + this->getLinkName() + "), ");
+  ndc.push_back("wifiMac_" + this->GetLinkName() + ".SetType (\"ns3::NqapWifiMac\", ");
+  ndc.push_back("   \"Ssid\", SsidValue (ssid_" + this->GetLinkName() + "), ");
   ndc.push_back("   \"BeaconGeneration\", BooleanValue (true),"); 
   ndc.push_back("   \"BeaconInterval\", TimeValue (Seconds (2.5)));");
-  ndc.push_back(this->getNdcName() + ".Add(wifi_" + this->getLinkName() + ".Install (wifiPhy_" + this->getLinkName() + ", wifiMac_" + this->getLinkName() + ", " + this->getApNode() + "));");
+  ndc.push_back(this->GetNdcName() + ".Add(wifi_" + this->GetLinkName() + ".Install (wifiPhy_" + this->GetLinkName() + ", wifiMac_" + this->GetLinkName() + ", " + this->GetApNode() + "));");
 
-  ndc.push_back("wifiMac_" + this->getLinkName() + ".SetType (\"ns3::NqstaWifiMac\",");
-  ndc.push_back("   \"Ssid\", SsidValue (ssid_" + this->getLinkName() + "), ");
+  ndc.push_back("wifiMac_" + this->GetLinkName() + ".SetType (\"ns3::NqstaWifiMac\",");
+  ndc.push_back("   \"Ssid\", SsidValue (ssid_" + this->GetLinkName() + "), ");
   ndc.push_back("   \"ActiveProbing\", BooleanValue (false));");
-  ndc.push_back(this->getNdcName() + ".Add (wifi_" + this->getLinkName() + ".Install (wifiPhy_" + this->getLinkName() + ", wifiMac_" + this->getLinkName() + ", " + this->getAllNodeContainer() + " ));");
+  ndc.push_back(this->GetNdcName() + ".Add (wifi_" + this->GetLinkName() + ".Install (wifiPhy_" + this->GetLinkName() + ", wifiMac_" + this->GetLinkName() + ", " + this->GetAllNodeContainer() + " ));");
 
-  ndc.push_back("MobilityHelper mobility_" + this->getLinkName() + ";");
-  ndc.push_back("mobility_" + this->getLinkName() + ".SetMobilityModel (\"ns3::ConstantPositionMobilityModel\");");
-  ndc.push_back("mobility_" + this->getLinkName() + ".Install(" + this->getApNode() + ");"); 
+  ndc.push_back("MobilityHelper mobility_" + this->GetLinkName() + ";");
+  ndc.push_back("mobility_" + this->GetLinkName() + ".SetMobilityModel (\"ns3::ConstantPositionMobilityModel\");");
+  ndc.push_back("mobility_" + this->GetLinkName() + ".Install(" + this->GetApNode() + ");"); 
 
-  if(this->getMobility())//if random walk is activated.
+  if(this->GetMobility())//if random walk is activated.
   {
-    ndc.push_back("mobility_" + this->getLinkName() + ".SetMobilityModel (\"ns3::RandomWalk2dMobilityModel\",\"Bounds\", RectangleValue (Rectangle (-50, 50, -50, 50)));");
+    ndc.push_back("mobility_" + this->GetLinkName() + ".SetMobilityModel (\"ns3::RandomWalk2dMobilityModel\",\"Bounds\", RectangleValue (Rectangle (-50, 50, -50, 50)));");
   }
-  ndc.push_back("mobility_" + this->getLinkName() + ".Install(" + this->getAllNodeContainer() + ");");
+  ndc.push_back("mobility_" + this->GetLinkName() + ".Install(" + this->GetAllNodeContainer() + ");");
 
   return ndc;
 }
 
-void Ap::setMobility(const bool &mobility)
+void Ap::SetMobility(const bool &mobility)
 {
   this->m_mobility = mobility;
 }
 
-bool Ap::getMobility()
+bool Ap::GetMobility()
 {
   return this->m_mobility;
 }
 
-void Ap::setApName(const std::string &apName)
+void Ap::SetApName(const std::string &apName)
 {
   this->m_apName = apName;
 }
 
-std::string Ap::getApName()
+std::string Ap::GetApName()
 {
   return this->m_apName;
 }
@@ -136,9 +136,9 @@ std::vector<std::string> Ap::GenerateTrace()
 {
   std::vector<std::string> trace;
 
-  if(this->getTrace())
+  if(this->GetTrace())
   {
-    trace.push_back("wifiPhy_" + this->getLinkName() + ".EnablePcap (\"" + this->getLinkName() + "\", " + this->getNdcName() + ".Get(0));");
+    trace.push_back("wifiPhy_" + this->GetLinkName() + ".EnablePcap (\"" + this->GetLinkName() + "\", " + this->GetNdcName() + ".Get(0));");
   }
 
   return trace;

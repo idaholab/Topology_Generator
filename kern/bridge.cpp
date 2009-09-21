@@ -32,22 +32,22 @@
 
 Bridge::Bridge(const size_t &indice, const std::string &nodeBridge) : Link(indice)
 {
-  this->setLinkName(std::string("bridge_" + this->getIndice()));
-  this->setNdcName(std::string("ndc_" + this->getLinkName()));
-  this->setAllNodeContainer(std::string("all_" + this->getLinkName()));
-  this->setNodeBridge(nodeBridge);
+  this->SetLinkName(std::string("bridge_" + this->GetIndice()));
+  this->SetNdcName(std::string("ndc_" + this->GetLinkName()));
+  this->SetAllNodeContainer(std::string("all_" + this->GetLinkName()));
+  this->SetNodeBridge(nodeBridge);
 }
 
 Bridge::~Bridge()
 {
 }
 
-std::string Bridge::getNodeBridge()
+std::string Bridge::GetNodeBridge()
 {
   return this->m_nodeBridge;
 }
 
-void Bridge::setNodeBridge(const std::string &nodeBridge)
+void Bridge::SetNodeBridge(const std::string &nodeBridge)
 {
   this->m_nodeBridge = nodeBridge;
 }
@@ -64,9 +64,9 @@ std::vector<std::string> Bridge::GenerateLink()
 {
   std::vector<std::string> generatedLink;
   /* creation of the link. */
-  generatedLink.push_back("CsmaHelper csma_" + this->getLinkName() + ";");
-  generatedLink.push_back("csma_" + this->getLinkName() + ".SetChannelAttribute (\"DataRate\", StringValue (\"" + this->getDataRate() + "\"));");
-  generatedLink.push_back("csma_" + this->getLinkName() + ".SetChannelAttribute (\"Delay\",  StringValue (\"" + this->getLinkDelay() + "\"));");
+  generatedLink.push_back("CsmaHelper csma_" + this->GetLinkName() + ";");
+  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute (\"DataRate\", StringValue (\"" + this->GetDataRate() + "\"));");
+  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute (\"Delay\",  StringValue (\"" + this->GetLinkDelay() + "\"));");
 
   return generatedLink;
 }
@@ -74,7 +74,7 @@ std::vector<std::string> Bridge::GenerateLink()
 std::vector<std::string> Bridge::GenerateNetDevice()
 {
   std::vector<std::string> ndc;
-  //ndc.push_back("NetDeviceContainer " + this->getNdcName() + " = csma_" + this->getLinkName() + ".Install (" + this->getAllNodeContainer() + ");");
+  //ndc.push_back("NetDeviceContainer " + this->GetNdcName() + " = csma_" + this->GetLinkName() + ".Install (" + this->GetAllNodeContainer() + ");");
 
   std::vector<std::string> allNodes = this->GroupAsNodeContainer();
   for(size_t i = 0; i < (size_t) allNodes.size(); i++)
@@ -82,20 +82,20 @@ std::vector<std::string> Bridge::GenerateNetDevice()
     ndc.push_back(allNodes.at(i));
   }
 
-  ndc.push_back("NetDeviceContainer terminalDevices_" + this->getLinkName() + ";");
-  ndc.push_back("NetDeviceContainer BridgeDevices_" + this->getLinkName() + ";");
+  ndc.push_back("NetDeviceContainer terminalDevices_" + this->GetLinkName() + ";");
+  ndc.push_back("NetDeviceContainer BridgeDevices_" + this->GetLinkName() + ";");
 
-  ndc.push_back("for (int i = 0; i < " + utils::toString(allNodes.size() - 1) + "; i++)");
+  ndc.push_back("for (int i = 0; i < " + utils::integerToString(allNodes.size() - 1) + "; i++)");
   ndc.push_back("{");
-  ndc.push_back(" NetDeviceContainer link = csma_" + this->getLinkName() + ".Install(NodeContainer(" + this->getAllNodeContainer() + ".Get(i), " + this->getNodeBridge() + "));");
-  ndc.push_back(" terminalDevices_" + this->getLinkName() + ".Add (link.Get(0));");
-  ndc.push_back(" BridgeDevices_" + this->getLinkName() + ".Add (link.Get(1));");
+  ndc.push_back(" NetDeviceContainer link = csma_" + this->GetLinkName() + ".Install(NodeContainer(" + this->GetAllNodeContainer() + ".Get(i), " + this->GetNodeBridge() + "));");
+  ndc.push_back(" terminalDevices_" + this->GetLinkName() + ".Add (link.Get(0));");
+  ndc.push_back(" BridgeDevices_" + this->GetLinkName() + ".Add (link.Get(1));");
   ndc.push_back("}");
 
-  ndc.push_back("BridgeHelper bridge_" + this->getLinkName() + ";");
-  ndc.push_back("bridge_" + this->getLinkName() + ".Install (" + this->getNodeBridge() + ".Get(0), BridgeDevices_" + this->getLinkName() + ");");
+  ndc.push_back("BridgeHelper bridge_" + this->GetLinkName() + ";");
+  ndc.push_back("bridge_" + this->GetLinkName() + ".Install (" + this->GetNodeBridge() + ".Get(0), BridgeDevices_" + this->GetLinkName() + ");");
 
-  ndc.push_back("NetDeviceContainer ndc_" + this->getLinkName() + " = terminalDevices_" + this->getLinkName() + ";"); 
+  ndc.push_back("NetDeviceContainer ndc_" + this->GetLinkName() + " = terminalDevices_" + this->GetLinkName() + ";"); 
 
   return ndc;
 }
@@ -104,15 +104,15 @@ std::vector<std::string> Bridge::GenerateTrace()
 {
   std::vector<std::string> trace;
 
-  if(this->getTrace())
+  if(this->GetTrace())
   {
-    if(this->getPromisc())
+    if(this->GetPromisc())
     {
-      trace.push_back("csma_" + this->getLinkName() + ".EnablePcapAll (\"csma_" + this->getLinkName() + "\", true);");
+      trace.push_back("csma_" + this->GetLinkName() + ".EnablePcapAll (\"csma_" + this->GetLinkName() + "\", true);");
     }
     else
     {
-      trace.push_back("csma_" + this->getLinkName() + ".EnablePcapAll (\"csma_" + this->getLinkName() + "\", false);");
+      trace.push_back("csma_" + this->GetLinkName() + ".EnablePcapAll (\"csma_" + this->GetLinkName() + "\", false);");
     }
   }
 

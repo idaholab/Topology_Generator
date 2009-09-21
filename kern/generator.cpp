@@ -222,7 +222,7 @@ void Generator::RemoveNode(const std::string &name)
   size_t startNumber = this->listNode.size();
   for(int i = 0; (size_t) i < this->listNode.size(); i++)
   {
-    if(this->listNode.at(i)->getNodeName() == name)
+    if(this->listNode.at(i)->GetNodeName() == name)
     {
       delete this->listNode[i];
       this->listNode.erase(this->listNode.begin() + i);
@@ -311,7 +311,7 @@ void Generator::RemoveApplication(const std::string &name)
   size_t startNumber = this->listApplication.size();
   for(int i = 0; (size_t) i < this->listApplication.size(); i++)
   {
-    if(this->listApplication.at(i)->getAppName() == name)
+    if(this->listApplication.at(i)->GetAppName() == name)
     {
       delete this->listApplication[i];
       this->listApplication.erase(this->listApplication.begin() + i);
@@ -410,7 +410,7 @@ void Generator::RemoveLink(const std::string &name)
   size_t startNumber = this->listLink.size();
   for(int i = 0; (size_t) i < this->listLink.size(); i++)
   {
-    if(this->listLink.at(i)->getLinkName() == name)
+    if(this->listLink.at(i)->GetLinkName() == name)
     {
       delete this->listLink[i];
       this->listLink.erase(this->listLink.begin() + i);
@@ -627,9 +627,9 @@ void Generator::GenerateCode()
   size_t stopTime = 0;/* default stop time. */
   for(size_t i = 0; i < (size_t) this->listApplication.size(); i++)
   {
-    if( (this->listApplication.at(i))->getEndTimeNumber() > stopTime)
+    if( (this->listApplication.at(i))->GetEndTimeNumber() > stopTime)
     {
-      stopTime = (this->listApplication.at(i))->getEndTimeNumber();
+      stopTime = (this->listApplication.at(i))->GetEndTimeNumber();
     }
   }
   stopTime += 1;
@@ -719,9 +719,9 @@ std::vector<std::string> Generator::GenerateVars()
   /* add nsc var if used. */
   for(size_t i = 0; i < (size_t) this->listNode.size(); i++)
   {
-    if( (this->listNode.at(i))->getNsc() != "")
+    if( (this->listNode.at(i))->GetNsc() != "")
     {
-      allVars.push_back("std::string nscStack = \"" + (this->listNode.at(i))->getNsc() + "\";");
+      allVars.push_back("std::string nscStack = \"" + (this->listNode.at(i))->GetNsc() + "\";");
     }
   }
   return allVars;
@@ -745,7 +745,7 @@ std::vector<std::string> Generator::GenerateConfig()
 {
   for(size_t i = 0; i < (size_t) this->listNode.size(); i++)
   {
-    if( ((this->listNode.at(i))->getNodeName()).find("tap_") == 0)
+    if( ((this->listNode.at(i))->GetNodeName()).find("tap_") == 0)
     {
       this->AddConfig("GlobalValue::Bind (\"SimulatorImplementationType\", StringValue (\"ns3::RealtimeSimulatorImpl\"));");
       this->AddConfig("GlobalValue::Bind (\"ChecksumEnabled\", BooleanValue (true));");
@@ -754,7 +754,7 @@ std::vector<std::string> Generator::GenerateConfig()
 
   for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
   { 
-    if( ((this->listLink.at(i))->getLinkName()).find("emu_") == 0 )
+    if( ((this->listLink.at(i))->GetLinkName()).find("emu_") == 0 )
     {
       this->AddConfig("GlobalValue::Bind (\"SimulatorImplementationType\", StringValue (\"ns3::RealtimeSimulatorImpl\"));");
       this->AddConfig("GlobalValue::Bind (\"ChecksumEnabled\", BooleanValue (true));");
@@ -823,7 +823,7 @@ std::vector<std::string> Generator::GenerateIpStack()
   std::string nodeName = "";
   for(size_t i = 0; i < (size_t) this->listNode.size(); i++)
   {
-    nodeName = (this->listNode.at(i))->getNodeName();
+    nodeName = (this->listNode.at(i))->GetNodeName();
     /* if it is not a bridge you can add it. */
     if(nodeName.find("bridge_") != 0)
     {
@@ -846,8 +846,8 @@ std::vector<std::string> Generator::GenerateIpAssign()
   size_t ipRange = 0;
   for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
   {
-    ipAssign.push_back("ipv4.SetBase (\"10.0." + utils::toString(ipRange) + ".0\", \"255.255.255.0\");");
-    ipAssign.push_back("Ipv4InterfaceContainer iface_" + this->listLink.at(i)->getNdcName() + " = ipv4.Assign(" + this->listLink.at(i)->getNdcName() + ");");
+    ipAssign.push_back("ipv4.SetBase (\"10.0." + utils::integerToString(ipRange) + ".0\", \"255.255.255.0\");");
+    ipAssign.push_back("Ipv4InterfaceContainer iface_" + this->listLink.at(i)->GetNdcName() + " = ipv4.Assign(" + this->listLink.at(i)->GetNdcName() + ");");
     ipRange += 1;
   } 
 
@@ -873,7 +873,7 @@ std::vector<std::string> Generator::GenerateApplication()
   for(size_t i = 0; i < (size_t) this->listApplication.size(); i++)
   {
     /* get NetDeviceContainer and number from the receiver. */
-    std::string receiverName = this->listApplication.at(i)->getReceiverNode();
+    std::string receiverName = this->listApplication.at(i)->GetReceiverNode();
     nodeNumber = 0;
     ndcName = "";
     linkNumber = 0;
@@ -894,11 +894,11 @@ std::vector<std::string> Generator::GenerateApplication()
       for(size_t x = 0;  x < this->listLink.size(); x++)
       {
         nodeNumber = 0;
-        for(size_t y = 0; y < this->listLink.at(x)->getInstalledNodes().size(); y++)
+        for(size_t y = 0; y < this->listLink.at(x)->GetInstalledNodes().size(); y++)
         {
-          if(this->listLink.at(x)->getInstalledNodes().at(y) == receiverName || this->listLink.at(x)->getInstalledNodes().at(y) == oldReceiverName)
+          if(this->listLink.at(x)->GetInstalledNodes().at(y) == receiverName || this->listLink.at(x)->GetInstalledNodes().at(y) == oldReceiverName)
           {
-            ndcName = (this->listLink.at(x))->getNdcName();
+            ndcName = (this->listLink.at(x))->GetNdcName();
             linkNumber = x;
             break;
           }
@@ -908,7 +908,7 @@ std::vector<std::string> Generator::GenerateApplication()
           }
         }
       }
-      std::vector<std::string> linksNode = this->listLink.at(linkNumber)->getInstalledNodes();
+      std::vector<std::string> linksNode = this->listLink.at(linkNumber)->GetInstalledNodes();
       for(size_t j = 0; j < linksNode.size(); j++)
       {
         if(linksNode.at(j) == oldReceiverName)
@@ -924,21 +924,21 @@ std::vector<std::string> Generator::GenerateApplication()
       {
         nodeNumber = 0;
         linkNumber = 0;
-        std::vector<std::string> nodes = (this->listLink.at(j))->getInstalledNodes();
+        std::vector<std::string> nodes = (this->listLink.at(j))->GetInstalledNodes();
         for(size_t k = 0; k < (size_t) nodes.size(); k++)
         {
           if( nodes.at(k) == receiverName)
           {
-            ndcName = (this->listLink.at(j))->getNdcName();
+            ndcName = (this->listLink.at(j))->GetNdcName();
             break;
           }
           else
           {
             for(size_t l = 0; l < (size_t) this->listNode.size(); l++)
             {
-              if(this->listNode.at(l)->getNodeName() == nodes.at(k))
+              if(this->listNode.at(l)->GetNodeName() == nodes.at(k))
               {
-                nodeNumber += this->listNode.at(l)->getMachinesNumber();
+                nodeNumber += this->listNode.at(l)->GetMachinesNumber();
                 break;
               }
             }
@@ -1001,7 +1001,7 @@ void Generator::OpenXml()
 {
 }
 
-std::string Generator::getXmlFileName() 
+std::string Generator::GetXmlFileName() 
 {
   return this->m_xmlFileName;
 }
@@ -1011,7 +1011,7 @@ void Generator::WriteXml(const std::string &line)
   std::cout << line << std::endl;
 }
 
-void Generator::setXmlFileName(const std::string &xmlFileName) 
+void Generator::SetXmlFileName(const std::string &xmlFileName) 
 {
   this->m_xmlFileName = xmlFileName;
 }
@@ -1020,12 +1020,12 @@ void Generator::setXmlFileName(const std::string &xmlFileName)
 // Cpp generation operation part.
 //
 
-std::string Generator::getCppFileName() 
+std::string Generator::GetCppFileName() 
 {
   return this->m_cppFileName;
 }
 
-void Generator::setCppFileName(const std::string &cppFileName ) 
+void Generator::SetCppFileName(const std::string &cppFileName ) 
 {
   this->m_cppFileName = cppFileName;
 }
@@ -1044,12 +1044,12 @@ void Generator::WritePython(const std::string &line)
   std::cout << line << std::endl;
 }
 
-std::string Generator::getPyFileName() 
+std::string Generator::GetPyFileName() 
 {
   return this->m_pyFileName;
 }
 
-void Generator::setPyFileName(const std::string &pyFileName ) 
+void Generator::SetPyFileName(const std::string &pyFileName ) 
 {
   this->m_pyFileName = pyFileName;
 }

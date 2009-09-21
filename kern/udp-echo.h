@@ -105,49 +105,49 @@ class UdpEcho : public Application
      * \brief Get port.
      * \return port
      */
-    size_t getPort();
+    size_t GetPort();
 
     /**
      * \brief Set port.
      * \param port new port
      */
-    void setPort(const size_t &port);
+    void SetPort(const size_t &port);
 
     /**
      * \brief Set packet size.
      * \param packetSize new packet size
      */
-    void setPacketSize(const size_t &packetSize);
+    void SetPacketSize(const size_t &packetSize);
 
     /**
      * \brief Get packet size.
      * \return packet size
      */
-    size_t getPacketSize();
+    size_t GetPacketSize();
 
     /**
      * \brief Set max packet count.
      * \param maxPacketCount max packet count
      */
-    void setMaxPacketCount(const size_t &maxPacketCount);
+    void SetMaxPacketCount(const size_t &maxPacketCount);
 
     /**
      * \brief Get max packet count.
      * \return max packet count
      */
-    size_t getMaxPacketCount();
+    size_t GetMaxPacketCount();
 
     /**
      * \brief Set packet interval time.
      * \param packetIntervalTime packet interval time
      */
-    void setPacketIntervalTime(const std::string &packetIntervalTime);
+    void SetPacketIntervalTime(const std::string &packetIntervalTime);
 
     /**
      * \brief Get packet interval time.
      * \return packet interval time
      */
-    std::string getPacketIntervalTime();
+    std::string GetPacketIntervalTime();
 };
 
 #endif /* UDP_ECHO_H */

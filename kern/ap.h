@@ -82,37 +82,37 @@ class Ap : public Link
      * \brief Switch mobility on the connected station.
      * \param mobility bool to apply mobility or not
      */
-    void setMobility(const bool &mobility);
+    void SetMobility(const bool &mobility);
 
     /**
      * \brief Get mobility.
      * \return mobility
      */
-    bool getMobility();
+    bool GetMobility();
 
     /**
      * \brief Get the ap node name.
      * \return ap node name
      */
-    std::string getApNode();
+    std::string GetApNode();
 
     /**
      * \brief Set ap node.
      * \param apNode new ap node
      */
-    void setApNode(const std::string &apNode);
+    void SetApNode(const std::string &apNode);
 
     /**
      * \brief Get ap name.
      * \return ap name
      */
-    std::string getApName();
+    std::string GetApName();
 
     /**
      * \brief Set the ap name (ssid).
      * \param apName the new apName
      */
-    void setApName(const std::string &apName);
+    void SetApName(const std::string &apName);
 
     /**
      * \brief Generate headers.

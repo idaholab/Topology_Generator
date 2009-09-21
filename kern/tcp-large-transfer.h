@@ -89,13 +89,13 @@ class TcpLargeTransfer : public Application
      * \brief Get port.
      * \return port.
      */
-    size_t getPort();
+    size_t GetPort();
 
     /**
      * \brief Set port.
      * \param port new port
      */
-    void setPort(const size_t &port);
+    void SetPort(const size_t &port);
 };
 
 #endif /* TCPLARGETRANSFER_H */

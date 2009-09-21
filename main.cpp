@@ -64,16 +64,16 @@ static void printState(Generator *gen)
   std::cout << "Nodes :" << std::endl;
   for(int i = 0; (size_t) i < gen->GetNNodes(); i++)
   {
-    std::cout << "- " << gen->GetNode(i)->getNodeName() << std::endl;
+    std::cout << "- " << gen->GetNode(i)->GetNodeName() << std::endl;
   }
 
   std::cout << "Link :" << std::endl;
   for(int i = 0; (size_t) i < gen->GetNLinks(); i++)
   {
-    std::cout << "- " << gen->GetLink(i)->getLinkName() << std::endl;
-    for(int j = 0; (size_t) j < gen->GetLink(i)->getInstalledNodes().size(); j++)
+    std::cout << "- " << gen->GetLink(i)->GetLinkName() << std::endl;
+    for(int j = 0; (size_t) j < gen->GetLink(i)->GetInstalledNodes().size(); j++)
     {
-      std::cout << "  -- " << gen->GetLink(i)->getInstalledNodes().at(j) << std::endl;
+      std::cout << "  -- " << gen->GetLink(i)->GetInstalledNodes().at(j) << std::endl;
     }
   }
 }
@@ -122,30 +122,30 @@ int main(int argc, char *argv[])
   gen->AddNode(std::string("Emu"));//6
 
   gen->AddLink(std::string("Hub"));//0
-  gen->GetLink(0)->Install(gen->GetNode(0)->getNodeName());
-  gen->GetLink(0)->Install(gen->GetNode(1)->getNodeName(0));
-  gen->GetLink(0)->setTrace(true);
-  gen->GetLink(0)->setPromisc(true);
+  gen->GetLink(0)->Install(gen->GetNode(0)->GetNodeName());
+  gen->GetLink(0)->Install(gen->GetNode(1)->GetNodeName(0));
+  gen->GetLink(0)->SetTrace(true);
+  gen->GetLink(0)->SetPromisc(true);
 
   gen->AddLink(std::string("PointToPoint"));//1
-  gen->GetLink(1)->Install(gen->GetNode(0)->getNodeName());
-  gen->GetLink(1)->Install(gen->GetNode(1)->getNodeName(1));
+  gen->GetLink(1)->Install(gen->GetNode(0)->GetNodeName());
+  gen->GetLink(1)->Install(gen->GetNode(1)->GetNodeName(1));
 
-  gen->AddLink(std::string("Bridge"), gen->GetNode(4)->getNodeName());//2
-  gen->GetLink(2)->Install(gen->GetNode(0)->getNodeName());
-  gen->GetLink(2)->Install(gen->GetNode(1)->getNodeName(2));
+  gen->AddLink(std::string("Bridge"), gen->GetNode(4)->GetNodeName());//2
+  gen->GetLink(2)->Install(gen->GetNode(0)->GetNodeName());
+  gen->GetLink(2)->Install(gen->GetNode(1)->GetNodeName(2));
 
-  gen->AddLink(std::string("Ap"), gen->GetNode(2)->getNodeName());//3
-  gen->GetLink(3)->setMobility(true);
-  gen->GetLink(3)->Install(gen->GetNode(0)->getNodeName());
-  gen->GetLink(3)->Install(gen->GetNode(3)->getNodeName());
+  gen->AddLink(std::string("Ap"), gen->GetNode(2)->GetNodeName());//3
+  gen->GetLink(3)->SetMobility(true);
+  gen->GetLink(3)->Install(gen->GetNode(0)->GetNodeName());
+  gen->GetLink(3)->Install(gen->GetNode(3)->GetNodeName());
 
-  //gen->AddLink(std::string("Emu"), gen->GetNode(6)->getNodeName(), std::string("wlan0"));//4
-  //gen->AddLink(std::string("Tap"), gen->GetNode(5)->getNodeName(), std::string("tap0"));//5
+  //gen->AddLink(std::string("Emu"), gen->GetNode(6)->GetNodeName(), std::string("wlan0"));//4
+  //gen->AddLink(std::string("Tap"), gen->GetNode(5)->GetNodeName(), std::string("tap0"));//5
 
-  gen->AddApplication(std::string("Ping"), gen->GetNode(1)->getNodeName(0), gen->GetNode(1)->getNodeName(1), 0, 5);
-  gen->AddApplication(std::string("Ping"), gen->GetNode(1)->getNodeName(0), gen->GetNode(1)->getNodeName(2), 0, 5);
-  gen->AddApplication(std::string("Ping"), gen->GetNode(1)->getNodeName(0), gen->GetNode(3)->getNodeName(), 0, 5);
+  gen->AddApplication(std::string("Ping"), gen->GetNode(1)->GetNodeName(0), gen->GetNode(1)->GetNodeName(1), 0, 5);
+  gen->AddApplication(std::string("Ping"), gen->GetNode(1)->GetNodeName(0), gen->GetNode(1)->GetNodeName(2), 0, 5);
+  gen->AddApplication(std::string("Ping"), gen->GetNode(1)->GetNodeName(0), gen->GetNode(3)->GetNodeName(), 0, 5);
 
   gen->GenerateCode();
  

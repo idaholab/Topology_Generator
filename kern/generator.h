@@ -459,14 +459,14 @@ class Generator
      *
      * \return xml file name
      */
-    std::string getXmlFileName();
+    std::string GetXmlFileName();
 
     /**
      * \brief Set xml file name.
      *
      * \param xmlFileName the new XML file name
      */
-    void setXmlFileName(const std::string &xmlFileName );
+    void SetXmlFileName(const std::string &xmlFileName );
 
     /**
      * \brief Write simulation into XML file.
@@ -493,13 +493,13 @@ class Generator
      * \brief Get the C++ output file name.
      * \return C++ file name
      */
-    std::string getCppFileName();
+    std::string GetCppFileName();
 
     /**
      * \brief Set C++ output file name.
      * \param cppFileName the new C++ file name
      */
-    void setCppFileName(const std::string &cppFileName);
+    void SetCppFileName(const std::string &cppFileName);
 
     /**
      * \brief Write C++ code into the attribute file name.
@@ -520,13 +520,13 @@ class Generator
      * \brief Get python output file name.
      * \return python file name
      */
-    std::string getPyFileName();
+    std::string GetPyFileName();
 
     /**
      * \brief Set the python output file name.
      * \param pyFileName the new python file name
      */
-    void setPyFileName(const std::string &pyFileName);
+    void SetPyFileName(const std::string &pyFileName);
 
     /**
      * \brief Write python code into the output file name.

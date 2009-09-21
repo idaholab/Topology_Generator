@@ -173,49 +173,49 @@ class Link
      * \brief Get link number.
      * \return link number
      */
-    std::string getIndice();
+    std::string GetIndice();
 
     /**
      * \brief Set link number.
      * \param indice new indice
      */
-    void setIndice(const size_t &indice);
+    void SetIndice(const size_t &indice);
 
     /**
      * \brief Get link name.
      * \return link name
      */
-    std::string getLinkName();
+    std::string GetLinkName();
 
     /**
      * \brief Get link data rate.
      * \return link data rate
      */
-    std::string getDataRate();
+    std::string GetDataRate();
 
     /**
      * \brief Get link delay (in ms).
      * \return link delay
      */
-    std::string getLinkDelay();
+    std::string GetLinkDelay();
 
     /**
      * \brief Get net device container name.
      * \return net device container name
      */
-    std::string getNdcName();
+    std::string GetNdcName();
 
     /**
      * \brief Get attached nodes list.
      * \return node list
      */
-    std::vector<std::string> getInstalledNodes();
+    std::vector<std::string> GetInstalledNodes();
 
     /**
      * \brief Get n node.
-     * \param i index from get node
+     * \param i index from Get node
      */
-    std::string getNInstalledNodes(const size_t &i);
+    std::string GetNInstalledNodes(const size_t &i);
 
     /**
      * \brief Remove installed selected node.
@@ -227,25 +227,25 @@ class Link
      * \brief Set link rate.
      * \param linkName new link name
      */
-    void setLinkName(const std::string &linkName);
+    void SetLinkName(const std::string &linkName);
 
     /**
      * \brief Set data rate.
      * \param dataRate new data rate
      */
-    void setDataRate(const std::string &dataRate);
+    void SetDataRate(const std::string &dataRate);
 
     /**
      * \brief Set link delay.
      * \param linkDelay new link delay
      */
-    void setLinkDelay(const std::string &linkDelay);
+    void SetLinkDelay(const std::string &linkDelay);
 
     /**
      * \brief Set net device container name.
      * \param ndcName new net device container name
      */
-    void setNdcName(const std::string &ndcName);
+    void SetNdcName(const std::string &ndcName);
 
     /**
      * \brief Install node on link.
@@ -263,37 +263,37 @@ class Link
      * \brief Get all node container name.
      * \return node container name
      */
-    std::string getAllNodeContainer();
+    std::string GetAllNodeContainer();
     
     /**
      * \brief Set name of all node container.
      * \param allNodeContainer all node container
      */
-    void setAllNodeContainer(const std::string &allNodeContainer);
+    void SetAllNodeContainer(const std::string &allNodeContainer);
 
     /**
      * \brief Enable/disable tracing.
      * \param state trace state
      */
-    void setTrace(const bool &state);
+    void SetTrace(const bool &state);
 
     /**
      * \brief Get tracing mod.
      * \return trace mod
      */
-    bool getTrace();
+    bool GetTrace();
 
     /**
      * \brief Enable/disable tracing in promiscious state.
      * \param state promisc state
      */
-    void setPromisc(const bool &state);
+    void SetPromisc(const bool &state);
 
     /**
      * \brief Get promisc mod.
      * \return promisc mod
      */
-    bool getPromisc();
+    bool GetPromisc();
 
 };
 

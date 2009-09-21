@@ -33,54 +33,54 @@
 
 Link::Link(const size_t &indice)
 {
-  this->setIndice(indice);
-  this->setDataRate(std::string("100Mbps"));
-  this->setLinkDelay(std::string("10ms"));
+  this->SetIndice(indice);
+  this->SetDataRate(std::string("100Mbps"));
+  this->SetLinkDelay(std::string("10ms"));
 
-  this->setTrace(false);
-  this->setPromisc(false);
+  this->SetTrace(false);
+  this->SetPromisc(false);
 }
 
 Link::~Link()
 {
 }
 
-std::string Link::getIndice()
+std::string Link::GetIndice()
 {
-  return utils::toString(this->m_indice);
+  return utils::integerToString(this->m_indice);
 }
 
-void Link::setIndice(const size_t &indice)
+void Link::SetIndice(const size_t &indice)
 {
   this->m_indice = indice;
 }
 
-std::string Link::getLinkName()
+std::string Link::GetLinkName()
 {
   return this->m_linkName;
 }
 
-std::string Link::getDataRate()
+std::string Link::GetDataRate()
 {
   return this->m_dataRate;
 }
 
-std::string Link::getLinkDelay()
+std::string Link::GetLinkDelay()
 {
   return this->m_linkDelay;
 }
 
-std::string Link::getNdcName()
+std::string Link::GetNdcName()
 {
   return this->m_ndcName;
 }
 
-std::vector<std::string> Link::getInstalledNodes()
+std::vector<std::string> Link::GetInstalledNodes()
 {
   return this->m_nodes;
 }
 
-std::string Link::getNInstalledNodes(const size_t &i)
+std::string Link::GetNInstalledNodes(const size_t &i)
 {
   return this->m_nodes.at(i);
 }
@@ -98,22 +98,22 @@ void Link::removeInstalledNodes(const size_t &nb)
   }
 }
 
-void Link::setLinkName(const std::string &linkName)
+void Link::SetLinkName(const std::string &linkName)
 {
   this->m_linkName = linkName;
 }
 
-void Link::setDataRate(const std::string &dataRate)
+void Link::SetDataRate(const std::string &dataRate)
 {
   this->m_dataRate = dataRate;
 }
 
-void Link::setLinkDelay(const std::string &linkDelay)
+void Link::SetLinkDelay(const std::string &linkDelay)
 {
   this->m_linkDelay = linkDelay;
 }
 
-void Link::setNdcName(const std::string &ndcName)
+void Link::SetNdcName(const std::string &ndcName)
 {
   this->m_ndcName = ndcName;
 }
@@ -123,15 +123,15 @@ void Link::Install(const std::string &node)
   this->m_nodes.push_back(node);
   std::vector<std::string> trans;
   std::vector<std::string> transWhitoutRouter;
-  for(size_t i = 0; i < (size_t) this->getInstalledNodes().size(); i++)
+  for(size_t i = 0; i < (size_t) this->GetInstalledNodes().size(); i++)
   {
     if((this->m_nodes.at(i)).find("router_") == 0)
     {
-      trans.push_back(this->getNInstalledNodes(i));
+      trans.push_back(this->GetNInstalledNodes(i));
     }
     else
     {
-      transWhitoutRouter.push_back(this->getNInstalledNodes(i));
+      transWhitoutRouter.push_back(this->GetNInstalledNodes(i));
     }
   }
   for(size_t i = 0; i < (size_t) transWhitoutRouter.size(); i++)
@@ -141,12 +141,12 @@ void Link::Install(const std::string &node)
   this->m_nodes = trans;
 }
 
-std::string Link::getAllNodeContainer()
+std::string Link::GetAllNodeContainer()
 {
   return this->m_allNodeContainer;
 }
 
-void Link::setAllNodeContainer(const std::string &allNodeContainer)
+void Link::SetAllNodeContainer(const std::string &allNodeContainer)
 {
   this->m_allNodeContainer = allNodeContainer;
 }
@@ -154,12 +154,12 @@ void Link::setAllNodeContainer(const std::string &allNodeContainer)
 std::vector<std::string> Link::GroupAsNodeContainer()
 {
   std::vector<std::string> res;
-  res.push_back("NodeContainer " + this->getAllNodeContainer() + ";");
-  for(size_t i = 0; i < (size_t) this->getInstalledNodes().size(); i++)
+  res.push_back("NodeContainer " + this->GetAllNodeContainer() + ";");
+  for(size_t i = 0; i < (size_t) this->GetInstalledNodes().size(); i++)
   {
-    if((this->getNInstalledNodes(i)).find("ap_") != 0)
+    if((this->GetNInstalledNodes(i)).find("ap_") != 0)
     {
-      res.push_back(this->getAllNodeContainer() + ".Add(" + this->getNInstalledNodes(i) + ");");
+      res.push_back(this->GetAllNodeContainer() + ".Add(" + this->GetNInstalledNodes(i) + ");");
     }
   }
 
@@ -190,22 +190,22 @@ std::vector<std::string> Link::GenerateTrace()
   return res;
 }
 
-void Link::setTrace(const bool &state)
+void Link::SetTrace(const bool &state)
 {
   this->m_enableTrace = state;
 }
 
-bool Link::getTrace()
+bool Link::GetTrace()
 {
   return this->m_enableTrace;
 }
 
-void Link::setPromisc(const bool &state)
+void Link::SetPromisc(const bool &state)
 {
   this->m_tracePromisc = state;
 }
 
-bool Link::getPromisc()
+bool Link::GetPromisc()
 {
   return this->m_tracePromisc;
 }

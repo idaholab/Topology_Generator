@@ -32,11 +32,11 @@
 
 Node::Node(const size_t &indice, const std::string &type, const size_t &machinesNumber)
 {
-  this->setIndice(indice);
-  this->setNodeName(std::string(type + utils::toString(indice)));
-  this->setIpInterfaceName(std::string("iface_" + this->getNodeName()));
-  this->setNsc(std::string(""));	
-  this->setMachinesNumber(machinesNumber);
+  this->SetIndice(indice);
+  this->SetNodeName(std::string(type + utils::integerToString(indice)));
+  this->SetIpInterfaceName(std::string("iface_" + this->GetNodeName()));
+  this->SetNsc(std::string(""));	
+  this->SetMachinesNumber(machinesNumber);
 }
 
 Node::~Node()
@@ -54,8 +54,8 @@ std::vector<std::string> Node::GenerateHeader()
 std::vector<std::string> Node::GenerateNode()
 {
   std::vector<std::string> nodes;
-  nodes.push_back("NodeContainer " + this->getNodeName() + ";");
-  nodes.push_back(this->getNodeName() + ".Create(" + utils::toString(this->getMachinesNumber()) + ");");
+  nodes.push_back("NodeContainer " + this->GetNodeName() + ";");
+  nodes.push_back(this->GetNodeName() + ".Create(" + utils::integerToString(this->GetMachinesNumber()) + ");");
 
   return nodes; 
 }
@@ -64,66 +64,66 @@ std::vector<std::string> Node::GenerateIpStack()
 {
   std::vector<std::string> stack;
   
-  if(this->getNsc() != "")
+  if(this->GetNsc() != "")
   {
     stack.push_back("internetStackH.SetTcp (\"ns3::NscTcpL4Protocol\",\"Library\",StringValue(nscStack));");
   }
-  stack.push_back("internetStackH.Install (" + this->getNodeName() + ");");
+  stack.push_back("internetStackH.Install (" + this->GetNodeName() + ");");
 
   return stack; 
 }
 
-void Node::setNodeName(const std::string &nodeName)
+void Node::SetNodeName(const std::string &nodeName)
 {
   this->m_nodeName = nodeName;
 }
 
-void Node::setIpInterfaceName(const std::string &ipInterfaceName)
+void Node::SetIpInterfaceName(const std::string &ipInterfaceName)
 {
   this->m_ipInterfaceName = ipInterfaceName;
 }
 
-std::string Node::getNodeName()
+std::string Node::GetNodeName()
 {
   return this->m_nodeName;
 }
 
-std::string Node::getNodeName(const size_t &number)
+std::string Node::GetNodeName(const size_t &number)
 {
-  return std::string("NodeContainer(" + this->getNodeName() + ".Get(" + utils::toString(number) + "))");
+  return std::string("NodeContainer(" + this->GetNodeName() + ".Get(" + utils::integerToString(number) + "))");
 }
 
-std::string Node::getIpInterfaceName()
+std::string Node::GetIpInterfaceName()
 {
   return this->m_ipInterfaceName;
 }
 
-std::string Node::getIndice()
+std::string Node::GetIndice()
 {
-  return utils::toString(this->m_indice);
+  return utils::integerToString(this->m_indice);
 }
 
-void Node::setIndice(const size_t &indice)
+void Node::SetIndice(const size_t &indice)
 {
   this->m_indice = indice;
 }
 
-std::string Node::getNsc()
+std::string Node::GetNsc()
 {
   return this->m_nsc;
 }
 
-void Node::setNsc(const std::string &nsc)
+void Node::SetNsc(const std::string &nsc)
 {
   this->m_nsc = nsc;
 }
 
-size_t Node::getMachinesNumber()
+size_t Node::GetMachinesNumber()
 {
   return this->m_machinesNumber;
 }
 
-void Node::setMachinesNumber(const size_t &machinesNumber)
+void Node::SetMachinesNumber(const size_t machinesNumber)
 {
   this->m_machinesNumber = machinesNumber;
 }

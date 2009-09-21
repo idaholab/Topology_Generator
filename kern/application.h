@@ -124,79 +124,79 @@ class Application
      * \brief Get application number.
      * \return application number
      */
-    std::string getIndice();
+    std::string GetIndice();
 
     /**
      * \brief Get application number.
      * \param indice new indice
      */
-    void setIndice(const size_t &indice);
+    void SetIndice(const size_t &indice);
 
     /**
      * \brief Get application node name.
      * \return application node name
      */
-    std::string getAppName();
+    std::string GetAppName();
 
     /**
      * \brief Set application name.
      * \param appName new application name
      */
-    void setAppName(const std::string &appName);
+    void SetAppName(const std::string &appName);
 
     /**
      * \brief Get sender node name.
      * \return sender node name
      */
-    std::string getSenderNode();
+    std::string GetSenderNode();
 
     /**
      * \brief Set sender node name.
      * \param senderNode new sender node name
      */
-    void setSenderNode(const std::string &senderNode);
+    void SetSenderNode(const std::string &senderNode);
 
     /**
      * \brief Get receiver node name.
      * \return receiver node name
      */
-    std::string getReceiverNode();
+    std::string GetReceiverNode();
 
     /**
      * \brief Set receiver node name.
      * \param receiverNode new receiver node name
      */
-    void setReceiverNode(const std::string &receiverNode);
+    void SetReceiverNode(const std::string &receiverNode);
 
     /**
      * \brief Get application start time.
      * \return application start time
      */
-    std::string getStartTime();
+    std::string GetStartTime();
 
     /**
      * \brief Set application start time.
      * \param startTime application start time
      */
-    void setStartTime(const size_t &startTime);
+    void SetStartTime(const size_t &startTime);
 
     /**
      * \brief Get application end time.
      * \return application end time
      */
-    std::string getEndTime();
+    std::string GetEndTime();
 
     /**
      * \brief Get application end time.
      * \return end time formatted into number
      */
-    size_t getEndTimeNumber();
+    size_t GetEndTimeNumber();
 
     /**
      * \brief Set application end time.
      * \param m_endTime application end time
      */
-    void setEndTime(const size_t &m_endTime);
+    void SetEndTime(const size_t &m_endTime);
 };
 
 #endif /* APPLICATION_H */

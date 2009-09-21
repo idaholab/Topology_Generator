@@ -32,78 +32,78 @@
 
 Application::Application(const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime)
 {
-  this->setIndice(indice);
-  this->setSenderNode(senderNode);
-  this->setReceiverNode(receiverNode);
-  this->setStartTime(startTime);
-  this->setEndTime(endTime);
+  this->SetIndice(indice);
+  this->SetSenderNode(senderNode);
+  this->SetReceiverNode(receiverNode);
+  this->SetStartTime(startTime);
+  this->SetEndTime(endTime);
 }
 
 Application::~Application()
 {
 }
 
-std::string Application::getIndice()
+std::string Application::GetIndice()
 {
-  return utils::toString(this->m_indice);
+  return utils::integerToString(this->m_indice);
 }
 
-void Application::setIndice(const size_t &indice)
+void Application::SetIndice(const size_t &indice)
 {
   this->m_indice = indice;
 }
 
-std::string Application::getAppName()
+std::string Application::GetAppName()
 {
   return this->m_appName;
 }
 
-void Application::setAppName(const std::string &appName)
+void Application::SetAppName(const std::string &appName)
 {
   this->m_appName = appName;
 }
 
-std::string Application::getSenderNode()
+std::string Application::GetSenderNode()
 {
   return this->m_senderNode;
 }
 
-void Application::setSenderNode(const std::string &senderNode)
+void Application::SetSenderNode(const std::string &senderNode)
 {
   this->m_senderNode = senderNode;
 }
 
-std::string Application::getReceiverNode()
+std::string Application::GetReceiverNode()
 {
   return this->m_receiverNode;
 }
 
-void Application::setReceiverNode(const std::string &receiverNode)
+void Application::SetReceiverNode(const std::string &receiverNode)
 {
   this->m_receiverNode = receiverNode;
 }
 
-std::string Application::getStartTime()
+std::string Application::GetStartTime()
 {
-  return utils::toString(this->m_startTime);
+  return utils::integerToString(this->m_startTime);
 }
 
-void Application::setStartTime(const size_t &startTime)
+void Application::SetStartTime(const size_t &startTime)
 {
   this->m_startTime = startTime;
 }
 
-std::string Application::getEndTime()
+std::string Application::GetEndTime()
 {
-  return utils::toString(this->m_endTime);
+  return utils::integerToString(this->m_endTime);
 }
 
-size_t Application::getEndTimeNumber()
+size_t Application::GetEndTimeNumber()
 {
   return this->m_endTime;
 }
 
-void Application::setEndTime(const size_t &endTime)
+void Application::SetEndTime(const size_t &endTime)
 {
   this->m_endTime = endTime;
 }
