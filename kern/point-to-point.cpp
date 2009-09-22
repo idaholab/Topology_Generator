@@ -46,7 +46,7 @@ std::vector<std::string> PointToPoint::GenerateHeader()
   return headers;
 }
 
-std::vector<std::string> PointToPoint::GenerateLink()
+std::vector<std::string> PointToPoint::GenerateLinkCpp()
 {
   std::vector<std::string> generatedLink;
   generatedLink.push_back("PointToPointHelper p2p_" + this->GetLinkName() + ";");
@@ -56,7 +56,7 @@ std::vector<std::string> PointToPoint::GenerateLink()
   return generatedLink;
 }
 
-std::vector<std::string> PointToPoint::GenerateNetDevice()
+std::vector<std::string> PointToPoint::GenerateNetDeviceCpp()
 {
   std::vector<std::string> ndc;
   std::vector<std::string> allNodes = this->GroupAsNodeContainer();
@@ -69,7 +69,7 @@ std::vector<std::string> PointToPoint::GenerateNetDevice()
   return ndc;
 }
 
-std::vector<std::string> PointToPoint::GenerateTrace()
+std::vector<std::string> PointToPoint::GenerateTraceCpp()
 {
   std::vector<std::string> trace;
 
@@ -78,6 +78,24 @@ std::vector<std::string> PointToPoint::GenerateTrace()
     trace.push_back("PointToPointHelper::EnablePcapAll (\"" + this->GetLinkName() + "\");");
   }
 
+  return trace;
+}
+
+std::vector<std::string> PointToPoint::GenerateLinkPython()
+{
+  std::vector<std::string> generatedLink;
+  return generatedLink;
+}
+
+std::vector<std::string> PointToPoint::GenerateNetDevicePython()
+{
+  std::vector<std::string> ndc;
+  return ndc;
+}
+
+std::vector<std::string> PointToPoint::GenerateTracePython()
+{
+  std::vector<std::string> trace;
   return trace;
 }
 

@@ -69,22 +69,40 @@ class PointToPoint : public Link
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief Generate link code.
+     * \brief Generate link C++ code.
      * \return link code
      */
-    virtual std::vector<std::string> GenerateLink();
+    virtual std::vector<std::string> GenerateLinkCpp();
 
     /**
-     * \brief Generate net device container.
+     * \brief Generate net device container C++ code.
      * \return net device container code
      */
-    virtual std::vector<std::string> GenerateNetDevice();
+    virtual std::vector<std::string> GenerateNetDeviceCpp();
 
     /**
-     * \brief Generate trace line code.
+     * \brief Generate trace line C++ code.
      * \return trace line code
      */
-    virtual std::vector<std::string> GenerateTrace();
+    virtual std::vector<std::string> GenerateTraceCpp();
+    
+    /**
+     * \brief Generate link python code.
+     * \return link code
+     */
+    virtual std::vector<std::string> GenerateLinkPython();
+
+    /**
+     * \brief Generate net device container python code.
+     * \return net device container code
+     */
+    virtual std::vector<std::string> GenerateNetDevicePython();
+
+    /**
+     * \brief Generate trace line python code.
+     * \return trace line code
+     */
+    virtual std::vector<std::string> GenerateTracePython();
 };
 
 #endif /* POINT_TO_POINT_H */

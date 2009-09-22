@@ -121,22 +121,40 @@ class Ap : public Link
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief Generate the build link code.
+     * \brief Generate the build link C++ code.
      * \return build link code.
      */
-    virtual std::vector<std::string> GenerateLink();
+    virtual std::vector<std::string> GenerateLinkCpp();
 
     /**
-     * \brief Generate build of the net device container.
+     * \brief Generate build of the net device container C++ code.
      * \return net device container
      */
-    virtual std::vector<std::string> GenerateNetDevice();
+    virtual std::vector<std::string> GenerateNetDeviceCpp();
 
     /**
-     * \brief Generate the trace line.
+     * \brief Generate the trace line C++ code.
      * \return trace line
      */
-    virtual std::vector<std::string> GenerateTrace();
+    virtual std::vector<std::string> GenerateTraceCpp();
+    
+    /**
+     * \brief Generate link python code.
+     * \return link code
+     */
+    virtual std::vector<std::string> GenerateLinkPython();
+
+    /**
+     * \brief Generate net device container python code.
+     * \return net device container code
+     */
+    virtual std::vector<std::string> GenerateNetDevicePython();
+
+    /**
+     * \brief Generate trace line python code.
+     * \return trace line code
+     */
+    virtual std::vector<std::string> GenerateTracePython();
 };
 
 #endif /* AP_H */

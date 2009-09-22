@@ -52,6 +52,26 @@ void Ap::SetApNode(const std::string &apNode)
   this->m_apNode = apNode;
 }
 
+void Ap::SetMobility(const bool &mobility)
+{
+  this->m_mobility = mobility;
+}
+
+bool Ap::GetMobility()
+{
+  return this->m_mobility;
+}
+
+void Ap::SetApName(const std::string &apName)
+{
+  this->m_apName = apName;
+}
+
+std::string Ap::GetApName()
+{
+  return this->m_apName;
+}
+
 std::vector<std::string> Ap::GenerateHeader()
 {
   std::vector<std::string> headers;
@@ -62,7 +82,7 @@ std::vector<std::string> Ap::GenerateHeader()
   return headers;
 }
 
-std::vector<std::string> Ap::GenerateLink()
+std::vector<std::string> Ap::GenerateLinkCpp()
 {
   std::vector<std::string> generatedLink;
   /* creation of the link. */
@@ -73,7 +93,7 @@ std::vector<std::string> Ap::GenerateLink()
   return generatedLink;
 }
 
-std::vector<std::string> Ap::GenerateNetDevice()
+std::vector<std::string> Ap::GenerateNetDeviceCpp()
 {
   std::vector<std::string> ndc;
 
@@ -112,27 +132,7 @@ std::vector<std::string> Ap::GenerateNetDevice()
   return ndc;
 }
 
-void Ap::SetMobility(const bool &mobility)
-{
-  this->m_mobility = mobility;
-}
-
-bool Ap::GetMobility()
-{
-  return this->m_mobility;
-}
-
-void Ap::SetApName(const std::string &apName)
-{
-  this->m_apName = apName;
-}
-
-std::string Ap::GetApName()
-{
-  return this->m_apName;
-}
-
-std::vector<std::string> Ap::GenerateTrace()
+std::vector<std::string> Ap::GenerateTraceCpp()
 {
   std::vector<std::string> trace;
 
@@ -143,4 +143,28 @@ std::vector<std::string> Ap::GenerateTrace()
 
   return trace;
 }  
+
+std::vector<std::string> Ap::GenerateLinkPython()
+{
+  std::vector<std::string> generatedLink;
+  return generatedLink;
+}
+
+std::vector<std::string> Ap::GenerateNetDevicePython()
+{
+  std::vector<std::string> ndc;
+  return ndc;
+}
+
+std::vector<std::string> Ap::GenerateTracePython()
+{
+  std::vector<std::string> trace;
+
+  if(this->GetTrace())
+  {
+    trace.push_back("wifiPhy_" + this->GetLinkName() + ".EnablePcap (\"" + this->GetLinkName() + "\", " + this->GetNdcName() + ".Get(0));");
+  }
+
+  return trace;
+}
 

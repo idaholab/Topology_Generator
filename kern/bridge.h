@@ -87,22 +87,40 @@ class Bridge : public Link
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief Generate build link code.
+     * \brief Generate build link C++ code.
      * \return build link code
      */
-    virtual std::vector<std::string> GenerateLink();
+    virtual std::vector<std::string> GenerateLinkCpp();
 
     /**
-     * \brief Generate build of the net device container.
+     * \brief Generate build of the net device container for C++.
      * \return net device container code
      */
-    virtual std::vector<std::string> GenerateNetDevice();
+    virtual std::vector<std::string> GenerateNetDeviceCpp();
 
     /**
-     * \brief Generate trace line.
+     * \brief Generate trace line for C++.
      * \return trace line code
      */
-    virtual std::vector<std::string> GenerateTrace();
+    virtual std::vector<std::string> GenerateTraceCpp();
+    
+    /**
+     * \brief Generate build link python code.
+     * \return build link code
+     */
+    virtual std::vector<std::string> GenerateLinkPython();
+
+    /**
+     * \brief Generate build of the net device container for python.
+     * \return net device container code
+     */
+    virtual std::vector<std::string> GenerateNetDevicePython();
+
+    /**
+     * \brief Generate trace line for python.
+     * \return trace line code
+     */
+    virtual std::vector<std::string> GenerateTracePython();
 };
 
 #endif /* BRIDGE_H */

@@ -60,7 +60,7 @@ std::vector<std::string> Bridge::GenerateHeader()
   return headers;
 }
 
-std::vector<std::string> Bridge::GenerateLink()
+std::vector<std::string> Bridge::GenerateLinkCpp()
 {
   std::vector<std::string> generatedLink;
   /* creation of the link. */
@@ -71,7 +71,7 @@ std::vector<std::string> Bridge::GenerateLink()
   return generatedLink;
 }
 
-std::vector<std::string> Bridge::GenerateNetDevice()
+std::vector<std::string> Bridge::GenerateNetDeviceCpp()
 {
   std::vector<std::string> ndc;
   //ndc.push_back("NetDeviceContainer " + this->GetNdcName() + " = csma_" + this->GetLinkName() + ".Install (" + this->GetAllNodeContainer() + ");");
@@ -100,7 +100,65 @@ std::vector<std::string> Bridge::GenerateNetDevice()
   return ndc;
 }
 
-std::vector<std::string> Bridge::GenerateTrace()
+std::vector<std::string> Bridge::GenerateTraceCpp()
+{
+  std::vector<std::string> trace;
+
+  if(this->GetTrace())
+  {
+    if(this->GetPromisc())
+    {
+      trace.push_back("csma_" + this->GetLinkName() + ".EnablePcapAll (\"csma_" + this->GetLinkName() + "\", true);");
+    }
+    else
+    {
+      trace.push_back("csma_" + this->GetLinkName() + ".EnablePcapAll (\"csma_" + this->GetLinkName() + "\", false);");
+    }
+  }
+
+  return trace;
+}
+
+std::vector<std::string> Bridge::GenerateLinkPython()
+{
+  std::vector<std::string> generatedLink;
+
+  /* creation of the link. */
+  generatedLink.push_back("csma_" + this->GetLinkName() + " = ns3.CsmaHelper();");
+  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute (\"DataRate\", ns3.DataRateValue (ns3.DataRate (" + this->GetDataRate() + ")))");
+  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute (\"Delay\",  ns3.TimeValue (ns3.MilliSeconds (" + this->GetLinkDelay() + ")))");
+
+  return generatedLink;
+}
+
+std::vector<std::string> Bridge::GenerateNetDevicePython()
+{
+  std::vector<std::string> ndc;
+  //ndc.push_back("NetDeviceContainer " + this->GetNdcName() + " = csma_" + this->GetLinkName() + ".Install (" + this->GetAllNodeContainer() + ")");
+
+  std::vector<std::string> allNodes = this->GroupAsNodeContainer();
+  for(size_t i = 0; i < (size_t) allNodes.size(); i++)
+  {
+    ndc.push_back(allNodes.at(i));
+  }
+
+  ndc.push_back("terminalDevices_" + this->GetLinkName() + " = ns3.NetDeviceContainer()");
+  ndc.push_back("BridgeDevices_" + this->GetLinkName() + " = ns3.NetDeviceContainer()");
+
+  ndc.push_back("for (int i = 0; i < " + utils::integerToString(allNodes.size() - 1) + "; i++)");
+  ndc.push_back("    link = csma_" + this->GetLinkName() + ".Install(NodeContainer(" + this->GetAllNodeContainer() + ".Get(i), " + this->GetNodeBridge() + "));");
+  ndc.push_back("    terminalDevices_" + this->GetLinkName() + ".Add (link.Get(0));");
+  ndc.push_back("    BridgeDevices_" + this->GetLinkName() + ".Add (link.Get(1));");
+
+  ndc.push_back("bridge_" + this->GetLinkName() + " = ns3.BridgeHelper");
+  ndc.push_back("bridge_" + this->GetLinkName() + ".Install (" + this->GetNodeBridge() + ".Get(0), BridgeDevices_" + this->GetLinkName() + ");");
+
+  ndc.push_back("ndc_" + this->GetLinkName() + " = terminalDevices_" + this->GetLinkName() + ""); 
+
+  return ndc;
+}
+
+std::vector<std::string> Bridge::GenerateTracePython()
 {
   std::vector<std::string> trace;
 

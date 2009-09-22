@@ -457,7 +457,7 @@ size_t Generator::GetNLinks() const
 // This part is looking about the code to write.
 //
 
-void Generator::GenerateCode() 
+void Generator::GenerateCodeCpp() 
 {	
   /* In first time we just print it to stdout, at the end, we will use the write cpp function */
 
@@ -486,7 +486,7 @@ void Generator::GenerateCode()
   //
   // Tap/Emu variables
   //
-  std::vector<std::string> allVars = GenerateVars();
+  std::vector<std::string> allVars = GenerateVarsCpp();
   for(size_t i = 0; i < (size_t) allVars.size(); i++)
   {
     std::cout << "  " << allVars.at(i) << std::endl;
@@ -498,7 +498,7 @@ void Generator::GenerateCode()
   //
   std::cout << "  CommandLine cmd;" << std::endl;
 
-  std::vector<std::string> allCmdLine = GenerateCmdLine();
+  std::vector<std::string> allCmdLine = GenerateCmdLineCpp();
   for(size_t i = 0; i < (size_t) allCmdLine.size(); i++)
   {
     std::cout << "  " << allCmdLine.at(i) << std::endl;
@@ -534,7 +534,7 @@ void Generator::GenerateCode()
   //
   std::cout << "" << std::endl;
   std::cout << "  /* Build link. */" << std::endl;
-  std::vector<std::string> linkBuild = GenerateLink(); 
+  std::vector<std::string> linkBuild = GenerateLinkCpp(); 
   for(size_t i = 0; i < (size_t) linkBuild.size(); i++)
   {
     std::cout << "  " << linkBuild.at(i) << std::endl;
@@ -545,7 +545,7 @@ void Generator::GenerateCode()
   //
   std::cout << "" << std::endl;
   std::cout << "  /* Build link net device container. */" << std::endl;
-  std::vector<std::string> linkNdcBuild = GenerateNetDevice(); 
+  std::vector<std::string> linkNdcBuild = GenerateNetDeviceCpp(); 
   for(size_t i = 0; i < (size_t) linkNdcBuild.size(); i++)
   {
     std::cout << "  " << linkNdcBuild.at(i) << std::endl;
@@ -576,7 +576,7 @@ void Generator::GenerateCode()
   //
   // Generate TapBridge if tap is used.
   //
-  std::vector<std::string> allTapBridge = GenerateTapBridge();
+  std::vector<std::string> allTapBridge = GenerateTapBridgeCpp();
   if(allTapBridge.size() > 0)
   {
     std::cout << "" << std::endl;
@@ -617,7 +617,7 @@ void Generator::GenerateCode()
 
 
   std::cout << "  /* Pcap output.*/" << std::endl;
-  std::vector<std::string> allTrace = GenerateTrace();
+  std::vector<std::string> allTrace = GenerateTraceCpp();
   for(size_t i = 0; i < (size_t) allTrace.size(); i++)
   {
     std::cout << "  " << allTrace.at(i) << std::endl;
@@ -704,12 +704,12 @@ std::vector<std::string> Generator::GenerateHeader()
   return headersWithoutDuplicateElem;
 }
 
-std::vector<std::string> Generator::GenerateVars()
+std::vector<std::string> Generator::GenerateVarsCpp()
 {
   std::vector<std::string> allVars;
   for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
   {
-    std::vector<std::string> trans = (this->listLink.at(i))->GenerateVars();
+    std::vector<std::string> trans = (this->listLink.at(i))->GenerateVarsCpp();
     for(size_t j = 0; j < (size_t) trans.size(); j++)
     {
       allVars.push_back(trans.at(j));
@@ -727,12 +727,12 @@ std::vector<std::string> Generator::GenerateVars()
   return allVars;
 }
 
-std::vector<std::string> Generator::GenerateCmdLine() 
+std::vector<std::string> Generator::GenerateCmdLineCpp() 
 {
   std::vector<std::string> allCmdLine;
   for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
   {
-    std::vector<std::string> trans = (this->listLink.at(i))->GenerateCmdLine();
+    std::vector<std::string> trans = (this->listLink.at(i))->GenerateCmdLineCpp();
     for(size_t j = 0; j < (size_t) trans.size(); j++)
     {
       allCmdLine.push_back(trans.at(j));
@@ -785,13 +785,13 @@ std::vector<std::string> Generator::GenerateNode()
   return allNodes;
 }
 
-std::vector<std::string> Generator::GenerateLink() 
+std::vector<std::string> Generator::GenerateLinkCpp() 
 {
   std::vector<std::string> allLink;
   /* get all the link build code. */
   for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
   {
-    std::vector<std::string> trans = (this->listLink.at(i))->GenerateLink();
+    std::vector<std::string> trans = (this->listLink.at(i))->GenerateLinkCpp();
     for(size_t j = 0; j < (size_t) trans.size(); j++)
     {
       allLink.push_back(trans.at(j));
@@ -799,13 +799,13 @@ std::vector<std::string> Generator::GenerateLink()
   }
   return allLink;
 }
-std::vector<std::string> Generator::GenerateNetDevice() 
+std::vector<std::string> Generator::GenerateNetDeviceCpp() 
 {
   std::vector<std::string> allNdc;
   /* get all the link build code. */
   for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
   {
-    std::vector<std::string> trans = (this->listLink.at(i))->GenerateNetDevice();
+    std::vector<std::string> trans = (this->listLink.at(i))->GenerateNetDeviceCpp();
     for(size_t j = 0; j < (size_t) trans.size(); j++)
     {
       allNdc.push_back(trans.at(j));
@@ -961,13 +961,13 @@ std::vector<std::string> Generator::GenerateApplication()
   return allApps;
 }
 
-std::vector<std::string> Generator::GenerateTapBridge()
+std::vector<std::string> Generator::GenerateTapBridgeCpp()
 {
   std::vector<std::string> allTapBridge;
 
   for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
   {
-    std::vector<std::string> trans = (this->listLink.at(i))->GenerateTapBridge();
+    std::vector<std::string> trans = (this->listLink.at(i))->GenerateTapBridgeCpp();
     for(size_t j = 0; j < (size_t) trans.size(); j++)
     {
       allTapBridge.push_back(trans.at(j));
@@ -977,13 +977,13 @@ std::vector<std::string> Generator::GenerateTapBridge()
   return allTapBridge;
 }
 
-std::vector<std::string> Generator::GenerateTrace()
+std::vector<std::string> Generator::GenerateTraceCpp()
 {
   std::vector<std::string> allTrace;
 
   for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
   {
-    std::vector<std::string> trans = (this->listLink.at(i))->GenerateTrace();
+    std::vector<std::string> trans = (this->listLink.at(i))->GenerateTraceCpp();
     for(size_t j = 0; j < (size_t) trans.size(); j++)
     {
       allTrace.push_back(trans.at(j));
@@ -991,6 +991,11 @@ std::vector<std::string> Generator::GenerateTrace()
   }
 
   return allTrace;
+}
+
+void Generator::GenerateCodePython()
+{
+  std::cout << "Generate Python code" << std::endl;
 }
 
 //

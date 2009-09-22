@@ -117,34 +117,46 @@ class Tap : public Link
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief Generate link code.
+     * \brief Generate link C++ code.
      * \return link code
      */
-    virtual std::vector<std::string> GenerateLink();
+    virtual std::vector<std::string> GenerateLinkCpp();
 
     /**
-     * \brief Generate net device container code.
+     * \brief Generate net device container C++ code.
      * \return net device container code
      */
-    virtual std::vector<std::string> GenerateNetDevice();
+    virtual std::vector<std::string> GenerateNetDeviceCpp();
 
     /**
      * \brief Function re-writted from link main class.
      * \return tap bridge code
      */
-    std::vector<std::string> GenerateTapBridge();
+    std::vector<std::string> GenerateTapBridgeCpp();
 
     /**
      * \brief Function re-writted from link main class.
      * \return vars code
      */
-    std::vector<std::string> GenerateVars();
+    std::vector<std::string> GenerateVarsCpp();
 
     /**
      * \brief Function re-wrotted from link main class.
      * \return cmd line code
      */
-    std::vector<std::string> GenerateCmdLine();
+    std::vector<std::string> GenerateCmdLineCpp();
+    
+    /**
+     * \brief Generate link python code.
+     * \return link code
+     */
+    virtual std::vector<std::string> GenerateLinkPython();
+
+    /**
+     * \brief Generate net device container python code.
+     * \return net device container code
+     */
+    virtual std::vector<std::string> GenerateNetDevicePython();
 };
 
 #endif /* TAP_H */

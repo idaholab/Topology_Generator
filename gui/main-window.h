@@ -184,9 +184,14 @@ class MainWindow : public QMainWindow
     void Help();
 
     /**
-     * \brief Generate the cpp code.
+     * \brief Generate the C++ code.
      */
     void GenerateCpp();
+
+    /**
+     * \brief Generate the Python code.
+     */
+    void GeneratePython();
 
     /**
      * \brief Create an application for a simulation node.

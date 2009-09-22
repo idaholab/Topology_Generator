@@ -225,12 +225,20 @@ class Generator
     size_t GetNLinks() const;
 
     /**
-     * \brief Fenerate ns3 code.
+     * \brief Generate ns-3 C++ code.
      * 
      * This procedure is the main procedure to generate the code from the simulation.
      * It also go to use all the procedure on the bottom like generate all headers, ...
      */
-    void GenerateCode();
+    void GenerateCodeCpp();
+
+    /**
+     * \brief Generate ns-3 python code.
+     * 
+     * This procedure is the main procedure to generate the code from the simulation.
+     * It also go to use all the procedure on the bottom like generate all headers, ...
+     */
+    void GenerateCodePython();
 
   private:
     /**
@@ -364,14 +372,14 @@ class Generator
      * 
      * \return vars code
      */
-    std::vector<std::string> GenerateVars();
+    std::vector<std::string> GenerateVarsCpp();
 
     /**
      * \brief Generate command line code.
      * 
      * \return commend line code
      */
-    std::vector<std::string> GenerateCmdLine();
+    std::vector<std::string> GenerateCmdLineCpp();
 
     /**
      * \brief Generate config code.
@@ -392,14 +400,14 @@ class Generator
      * 
      * \return link code
      */
-    std::vector<std::string> GenerateLink();
+    std::vector<std::string> GenerateLinkCpp();
 
     /**
      * \brief Generate net device code.
      * 
      * \return net device code
      */
-    std::vector<std::string> GenerateNetDevice();
+    std::vector<std::string> GenerateNetDeviceCpp();
 
     /**
      * \brief Generate ip stack declaration.
@@ -420,7 +428,7 @@ class Generator
      * 
      * \return tab bridge code
      */
-    std::vector<std::string> GenerateTapBridge();
+    std::vector<std::string> GenerateTapBridgeCpp();
 
     /**
      * \brief Generate route code.
@@ -441,7 +449,7 @@ class Generator
      * 
      * \return trace code
      */
-    std::vector<std::string> GenerateTrace();
+    std::vector<std::string> GenerateTraceCpp();
 
     //
     // XML generation operation part.

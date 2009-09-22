@@ -65,10 +65,11 @@ MainWindow::MainWindow(const std::string &simulationName)
   connect(actionConfig, SIGNAL(triggered()), this, SLOT(ConfigurationMenu())); 
 
   QMenu *menuView = menuBar()->addMenu("&Generate");
-  QAction *actionCpp = menuView->addAction("C++");
+  QAction *actionCpp = menuView->addAction("&C++");
   connect(actionCpp, SIGNAL(triggered()), this, SLOT(GenerateCpp())); 
-  QAction *menuPython = menuView->addAction("Python");
-  menuPython->setDisabled(true);
+  QAction *actionPython = menuView->addAction("&Python");
+  connect(actionPython, SIGNAL(triggered()), this, SLOT(GeneratePython()));
+  actionPython->setDisabled(true);
 
   QMenu *menuHelp = menuBar()->addMenu("&Help");
   QAction *menuOnlineHelp = menuHelp->addAction("Online Help");
@@ -649,7 +650,12 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
 
 void MainWindow::GenerateCpp()
 {
-  this->m_gen->GenerateCode();
+  this->m_gen->GenerateCodeCpp();
+}
+
+void MainWindow::GeneratePython()
+{
+  this->m_gen->GenerateCodePython();
 }
 
 void MainWindow::CreateApps()

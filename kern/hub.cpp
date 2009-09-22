@@ -46,7 +46,7 @@ std::vector<std::string> Hub::GenerateHeader()
   return headers;
 }
 
-std::vector<std::string> Hub::GenerateLink()
+std::vector<std::string> Hub::GenerateLinkCpp()
 {
   std::vector<std::string> generatedLink;
   generatedLink.push_back("CsmaHelper csma_" + this->GetLinkName() + ";");
@@ -56,7 +56,7 @@ std::vector<std::string> Hub::GenerateLink()
   return generatedLink;
 }
 
-std::vector<std::string> Hub::GenerateNetDevice()
+std::vector<std::string> Hub::GenerateNetDeviceCpp()
 {
   std::vector<std::string> ndc;
   std::vector<std::string> allNodes = this->GroupAsNodeContainer();
@@ -69,7 +69,7 @@ std::vector<std::string> Hub::GenerateNetDevice()
   return ndc;
 }
 
-std::vector<std::string> Hub::GenerateTrace()
+std::vector<std::string> Hub::GenerateTraceCpp()
 {
   std::vector<std::string> trace;
 
@@ -86,5 +86,23 @@ std::vector<std::string> Hub::GenerateTrace()
   }
 
   return trace;
+}
+
+std::vector<std::string> Hub::GenerateLinkPython()
+{
+  std::vector<std::string> ret;
+  return ret;
+}
+
+std::vector<std::string> Hub::GenerateNetDevicePython()
+{
+  std::vector<std::string> ret;
+  return ret;
+}
+
+std::vector<std::string> Hub::GenerateTracePython()
+{
+  std::vector<std::string> ret;
+  return ret;
 }
 

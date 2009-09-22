@@ -166,30 +166,6 @@ std::vector<std::string> Link::GroupAsNodeContainer()
   return res;
 }
 
-std::vector<std::string> Link::GenerateTapBridge()
-{
-  std::vector<std::string> res;
-  return res;
-}
-
-std::vector<std::string> Link::GenerateVars()
-{
-  std::vector<std::string> res;
-  return res;
-}
-
-std::vector<std::string> Link::GenerateCmdLine()
-{
-  std::vector<std::string> res;
-  return res;
-}
-
-std::vector<std::string> Link::GenerateTrace()
-{
-  std::vector<std::string> res;
-  return res;
-}
-
 void Link::SetTrace(const bool &state)
 {
   this->m_enableTrace = state;
@@ -208,5 +184,54 @@ void Link::SetPromisc(const bool &state)
 bool Link::GetPromisc()
 {
   return this->m_tracePromisc;
+}
+
+std::vector<std::string> Link::GenerateTapBridgeCpp()
+{
+  std::vector<std::string> res;
+  return res;
+}
+
+std::vector<std::string> Link::GenerateVarsCpp()
+{
+  std::vector<std::string> res;
+  return res;
+}
+
+std::vector<std::string> Link::GenerateCmdLineCpp()
+{
+  std::vector<std::string> res;
+  return res;
+}
+
+std::vector<std::string> Link::GenerateTraceCpp()
+{
+  std::vector<std::string> res;
+  return res;
+}
+
+/* XXX to move elsewhere */
+std::vector<std::string> Link::GenerateTapBridgePython()
+{
+  std::vector<std::string> res;
+  return res;
+}
+
+std::vector<std::string> Link::GenerateVarsPython()
+{
+  std::vector<std::string> res;
+  return res;
+}
+
+std::vector<std::string> Link::GenerateCmdLinePython()
+{
+  std::vector<std::string> res;
+  return res;
+}
+
+std::vector<std::string> Link::GenerateTracePython()
+{
+  std::vector<std::string> res;
+  return res;
 }
 

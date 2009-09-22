@@ -50,19 +50,25 @@
  *  example of .h file :
  *
  *  include "link.h"
- *  class new-class : public Link
+ *  class LinkImpl : public Link
  *  {
- *    new-class(...);
- *    ~new-class();
+ *    LinkImpl(...);
+ *    ~LinkImpl();
  *
  *    virtual std::vector<std::string> GenerateHeader();
- *    virtual std::vector<std::string> GenerateLink();
- *    virtual std::vector<std::string> GenerateNetdevice();
+ *    virtual std::vector<std::string> GenerateLinkCpp();
+ *    virtual std::vector<std::string> GenerateNetdeviceCpp();
+ *    virtual std::vector<std::string> GenerateLinkPython();
+ *    virtual std::vector<std::string> GenerateNetdevicePython();
  *    # and if you need
- *    virtual std::vector<std::string> GenerateTrace();
- *    virtual std::vector<std::string> GenerateTapBridge();
- *    virtual std::vector<std::string> GenerateVars();
- *    virtual std::vector<std::string> GenerateCmdLine();
+ *    virtual std::vector<std::string> GenerateTraceCpp();
+ *    virtual std::vector<std::string> GenerateTapBridgeCpp();
+ *    virtual std::vector<std::string> GenerateVarsCpp();
+ *    virtual std::vector<std::string> GenerateCmdLineCpp();
+ *    virtual std::vector<std::string> GenerateTracePython();
+ *    virtual std::vector<std::string> GenerateTapBridgePython();
+ *    virtual std::vector<std::string> GenerateVarsPython();
+ *    virtual std::vector<std::string> GenerateCmdLinePython();
  *  }
  */
 class Link
@@ -132,42 +138,80 @@ class Link
     virtual std::vector<std::string> GenerateHeader() = 0;
 
     /**
-     * \brief Generate link code.
+     * \brief Generate link C++ code.
      * \return link code
      */
-    virtual std::vector<std::string> GenerateLink() = 0;
+    virtual std::vector<std::string> GenerateLinkCpp() = 0;
 
     /**
-     * \brief Generate net device container code.
+     * \brief Generate net device container C++ code.
      *
      * The net device container contain all nodes installed by the link.
      * \return net device container code
      */
-    virtual std::vector<std::string> GenerateNetDevice() = 0;
+    virtual std::vector<std::string> GenerateNetDeviceCpp() = 0;
 
     /**
-     * \brief Generate tap bridge code.
+     * \brief Generate tap bridge C++ code.
      * \return tap bridge code
      */
-    virtual std::vector<std::string> GenerateTapBridge();
+    virtual std::vector<std::string> GenerateTapBridgeCpp();
 
     /**
-     * \brief Generate vars code.
+     * \brief Generate vars C++ code.
      * \return vars code
      */
-    virtual std::vector<std::string> GenerateVars();
+    virtual std::vector<std::string> GenerateVarsCpp();
 
     /**
-     * \brief Generate cmd line code.
+     * \brief Generate cmd line C++ code.
      * \return cmd line code
      */
-    virtual std::vector<std::string> GenerateCmdLine();
+    virtual std::vector<std::string> GenerateCmdLineCpp();
 
     /**
-     * \brief Generate trace line code.
+     * \brief Generate trace line C++ code.
      * \return trace line code
      */
-    virtual std::vector<std::string> GenerateTrace();
+    virtual std::vector<std::string> GenerateTraceCpp();
+
+    /**
+     * \brief Generate link python code.
+     * \return link code
+     */
+    virtual std::vector<std::string> GenerateLinkPython() = 0;
+
+    /**
+     * \brief Generate net device container python code.
+     *
+     * The net device container contain all nodes installed by the link.
+     * \return net device container code
+     */
+    virtual std::vector<std::string> GenerateNetDevicePython() = 0;
+
+    /**
+     * \brief Generate tap bridge python code.
+     * \return tap bridge code
+     */
+    virtual std::vector<std::string> GenerateTapBridgePython();
+
+    /**
+     * \brief Generate vars python code.
+     * \return vars code
+     */
+    virtual std::vector<std::string> GenerateVarsPython();
+
+    /**
+     * \brief Generate cmd line python code.
+     * \return cmd line code
+     */
+    virtual std::vector<std::string> GenerateCmdLinePython();
+
+    /**
+     * \brief Generate trace line python code.
+     * \return trace line code
+     */
+    virtual std::vector<std::string> GenerateTracePython();
 
     /**
      * \brief Get link number.
@@ -294,7 +338,6 @@ class Link
      * \return promisc mod
      */
     bool GetPromisc();
-
 };
 
 #endif /* LINK_H */
