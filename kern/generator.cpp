@@ -1000,8 +1000,6 @@ void Generator::GenerateCodePython()
 {
   /* In first time we just print it to stdout, at the end, we will use the write cpp function */
   
-  std::cout << "Generated Python code:" << std::endl;
-  
   //
   // Generate headers 
   //

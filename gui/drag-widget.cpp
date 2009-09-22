@@ -782,7 +782,7 @@ void DragWidget::ShowGuiUdpEcho()
   layout->addWidget(button_machineRight, 3, 1);
 
   /* PARAMS. */
-  QLabel *lab_m_startTime = new QLabel("Start m_time (s):", m_dialog);
+  QLabel *lab_m_startTime = new QLabel("Start time (s):", m_dialog);
   layout->addWidget(lab_m_startTime, 5, 0);
 
   QLineEdit *line_m_startTime = new QLineEdit(m_dialog);
@@ -792,7 +792,7 @@ void DragWidget::ShowGuiUdpEcho()
   }
   layout->addWidget(line_m_startTime, 5, 1);
 
-  QLabel *lab_m_endTime = new QLabel("End m_time (s):", m_dialog);
+  QLabel *lab_m_endTime = new QLabel("End time (s):", m_dialog);
   layout->addWidget(lab_m_endTime, 6, 0);
 
   QLineEdit *line_m_endTime = new QLineEdit(m_dialog);
