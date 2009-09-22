@@ -45,16 +45,16 @@ int main(int argc, char *argv[])
   gen->AddNode("Bridge");//2
   
   /* Add the bridge. */
-  gen->AddLink("Bridge", gen->GetNode(2)->getNodeName());
+  gen->AddLink("Bridge", gen->GetNode(2)->GetNodeName());
   /* Add equipement to bridge */
-  gen->GetLink(0)->Install(gen->GetNode(0)->getNodeName());
-  gen->GetLink(0)->Install(gen->GetNode(1)->getNodeName());
+  gen->GetLink(0)->Install(gen->GetNode(0)->GetNodeName());
+  gen->GetLink(0)->Install(gen->GetNode(1)->GetNodeName());
   
   /* Enable trace... */
-  gen->GetLink(0)->setTrace(true);
+  gen->GetLink(0)->SetTrace(true);
   
   /* Add an application */
-  gen->AddApplication("Ping", gen->GetNode(0)->getNodeName(), gen->GetNode(1)->getNodeName(), 0, 5);// 0 start time - 5 end time
+  gen->AddApplication("Ping", gen->GetNode(0)->GetNodeName(), gen->GetNode(1)->GetNodeName(), 0, 5);// 0 start time - 5 end time
 
   gen->GenerateCode();
   

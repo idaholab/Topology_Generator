@@ -53,23 +53,23 @@ int main(int argc, char *argv[])
   
   /* Add it to a Csma network. */
   gen->AddLink("Hub");//0
-  gen->GetLink(0)->Install(gen->GetNode(0)->getNodeName());
-  gen->GetLink(0)->Install(gen->GetNode(1)->getNodeName());
+  gen->GetLink(0)->Install(gen->GetNode(0)->GetNodeName());
+  gen->GetLink(0)->Install(gen->GetNode(1)->GetNodeName());
   /* Enable trace... */
-  gen->GetLink(0)->setTrace(true);
+  gen->GetLink(0)->SetTrace(true);
   
   gen->AddLink("Hub");//1
-  gen->GetLink(1)->Install(gen->GetNode(3)->getNodeName());
-  gen->GetLink(1)->Install(gen->GetNode(4)->getNodeName());
+  gen->GetLink(1)->Install(gen->GetNode(3)->GetNodeName());
+  gen->GetLink(1)->Install(gen->GetNode(4)->GetNodeName());
   /* Enable trace... */
-  gen->GetLink(1)->setTrace(true);
+  gen->GetLink(1)->SetTrace(true);
   
   /* link the two subnetworks to the router. */
-  gen->GetLink(0)->Install(gen->GetNode(2)->getNodeName());
-  gen->GetLink(1)->Install(gen->GetNode(2)->getNodeName());
+  gen->GetLink(0)->Install(gen->GetNode(2)->GetNodeName());
+  gen->GetLink(1)->Install(gen->GetNode(2)->GetNodeName());
   
   /* Add an application */
-  gen->AddApplication("Ping", gen->GetNode(0)->getNodeName(), gen->GetNode(4)->getNodeName(), 0, 5);// 0 start time - 5 end time
+  gen->AddApplication("Ping", gen->GetNode(0)->GetNodeName(), gen->GetNode(4)->GetNodeName(), 0, 5);// 0 start time - 5 end time
 
   gen->GenerateCode();
   

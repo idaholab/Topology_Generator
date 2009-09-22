@@ -34,8 +34,8 @@
 Link::Link(const size_t &indice)
 {
   this->SetIndice(indice);
-  this->SetDataRate(std::string("100Mbps"));
-  this->SetLinkDelay(std::string("10ms"));
+  this->SetDataRate(std::string("100000000")); /* 100 Mbps */
+  this->SetLinkDelay(std::string("10000")); /* 10 ms */
 
   this->SetTrace(false);
   this->SetPromisc(false);
@@ -159,7 +159,7 @@ std::vector<std::string> Link::GroupAsNodeContainer()
   {
     if((this->GetNInstalledNodes(i)).find("ap_") != 0)
     {
-      res.push_back(this->GetAllNodeContainer() + ".Add(" + this->GetNInstalledNodes(i) + ");");
+      res.push_back(this->GetAllNodeContainer() + ".Add (" + this->GetNInstalledNodes(i) + ");");
     }
   }
 

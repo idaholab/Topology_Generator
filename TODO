@@ -19,6 +19,7 @@ GUI
 Core
 -----
 - Mapping to integrate Python;
+- IPv6;
 - XML generation;
 - Add configuration into application.
 

@@ -490,12 +490,12 @@ void Generator::GenerateCode()
   for(size_t i = 0; i < (size_t) allVars.size(); i++)
   {
     std::cout << "  " << allVars.at(i) << std::endl;
+    std::cout << "" << std::endl;
   }
 
   //
   // Generate Command Line 
   //
-  std::cout << "" << std::endl;
   std::cout << "  CommandLine cmd;" << std::endl;
 
   std::vector<std::string> allCmdLine = GenerateCmdLine();
@@ -847,7 +847,7 @@ std::vector<std::string> Generator::GenerateIpAssign()
   for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
   {
     ipAssign.push_back("ipv4.SetBase (\"10.0." + utils::integerToString(ipRange) + ".0\", \"255.255.255.0\");");
-    ipAssign.push_back("Ipv4InterfaceContainer iface_" + this->listLink.at(i)->GetNdcName() + " = ipv4.Assign(" + this->listLink.at(i)->GetNdcName() + ");");
+    ipAssign.push_back("Ipv4InterfaceContainer iface_" + this->listLink.at(i)->GetNdcName() + " = ipv4.Assign (" + this->listLink.at(i)->GetNdcName() + ");");
     ipRange += 1;
   } 
 

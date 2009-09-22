@@ -561,7 +561,7 @@ void MainWindow::About()
 {
   QMessageBox::about(this, "About",
       tr("<p align=\"center\">"
-        "<h2>The ns-3 topology m_generator"
+        "<h2>The ns-3 topology generator"
         "</h2>"
         "</p><br />"
         "Copyright (c) 2009 University of Strasbourg<br /><br />"

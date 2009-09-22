@@ -230,13 +230,13 @@ class Link
     void SetLinkName(const std::string &linkName);
 
     /**
-     * \brief Set data rate.
+     * \brief Set data rate in bps.
      * \param dataRate new data rate
      */
     void SetDataRate(const std::string &dataRate);
 
     /**
-     * \brief Set link delay.
+     * \brief Set link delay in millisecond.
      * \param linkDelay new link delay
      */
     void SetLinkDelay(const std::string &linkDelay);

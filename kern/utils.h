@@ -26,6 +26,7 @@
 
 #include <vector>
 #include <string>
+#include <stdexcept>
 
 /**
  * \namespace utils
@@ -49,6 +50,14 @@ size_t split(std::vector<std::string> &res, std::string str, char separator);
  * \return number in string format
  */
 std::string integerToString(const size_t nb);
+
+/**
+ * \brief Convert strint to size_t (integer).
+ * \param str string to convert
+ * \return number
+ * \throw std::runtime_exception is thrown if cannot convert
+ */
+size_t stringToInteger(const std::string& str) throw (std::runtime_error);
 
 } /* namespace utils */
 

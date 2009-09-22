@@ -21,6 +21,8 @@
  * \brief Utils functions.
  */
 
+#include <stdint.h>
+
 #include <sstream>
 
 #include "utils.h"
@@ -52,6 +54,19 @@ std::string integerToString(const size_t nb)
   out << nb;
 
   return out.str();
+}
+
+size_t stringToInteger(const std::string& str) throw(std::runtime_error)
+{
+  uint64_t ret = 0;
+  std::istringstream in(str);
+
+  if(!(in >> ret))
+  {
+    throw std::runtime_error("Cannot convert string to uint64_t");
+    return (size_t)-1;
+  }
+  return ret;
 }
 
 } /* namespace utils */

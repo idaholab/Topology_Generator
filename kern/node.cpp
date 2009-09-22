@@ -55,7 +55,7 @@ std::vector<std::string> Node::GenerateNode()
 {
   std::vector<std::string> nodes;
   nodes.push_back("NodeContainer " + this->GetNodeName() + ";");
-  nodes.push_back(this->GetNodeName() + ".Create(" + utils::integerToString(this->GetMachinesNumber()) + ");");
+  nodes.push_back(this->GetNodeName() + ".Create (" + utils::integerToString(this->GetMachinesNumber()) + ");");
 
   return nodes; 
 }

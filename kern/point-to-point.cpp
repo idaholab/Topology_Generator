@@ -50,7 +50,7 @@ std::vector<std::string> PointToPoint::GenerateLink()
 {
   std::vector<std::string> generatedLink;
   generatedLink.push_back("PointToPointHelper p2p_" + this->GetLinkName() + ";");
-  generatedLink.push_back("p2p_" + this->GetLinkName() + ".SetDeviceAttribute (\"DataRate\", StringValue (\"" + this->GetDataRate() + "\"));");
+  generatedLink.push_back("p2p_" + this->GetLinkName() + ".SetDeviceAttribute (\"DataRate\", DataRateValue (" + this->GetDataRate() + "));");
   generatedLink.push_back("p2p_" + this->GetLinkName() + ".SetChannelAttribute (\"Delay\", TimeValue (MilliSeconds (" + this->GetLinkDelay() + ")));");
 
   return generatedLink;

@@ -45,14 +45,14 @@ int main(int argc, char *argv[])
   /* Add the Link (csma) */
   gen->AddLink("Hub"); 
   /* Add equipement to te link */
-  gen->GetLink(0)->Install(gen->GetNode(0)->getNodeName());
-  gen->GetLink(0)->Install(gen->GetNode(1)->getNodeName());
+  gen->GetLink(0)->Install(gen->GetNode(0)->GetNodeName());
+  gen->GetLink(0)->Install(gen->GetNode(1)->GetNodeName());
   
   /* Enable trace... */
-  gen->GetLink(0)->setTrace(true);
+  gen->GetLink(0)->SetTrace(true);
 
   /* Add Tcp large transfer application from pc to pc on PORT 6666 */
-  gen->AddApplication("TcpLargeTransfer", gen->GetNode(0)->getNodeName(), gen->GetNode(1)->getNodeName(), 0, 5, 6666);// 0 start time - 5 end time
+  gen->AddApplication("TcpLargeTransfer", gen->GetNode(0)->GetNodeName(), gen->GetNode(1)->GetNodeName(), 0, 5, 6666);// 0 start time - 5 end time
                                                                                                                              
   gen->GenerateCode();
   

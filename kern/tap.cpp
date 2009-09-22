@@ -54,8 +54,8 @@ std::vector<std::string> Tap::GenerateLink()
 {
   std::vector<std::string> generatedLink;
   generatedLink.push_back("CsmaHelper csma_" + this->GetLinkName() + ";");
-  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute (\"DataRate\", StringValue (\"" + this->GetDataRate() + "\"));");
-  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute (\"Delay\", StringValue (\"" + this->GetLinkDelay() + "\"));");
+  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute (\"DataRate\", DataRateValue (" + this->GetDataRate() + "));");
+  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute (\"Delay\", TimeValue (MilliSeconds (" + this->GetLinkDelay() + ")));");
 
   return generatedLink;
 }

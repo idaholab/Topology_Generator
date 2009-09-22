@@ -48,55 +48,55 @@ int main(int argc, char *argv[])
   
   /* Add the bridge. */
   gen->AddLink("Hub");
-  gen->GetLink(0)->Install(gen->GetNode(0)->getNodeName(0));
-  gen->GetLink(0)->Install(gen->GetNode(0)->getNodeName(1));
+  gen->GetLink(0)->Install(gen->GetNode(0)->GetNodeName(0));
+  gen->GetLink(0)->Install(gen->GetNode(0)->GetNodeName(1));
   /* Enable trace... */
-  gen->GetLink(0)->setTrace(true);
+  gen->GetLink(0)->SetTrace(true);
   
   gen->AddLink("Hub");
-  gen->GetLink(1)->Install(gen->GetNode(0)->getNodeName(0));
-  gen->GetLink(1)->Install(gen->GetNode(0)->getNodeName(2));
+  gen->GetLink(1)->Install(gen->GetNode(0)->GetNodeName(0));
+  gen->GetLink(1)->Install(gen->GetNode(0)->GetNodeName(2));
   /* Enable trace... */
-  gen->GetLink(1)->setTrace(true);
+  gen->GetLink(1)->SetTrace(true);
   
   gen->AddLink("Hub");
-  gen->GetLink(2)->Install(gen->GetNode(0)->getNodeName(0));
-  gen->GetLink(2)->Install(gen->GetNode(0)->getNodeName(3));
+  gen->GetLink(2)->Install(gen->GetNode(0)->GetNodeName(0));
+  gen->GetLink(2)->Install(gen->GetNode(0)->GetNodeName(3));
   /* Enable trace... */
-  //gen->GetLink(2)->setTrace(true);
+  //gen->GetLink(2)->SetTrace(true);
   
   gen->AddLink("Hub");
-  gen->GetLink(3)->Install(gen->GetNode(0)->getNodeName(0));
-  gen->GetLink(3)->Install(gen->GetNode(0)->getNodeName(4));
+  gen->GetLink(3)->Install(gen->GetNode(0)->GetNodeName(0));
+  gen->GetLink(3)->Install(gen->GetNode(0)->GetNodeName(4));
   /* Enable trace... */
-  //gen->GetLink(3)->setTrace(true);
+  //gen->GetLink(3)->SetTrace(true);
   
   gen->AddLink("Hub");
-  gen->GetLink(4)->Install(gen->GetNode(0)->getNodeName(0));
-  gen->GetLink(4)->Install(gen->GetNode(0)->getNodeName(5));
+  gen->GetLink(4)->Install(gen->GetNode(0)->GetNodeName(0));
+  gen->GetLink(4)->Install(gen->GetNode(0)->GetNodeName(5));
   /* Enable trace... */
-  gen->GetLink(4)->setTrace(true);
+  gen->GetLink(4)->SetTrace(true);
   
   gen->AddLink("Hub");
-  gen->GetLink(5)->Install(gen->GetNode(0)->getNodeName(0));
-  gen->GetLink(5)->Install(gen->GetNode(0)->getNodeName(6));
+  gen->GetLink(5)->Install(gen->GetNode(0)->GetNodeName(0));
+  gen->GetLink(5)->Install(gen->GetNode(0)->GetNodeName(6));
   /* Enable trace... */
-  //gen->GetLink(5)->setTrace(true);
+  //gen->GetLink(5)->SetTrace(true);
   
   gen->AddLink("Hub");
-  gen->GetLink(6)->Install(gen->GetNode(0)->getNodeName(0));
-  gen->GetLink(6)->Install(gen->GetNode(0)->getNodeName(7));
+  gen->GetLink(6)->Install(gen->GetNode(0)->GetNodeName(0));
+  gen->GetLink(6)->Install(gen->GetNode(0)->GetNodeName(7));
   /* Enable trace... */
-  //gen->GetLink(6)->setTrace(true);
+  //gen->GetLink(6)->SetTrace(true);
   
   gen->AddLink("Hub");
-  gen->GetLink(7)->Install(gen->GetNode(0)->getNodeName(0));
-  gen->GetLink(7)->Install(gen->GetNode(0)->getNodeName(8));
+  gen->GetLink(7)->Install(gen->GetNode(0)->GetNodeName(0));
+  gen->GetLink(7)->Install(gen->GetNode(0)->GetNodeName(8));
   /* Enable trace... */
-  //gen->GetLink(7)->setTrace(true);
+  //gen->GetLink(7)->SetTrace(true);
   
   /* Add an application */
-  gen->AddApplication("Ping", gen->GetNode(0)->getNodeName(1), gen->GetNode(0)->getNodeName(5), 0, 5);// 0 start time - 5 end time
+  gen->AddApplication("Ping", gen->GetNode(0)->GetNodeName(1), gen->GetNode(0)->GetNodeName(5), 0, 5);// 0 start time - 5 end time
 
 
   gen->GenerateCode();
