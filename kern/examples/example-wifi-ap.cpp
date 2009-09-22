@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
   /* Add an application */
   gen->AddApplication("Ping", gen->GetNode(1)->GetNodeName(), gen->GetNode(2)->GetNodeName(), 0, 5);// 0 start time - 5 end time
 
-  gen->GenerateCode();
+  gen->GenerateCodeCpp();
   
   delete ap;
   delete gen;

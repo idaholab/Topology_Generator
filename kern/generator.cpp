@@ -517,7 +517,6 @@ void Generator::GenerateCodeCpp()
     std::cout << "  " << conf.at(i) << std::endl;
   }
 
-
   //
   // Generate Nodes. 
   //
@@ -555,7 +554,7 @@ void Generator::GenerateCodeCpp()
   // Generate Ip Stack. 
   //
   std::cout << "" << std::endl;
-  std::cout << "  /* Install the IP stack */" << std::endl;
+  std::cout << "  /* Install the IP stack. */" << std::endl;
   std::vector<std::string> allStacks = GenerateIpStackCpp();
   for(size_t i = 0; i < (size_t) allStacks.size(); i++)
   {
@@ -563,10 +562,10 @@ void Generator::GenerateCodeCpp()
   }
 
   //
-  // Generate Ip Assign.
+  // Generate IP assignation.
   // 
   std::cout << "" << std::endl;
-  std::cout << "  /* IP assign */" << std::endl;
+  std::cout << "  /* IP assign. */" << std::endl;
   std::vector<std::string> allAssign = GenerateIpAssignCpp();
   for(size_t i = 0; i < (size_t) allAssign.size(); i++)
   {
@@ -580,7 +579,7 @@ void Generator::GenerateCodeCpp()
   if(allTapBridge.size() > 0)
   {
     std::cout << "" << std::endl;
-    std::cout << "  /* Tap Bridge */" << std::endl;
+    std::cout << "  /* Tap Bridge. */" << std::endl;
   }
   for(size_t i = 0; i < (size_t) allTapBridge.size(); i++)
   {
@@ -616,7 +615,7 @@ void Generator::GenerateCodeCpp()
   std::cout << "  /* Simulation. */" << std::endl;
 
 
-  std::cout << "  /* Pcap output.*/" << std::endl;
+  std::cout << "  /* Pcap output. */" << std::endl;
   std::vector<std::string> allTrace = GenerateTraceCpp();
   for(size_t i = 0; i < (size_t) allTrace.size(); i++)
   {
@@ -852,7 +851,7 @@ std::vector<std::string> Generator::GenerateIpAssignCpp()
   } 
 
   return ipAssign;
-  }
+}
 
 std::vector<std::string> Generator::GenerateRouteCpp() 
 {
@@ -999,7 +998,179 @@ std::vector<std::string> Generator::GenerateTraceCpp()
 
 void Generator::GenerateCodePython()
 {
-  std::cout << "Generate Python code" << std::endl;
+  /* In first time we just print it to stdout, at the end, we will use the write cpp function */
+  
+  std::cout << "Generated Python code:" << std::endl;
+  
+  //
+  // Generate headers 
+  //
+  std::cout << "import ns3" << std::endl << std::endl;
+
+  std::cout << "def main(argv):" << std::endl << std::endl;
+
+  //
+  // Tap/Emu variables
+  //
+  std::vector<std::string> allVars = GenerateVarsPython();
+  for(size_t i = 0; i < (size_t) allVars.size(); i++)
+  {
+    std::cout << "    " << allVars.at(i) << std::endl;
+    std::cout << "" << std::endl;
+  }
+
+  //
+  // Generate Command Line 
+  //
+  std::cout << "    cmd = ns3.CommandLine()" << std::endl;
+
+  std::vector<std::string> allCmdLine = GenerateCmdLinePython();
+  for(size_t i = 0; i < (size_t) allCmdLine.size(); i++)
+  {
+    std::cout << "    " << allCmdLine.at(i) << std::endl;
+  } 
+
+  std::cout << "    cmd.Parse (argv);" << std::endl;
+
+  //
+  // Generate Optional configuration
+  // 
+  std::cout << "" << std::endl;
+  std::cout << "    # Configuration." << std::endl;
+  std::vector<std::string> conf = GenerateConfigPython();
+  for(size_t i = 0; i < (size_t) conf.size(); i++)
+  {
+    std::cout << "    " << conf.at(i) << std::endl;
+  }
+
+  //
+  // Generate Nodes. 
+  //
+  std::cout << "" << std::endl;
+  std::cout << "    # Build nodes" << std::endl;
+  std::vector<std::string> nodeBuild = GenerateNodePython();
+  for(size_t i = 0; i < (size_t) nodeBuild.size(); i++)
+  {
+    std::cout << "    " << nodeBuild.at(i) << std::endl;
+  }
+
+  //
+  // Generate Link.
+  //
+  std::cout << "" << std::endl;
+  std::cout << "    # Build link." << std::endl;
+  std::vector<std::string> linkBuild = GenerateLinkPython();
+  for(size_t i = 0; i < (size_t) linkBuild.size(); i++)
+  {
+    std::cout << "    " << linkBuild.at(i) << std::endl;
+  }
+
+  //
+  // Generate link net device container.
+  //
+  std::cout << "" << std::endl;
+  std::cout << "    # Build link net device container." << std::endl;
+  std::vector<std::string> linkNdcBuild = GenerateNetDevicePython(); 
+  for(size_t i = 0; i < (size_t) linkNdcBuild.size(); i++)
+  {
+    std::cout << "    " << linkNdcBuild.at(i) << std::endl;
+  }
+
+  //
+  // Generate IP Stack. 
+  //
+  std::cout << "" << std::endl;
+  std::cout << "    # Install the IP stack." << std::endl;
+  std::vector<std::string> allStacks = GenerateIpStackPython();
+  for(size_t i = 0; i < (size_t) allStacks.size(); i++)
+  {
+    std::cout << "    " << allStacks.at(i) << std::endl;
+  }
+
+  //
+  // Generate IP assignation.
+  // 
+  std::cout << "" << std::endl;
+  std::cout << "    # IP assign." << std::endl;
+  std::vector<std::string> allAssign = GenerateIpAssignPython();
+  for(size_t i = 0; i < (size_t) allAssign.size(); i++)
+  {
+    std::cout << "    " << allAssign.at(i) << std::endl;
+  } 
+
+  //
+  // Generate TapBridge if tap is used.
+  //
+  std::vector<std::string> allTapBridge = GenerateTapBridgePython();
+  if(allTapBridge.size() > 0)
+  {
+    std::cout << "" << std::endl;
+    std::cout << "    # Tap Bridge */" << std::endl;
+  }
+  for(size_t i = 0; i < (size_t) allTapBridge.size(); i++)
+  {
+    std::cout << "    " << allTapBridge.at(i) << std::endl;
+  } 
+
+  //
+  // Generate Route.
+  //
+  std::cout << "" << std::endl;
+  std::cout << "    # Generate Route." << std::endl;
+  std::vector<std::string> allRoutes = GenerateRoutePython();
+  for(size_t i = 0; i < (size_t) allRoutes.size(); i++)
+  {
+    std::cout << "    " << allRoutes.at(i) << std::endl;
+  } 
+
+  //
+  // Generate Application.
+  //
+  std::cout << "" << std::endl;
+  std::cout << "    # Generate Application." << std::endl;
+  std::vector<std::string> allApps = GenerateApplicationPython();
+  for(size_t i = 0; i < (size_t) allApps.size(); i++)
+  {
+    std::cout << "    " << allApps.at(i) << std::endl;
+  } 
+
+  //
+  // Others
+  //
+  std::cout << "" << std::endl;
+  std::cout << "    # Simulation." << std::endl;
+
+
+  std::cout << "    # Pcap output." << std::endl;
+  std::vector<std::string> allTrace = GenerateTracePython();
+  for(size_t i = 0; i < (size_t) allTrace.size(); i++)
+  {
+    std::cout << "    " << allTrace.at(i) << std::endl;
+  } 
+
+  /* Set stop time. */
+  size_t stopTime = 0;/* default stop time. */
+  for(size_t i = 0; i < (size_t) this->listApplication.size(); i++)
+  {
+    if( (this->listApplication.at(i))->GetEndTimeNumber() > stopTime)
+    {
+      stopTime = (this->listApplication.at(i))->GetEndTimeNumber();
+    }
+  }
+  stopTime += 1;
+
+  std::cout << "    # Stop the simulation after x seconds. */" << std::endl;
+  std::cout << "    stopTime = "<< stopTime << std::endl; 
+  std::cout << "    ns3.Simulator.Stop (ns3.Seconds (stopTime))" << std::endl;
+
+  std::cout << "    # Start and clean simulation. */" << std::endl;
+  std::cout << "    ns3.Simulator.Run ();" << std::endl;
+  std::cout << "    ns3.Simulator.Destroy ();" << std::endl;
+
+  std::cout << std::endl;
+  std::cout << "if __name__ == '__main__':" << std::endl;;
+  std::cout << "    import sys" << std::endl;
+  std::cout << "    main(sys.argv)" << std::endl;
 }
 
 
@@ -1011,68 +1182,271 @@ std::vector<std::string> Generator::GenerateVarsPython()
 
 std::vector<std::string> Generator::GenerateCmdLinePython()
 {
-  std::vector<std::string> ret;
-  return ret;
+  std::vector<std::string> allCmdLine;
+
+  for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
+  {
+    std::vector<std::string> trans = (this->listLink.at(i))->GenerateCmdLinePython();
+    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    {
+      allCmdLine.push_back(trans.at(j));
+    }
+  }
+  return allCmdLine;
 }
 
 std::vector<std::string> Generator::GenerateConfigPython()
 {
-  std::vector<std::string> ret;
-  return ret;
+  for(size_t i = 0; i < (size_t) this->listNode.size(); i++)
+  {
+    if( ((this->listNode.at(i))->GetNodeName()).find("tap_") == 0)
+    {
+      this->AddConfig("ns3.GlobalValue.Bind (\"SimulatorImplementationType\", ns3.StringValue (\"ns3::RealtimeSimulatorImpl\"));");
+      this->AddConfig("ns3.GlobalValue.Bind (\"ChecksumEnabled\", ns3.BooleanValue (true));");
+    }
+  }
+
+  for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
+  {
+    if( ((this->listLink.at(i))->GetLinkName()).find("emu_") == 0 )
+    {
+      this->AddConfig("ns3.GlobalValue.Bind (\"SimulatorImplementationType\", ns3.StringValue (\"ns3::RealtimeSimulatorImpl\"));");
+      this->AddConfig("ns3.GlobalValue.Bind (\"ChecksumEnabled\", ns3.BooleanValue (true));");
+    }
+  }
+
+  std::vector<std::string> allConf;
+  for(size_t i = 0; i < (size_t) this->listConfiguration.size(); i++)
+  {
+    allConf.push_back(this->listConfiguration.at(i));
+  }
+
+  return allConf;
 }
 
 std::vector<std::string> Generator::GenerateNodePython()
 {
-  std::vector<std::string> ret;
-  return ret;
+  std::vector<std::string> allNodes;
+  /* get all the node code. */
+  for(size_t i = 0; i < (size_t) this->listNode.size(); i++)
+  {
+    std::vector<std::string> trans = (this->listNode.at(i))->GenerateNodePython();
+    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    {
+      allNodes.push_back(trans.at(j));
+    }
+  }
+  return allNodes;
 }
 
 std::vector<std::string> Generator::GenerateLinkPython()
 {
-  std::vector<std::string> ret;
-  return ret;
+  std::vector<std::string> allLink;
+  /* get all the link build code. */
+  for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
+  {
+    std::vector<std::string> trans = (this->listLink.at(i))->GenerateLinkPython();
+    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    {
+      allLink.push_back(trans.at(j));
+    }
+  }
+  return allLink;
 }
 
 std::vector<std::string> Generator::GenerateNetDevicePython()
 {
-  std::vector<std::string> ret;
-  return ret;
+  std::vector<std::string> allNdc;
+  /* get all the link build code. */
+  for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
+  {
+    std::vector<std::string> trans = (this->listLink.at(i))->GenerateNetDevicePython();
+    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    {
+      allNdc.push_back(trans.at(j));
+    }
+  }
+  return allNdc;
 }
 
 std::vector<std::string> Generator::GenerateIpStackPython()
 {
-  std::vector<std::string> ret;
-  return ret;
+  std::vector<std::string> allStack;
+
+  /* construct node without bridge Node. */
+  allStack.push_back("internetStackH = ns3.InternetStackHelper()");
+  std::string nodeName = "";
+  for(size_t i = 0; i < (size_t) this->listNode.size(); i++)
+  {
+    nodeName = (this->listNode.at(i))->GetNodeName();
+    /* if it is not a bridge you can add it. */
+    if(nodeName.find("bridge_") != 0)
+    {
+      std::vector<std::string> trans = (this->listNode.at(i)->GenerateIpStackPython());
+      for(size_t j = 0; j < (size_t) trans.size(); j++)
+      {
+        allStack.push_back(trans.at(j));
+      }
+    }
+  }
+
+  return allStack;
 }
 
 std::vector<std::string> Generator::GenerateIpAssignPython()
 {
-  std::vector<std::string> ret;
-  return ret;
+  std::vector<std::string> ipAssign;
+  ipAssign.push_back("ipv4 = ns3.Ipv4AddressHelper()");
+
+  size_t ipRange = 0;
+  for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
+  {
+    ipAssign.push_back("ipv4.SetBase (ns3.Ipv4Address(\"10.0." + utils::integerToString(ipRange) + ".0\"), ns3.Ipv4Mask(\"255.255.255.0\"))");
+    ipAssign.push_back("iface_" + this->listLink.at(i)->GetNdcName() + " = ipv4.Assign (" + this->listLink.at(i)->GetNdcName() + ")");
+    ipRange += 1;
+  }
+
+  return ipAssign;
 }
 
 std::vector<std::string> Generator::GenerateTapBridgePython()
 {
-  std::vector<std::string> ret;
-  return ret;
+  std::vector<std::string> allTapBridge;
+
+  for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
+  {
+    std::vector<std::string> trans = (this->listLink.at(i))->GenerateTapBridgePython();
+    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    {
+      allTapBridge.push_back(trans.at(j));
+    }
+  }
+
+  return allTapBridge;
 }
 
 std::vector<std::string> Generator::GenerateRoutePython()
 {
-  std::vector<std::string> ret;
-  return ret;
+  std::vector<std::string> allRoutes;
+
+  allRoutes.push_back("ns3.Ipv4GlobalRoutingHelper.PopulateRoutingTables ()");
+
+  return allRoutes;
 }
 
 std::vector<std::string> Generator::GenerateApplicationPython()
 {
-  std::vector<std::string> ret;
-  return ret;
+  size_t nodeNumber = 0;
+  std::string ndcName = "";
+  size_t linkNumber = 0;
+  std::vector<std::string> allApps;
+  
+  /* get all the ip assign code. */
+  for(size_t i = 0; i < (size_t) this->listApplication.size(); i++)
+  {
+    /* get NetDeviceContainer and number from the receiver. */
+    std::string receiverName = this->listApplication.at(i)->GetReceiverNode();
+    nodeNumber = 0;
+    ndcName = "";
+    linkNumber = 0;
+
+    /* if the receiver is in NodeContainer */
+    if(receiverName.find("NodeContainer(") == 0)
+    {
+      std::string oldReceiverName = receiverName;
+      
+      std::vector<std::string> tab_name;
+      split(tab_name, receiverName, '(');
+      
+      std::string str_get = tab_name.at(1);
+      std::vector<std::string> tab_name2;
+      split(tab_name2, str_get, '.');
+      
+      receiverName = tab_name2.at(0);
+      for(size_t x = 0;  x < this->listLink.size(); x++)
+      {
+        nodeNumber = 0;
+        for(size_t y = 0; y < this->listLink.at(x)->GetInstalledNodes().size(); y++)
+        {
+          if(this->listLink.at(x)->GetInstalledNodes().at(y) == receiverName || this->listLink.at(x)->GetInstalledNodes().at(y) == oldReceiverName)
+          {
+            ndcName = (this->listLink.at(x))->GetNdcName();
+            linkNumber = x;
+            break;
+          }
+          if(ndcName != "")
+          {
+            break;
+          }
+        }
+      }
+      std::vector<std::string> linksNode = this->listLink.at(linkNumber)->GetInstalledNodes();
+      for(size_t j = 0; j < linksNode.size(); j++)
+      {
+        if(linksNode.at(j) == oldReceiverName)
+        {
+          nodeNumber = j;
+          break;
+        }
+      }
+    }
+    else
+    {
+      for(size_t j = 0; j < (size_t) this->listLink.size(); j++)
+      {
+        nodeNumber = 0;
+        linkNumber = 0;
+        std::vector<std::string> nodes = (this->listLink.at(j))->GetInstalledNodes();
+        for(size_t k = 0; k < (size_t) nodes.size(); k++)
+        {
+          if( nodes.at(k) == receiverName)
+          {
+            ndcName = (this->listLink.at(j))->GetNdcName();
+            break;
+          }
+          else
+          {
+            for(size_t l = 0; l < (size_t) this->listNode.size(); l++)
+            {
+              if(this->listNode.at(l)->GetNodeName() == nodes.at(k))
+              {
+                nodeNumber += this->listNode.at(l)->GetMachinesNumber();
+                break;
+              }
+            }
+          }
+        }
+        if(ndcName != "")
+        {
+          break;
+        }
+      }
+    }
+    /* get the application code with param. */
+    std::vector<std::string> trans = (this->listApplication.at(i)->GenerateApplicationPython(ndcName, nodeNumber));
+    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    {
+      allApps.push_back(trans.at(j));
+    }
+  }
+
+  return allApps;
 }
 
 std::vector<std::string> Generator::GenerateTracePython()
 {
-  std::vector<std::string> ret;
-  return ret;
+  std::vector<std::string> allTrace;
+
+  for(size_t i = 0; i < (size_t) this->listLink.size(); i++)
+  {
+    std::vector<std::string> trans = (this->listLink.at(i))->GenerateTracePython();
+    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    {
+      allTrace.push_back(trans.at(j));
+    }
+  }
+
+  return allTrace;
 }
 
 //

@@ -151,7 +151,7 @@ void Link::SetAllNodeContainer(const std::string &allNodeContainer)
   this->m_allNodeContainer = allNodeContainer;
 }
 
-std::vector<std::string> Link::GroupAsNodeContainer()
+std::vector<std::string> Link::GroupAsNodeContainerCpp()
 {
   std::vector<std::string> res;
   res.push_back("NodeContainer " + this->GetAllNodeContainer() + ";");
@@ -163,6 +163,21 @@ std::vector<std::string> Link::GroupAsNodeContainer()
     }
   }
 
+  return res;
+}
+
+std::vector<std::string> Link::GroupAsNodeContainerPython()
+{
+  std::vector<std::string> res;
+
+  res.push_back(this->GetAllNodeContainer() + " = ns3.NodeContainer()");
+  for(size_t i = 0; i < (size_t) this->GetInstalledNodes().size(); i++)
+  {
+    if((this->GetNInstalledNodes(i)).find("ap_") != 0)
+    {
+      res.push_back(this->GetAllNodeContainer() + ".Add (" + this->GetNInstalledNodes(i) + ")");
+    }
+  }
   return res;
 }
 

@@ -82,7 +82,7 @@ std::vector<std::string> Emu::GenerateLinkCpp()
 std::vector<std::string> Emu::GenerateNetDeviceCpp()
 {
   std::vector<std::string> ndc;
-  std::vector<std::string> allNodes = this->GroupAsNodeContainer();
+  std::vector<std::string> allNodes = this->GroupAsNodeContainerCpp();
   for(size_t i = 0; i < (size_t) allNodes.size(); i++)
   {
     ndc.push_back(allNodes.at(i));
@@ -128,8 +128,8 @@ std::vector<std::string> Emu::GenerateTraceCpp()
 std::vector<std::string> Emu::GenerateLinkPython()
 {
   std::vector<std::string> generatedLink;
-  generatedLink.push_back("EmuHelper " + this->GetLinkName() + ";");
-  generatedLink.push_back(this->GetLinkName() + ".SetAttribute (\"DeviceName\", StringValue (emuDevice_" + this->GetLinkName() + "));");
+  generatedLink.push_back(this->GetLinkName() + " = ns3.EmuHelper()");
+  generatedLink.push_back(this->GetLinkName() + ".SetAttribute (\"DeviceName\", StringValue (emuDevice_" + this->GetLinkName() + "))");
 
   return generatedLink;
 }
@@ -137,12 +137,12 @@ std::vector<std::string> Emu::GenerateLinkPython()
 std::vector<std::string> Emu::GenerateNetDevicePython()
 {
   std::vector<std::string> ndc;
-  std::vector<std::string> allNodes = this->GroupAsNodeContainer();
+  std::vector<std::string> allNodes = this->GroupAsNodeContainerPython();
   for(size_t i = 0; i < (size_t) allNodes.size(); i++)
   {
     ndc.push_back(allNodes.at(i));
   }
-  ndc.push_back("NetDeviceContainer " + this->GetNdcName() + " = " + this->GetLinkName() + ".Install (" + this->GetAllNodeContainer() + ");");
+  ndc.push_back(this->GetNdcName() + " = " + this->GetLinkName() + ".Install (" + this->GetAllNodeContainer() + ")");
 
   return ndc;
 }
@@ -150,14 +150,14 @@ std::vector<std::string> Emu::GenerateNetDevicePython()
 std::vector<std::string> Emu::GenerateVarsPython()
 {
   std::vector<std::string> vars;
-  vars.push_back("std::string emuDevice_" + this->GetLinkName() + " = \"" + this->GetIfaceName() + "\";");
+  vars.push_back("emuDevice_" + this->GetLinkName() + " = \"" + this->GetIfaceName() + "\"");
   return vars;
 }
 
 std::vector<std::string> Emu::GenerateCmdLinePython()
 {
   std::vector<std::string> cmdLine;
-  cmdLine.push_back("cmd.AddValue(\"deviceName_" + this->GetLinkName() + "\", \"device name\", emuDevice_" + this->GetLinkName() + ");");
+  cmdLine.push_back("cmd.AddValue(\"deviceName_" + this->GetLinkName() + "\", \"device name\", emuDevice_" + this->GetLinkName() + ")");
   return cmdLine;
 }
 
@@ -169,11 +169,11 @@ std::vector<std::string> Emu::GenerateTracePython()
   {
     if(this->GetPromisc())
     {
-      trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->GetLinkName() + "\",\"" + this->GetIfaceName() + "\", true);");
+      trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->GetLinkName() + "\",\"" + this->GetIfaceName() + "\", true)");
     }
     else
     {
-      trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->GetLinkName() + "\",\"" + this->GetIfaceName() + "\", false);");
+      trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->GetLinkName() + "\",\"" + this->GetIfaceName() + "\", false)");
     }
   }
 

@@ -97,7 +97,7 @@ std::vector<std::string> Ap::GenerateNetDeviceCpp()
 {
   std::vector<std::string> ndc;
 
-  std::vector<std::string> allNodes = this->GroupAsNodeContainer();//all station nodes !
+  std::vector<std::string> allNodes = this->GroupAsNodeContainerCpp(); //all station nodes !
   for(size_t i = 0; i < (size_t) allNodes.size(); i++)
   {
     ndc.push_back(allNodes.at(i));
@@ -162,7 +162,7 @@ std::vector<std::string> Ap::GenerateTracePython()
 
   if(this->GetTrace())
   {
-    trace.push_back("wifiPhy_" + this->GetLinkName() + ".EnablePcap (\"" + this->GetLinkName() + "\", " + this->GetNdcName() + ".Get(0));");
+    trace.push_back("wifiPhy_" + this->GetLinkName() + ".EnablePcap(\"" + this->GetLinkName() + "\", " + this->GetNdcName() + ".Get(0));");
   }
 
   return trace;

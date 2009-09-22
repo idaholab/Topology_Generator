@@ -59,7 +59,7 @@ std::vector<std::string> PointToPoint::GenerateLinkCpp()
 std::vector<std::string> PointToPoint::GenerateNetDeviceCpp()
 {
   std::vector<std::string> ndc;
-  std::vector<std::string> allNodes = this->GroupAsNodeContainer();
+  std::vector<std::string> allNodes = this->GroupAsNodeContainerCpp();
   for(size_t i = 0; i < (size_t) allNodes.size(); i++)
   {
     ndc.push_back(allNodes.at(i));
@@ -84,18 +84,37 @@ std::vector<std::string> PointToPoint::GenerateTraceCpp()
 std::vector<std::string> PointToPoint::GenerateLinkPython()
 {
   std::vector<std::string> generatedLink;
+  
+  generatedLink.push_back("p2p_" + this->GetLinkName() + " = ns3.PointToPointHelper()");
+  generatedLink.push_back("p2p_" + this->GetLinkName() + ".SetDeviceAttribute(\"DataRate\", ns3.DataRateValue(ns3.DataRate(" + this->GetDataRate() + ")));");
+  generatedLink.push_back("p2p_" + this->GetLinkName() + ".SetChannelAttribute(\"Delay\", ns3.TimeValue(ns3.MilliSeconds(" + this->GetLinkDelay() + ")));");
   return generatedLink;
 }
 
 std::vector<std::string> PointToPoint::GenerateNetDevicePython()
 {
   std::vector<std::string> ndc;
+  std::vector<std::string> allNodes = this->GroupAsNodeContainerPython();
+  
+  for(size_t i = 0; i < (size_t) allNodes.size(); i++)
+  {
+    ndc.push_back(allNodes.at(i));
+  }
+  
+  ndc.push_back(this->GetNdcName() + " = p2p_" + this->GetLinkName() + ".Install(" + this->GetAllNodeContainer() + ");");
+
   return ndc;
 }
 
 std::vector<std::string> PointToPoint::GenerateTracePython()
 {
   std::vector<std::string> trace;
+  
+  if(this->GetTrace())
+  {
+    trace.push_back("PointToPointHelper.EnablePcapAll(\"" + this->GetLinkName() + "\");");
+  }
+  
   return trace;
 }
 

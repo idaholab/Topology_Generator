@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
   UdpEcho *app = dynamic_cast<UdpEcho*>(gen->GetApplication(0));
   app->SetPacketSize(512);
 
-  gen->GenerateCode();
+  gen->GenerateCodeCpp();
   
   delete app;
   delete gen;

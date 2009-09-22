@@ -59,7 +59,7 @@ std::vector<std::string> Hub::GenerateLinkCpp()
 std::vector<std::string> Hub::GenerateNetDeviceCpp()
 {
   std::vector<std::string> ndc;
-  std::vector<std::string> allNodes = this->GroupAsNodeContainer();
+  std::vector<std::string> allNodes = this->GroupAsNodeContainerCpp();
   for(size_t i = 0; i < (size_t) allNodes.size(); i++)
   {
     ndc.push_back(allNodes.at(i));
@@ -91,18 +91,42 @@ std::vector<std::string> Hub::GenerateTraceCpp()
 std::vector<std::string> Hub::GenerateLinkPython()
 {
   std::vector<std::string> ret;
+  
+  ret.push_back("csma_" + this->GetLinkName() + " = ns3.CsmaHelper()");
+  ret.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute(\"DataRate\", ns3.DataRateValue(ns3.DataRate(" + this->GetDataRate() + ")))");
+  ret.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute(\"Delay\",  ns3.TimeValue(ns3.MilliSeconds(" + this->GetLinkDelay() + ")))");
   return ret;
 }
 
 std::vector<std::string> Hub::GenerateNetDevicePython()
 {
   std::vector<std::string> ret;
+  std::vector<std::string> allNodes = this->GroupAsNodeContainerPython();
+  
+  for(size_t i = 0; i < (size_t) allNodes.size(); i++)
+  {
+    ret.push_back(allNodes.at(i));
+  }
+  ret.push_back(this->GetNdcName() + " = csma_" + this->GetLinkName() + ".Install(" + this->GetAllNodeContainer() + ")");
+
   return ret;
 }
 
 std::vector<std::string> Hub::GenerateTracePython()
 {
-  std::vector<std::string> ret;
-  return ret;
+  std::vector<std::string> trace;
+  
+  if(this->GetTrace())
+  {
+    if(this->GetPromisc())
+    {
+      trace.push_back("csma_" + this->GetLinkName() + ".EnablePcapAll(\"csma_" + this->GetLinkName() + "\", true)");
+    }
+    else
+    {
+      trace.push_back("csma_" + this->GetLinkName() + ".EnablePcapAll(\"csma_" + this->GetLinkName() + "\", false)");
+    }
+  }
+  return trace;
 }
 

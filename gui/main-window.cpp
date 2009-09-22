@@ -69,7 +69,7 @@ MainWindow::MainWindow(const std::string &simulationName)
   connect(actionCpp, SIGNAL(triggered()), this, SLOT(GenerateCpp())); 
   QAction *actionPython = menuView->addAction("&Python");
   connect(actionPython, SIGNAL(triggered()), this, SLOT(GeneratePython()));
-  actionPython->setDisabled(true);
+  /* actionPython->setDisabled(true); */
 
   QMenu *menuHelp = menuBar()->addMenu("&Help");
   QAction *menuOnlineHelp = menuHelp->addAction("Online Help");

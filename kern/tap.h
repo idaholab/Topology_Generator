@@ -147,6 +147,24 @@ class Tap : public Link
     std::vector<std::string> GenerateCmdLineCpp();
     
     /**
+     * \brief Function re-writted from link main class.
+     * \return tap bridge code
+     */
+    std::vector<std::string> GenerateTapBridgePython();
+
+    /**
+     * \brief Function re-writted from link main class.
+     * \return vars code
+     */
+    std::vector<std::string> GenerateVarsPython();
+
+    /**
+     * \brief Function re-wrotted from link main class.
+     * \return cmd line code
+     */
+    std::vector<std::string> GenerateCmdLinePython();
+    
+    /**
      * \brief Generate link python code.
      * \return link code
      */

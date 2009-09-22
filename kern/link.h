@@ -301,7 +301,13 @@ class Link
      * \brief Group all link installed nodes.
      * \return all nodes
      */
-    std::vector<std::string> GroupAsNodeContainer();
+    std::vector<std::string> GroupAsNodeContainerCpp();
+
+    /**
+     * \brief Group all link installed nodes.
+     * \return all nodes
+     */
+    std::vector<std::string> GroupAsNodeContainerPython();
 
     /**
      * \brief Get all node container name.

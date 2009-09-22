@@ -41,29 +41,10 @@ Tap::~Tap()
 {
 }
 
-std::vector<std::string> Tap::GenerateHeader()
-{
-  std::vector<std::string> headers;
-  headers.push_back("#include \"ns3/bridge-module.h\"");
-  headers.push_back("#include \"ns3/helper-module.h\"");
-
-  return headers;
-}
-
-std::vector<std::string> Tap::GenerateLinkCpp()
-{
-  std::vector<std::string> generatedLink;
-  generatedLink.push_back("CsmaHelper csma_" + this->GetLinkName() + ";");
-  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute (\"DataRate\", DataRateValue (" + this->GetDataRate() + "));");
-  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute (\"Delay\", TimeValue (MilliSeconds (" + this->GetLinkDelay() + ")));");
-
-  return generatedLink;
-}
-
 std::vector<std::string> Tap::GenerateNetDeviceCpp()
 {
   std::vector<std::string> ndc;
-  std::vector<std::string> allNodes = this->GroupAsNodeContainer();
+  std::vector<std::string> allNodes = this->GroupAsNodeContainerCpp();
   for(size_t i = 0; i < (size_t) allNodes.size(); i++)
   {
     ndc.push_back(allNodes.at(i));
@@ -112,23 +93,83 @@ std::vector<std::string> Tap::GenerateVarsCpp()
   vars.push_back("std::string tapName_" + this->GetLinkName() + " = \"" + this->GetIfaceName() + "\";");
   return vars;
 }
+
+std::vector<std::string> Tap::GenerateHeader()
+{
+  std::vector<std::string> headers;
+  headers.push_back("#include \"ns3/bridge-module.h\"");
+  headers.push_back("#include \"ns3/helper-module.h\"");
+
+  return headers;
+}
+
+std::vector<std::string> Tap::GenerateLinkCpp()
+{
+  std::vector<std::string> generatedLink;
+  generatedLink.push_back("CsmaHelper csma_" + this->GetLinkName() + ";");
+  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute (\"DataRate\", DataRateValue (" + this->GetDataRate() + "));");
+  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute (\"Delay\", TimeValue (MilliSeconds (" + this->GetLinkDelay() + ")));");
+
+  return generatedLink;
+}
+
 std::vector<std::string> Tap::GenerateCmdLineCpp()
 {
   std::vector<std::string> cmdLine;
-  cmdLine.push_back("cmd.AddValue(\"mode_" + this->GetLinkName() + "\", \"Mode Setting of TapBridge\", mode_" + this->GetLinkName() + ");");
-  cmdLine.push_back("cmd.AddValue(\"tapName_" + this->GetLinkName() + "\", \"Name of the OS tap device\", tapName_" + this->GetLinkName() + ");");
+  cmdLine.push_back("cmd.AddValue (\"mode_" + this->GetLinkName() + "\", \"Mode Setting of TapBridge\", mode_" + this->GetLinkName() + ");");
+  cmdLine.push_back("cmd.AddValue (\"tapName_" + this->GetLinkName() + "\", \"Name of the OS tap device\", tapName_" + this->GetLinkName() + ");");
+  return cmdLine;
+}
+
+std::vector<std::string> Tap::GenerateVarsPython()
+{
+  std::vector<std::string> vars;
+  vars.push_back("mode_" + this->GetLinkName() + " = \"ConfigureLocal\"");
+  vars.push_back("tapName_" + this->GetLinkName() + " = \"" + this->GetIfaceName() + "\"");
+  return vars;
+}
+
+std::vector<std::string> Tap::GenerateCmdLinePython()
+{
+  std::vector<std::string> cmdLine;
+  cmdLine.push_back("cmd.AddValue(\"mode_" + this->GetLinkName() + "\", \"Mode Setting of TapBridge\", mode_" + this->GetLinkName() + ")");
+  cmdLine.push_back("cmd.AddValue(\"tapName_" + this->GetLinkName() + "\", \"Name of the OS tap device\", tapName_" + this->GetLinkName() + ")");
   return cmdLine;
 }
 
 std::vector<std::string> Tap::GenerateLinkPython()
 {
   std::vector<std::string> generatedLink;
+  generatedLink.push_back("csma_" + this->GetLinkName() + " = ns3.CsmaHelper()");
+  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute(\"DataRate\", ns3.DataRateValue(ns3.DataRate(" + this->GetDataRate() + ")));");
+  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute(\"Delay\", ns3.TimeValue(ns3.MilliSeconds(" + this->GetLinkDelay() + ")));");
+
   return generatedLink;
 }
 
 std::vector<std::string> Tap::GenerateNetDevicePython()
 {
   std::vector<std::string> ndc;
+  std::vector<std::string> allNodes = this->GroupAsNodeContainerCpp();
+  
+  for(size_t i = 0; i < (size_t) allNodes.size(); i++)
+  {
+    ndc.push_back(allNodes.at(i));
+  }
+  ndc.push_back(this->GetNdcName() + " = csma_" + this->GetLinkName() + ".Install(" + this->GetAllNodeContainer() + ");");
+
   return ndc;
 }
+
+std::vector<std::string> Tap::GenerateTapBridgePython()
+{ 
+  std::vector<std::string> tapBridge;
+  
+  tapBridge.push_back("tapBridge_" + this->GetLinkName() + " = ns3.TapBridgeHelper(iface_" + this->GetNdcName() + ".GetAddress(1))");
+  tapBridge.push_back("tapBridge_" + this->GetLinkName() + ".SetAttribute(\"Mode\", ns3.StringValue (mode_" + this->GetLinkName() + "))");
+  tapBridge.push_back("tapBridge_" + this->GetLinkName() + ".SetAttribute(\"DeviceName\", ns3.StringValue (tapName_" + this->GetLinkName() + "))");
+  tapBridge.push_back("tapBridge_" + this->GetLinkName() + ".Install(" + this->GetTapName() + ".Get(0), " + this->GetNdcName() + ".Get(0))");
+  
+  return tapBridge;
+} 
 

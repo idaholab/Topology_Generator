@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
   /* Add Ping application from pc to pc. */
   gen->AddApplication("Ping", gen->GetNode(0)->GetNodeName(), gen->GetNode(1)->GetNodeName(), 0, 5);// 0 start time - 5 end time
 
-  gen->GenerateCode();
+  gen->GenerateCodeCpp();
   
   delete gen;
 }

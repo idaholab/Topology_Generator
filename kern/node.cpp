@@ -131,12 +131,22 @@ std::vector<std::string> Node::GenerateIpStackCpp()
 std::vector<std::string> Node::GenerateNodePython()
 {
   std::vector<std::string> nodes;
+  
+  nodes.push_back(this->GetNodeName() + " = ns3.NodeContainer()");
+  nodes.push_back(this->GetNodeName() + ".Create (" + utils::integerToString(this->GetMachinesNumber()) + ")");
   return nodes; 
 }
 
 std::vector<std::string> Node::GenerateIpStackPython()
 {
   std::vector<std::string> stack;
+  
+  if(this->GetNsc() != "")
+  {
+    stack.push_back("internetStackH.SetTcp (\"ns3::NscTcpL4Protocol\",\"Library\",StringValue(nscStack))");
+  }
+  stack.push_back("internetStackH.Install (" + this->GetNodeName() + ")");
+
   return stack; 
 }
 
