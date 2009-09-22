@@ -761,6 +761,17 @@ void MainWindow::SavePicture()
   {
     QImage img = QPixmap::grabWidget(this->m_dw).toImage();
     QString fileName = dlg.selectedFiles().at(0);
+
+    /* check if file exists and notificate the user */
+    if(QFile(fileName).exists())
+    {
+      if(QMessageBox(QMessageBox::Question, "File exists", "File already exists. Overwrite ?", 
+            QMessageBox::Ok | QMessageBox::No).exec() != QMessageBox::Ok)
+      {
+        return;
+      }
+    }
+
     if(img.save(fileName))
     {
       QMessageBox(QMessageBox::Information, "Save picture", "Picture saved at " + fileName).exec();
