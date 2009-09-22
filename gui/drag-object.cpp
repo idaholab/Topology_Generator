@@ -33,8 +33,8 @@
 
 DragObject::DragObject(QWidget *parent) : QLabel(parent)
 {
-  this->m_name = "";
-  this->m_tooltip = "";
+  this->SetName("");
+  this->SetToolTipText("");
 }
 
 DragObject::~DragObject()
@@ -53,7 +53,7 @@ std::string DragObject::GetName()
 
 void DragObject::Destroy()
 {
-  this->m_name = "deleted";
+  this->SetName("deleted");
   this->destroy();
 }
 

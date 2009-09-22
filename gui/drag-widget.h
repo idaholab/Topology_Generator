@@ -126,8 +126,75 @@ class DragWidget : public QWidget
      */
     DragObject* GetChildFromName(const std::string &name);
 
-/* to be made private ... but ... */ 
-  //private:
+    /**
+     * \brief Set link type.
+     * \param linkType link type
+     */
+    void SetLinkType(const std::string& linkType);
+
+    /**
+     * \brief Get link type.
+     * \return link type
+     */
+    std::string GetLinkType() const;
+
+
+    void SetLastPosition(const QPoint &pos);
+    QPoint GetLastPosition();
+
+    void SetLinkBegin(const std::string &linkBegin);
+    std::string GetLinkBegin();
+
+    MainWindow* GetMainWindow();
+
+    void SetTraceLink(const bool &state);
+    bool GetTraceLink();
+
+    void SetLinkEnd(const std::string &link);
+    std::string GetLinkEnd();
+
+    void SetDragLines(const DragLines &lines);
+    DragLines GetDragLines();
+
+    void AddDrawLines(const DragLines &dl);
+    DragLines GetNDrawLines(const size_t &index);
+    std::vector<DragLines> GetDrawLines();
+    void EraseDrawLines(const size_t &index);
+
+    void SetTimer(QTimer *timer);
+    QTimer* GetTimer();
+  
+    void SetAppsServer(const std::string &appsServ);
+    std::string GetAppsServer();
+
+    void SetAppsClient(const std::string &appsCli);
+    std::string GetAppsClient();
+
+    void SetAppsPing(const bool &appsPing);
+    bool GetAppsPing();
+
+    void SetAppsUdpEcho(const bool &appsUdp);
+    bool GetAppsUdpEcho();
+
+    void SetAppsTcp(const bool &appsTcp);
+    bool GetAppsTcp();
+
+    void SetStartTime(const size_t &start);
+    size_t GetStartTime();
+
+    void SetEndTime(const size_t &end);
+    size_t GetEndTime();
+
+    void SetPort(const size_t &port);
+    size_t GetPort();
+
+    void SetDialog(QDialog *dialog);
+    QDialog* GetDialog();
+
+    void SetAppsEnable(const bool &state);
+    bool GetAppsEnable();
+
+  private:
     /**
      * \brief last position of last object which moved.
      */ 

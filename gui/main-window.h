@@ -77,8 +77,68 @@ class MainWindow : public QMainWindow
      */
     void ConnectNode(const size_t &linkNumber, const std::string &nodeName);
 
-/* to be set private ... but ... */
-  //private:
+    /**
+     * \brief Set generator object.
+     * \param gen new generator object
+     */
+    void SetGenerator(Generator *gen);
+    
+    /**
+     * \brief Get generator object.
+     * \return generator object
+     */
+    Generator* GetGenerator();
+    
+    /**
+     * \brief Set delete qaction button.
+     * \param delAction new qaction object
+     */
+    void SetDelQAction(QAction *delAction);
+    
+    /**
+     * \brief Get delete qaction button.
+     * \return qaction object
+     */
+    QAction* GetDelQAction();
+    
+    /**
+     * \brief Set the drag widget object.
+     * \param dw new drag widget
+     */
+    void SetDragWidget(DragWidget *dw);
+
+    /**
+     * \brief Get the drag widget object.
+     * \return drag widget object
+     */
+    DragWidget* GetDragWidget();
+  
+    /**
+     * \brief Add an element to the iface list.
+     * \param str the element to be added
+     */
+    void AddIfaceList(const std::string &str);
+
+    /**
+     * \brief Get the iface list.
+     * \return iface list
+     */
+    std::vector<std::string> GetIfaceList();
+    
+    /**
+     * \brief Get the N element from the iface list.
+     * \param index the n element index
+     * \return the n element
+     */
+    std::string GetNIfaceList(const size_t &index);
+
+    /**
+     * \brief Erase the N element from iface list.
+     * \param index the n element index
+     */
+    void EraseIfaceList(const size_t &index);
+
+  private:
     /**
      * \brief Generator.
      */
@@ -86,12 +146,10 @@ class MainWindow : public QMainWindow
 
     /**
      * \brief Action to delete object.
-     *
      * Is attribute to setDisable ...
      */
     QAction *m_delAction;
 
-  private:
     /**
      * \brief The drag'n'drop zone.
      */

@@ -37,8 +37,8 @@
 
 MainWindow::MainWindow(const std::string &simulationName)
 {
-  this->m_dw = NULL;
-  this->m_gen = new Generator(simulationName);
+  this->SetDragWidget(NULL);
+  this->SetGenerator(new Generator(simulationName));
 
   //
   // Menu
@@ -157,17 +157,17 @@ MainWindow::MainWindow(const std::string &simulationName)
   //Delete button
   QIcon delIcon(":/Ico/Del.png");
   QString delString("Delete");
-  MainWindow::m_delAction = toolBarFichier->addAction(delIcon, delString);
-  MainWindow::m_delAction->setDisabled (true);  
-  connect(MainWindow::m_delAction, SIGNAL(triggered()), this, SLOT(DeleteObject()));
+  this->SetDelQAction(toolBarFichier->addAction(delIcon, delString));
+  this->GetDelQAction()->setDisabled (true);  
+  connect(this->GetDelQAction(), SIGNAL(triggered()), this, SLOT(DeleteObject()));
 
   //
   // Creation of Drag N Drop Area.
   //
   QHBoxLayout *dragLayout = new QHBoxLayout;
-  this->m_dw = new DragWidget();
+  this->SetDragWidget(new DragWidget());
 
-  dragLayout->addWidget(m_dw);
+  dragLayout->addWidget(GetDragWidget());
 
   QWidget *zoneCentral = new QWidget; 
   zoneCentral->setLayout(dragLayout);
@@ -177,18 +177,18 @@ MainWindow::MainWindow(const std::string &simulationName)
   //
   // 
   //
-  this->m_dw->SetMainWindow(this);
+  this->GetDragWidget()->SetMainWindow(this);
 }
 
 MainWindow::~MainWindow()
 {
-  delete m_gen;
+  delete this->GetGenerator();
 }
 
 void MainWindow::CreatePc()
 {
-  this->m_gen->AddNode("Pc");
-  m_dw->CreateObject("Pc", this->m_gen->GetNode(this->m_gen->GetNNodes() - 1)->GetNodeName());
+  this->GetGenerator()->AddNode("Pc");
+  GetDragWidget()->CreateObject("Pc", this->GetGenerator()->GetNode(this->GetGenerator()->GetNNodes() - 1)->GetNodeName());
 }
 
 void MainWindow::CreatePcGroup()
@@ -215,8 +215,8 @@ void MainWindow::CreatePcGroup()
     return;
   }
 
-  this->m_gen->AddNode("Pc",number);
-  m_dw->CreateObject("Pc-group", this->m_gen->GetNode(this->m_gen->GetNNodes() - 1)->GetNodeName());
+  this->GetGenerator()->AddNode("Pc",number);
+  GetDragWidget()->CreateObject("Pc-group", this->GetGenerator()->GetNode(this->GetGenerator()->GetNNodes() - 1)->GetNodeName());
 }
 
 void MainWindow::CreateEmu()
@@ -230,16 +230,16 @@ void MainWindow::CreateEmu()
   if (ok && !text.isEmpty())
   {
     /* test if the iface is already used. */
-    for(size_t i = 0; i < (size_t) this->m_listIface.size(); i++)
+    for(size_t i = 0; i < (size_t) this->GetIfaceList().size(); i++)
     {
-      if( text.toStdString() == this->m_listIface.at(i))
+      if( text.toStdString() == this->GetNIfaceList(i))
       {
         /* interface already used ... */
         QMessageBox::about(this, "Error", "The specified interface is already used ...");
         return;
       }
     }
-    this->m_listIface.push_back(text.toStdString());
+    this->AddIfaceList(text.toStdString());
   }
   else
   {
@@ -247,9 +247,9 @@ void MainWindow::CreateEmu()
     return;
   }
 
-  this->m_gen->AddNode("Pc");
-  this->m_gen->AddLink("Emu", this->m_gen->GetNode(this->m_gen->GetNNodes() - 1)->GetNodeName(), text.toStdString());
-  m_dw->CreateObject("Emu",this->m_gen->GetLink(this->m_gen->GetNLinks() - 1)->GetLinkName());
+  this->GetGenerator()->AddNode("Pc");
+  this->GetGenerator()->AddLink("Emu", this->GetGenerator()->GetNode(this->GetGenerator()->GetNNodes() - 1)->GetNodeName(), text.toStdString());
+  GetDragWidget()->CreateObject("Emu",this->GetGenerator()->GetLink(this->GetGenerator()->GetNLinks() - 1)->GetLinkName());
 }
 
 void MainWindow::CreateTap()
@@ -262,16 +262,16 @@ void MainWindow::CreateTap()
       "tap0", &ok);
   if (ok && !text.isEmpty())
   {
-    for(size_t i = 0; i < (size_t) this->m_listIface.size(); i++)
+    for(size_t i = 0; i < (size_t) this->GetIfaceList().size(); i++)
     {
-      if( text.toStdString() == this->m_listIface.at(i))
+      if( text.toStdString() == this->GetNIfaceList(i))
       {
         /* interface already used ... */
         QMessageBox::about(this, "Error", "The specified interface is already used ...");
         return;
       }
     }
-    this->m_listIface.push_back(text.toStdString());
+    this->AddIfaceList(text.toStdString());
   }
   else
   {
@@ -279,31 +279,31 @@ void MainWindow::CreateTap()
     return;
   }
 
-  this->m_gen->AddNode("Tap");
-  this->m_gen->AddLink("Tap", this->m_gen->GetNode(this->m_gen->GetNNodes() - 1)->GetNodeName(), text.toStdString());
-  m_dw->CreateObject("Tap",this->m_gen->GetLink(this->m_gen->GetNLinks() - 1)->GetLinkName());
+  this->GetGenerator()->AddNode("Tap");
+  this->GetGenerator()->AddLink("Tap", this->GetGenerator()->GetNode(this->GetGenerator()->GetNNodes() - 1)->GetNodeName(), text.toStdString());
+  GetDragWidget()->CreateObject("Tap",this->GetGenerator()->GetLink(this->GetGenerator()->GetNLinks() - 1)->GetLinkName());
 }
 
 void MainWindow::CleanIface()
 {
   /* remove from list the unused iface. */
   bool used = false;
-  for(size_t i = 0; i < (size_t) this->m_listIface.size(); i++)
+  for(size_t i = 0; i < (size_t) this->GetIfaceList().size(); i++)
   {
     used = false;
-    for(size_t j = 0; j < this->m_gen->GetNLinks(); j++)
+    for(size_t j = 0; j < this->GetGenerator()->GetNLinks(); j++)
     {
-      if( (this->m_gen->GetLink(j)->GetLinkName()).find("tap_") == 0)
+      if( (this->GetGenerator()->GetLink(j)->GetLinkName()).find("tap_") == 0)
       {
-        if( this->m_listIface.at(i) == static_cast<Tap*>(this->m_gen->GetLink(j))->GetIfaceName())
+        if( this->GetNIfaceList(i) == static_cast<Tap*>(this->GetGenerator()->GetLink(j))->GetIfaceName())
         {
           used = true;
           break;
         }
       }
-      if( (this->m_gen->GetLink(j)->GetLinkName()).find("emu_") == 0 ) 
+      if( (this->GetGenerator()->GetLink(j)->GetLinkName()).find("emu_") == 0 ) 
       {
-        if( this->m_listIface.at(i) == static_cast<Emu*>(this->m_gen->GetLink(j))->GetIfaceName())
+        if( this->GetNIfaceList(i) == static_cast<Emu*>(this->GetGenerator()->GetLink(j))->GetIfaceName())
         {
           used = true;
           break;
@@ -312,41 +312,41 @@ void MainWindow::CleanIface()
     }
     if(!used)
     {
-      this->m_listIface.erase(this->m_listIface.begin() + i);
+      this->EraseIfaceList(i);
     }
   }
 }
 
 void MainWindow::CreateAp()
 {  
-  this->m_gen->AddNode("Ap");
-  this->m_gen->AddLink("Ap", this->m_gen->GetNode(this->m_gen->GetNNodes() - 1)->GetNodeName());
-  m_dw->CreateObject("Ap", this->m_gen->GetLink(this->m_gen->GetNLinks() - 1)->GetLinkName() );
+  this->GetGenerator()->AddNode("Ap");
+  this->GetGenerator()->AddLink("Ap", this->GetGenerator()->GetNode(this->GetGenerator()->GetNNodes() - 1)->GetNodeName());
+  GetDragWidget()->CreateObject("Ap", this->GetGenerator()->GetLink(this->GetGenerator()->GetNLinks() - 1)->GetLinkName() );
 }
 
 void MainWindow::CreateStation()
 {
-  this->m_gen->AddNode("Station");
-  m_dw->CreateObject("Station", this->m_gen->GetNode(this->m_gen->GetNNodes() - 1)->GetNodeName());
+  this->GetGenerator()->AddNode("Station");
+  GetDragWidget()->CreateObject("Station", this->GetGenerator()->GetNode(this->GetGenerator()->GetNNodes() - 1)->GetNodeName());
 }
 
 void MainWindow::CreateHub()
 {
-  this->m_gen->AddLink("Hub");
-  m_dw->CreateObject("Hub", this->m_gen->GetLink(this->m_gen->GetNLinks() - 1)->GetLinkName());
+  this->GetGenerator()->AddLink("Hub");
+  GetDragWidget()->CreateObject("Hub", this->GetGenerator()->GetLink(this->GetGenerator()->GetNLinks() - 1)->GetLinkName());
 }
 
 void MainWindow::CreateSwitch()
 {
-  this->m_gen->AddNode("Bridge");
-  this->m_gen->AddLink("Bridge", this->m_gen->GetNode(this->m_gen->GetNNodes() - 1)->GetNodeName());
-  m_dw->CreateObject("Switch",this->m_gen->GetLink(this->m_gen->GetNLinks() - 1)->GetLinkName());
+  this->GetGenerator()->AddNode("Bridge");
+  this->GetGenerator()->AddLink("Bridge", this->GetGenerator()->GetNode(this->GetGenerator()->GetNNodes() - 1)->GetNodeName());
+  GetDragWidget()->CreateObject("Switch",this->GetGenerator()->GetLink(this->GetGenerator()->GetNLinks() - 1)->GetLinkName());
 }
 
 void MainWindow::CreateRouter()
 {
-  this->m_gen->AddNode("Router");
-  m_dw->CreateObject("Router", this->m_gen->GetNode(this->m_gen->GetNNodes() - 1)->GetNodeName());
+  this->GetGenerator()->AddNode("Router");
+  GetDragWidget()->CreateObject("Router", this->GetGenerator()->GetNode(this->GetGenerator()->GetNNodes() - 1)->GetNodeName());
 }
 
 void MainWindow::CreateWiredLink()
@@ -364,52 +364,52 @@ void MainWindow::CreateWiredLink()
    *  - Pc to emu
    *  - Pc to Tap
    */
-  if(this->m_dw->m_traceLink)
+  if(this->GetDragWidget()->GetTraceLink())
   {
-    this->m_dw->m_traceLink = false;
-    this->m_dw->ResetSelected();
+    this->GetDragWidget()->SetTraceLink(false);
+    this->GetDragWidget()->ResetSelected();
     return;
   }
-  this->m_dw->m_traceLink = true;
-  this->m_dw->m_linkType = "WiredLink";
+  this->GetDragWidget()->SetTraceLink(true);
+  this->GetDragWidget()->SetLinkType("WiredLink");
 }
 
 void MainWindow::ValidLink()
 {
   /* function called when the two equipement are selected. */
   /* get the selected equipement. */
-  this->m_dw->m_traceLink = false;
+  this->GetDragWidget()->SetTraceLink(false);
 
-  std::vector<std::string> equi = this->m_dw->GetLastSelected();
+  std::vector<std::string> equi = this->GetDragWidget()->GetLastSelected();
   size_t indic = 0;
 
   if(equi.at(0) == "" || equi.at(1) == "" || equi.at(0) == "deleted" || equi.at(1) == "deleted")
   {
     QMessageBox::about(this, "Error", "You don't have selected two equipement.");
-    for(size_t i = 0; i < (size_t) this->m_dw->m_drawLines.size(); i++)
+    for(size_t i = 0; i < (size_t) this->GetDragWidget()->GetDrawLines().size(); i++)
     {
-      if( (equi.at(0) == this->m_dw->m_drawLines.at(i).GetFirst() && equi.at(1) == this->m_dw->m_drawLines.at(i).GetSecond()) ||
-          (equi.at(1) == this->m_dw->m_drawLines.at(i).GetFirst() && equi.at(0) == this->m_dw->m_drawLines.at(i).GetSecond()) )
+      if( (equi.at(0) == this->GetDragWidget()->GetNDrawLines(i).GetFirst() && equi.at(1) == this->GetDragWidget()->GetNDrawLines(i).GetSecond()) ||
+          (equi.at(1) == this->GetDragWidget()->GetNDrawLines(i).GetFirst() && equi.at(0) == this->GetDragWidget()->GetNDrawLines(i).GetSecond()) )
       {
-        this->m_dw->m_drawLines.erase(this->m_dw->m_drawLines.begin() + i);
+        this->GetDragWidget()->EraseDrawLines(i);
       }
     }
-    this->m_dw->ResetSelected();
+    this->GetDragWidget()->ResetSelected();
     return;
   }
 
   if(equi.at(0) == equi.at(1))
   {
     QMessageBox::about(this, "Error", "You can't connect object to itself.");
-    for(size_t i = 0; i < (size_t) this->m_dw->m_drawLines.size(); i++)
+    for(size_t i = 0; i < (size_t) this->GetDragWidget()->GetDrawLines().size(); i++)
     {
-      if( (equi.at(0) == this->m_dw->m_drawLines.at(i).GetFirst() && equi.at(1) == this->m_dw->m_drawLines.at(i).GetSecond()) ||
-          (equi.at(1) == this->m_dw->m_drawLines.at(i).GetFirst() && equi.at(0) == this->m_dw->m_drawLines.at(i).GetSecond()) )
+      if( (equi.at(0) == this->GetDragWidget()->GetNDrawLines(i).GetFirst() && equi.at(1) == this->GetDragWidget()->GetNDrawLines(i).GetSecond()) ||
+          (equi.at(1) == this->GetDragWidget()->GetNDrawLines(i).GetFirst() && equi.at(0) == this->GetDragWidget()->GetNDrawLines(i).GetSecond()) )
       {
-        this->m_dw->m_drawLines.erase(this->m_dw->m_drawLines.begin() + i);
+        this->GetDragWidget()->EraseDrawLines(i);
       }
     }
-    this->m_dw->ResetSelected();
+    this->GetDragWidget()->ResetSelected();
     return;
   }
 
@@ -423,15 +423,15 @@ void MainWindow::ValidLink()
        (equi.at(1)).find("emu_") == 0 || (equi.at(1).find("tap_") == 0)) )
   {
     QMessageBox::about(this, "Error", "This link can't be etablished. Please use a Pc or a Router.");
-    for(size_t i = 0; i < (size_t) this->m_dw->m_drawLines.size(); i++)
+    for(size_t i = 0; i < (size_t) this->GetDragWidget()->GetDrawLines().size(); i++)
     {
-      if( (equi.at(0) == this->m_dw->m_drawLines.at(i).GetFirst() && equi.at(1) == this->m_dw->m_drawLines.at(i).GetSecond()) ||
-          (equi.at(1) == this->m_dw->m_drawLines.at(i).GetFirst() && equi.at(0) == this->m_dw->m_drawLines.at(i).GetSecond()) )
+      if( (equi.at(0) == this->GetDragWidget()->GetNDrawLines(i).GetFirst() && equi.at(1) == this->GetDragWidget()->GetNDrawLines(i).GetSecond()) ||
+          (equi.at(1) == this->GetDragWidget()->GetNDrawLines(i).GetFirst() && equi.at(0) == this->GetDragWidget()->GetNDrawLines(i).GetSecond()) )
       {
-        this->m_dw->m_drawLines.erase(this->m_dw->m_drawLines.begin() + i);
+        this->GetDragWidget()->EraseDrawLines(i);
       }
     }
-    this->m_dw->ResetSelected();
+    this->GetDragWidget()->ResetSelected();
     return;
   }
   //
@@ -441,9 +441,9 @@ void MainWindow::ValidLink()
       (equi.at(0)).find("emu_") == 0 || (equi.at(0).find("tap_") == 0 ))
   {
     indic = 0;
-    for(size_t i = 0; i < (size_t) this->m_gen->GetNLinks(); i++)
+    for(size_t i = 0; i < (size_t) this->GetGenerator()->GetNLinks(); i++)
     { 
-      if( this->m_gen->GetLink(i)->GetLinkName() == equi.at(0))
+      if( this->GetGenerator()->GetLink(i)->GetLinkName() == equi.at(0))
       {
         indic = i;
       }
@@ -454,9 +454,9 @@ void MainWindow::ValidLink()
       (equi.at(1)).find("emu_") == 0 || (equi.at(1).find("tap_") == 0 ))
   {
     indic = 0;
-    for(size_t i = 0; i < (size_t) this->m_gen->GetNLinks(); i++)
+    for(size_t i = 0; i < (size_t) this->GetGenerator()->GetNLinks(); i++)
     { 
-      if( this->m_gen->GetLink(i)->GetLinkName() == equi.at(1))
+      if( this->GetGenerator()->GetLink(i)->GetLinkName() == equi.at(1))
       {
         indic = i;
       }
@@ -468,14 +468,14 @@ void MainWindow::ValidLink()
     size_t number = -1;
     size_t number2 = -1;
 
-    for(size_t i = 0; i < (size_t) this->m_gen->GetNLinks(); i++)
+    for(size_t i = 0; i < (size_t) this->GetGenerator()->GetNLinks(); i++)
     {
-      if(equi.at(0) == this->m_gen->GetLink(i)->GetLinkName())
+      if(equi.at(0) == this->GetGenerator()->GetLink(i)->GetLinkName())
       {
         number = i;
         break;
       }
-      if(equi.at(1) == this->m_gen->GetLink(i)->GetLinkName())
+      if(equi.at(1) == this->GetGenerator()->GetLink(i)->GetLinkName())
       {
         number2 = i;
         break;
@@ -494,25 +494,25 @@ void MainWindow::ValidLink()
       /* you can't connect for example two terminals without an csma network so ... */
       if(equi.at(2) == "WiredLink")
       {
-        this->m_gen->AddLink("Hub");
-        this->ConnectNode((this->m_gen->GetNLinks() - 1), equi.at(0));
-        this->ConnectNode((this->m_gen->GetNLinks() - 1), equi.at(1));
+        this->GetGenerator()->AddLink("Hub");
+        this->ConnectNode((this->GetGenerator()->GetNLinks() - 1), equi.at(0));
+        this->ConnectNode((this->GetGenerator()->GetNLinks() - 1), equi.at(1));
       }
       else if(equi.at(2) == "P2pLink")
       {
-        this->m_gen->AddLink("PointToPoint");
-        this->ConnectNode((this->m_gen->GetNLinks() - 1), equi.at(0));
-        this->ConnectNode((this->m_gen->GetNLinks() - 1), equi.at(1));
+        this->GetGenerator()->AddLink("PointToPoint");
+        this->ConnectNode((this->GetGenerator()->GetNLinks() - 1), equi.at(0));
+        this->ConnectNode((this->GetGenerator()->GetNLinks() - 1), equi.at(1));
       }
       else
       {
         QMessageBox::about(this, "Error", "An error occured.");
         /* delete the two equi .... */
-        for(size_t i = 0; i < (size_t) this->m_dw->m_drawLines.size(); i++)
+        for(size_t i = 0; i < (size_t) this->GetDragWidget()->GetDrawLines().size(); i++)
         {
-          if(equi.at(0) == this->m_dw->m_drawLines.at(i).GetFirst() || equi.at(1) == this->m_dw->m_drawLines.at(i).GetFirst() )
+          if(equi.at(0) == this->GetDragWidget()->GetNDrawLines(i).GetFirst() || equi.at(1) == this->GetDragWidget()->GetNDrawLines(i).GetFirst() )
           {
-            this->m_dw->m_drawLines.erase(this->m_dw->m_drawLines.begin() + i);
+            this->GetDragWidget()->EraseDrawLines(i);
           }
         }
       }
@@ -520,32 +520,32 @@ void MainWindow::ValidLink()
   }
 
   /* Draw the connection. */
-  this->m_dw->DrawLine();
-  this->m_dw->ResetSelected();
+  this->GetDragWidget()->DrawLine();
+  this->GetDragWidget()->ResetSelected();
 }
 
 void MainWindow::CreateStationLink()
 {
-  if(this->m_dw->m_traceLink)
+  if(this->GetDragWidget()->GetTraceLink())
   {
-    this->m_dw->m_traceLink = false;
-    this->m_dw->ResetSelected();
+    this->GetDragWidget()->SetTraceLink(false);
+    this->GetDragWidget()->ResetSelected();
     return;
   }
-  this->m_dw->m_traceLink = true;
-  this->m_dw->m_linkType = "WifiLink";
+  this->GetDragWidget()->SetTraceLink(true);
+  this->GetDragWidget()->SetLinkType("WifiLink");
 }
 
 void MainWindow::CreateP2pLink()
 {
-  if(this->m_dw->m_traceLink)
+  if(this->GetDragWidget()->GetTraceLink())
   {
-    this->m_dw->m_traceLink = false;
-    this->m_dw->ResetSelected();
+    this->GetDragWidget()->SetTraceLink(false);
+    this->GetDragWidget()->ResetSelected();
     return;
   }
-  this->m_dw->m_traceLink = true;
-  this->m_dw->m_linkType = "P2pLink";
+  this->GetDragWidget()->SetTraceLink(true);
+  this->GetDragWidget()->SetLinkType("P2pLink");
 }
 
 void MainWindow::ConfigurationMenu()
@@ -554,7 +554,7 @@ void MainWindow::ConfigurationMenu()
 
 void MainWindow::DeleteObject()
 {
-  this->m_dw->DeleteSelected();
+  this->GetDragWidget()->DeleteSelected();
 }
 
 void MainWindow::About()
@@ -586,17 +586,17 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
   /* test if the link exist. */
   try
   {
-    this->m_gen->GetLink(linkNumber);
+    this->GetGenerator()->GetLink(linkNumber);
   }
   catch(const std::out_of_range &e)
   {
     QMessageBox::about(this, "Error", "This link doesn't exist.");
-    for(size_t i = 0; i < (size_t) this->m_dw->m_drawLines.size(); i++)
+    for(size_t i = 0; i < (size_t) this->GetDragWidget()->GetDrawLines().size(); i++)
     {
-      if( (nodeName == this->m_dw->m_drawLines.at(i).GetFirst() && this->m_gen->GetLink(linkNumber)->GetLinkName() == this->m_dw->m_drawLines.at(i).GetSecond()) ||
-          (this->m_gen->GetLink(linkNumber)->GetLinkName() == this->m_dw->m_drawLines.at(i).GetFirst() && nodeName == this->m_dw->m_drawLines.at(i).GetSecond()) )
+      if( (nodeName == this->GetDragWidget()->GetNDrawLines(i).GetFirst() && this->GetGenerator()->GetLink(linkNumber)->GetLinkName() == this->GetDragWidget()->GetNDrawLines(i).GetSecond()) ||
+          (this->GetGenerator()->GetLink(linkNumber)->GetLinkName() == this->GetDragWidget()->GetNDrawLines(i).GetFirst() && nodeName == this->GetDragWidget()->GetNDrawLines(i).GetSecond()) )
       {
-        this->m_dw->m_drawLines.erase(this->m_dw->m_drawLines.begin() + i);
+        this->GetDragWidget()->EraseDrawLines(i);
       }
     }
     return;
@@ -610,51 +610,51 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
   }
   else
   {
-    for(size_t i = 0; i < (size_t) this->m_gen->GetNNodes(); i++)
+    for(size_t i = 0; i < (size_t) this->GetGenerator()->GetNNodes(); i++)
     {
-      if(nodeName == this->m_gen->GetNode(i)->GetNodeName())
+      if(nodeName == this->GetGenerator()->GetNode(i)->GetNodeName())
       {
-        numberOfConnectedMachines += MainWindow::m_gen->GetNode(i)->GetMachinesNumber();
+        numberOfConnectedMachines += MainWindow::GetGenerator()->GetNode(i)->GetMachinesNumber();
       }
     }
   }
 
   /* get the number of machines also connected. */
-  std::vector<std::string> nodes = this->m_gen->GetLink(linkNumber)->GetInstalledNodes();
+  std::vector<std::string> nodes = this->GetGenerator()->GetLink(linkNumber)->GetInstalledNodes();
   for(size_t i = 0; i < (size_t) nodes.size(); i++)
   {
-    for(size_t j = 0; j < (size_t) this->m_gen->GetNNodes(); j++)
+    for(size_t j = 0; j < (size_t) this->GetGenerator()->GetNNodes(); j++)
     {
-      if(nodes.at(i) == this->m_gen->GetNode(j)->GetNodeName())
+      if(nodes.at(i) == this->GetGenerator()->GetNode(j)->GetNodeName())
       {
-        numberOfConnectedMachines += this->m_gen->GetNode(j)->GetMachinesNumber();
+        numberOfConnectedMachines += this->GetGenerator()->GetNode(j)->GetMachinesNumber();
       }
     }
   }
   if( numberOfConnectedMachines > (255 -2) )
   {
     QMessageBox::about(this, "Error", "Limit of machines exceeded.");
-    for(size_t i = 0; i < (size_t) this->m_dw->m_drawLines.size(); i++)
+    for(size_t i = 0; i < (size_t) this->GetDragWidget()->GetDrawLines().size(); i++)
     {
-      if( (nodeName == this->m_dw->m_drawLines.at(i).GetFirst() && this->m_gen->GetLink(linkNumber)->GetLinkName() == this->m_dw->m_drawLines.at(i).GetSecond()) ||
-          (this->m_gen->GetLink(linkNumber)->GetLinkName() == this->m_dw->m_drawLines.at(i).GetFirst() && nodeName == this->m_dw->m_drawLines.at(i).GetSecond()) )
+      if( (nodeName == this->GetDragWidget()->GetNDrawLines(i).GetFirst() && this->GetGenerator()->GetLink(linkNumber)->GetLinkName() == this->GetDragWidget()->GetNDrawLines(i).GetSecond()) ||
+          (this->GetGenerator()->GetLink(linkNumber)->GetLinkName() == this->GetDragWidget()->GetNDrawLines(i).GetFirst() && nodeName == this->GetDragWidget()->GetNDrawLines(i).GetSecond()) )
       {
-        this->m_dw->m_drawLines.erase(this->m_dw->m_drawLines.begin() + i);
+        this->GetDragWidget()->EraseDrawLines(i);
       }
     }
     return;
   }
-  this->m_gen->GetLink(linkNumber)->Install(nodeName);
+  this->GetGenerator()->GetLink(linkNumber)->Install(nodeName);
 }
 
 void MainWindow::GenerateCpp()
 {
-  this->m_gen->GenerateCodeCpp();
+  this->GetGenerator()->GenerateCodeCpp();
 }
 
 void MainWindow::GeneratePython()
 {
-  this->m_gen->GenerateCodePython();
+  this->GetGenerator()->GenerateCodePython();
 }
 
 void MainWindow::CreateApps()
@@ -705,50 +705,50 @@ void MainWindow::CreateApps()
   {
     if(box_m_appsPing->isChecked())
     {
-      this->m_dw->m_appsPing = true;
-      this->m_dw->ShowGuiPing();
+      this->GetDragWidget()->SetAppsPing(true);
+      this->GetDragWidget()->ShowGuiPing();
     }
     else if(box_m_appsUdpEcho->isChecked())
     {
-      this->m_dw->m_appsUdpEcho = true;
-      this->m_dw->ShowGuiUdpEcho();
+      this->GetDragWidget()->SetAppsUdpEcho(true);
+      this->GetDragWidget()->ShowGuiUdpEcho();
     }
     else if(box_m_appsTcp->isChecked())
     {
-      this->m_dw->m_appsTcp = true;
-      this->m_dw->ShowGuiTcp();
+      this->GetDragWidget()->SetAppsTcp(true);
+      this->GetDragWidget()->ShowGuiTcp();
     }
   }
 }
 
 void MainWindow::ValidApps()
 {
-  if(this->m_dw->m_appsPing)
+  if(this->GetDragWidget()->GetAppsPing())
   {
-    this->m_gen->AddApplication("Ping", this->m_dw->m_appsServer, this->m_dw->m_appsClient, this->m_dw->m_startTime, this->m_dw->m_endTime);
+    this->GetGenerator()->AddApplication("Ping", this->GetDragWidget()->GetAppsServer(), this->GetDragWidget()->GetAppsClient(), this->GetDragWidget()->GetStartTime(), this->GetDragWidget()->GetEndTime());
     QMessageBox::about(this, "Ping", "Ping successfull installed.");
   }
 
-  if(this->m_dw->m_appsUdpEcho)
+  if(this->GetDragWidget()->GetAppsUdpEcho())
   {
-    this->m_gen->AddApplication("UdpEcho", this->m_dw->m_appsServer, this->m_dw->m_appsClient, this->m_dw->m_startTime, this->m_dw->m_endTime, this->m_dw->m_port);
+    this->GetGenerator()->AddApplication("UdpEcho", this->GetDragWidget()->GetAppsServer(), this->GetDragWidget()->GetAppsClient(), this->GetDragWidget()->GetStartTime(), this->GetDragWidget()->GetEndTime(), this->GetDragWidget()->GetPort());
     QMessageBox::about(this, "Udp Echo", "Udp echo successfull installed.");
   }
 
-  if(this->m_dw->m_appsTcp)
+  if(this->GetDragWidget()->GetAppsTcp())
   {
-    this->m_gen->AddApplication("TcpLargeTransfer", this->m_dw->m_appsServer, this->m_dw->m_appsClient, this->m_dw->m_startTime, this->m_dw->m_endTime, this->m_dw->m_port);
+    this->GetGenerator()->AddApplication("TcpLargeTransfer", this->GetDragWidget()->GetAppsServer(), this->GetDragWidget()->GetAppsClient(), this->GetDragWidget()->GetStartTime(), this->GetDragWidget()->GetEndTime(), this->GetDragWidget()->GetPort());
     QMessageBox::about(this, "Tcp Large Transfer", "Tcp large transfer successfull installed.");
   }
 
-  this->m_dw->m_appsPing = false;
-  this->m_dw->m_appsUdpEcho = false;
-  this->m_dw->m_appsTcp = false;
-  this->m_dw->m_appsServer = "";
-  this->m_dw->m_appsClient = "";
-  this->m_dw->m_startTime = 0;
-  this->m_dw->m_endTime = 0;
-  this->m_dw->m_port = 0;
+  this->GetDragWidget()->SetAppsPing(false);
+  this->GetDragWidget()->SetAppsUdpEcho(false);
+  this->GetDragWidget()->SetAppsTcp(false);
+  this->GetDragWidget()->SetAppsServer("");
+  this->GetDragWidget()->SetAppsClient("");
+  this->GetDragWidget()->SetStartTime(0);
+  this->GetDragWidget()->SetEndTime(0);
+  this->GetDragWidget()->SetPort(0);
 }
 
 void MainWindow::SavePicture()
@@ -759,7 +759,7 @@ void MainWindow::SavePicture()
  
   if(dlg.exec())
   {
-    QImage img = QPixmap::grabWidget(this->m_dw).toImage();
+    QImage img = QPixmap::grabWidget(this->GetDragWidget()).toImage();
     QString fileName = dlg.selectedFiles().at(0);
 
     /* check if file exists and notificate the user */
@@ -781,5 +781,55 @@ void MainWindow::SavePicture()
       QMessageBox(QMessageBox::Warning, "Save picture", "Picture saving failed!").exec();
     }
   }
+}
+
+void MainWindow::SetGenerator(Generator *gen)
+{
+  this->m_gen = gen;
+}
+
+Generator* MainWindow::GetGenerator()
+{
+  return this->m_gen;
+}
+
+void MainWindow::SetDelQAction(QAction *delAction)
+{
+  this->m_delAction = delAction;
+}
+
+QAction* MainWindow::GetDelQAction()
+{
+  return this->m_delAction;
+}
+
+void MainWindow::SetDragWidget(DragWidget *dw)
+{
+  this->m_dw = dw;
+}
+
+DragWidget* MainWindow::GetDragWidget()
+{
+  return this->m_dw;
+}
+
+void MainWindow::AddIfaceList(const std::string &str)
+{
+  this->m_listIface.push_back(str);
+}
+
+std::vector<std::string> MainWindow::GetIfaceList()
+{
+  return this->m_listIface;
+}
+
+std::string MainWindow::GetNIfaceList(const size_t &index)
+{
+  return this->m_listIface.at(index);
+}
+
+void MainWindow::EraseIfaceList(const size_t &index)
+{
+  this->m_listIface.erase(this->m_listIface.begin() + index);
 }
 

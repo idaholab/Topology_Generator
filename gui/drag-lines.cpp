@@ -29,8 +29,8 @@
 
 DragLines::DragLines()
 {
-  this->m_first = "";
-  this->m_second = "";
+  this->SetFirst("");
+  this->SetSecond("");
 }
 
 void DragLines::SetFirst(const std::string& name)
