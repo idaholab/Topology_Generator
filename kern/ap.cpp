@@ -112,7 +112,7 @@ std::vector<std::string> Ap::GenerateNetDeviceCpp()
   ndc.push_back("   \"Ssid\", SsidValue (ssid_" + this->GetLinkName() + "), ");
   ndc.push_back("   \"BeaconGeneration\", BooleanValue (true),"); 
   ndc.push_back("   \"BeaconInterval\", TimeValue (Seconds (2.5)));");
-  ndc.push_back(this->GetNdcName() + ".Add(wifi_" + this->GetLinkName() + ".Install (wifiPhy_" + this->GetLinkName() + ", wifiMac_" + this->GetLinkName() + ", " + this->GetApNode() + "));");
+  ndc.push_back(this->GetNdcName() + ".Add (wifi_" + this->GetLinkName() + ".Install (wifiPhy_" + this->GetLinkName() + ", wifiMac_" + this->GetLinkName() + ", " + this->GetApNode() + "));");
 
   ndc.push_back("wifiMac_" + this->GetLinkName() + ".SetType (\"ns3::NqstaWifiMac\",");
   ndc.push_back("   \"Ssid\", SsidValue (ssid_" + this->GetLinkName() + "), ");
@@ -121,7 +121,7 @@ std::vector<std::string> Ap::GenerateNetDeviceCpp()
 
   ndc.push_back("MobilityHelper mobility_" + this->GetLinkName() + ";");
   ndc.push_back("mobility_" + this->GetLinkName() + ".SetMobilityModel (\"ns3::ConstantPositionMobilityModel\");");
-  ndc.push_back("mobility_" + this->GetLinkName() + ".Install(" + this->GetApNode() + ");"); 
+  ndc.push_back("mobility_" + this->GetLinkName() + ".Install (" + this->GetApNode() + ");"); 
 
   if(this->GetMobility())//if random walk is activated.
   {
@@ -147,12 +147,51 @@ std::vector<std::string> Ap::GenerateTraceCpp()
 std::vector<std::string> Ap::GenerateLinkPython()
 {
   std::vector<std::string> generatedLink;
+
+  /* creation of the link. */
+  generatedLink.push_back("wifiPhy_" + this->GetLinkName() + " = ns3.YansWifiPhyHelper.Default()");
+  generatedLink.push_back("wifiChannel_" + this->GetLinkName() + " = ns3.YansWifiChannelHelper.Default()");
+  generatedLink.push_back("wifiPhy_" + this->GetLinkName() + ".SetChannel(wifiChannel_" + this->GetLinkName() + ".Create())");
+
   return generatedLink;
 }
 
 std::vector<std::string> Ap::GenerateNetDevicePython()
 {
   std::vector<std::string> ndc;
+
+  std::vector<std::string> allNodes = this->GroupAsNodeContainerPython(); //all station nodes !
+  for(size_t i = 0; i < (size_t) allNodes.size(); i++)
+  {
+    ndc.push_back(allNodes.at(i));
+  }
+  ndc.push_back(this->GetNdcName() + " = ns3.NetDeviceContainer()");
+  ndc.push_back("ssid_" + this->GetLinkName() + " = ns3.Ssid(\"" + this->GetApName() + "\")");
+  ndc.push_back("wifi_" + this->GetLinkName() + " = ns3.WifiHelper.Default()");
+  ndc.push_back("wifiMac_" + this->GetLinkName() + " = ns3.NqosWifiMacHelper.Default()");
+  ndc.push_back("wifi_" + this->GetLinkName() + ".SetRemoteStationManager(\"ns3::ArfWifiManager\")");
+
+  ndc.push_back("wifiMac_" + this->GetLinkName() + ".SetType (\"ns3::NqapWifiMac\", ");
+  ndc.push_back("   \"Ssid\", ns3.SsidValue(ssid_" + this->GetLinkName() + "), ");
+  ndc.push_back("   \"BeaconGeneration\", ns3.BooleanValue(True),");
+  ndc.push_back("   \"BeaconInterval\", ns3.TimeValue(ns3.Seconds(2.5)))");
+  ndc.push_back(this->GetNdcName() + ".Add(wifi_" + this->GetLinkName() + ".Install(wifiPhy_" + this->GetLinkName() + ", wifiMac_" + this->GetLinkName() + ", " + this->GetApNode() + "))");
+
+  ndc.push_back("wifiMac_" + this->GetLinkName() + ".SetType(\"ns3::NqstaWifiMac\",");
+  ndc.push_back("   \"Ssid\", ns3.SsidValue(ssid_" + this->GetLinkName() + "), ");
+  ndc.push_back("   \"ActiveProbing\", ns3.BooleanValue(False))");
+  ndc.push_back(this->GetNdcName() + ".Add(wifi_" + this->GetLinkName() + ".Install(wifiPhy_" + this->GetLinkName() + ", wifiMac_" + this->GetLinkName() + ", " + this->GetAllNodeContainer() + " ))");
+
+  ndc.push_back("mobility_" + this->GetLinkName() + " = ns3.MobilityHelper()");
+  ndc.push_back("mobility_" + this->GetLinkName() + ".SetMobilityModel (\"ns3::ConstantPositionMobilityModel\")");
+  ndc.push_back("mobility_" + this->GetLinkName() + ".Install(" + this->GetApNode() + ")");
+
+  if(this->GetMobility())//if random walk is activated.
+  {
+    ndc.push_back("mobility_" + this->GetLinkName() + ".SetMobilityModel (\"ns3::RandomWalk2dMobilityModel\",\"Bounds\", RectangleValue (Rectangle (-50, 50, -50, 50)))");
+  }
+  ndc.push_back("mobility_" + this->GetLinkName() + ".Install(" + this->GetAllNodeContainer() + ")");
+
   return ndc;
 }
 
@@ -162,7 +201,7 @@ std::vector<std::string> Ap::GenerateTracePython()
 
   if(this->GetTrace())
   {
-    trace.push_back("wifiPhy_" + this->GetLinkName() + ".EnablePcap(\"" + this->GetLinkName() + "\", " + this->GetNdcName() + ".Get(0));");
+    trace.push_back("wifiPhy_" + this->GetLinkName() + ".EnablePcap(\"" + this->GetLinkName() + "\", " + this->GetNdcName() + ".Get(0))");
   }
 
   return trace;

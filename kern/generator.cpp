@@ -1028,7 +1028,7 @@ void Generator::GenerateCodePython()
     std::cout << "    " << allCmdLine.at(i) << std::endl;
   } 
 
-  std::cout << "    cmd.Parse (argv);" << std::endl;
+  std::cout << "    cmd.Parse (argv)" << std::endl;
 
   //
   // Generate Optional configuration
@@ -1103,7 +1103,7 @@ void Generator::GenerateCodePython()
   if(allTapBridge.size() > 0)
   {
     std::cout << "" << std::endl;
-    std::cout << "    # Tap Bridge */" << std::endl;
+    std::cout << "    # Tap Bridge." << std::endl;
   }
   for(size_t i = 0; i < (size_t) allTapBridge.size(); i++)
   {
@@ -1157,13 +1157,13 @@ void Generator::GenerateCodePython()
   }
   stopTime += 1;
 
-  std::cout << "    # Stop the simulation after x seconds. */" << std::endl;
+  std::cout << "    # Stop the simulation after x seconds." << std::endl;
   std::cout << "    stopTime = "<< stopTime << std::endl; 
-  std::cout << "    ns3.Simulator.Stop (ns3.Seconds (stopTime))" << std::endl;
+  std::cout << "    ns3.Simulator.Stop (ns3.Seconds(stopTime))" << std::endl;
 
-  std::cout << "    # Start and clean simulation. */" << std::endl;
-  std::cout << "    ns3.Simulator.Run ();" << std::endl;
-  std::cout << "    ns3.Simulator.Destroy ();" << std::endl;
+  std::cout << "    # Start and clean simulation." << std::endl;
+  std::cout << "    ns3.Simulator.Run()" << std::endl;
+  std::cout << "    ns3.Simulator.Destroy()" << std::endl;
 
   std::cout << std::endl;
   std::cout << "if __name__ == '__main__':" << std::endl;;
