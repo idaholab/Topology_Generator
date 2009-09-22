@@ -353,103 +353,170 @@ class Generator
     size_t m_indiceLinkBridge; 
 
     //
-    // Code generation operation part
+    // C++ code generation operation part
     //
 
     /**
      * \brief Generate headers code.
      * 
-     * This function return a string wich contain all c++ header without duplicate.
+     * This function return a string wich contain all C++ header without duplicate.
      * 
      * \return headers code
      */
     std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief Generate vars code.
+     * \brief Generate vars C++ code.
      * 
-     * This function return a string wich contain all c++ vars.
-     * 
+     * This function return a string wich contain all C++ vars.
      * \return vars code
      */
     std::vector<std::string> GenerateVarsCpp();
 
     /**
-     * \brief Generate command line code.
-     * 
+     * \brief Generate command line C++ code.
      * \return commend line code
      */
     std::vector<std::string> GenerateCmdLineCpp();
 
     /**
-     * \brief Generate config code.
-     * 
+     * \brief Generate config C++ code.
      * \return config code
      */
-    std::vector<std::string> GenerateConfig();
+    std::vector<std::string> GenerateConfigCpp();
 
     /**
-     * \brief Generate node declaration code.
-     *
+     * \brief Generate node declaration C++ code.
      * \return declaration code
      */
-    std::vector<std::string> GenerateNode();
+    std::vector<std::string> GenerateNodeCpp();
 
     /**
-     * \brief Generate link code.
-     * 
+     * \brief Generate link C++ code.
      * \return link code
      */
     std::vector<std::string> GenerateLinkCpp();
 
     /**
-     * \brief Generate net device code.
-     * 
+     * \brief Generate net device C++ code.
      * \return net device code
      */
     std::vector<std::string> GenerateNetDeviceCpp();
 
     /**
      * \brief Generate ip stack declaration.
-     * 
      * \return IP stack code
      */
-    std::vector<std::string> GenerateIpStack();
+    std::vector<std::string> GenerateIpStackCpp();
 
     /**
-     * \brief Generate ip assign code.
-     * 
+     * \brief Generate ip assign C++ code.
      * \return IP assign code
      */
-    std::vector<std::string> GenerateIpAssign();
+    std::vector<std::string> GenerateIpAssignCpp();
 
     /**
-     * \brief Generate tap bridge code.
-     * 
+     * \brief Generate tap bridge C++ code.
      * \return tab bridge code
      */
     std::vector<std::string> GenerateTapBridgeCpp();
 
     /**
-     * \brief Generate route code.
-     * 
+     * \brief Generate route C++ code.
      * \return route code
      */
-    std::vector<std::string> GenerateRoute();
+    std::vector<std::string> GenerateRouteCpp();
 
     /**
-     * \brief Generate application code.
-     * 
+     * \brief Generate application C++ code.
      * \return application code
      */
-    std::vector<std::string> GenerateApplication();
+    std::vector<std::string> GenerateApplicationCpp();
 
     /**
-     * \brief Generate trace code.
-     * 
+     * \brief Generate trace C++ code.
      * \return trace code
      */
     std::vector<std::string> GenerateTraceCpp();
+
+    //
+    // Python code generation operation part
+    //
+
+    /**
+     * \brief Generate vars python code.
+     * 
+     * This function return a string wich contain all python vars.
+     * 
+     * \return vars code
+     */
+    std::vector<std::string> GenerateVarsPython();
+
+    /**
+     * \brief Generate command line python code.
+     * \return commend line code
+     */
+    std::vector<std::string> GenerateCmdLinePython();
+
+    /**
+     * \brief Generate config python code.
+     * \return config code
+     */
+    std::vector<std::string> GenerateConfigPython();
+
+    /**
+     * \brief Generate node declaration python code.
+     * \return declaration code
+     */
+    std::vector<std::string> GenerateNodePython();
+
+    /**
+     * \brief Generate link python code.
+     * \return link code
+     */
+    std::vector<std::string> GenerateLinkPython();
+
+    /**
+     * \brief Generate net device python code.
+     * \return net device code
+     */
+    std::vector<std::string> GenerateNetDevicePython();
+
+    /**
+     * \brief Generate ip stack declaration.
+     * \return IP stack code
+     */
+    std::vector<std::string> GenerateIpStackPython();
+
+    /**
+     * \brief Generate ip assign python code.
+     * \return IP assign code
+     */
+    std::vector<std::string> GenerateIpAssignPython();
+
+    /**
+     * \brief Generate tap bridge python code.
+     * \return tab bridge code
+     */
+    std::vector<std::string> GenerateTapBridgePython();
+
+    /**
+     * \brief Generate route python code.
+     * \return route code
+     */
+    std::vector<std::string> GenerateRoutePython();
+
+    /**
+     * \brief Generate application python code.
+     * \return application code
+     */
+    std::vector<std::string> GenerateApplicationPython();
+
+    /**
+     * \brief Generate trace python code.
+     * \return trace code
+     */
+    std::vector<std::string> GenerateTracePython();
 
     //
     // XML generation operation part.
@@ -464,21 +531,18 @@ class Generator
 
     /**
      * \brief Get XML file name.
-     *
      * \return xml file name
      */
     std::string GetXmlFileName();
 
     /**
      * \brief Set xml file name.
-     *
      * \param xmlFileName the new XML file name
      */
     void SetXmlFileName(const std::string &xmlFileName );
 
     /**
      * \brief Write simulation into XML file.
-     * 
      * \param line the line to add to the XML file
      */
     void WriteXml(const std::string &line);

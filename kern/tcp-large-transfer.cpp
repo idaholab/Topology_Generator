@@ -46,7 +46,17 @@ std::vector<std::string> TcpLargeTransfer::GenerateHeader()
   return headers;
 }
 
-std::vector<std::string> TcpLargeTransfer::GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice)
+size_t TcpLargeTransfer::GetPort()
+{
+  return this->m_port;
+}
+
+void TcpLargeTransfer::SetPort(const size_t &port)
+{
+  this->m_port = port;
+}
+
+std::vector<std::string> TcpLargeTransfer::GenerateApplicationCpp(std::string netDeviceContainer, size_t numberIntoNetDevice)
 {
   std::vector<std::string> apps;
 
@@ -72,13 +82,9 @@ std::vector<std::string> TcpLargeTransfer::GenerateApplication(std::string netDe
   return apps;
 }
 
-size_t TcpLargeTransfer::GetPort()
+std::vector<std::string> TcpLargeTransfer::GenerateApplicationPython(std::string netDeviceContainer, size_t numberIntoNetDevice)
 {
-  return this->m_port;
-}
-
-void TcpLargeTransfer::SetPort(const size_t &port)
-{
-  this->m_port = port;
+  std::vector<std::string> apps;
+  return apps;
 }
 

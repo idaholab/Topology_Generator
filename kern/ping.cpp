@@ -47,7 +47,7 @@ std::vector<std::string> Ping::GenerateHeader()
   return headers;
 }
 
-std::vector<std::string> Ping::GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice)
+std::vector<std::string> Ping::GenerateApplicationCpp(std::string netDeviceContainer, size_t numberIntoNetDevice)
 {
   std::vector<std::string> apps;
 
@@ -70,6 +70,12 @@ std::vector<std::string> Ping::GenerateApplication(std::string netDeviceContaine
   apps.push_back("apps_" + this->GetAppName() + ".Start (Seconds (" + this->GetStartTime() + ".2));");
   apps.push_back("apps_" + this->GetAppName() + ".Stop (Seconds (" + this->GetEndTime() + ".0));");
 
+  return apps;
+}
+
+std::vector<std::string> Ping::GenerateApplicationPython(std::string netDeviceContainer, size_t numberIntoNetDevice)
+{
+  std::vector<std::string> apps;
   return apps;
 }
 

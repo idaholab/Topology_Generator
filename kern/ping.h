@@ -73,12 +73,20 @@ class Ping : public Application
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief Generate the application.
+     * \brief Generate the application C++ code.
      * \param netDeviceContainer net device container name which are contain the sender node
      * \param numberIntoNetDevice place of the machine into the net device container
      * \return application code
      */
-    virtual std::vector<std::string> GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice);
+    virtual std::vector<std::string> GenerateApplicationCpp(std::string netDeviceContainer, size_t numberIntoNetDevice);
+    
+    /**
+     * \brief Generate the application python code.
+     * \param netDeviceContainer net device container name which are contain the sender node
+     * \param numberIntoNetDevice place of the machine into the net device container
+     * \return application code
+     */
+    virtual std::vector<std::string> GenerateApplicationPython(std::string netDeviceContainer, size_t numberIntoNetDevice);
 };
 
 #endif /* PING_H */

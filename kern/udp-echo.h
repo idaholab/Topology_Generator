@@ -94,12 +94,20 @@ class UdpEcho : public Application
     virtual std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief Generate application code.
+     * \brief Generate application C++ code.
      * \param netDeviceContainer net device container
      * \param numberIntoNetDevice number into net device
      * \return application code
      */
-    virtual std::vector<std::string> GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice);
+    virtual std::vector<std::string> GenerateApplicationCpp(std::string netDeviceContainer, size_t numberIntoNetDevice);
+
+    /**
+     * \brief Generate application python code.
+     * \param netDeviceContainer net device container
+     * \param numberIntoNetDevice number of the sender node into the net device container
+     * \return the ns3 application code
+     */
+    virtual std::vector<std::string> GenerateApplicationPython(std::string netDeviceContainer, size_t numberIntoNetDevice);
 
     /**
      * \brief Get port.

@@ -44,34 +44,6 @@ UdpEcho::~UdpEcho()
 {
 }
 
-std::vector<std::string> UdpEcho::GenerateHeader()
-{
-  std::vector<std::string> headers;
-  return headers;
-}
-
-std::vector<std::string> UdpEcho::GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice)
-{
-  std::vector<std::string> apps;
-
-  apps.push_back("uint16_t port_" + this->GetAppName() + " = " + utils::integerToString(this->GetPort()) + ";"); 
-  apps.push_back("UdpEchoServerHelper server_" + this->GetAppName() + " (port_" + this->GetAppName() + ");");
-  apps.push_back("ApplicationContainer apps_" + this->GetAppName() + " = server_" + this->GetAppName() + ".Install (" + this->GetReceiverNode() + ".Get(0));");
-  apps.push_back("apps_" + this->GetAppName() + ".Start (Seconds (" + this->GetStartTime() + ".0));");
-  apps.push_back("apps_" + this->GetAppName() + ".Stop (Seconds (" + this->GetEndTime() + ".0));");
-
-  apps.push_back("Time interPacketInterval_" + this->GetAppName() + " = Seconds (" + this->GetPacketIntervalTime() + ");");
-  apps.push_back("UdpEchoClientHelper client_" + this->GetAppName() + " (iface_" + netDeviceContainer + ".GetAddress(" + utils::integerToString(numberIntoNetDevice) + "), " + utils::integerToString(this->GetPort()) + ");");
-  apps.push_back("client_" + this->GetAppName() + ".SetAttribute (\"MaxPackets\", UintegerValue (" + utils::integerToString(this->GetMaxPacketCount()) + "));");
-  apps.push_back("client_" + this->GetAppName() + ".SetAttribute (\"Interval\", TimeValue (interPacketInterval_" + this->GetAppName() + "));");
-  apps.push_back("client_" + this->GetAppName() + ".SetAttribute (\"PacketSize\", UintegerValue (" + utils::integerToString(this->GetPacketSize()) + "));");
-  apps.push_back("apps_" + this->GetAppName() + " = client_" + this->GetAppName() + ".Install (" + this->GetSenderNode() + ".Get (0));");
-  apps.push_back("apps_" + this->GetAppName() + ".Start (Seconds (" + this->GetStartTime() + ".1));");
-  apps.push_back("apps_" + this->GetAppName() + ".Stop (Seconds (" + this->GetEndTime() + ".0));");
-
-  return apps;
-}
-
 size_t UdpEcho::GetPort()
 {
   return this->m_port;
@@ -110,5 +82,39 @@ void UdpEcho::SetPacketIntervalTime(const std::string &packetIntervalTime)
 std::string UdpEcho::GetPacketIntervalTime()
 {
   return this->m_packetIntervalTime;
+}
+
+std::vector<std::string> UdpEcho::GenerateHeader()
+{
+  std::vector<std::string> headers;
+  return headers;
+}
+
+std::vector<std::string> UdpEcho::GenerateApplicationCpp(std::string netDeviceContainer, size_t numberIntoNetDevice)
+{
+  std::vector<std::string> apps;
+
+  apps.push_back("uint16_t port_" + this->GetAppName() + " = " + utils::integerToString(this->GetPort()) + ";"); 
+  apps.push_back("UdpEchoServerHelper server_" + this->GetAppName() + " (port_" + this->GetAppName() + ");");
+  apps.push_back("ApplicationContainer apps_" + this->GetAppName() + " = server_" + this->GetAppName() + ".Install (" + this->GetReceiverNode() + ".Get(0));");
+  apps.push_back("apps_" + this->GetAppName() + ".Start (Seconds (" + this->GetStartTime() + ".0));");
+  apps.push_back("apps_" + this->GetAppName() + ".Stop (Seconds (" + this->GetEndTime() + ".0));");
+
+  apps.push_back("Time interPacketInterval_" + this->GetAppName() + " = Seconds (" + this->GetPacketIntervalTime() + ");");
+  apps.push_back("UdpEchoClientHelper client_" + this->GetAppName() + " (iface_" + netDeviceContainer + ".GetAddress(" + utils::integerToString(numberIntoNetDevice) + "), " + utils::integerToString(this->GetPort()) + ");");
+  apps.push_back("client_" + this->GetAppName() + ".SetAttribute (\"MaxPackets\", UintegerValue (" + utils::integerToString(this->GetMaxPacketCount()) + "));");
+  apps.push_back("client_" + this->GetAppName() + ".SetAttribute (\"Interval\", TimeValue (interPacketInterval_" + this->GetAppName() + "));");
+  apps.push_back("client_" + this->GetAppName() + ".SetAttribute (\"PacketSize\", UintegerValue (" + utils::integerToString(this->GetPacketSize()) + "));");
+  apps.push_back("apps_" + this->GetAppName() + " = client_" + this->GetAppName() + ".Install (" + this->GetSenderNode() + ".Get (0));");
+  apps.push_back("apps_" + this->GetAppName() + ".Start (Seconds (" + this->GetStartTime() + ".1));");
+  apps.push_back("apps_" + this->GetAppName() + ".Stop (Seconds (" + this->GetEndTime() + ".0));");
+
+  return apps;
+}
+
+std::vector<std::string> UdpEcho::GenerateApplicationPython(std::string netDeviceContainer, size_t numberIntoNetDevice)
+{
+  std::vector<std::string> apps;
+  return apps;
 }
 

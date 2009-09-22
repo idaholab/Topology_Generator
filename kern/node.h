@@ -99,18 +99,32 @@ class Node
     std::vector<std::string> GenerateHeader();
 
     /**
-     * \brief Generate node code.
+     * \brief Generate node C++ code.
      * This function return a vector which contain the declaration and instanciation of the node
      * \return node code
      */
-    std::vector<std::string> GenerateNode();
+    std::vector<std::string> GenerateNodeCpp();
 
     /**
-     * \brief Generate IP stack code.
+     * \brief Generate IP stack C++ code.
      * This function return a vector which contain the c++ code from the Ipv4 stack declaration and instanciation
      * \return IP stack code.
      */
-    std::vector<std::string> GenerateIpStack();
+    std::vector<std::string> GenerateIpStackCpp();
+
+    /**
+     * \brief Generate node python code.
+     * This function return a vector which contain the declaration and instanciation of the node
+     * \return node code
+     */
+    std::vector<std::string> GenerateNodePython();
+
+    /**
+     * \brief Generate IP stack python code.
+     * This function return a vector which contain the c++ code from the Ipv4 stack declaration and instanciation
+     * \return IP stack code.
+     */
+    std::vector<std::string> GenerateIpStackPython();
 
     /**
      * \brief Set node name.

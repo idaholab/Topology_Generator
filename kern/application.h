@@ -47,13 +47,14 @@
  *  example of .h file :
  *
  *    include "application.h"
- *    class new-class : public Application
+ *    class NewApplication : public Application
  *    {
- *      new-class(...);
- *      ~new-class();
+ *      NewApplication(...);
+ *      ~NewApplication();
  *      
  *      virtual std::vector<std::string> GenerateHeader();
- *      virtual std::vector<std::string> GenerateApplication(std::string, size_t);
+ *      virtual std::vector<std::string> GenerateApplicationCpp(std::string, size_t);
+ *      virtual std::vector<std::string> GenerateApplicationPython(std::string, size_t);
  *    }
  */
 class Application
@@ -112,13 +113,22 @@ class Application
     virtual std::vector<std::string> GenerateHeader() = 0;
 
     /**
-     * \brief Generate the application code.
+     * \brief Generate the application C++ code.
      * \param netDeviceContainer is the ns3 net device containe
      * \param numberIntoNetDevice is the place from the sender node in the assigned ip network
      * \param numberIntoNetDevice example sender node is 192.168.0.5, then the number is 5
      * \return code from the application
      */
-    virtual std::vector<std::string> GenerateApplication(std::string netDeviceContainer, size_t numberIntoNetDevice) = 0;
+    virtual std::vector<std::string> GenerateApplicationCpp(std::string netDeviceContainer, size_t numberIntoNetDevice) = 0;
+
+    /**
+     * \brief Generate the application python code.
+     * \param netDeviceContainer is the ns3 net device containe
+     * \param numberIntoNetDevice is the place from the sender node in the assigned ip network
+     * \param numberIntoNetDevice example sender node is 192.168.0.5, then the number is 5
+     * \return code from the application
+     */
+    virtual std::vector<std::string> GenerateApplicationPython(std::string netDeviceContainer, size_t numberIntoNetDevice) = 0;
 
     /**
      * \brief Get application number.

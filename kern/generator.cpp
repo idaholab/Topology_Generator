@@ -453,7 +453,7 @@ size_t Generator::GetNLinks() const
 }
 
 //
-// Part around the code Generation.
+// Part around the C++ code Generation.
 // This part is looking about the code to write.
 //
 
@@ -511,7 +511,7 @@ void Generator::GenerateCodeCpp()
   // 
   std::cout << "" << std::endl;
   std::cout << "  /* Configuration. */" << std::endl;
-  std::vector<std::string> conf = GenerateConfig();
+  std::vector<std::string> conf = GenerateConfigCpp();
   for(size_t i = 0; i < (size_t) conf.size(); i++)
   {
     std::cout << "  " << conf.at(i) << std::endl;
@@ -523,7 +523,7 @@ void Generator::GenerateCodeCpp()
   //
   std::cout << "" << std::endl;
   std::cout << "  /* Build nodes. */" << std::endl;
-  std::vector<std::string> nodeBuild = GenerateNode();
+  std::vector<std::string> nodeBuild = GenerateNodeCpp();
   for(size_t i = 0; i < (size_t) nodeBuild.size(); i++)
   {
     std::cout << "  " << nodeBuild.at(i) << std::endl;
@@ -556,7 +556,7 @@ void Generator::GenerateCodeCpp()
   //
   std::cout << "" << std::endl;
   std::cout << "  /* Install the IP stack */" << std::endl;
-  std::vector<std::string> allStacks = GenerateIpStack();
+  std::vector<std::string> allStacks = GenerateIpStackCpp();
   for(size_t i = 0; i < (size_t) allStacks.size(); i++)
   {
     std::cout << "  " << allStacks.at(i) << std::endl;
@@ -567,7 +567,7 @@ void Generator::GenerateCodeCpp()
   // 
   std::cout << "" << std::endl;
   std::cout << "  /* IP assign */" << std::endl;
-  std::vector<std::string> allAssign = GenerateIpAssign();
+  std::vector<std::string> allAssign = GenerateIpAssignCpp();
   for(size_t i = 0; i < (size_t) allAssign.size(); i++)
   {
     std::cout << "  " << allAssign.at(i) << std::endl;
@@ -592,7 +592,7 @@ void Generator::GenerateCodeCpp()
   //
   std::cout << "" << std::endl;
   std::cout << "  /* Generate Route. */" << std::endl;
-  std::vector<std::string> allRoutes = GenerateRoute();
+  std::vector<std::string> allRoutes = GenerateRouteCpp();
   for(size_t i = 0; i < (size_t) allRoutes.size(); i++)
   {
     std::cout << "  " << allRoutes.at(i) << std::endl;
@@ -603,7 +603,7 @@ void Generator::GenerateCodeCpp()
   //
   std::cout << "" << std::endl;
   std::cout << "  /* Generate Application. */" << std::endl;
-  std::vector<std::string> allApps = GenerateApplication();
+  std::vector<std::string> allApps = GenerateApplicationCpp();
   for(size_t i = 0; i < (size_t) allApps.size(); i++)
   {
     std::cout << "  " << allApps.at(i) << std::endl;
@@ -741,7 +741,7 @@ std::vector<std::string> Generator::GenerateCmdLineCpp()
   return allCmdLine;
 }
 
-std::vector<std::string> Generator::GenerateConfig() 
+std::vector<std::string> Generator::GenerateConfigCpp() 
 {
   for(size_t i = 0; i < (size_t) this->listNode.size(); i++)
   {
@@ -770,13 +770,13 @@ std::vector<std::string> Generator::GenerateConfig()
   return allConf;
 }
 
-std::vector<std::string> Generator::GenerateNode() 
+std::vector<std::string> Generator::GenerateNodeCpp() 
 {
   std::vector<std::string> allNodes;
   /* get all the node code. */
   for(size_t i = 0; i < (size_t) this->listNode.size(); i++)
   {
-    std::vector<std::string> trans = (this->listNode.at(i))->GenerateNode();
+    std::vector<std::string> trans = (this->listNode.at(i))->GenerateNodeCpp();
     for(size_t j = 0; j < (size_t) trans.size(); j++)
     {
       allNodes.push_back(trans.at(j));
@@ -814,7 +814,7 @@ std::vector<std::string> Generator::GenerateNetDeviceCpp()
   return allNdc;
 }
 
-std::vector<std::string> Generator::GenerateIpStack() 
+std::vector<std::string> Generator::GenerateIpStackCpp() 
 {
   std::vector<std::string> allStack;
 
@@ -827,7 +827,7 @@ std::vector<std::string> Generator::GenerateIpStack()
     /* if it is not a bridge you can add it. */
     if(nodeName.find("bridge_") != 0)
     {
-      std::vector<std::string> trans = (this->listNode.at(i)->GenerateIpStack());
+      std::vector<std::string> trans = (this->listNode.at(i)->GenerateIpStackCpp());
       for(size_t j = 0; j < (size_t) trans.size(); j++)
       {
         allStack.push_back(trans.at(j));
@@ -838,7 +838,7 @@ std::vector<std::string> Generator::GenerateIpStack()
   return allStack;
 }
 
-std::vector<std::string> Generator::GenerateIpAssign() 
+std::vector<std::string> Generator::GenerateIpAssignCpp() 
 {
   std::vector<std::string> ipAssign;
   ipAssign.push_back("Ipv4AddressHelper ipv4;");
@@ -854,7 +854,7 @@ std::vector<std::string> Generator::GenerateIpAssign()
   return ipAssign;
   }
 
-std::vector<std::string> Generator::GenerateRoute() 
+std::vector<std::string> Generator::GenerateRouteCpp() 
 {
   std::vector<std::string> allRoutes;
  
@@ -863,7 +863,7 @@ std::vector<std::string> Generator::GenerateRoute()
   return allRoutes;
 }
 
-std::vector<std::string> Generator::GenerateApplication() 
+std::vector<std::string> Generator::GenerateApplicationCpp() 
 {
   size_t nodeNumber = 0;
   std::string ndcName = "";
@@ -951,7 +951,7 @@ std::vector<std::string> Generator::GenerateApplication()
       }
     }
     /* get the application code with param. */
-    std::vector<std::string> trans = (this->listApplication.at(i)->GenerateApplication(ndcName, nodeNumber));
+    std::vector<std::string> trans = (this->listApplication.at(i)->GenerateApplicationCpp(ndcName, nodeNumber));
     for(size_t j = 0; j < (size_t) trans.size(); j++)
     {
       allApps.push_back(trans.at(j));
@@ -993,9 +993,86 @@ std::vector<std::string> Generator::GenerateTraceCpp()
   return allTrace;
 }
 
+//
+// Part around the C++ code Generation.
+// This part is looking about the code to write.
+
 void Generator::GenerateCodePython()
 {
   std::cout << "Generate Python code" << std::endl;
+}
+
+
+std::vector<std::string> Generator::GenerateVarsPython()
+{
+  std::vector<std::string> ret;
+  return ret;
+}
+
+std::vector<std::string> Generator::GenerateCmdLinePython()
+{
+  std::vector<std::string> ret;
+  return ret;
+}
+
+std::vector<std::string> Generator::GenerateConfigPython()
+{
+  std::vector<std::string> ret;
+  return ret;
+}
+
+std::vector<std::string> Generator::GenerateNodePython()
+{
+  std::vector<std::string> ret;
+  return ret;
+}
+
+std::vector<std::string> Generator::GenerateLinkPython()
+{
+  std::vector<std::string> ret;
+  return ret;
+}
+
+std::vector<std::string> Generator::GenerateNetDevicePython()
+{
+  std::vector<std::string> ret;
+  return ret;
+}
+
+std::vector<std::string> Generator::GenerateIpStackPython()
+{
+  std::vector<std::string> ret;
+  return ret;
+}
+
+std::vector<std::string> Generator::GenerateIpAssignPython()
+{
+  std::vector<std::string> ret;
+  return ret;
+}
+
+std::vector<std::string> Generator::GenerateTapBridgePython()
+{
+  std::vector<std::string> ret;
+  return ret;
+}
+
+std::vector<std::string> Generator::GenerateRoutePython()
+{
+  std::vector<std::string> ret;
+  return ret;
+}
+
+std::vector<std::string> Generator::GenerateApplicationPython()
+{
+  std::vector<std::string> ret;
+  return ret;
+}
+
+std::vector<std::string> Generator::GenerateTracePython()
+{
+  std::vector<std::string> ret;
+  return ret;
 }
 
 //
