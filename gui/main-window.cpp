@@ -37,7 +37,6 @@
 
 MainWindow::MainWindow(const std::string &simulationName)
 {
-
   this->m_dw = NULL;
   this->m_gen = new Generator(simulationName);
 
@@ -51,10 +50,11 @@ MainWindow::MainWindow(const std::string &simulationName)
   menuNew->setDisabled(true);
   QAction *menuSave = menuFichier->addAction("Save");
   menuSave->setDisabled(true);
-  QAction *menuSaveAs = menuFichier->addAction("Save As");
+  QAction *menuSaveAs = menuFichier->addAction("Save as");
   menuSaveAs->setDisabled(true);
-  QAction *menuSavePix = menuFichier->addAction("Save Picture");
-  menuSavePix->setDisabled(true);
+  QAction *menuSavePix = menuFichier->addAction("Save as picture");
+  connect(menuSavePix, SIGNAL(triggered()), this, SLOT(SavePicture()));
+  /* menuSavePix->setDisabled(true); */
 
   QAction *actionQuit = menuFichier->addAction("Quit");
   connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
@@ -69,7 +69,6 @@ MainWindow::MainWindow(const std::string &simulationName)
   connect(actionCpp, SIGNAL(triggered()), this, SLOT(GenerateCpp())); 
   QAction *actionPython = menuView->addAction("&Python");
   connect(actionPython, SIGNAL(triggered()), this, SLOT(GeneratePython()));
-  /* actionPython->setDisabled(true); */
 
   QMenu *menuHelp = menuBar()->addMenu("&Help");
   QAction *menuOnlineHelp = menuHelp->addAction("Online Help");
@@ -750,5 +749,26 @@ void MainWindow::ValidApps()
   this->m_dw->m_startTime = 0;
   this->m_dw->m_endTime = 0;
   this->m_dw->m_port = 0;
+}
+
+void MainWindow::SavePicture()
+{
+  QFileDialog dlg(this, tr("Save image"));
+
+  dlg.setFileMode(QFileDialog::AnyFile);
+ 
+  if(dlg.exec())
+  {
+    QImage img = QPixmap::grabWidget(this->m_dw).toImage();
+    QString fileName = dlg.selectedFiles().at(0);
+    if(img.save(fileName))
+    {
+      QMessageBox(QMessageBox::Information, "Save picture", "Picture saved at " + fileName).exec();
+    }
+    else
+    {
+      QMessageBox(QMessageBox::Warning, "Save picture", "Picture saving failed!").exec();
+    }
+  }
 }
 

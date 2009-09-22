@@ -197,6 +197,11 @@ class MainWindow : public QMainWindow
      * \brief Create an application for a simulation node.
      */
     void CreateApps();
+    
+    /**
+     * \brief Save simulation as a picture.
+     */
+    void SavePicture();
 };
 
 #endif /* MAIN_WINDOW_H */
