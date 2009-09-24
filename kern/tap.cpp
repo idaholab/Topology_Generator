@@ -30,8 +30,8 @@
 Tap::Tap(const size_t &indice, const std::string &tapNode, const std::string &ifaceName) : Link(indice)
 {
   this->Install(tapNode);
-  this->SetTapName(tapNode);
-  this->SetIfaceName(ifaceName);
+  this->m_tapNode = tapNode;
+  this->m_ifaceName = ifaceName;
   this->SetLinkName(std::string("tap_" + this->GetIndice()));
   this->SetNdcName(std::string("ndc_" + this->GetLinkName()));
   this->SetAllNodeContainer(std::string("all_" + this->GetLinkName()));
@@ -61,7 +61,7 @@ std::vector<std::string> Tap::GenerateTapBridgeCpp()
   tapBridge.push_back("TapBridgeHelper tapBridge_" + this->GetLinkName() + " (iface_" + this->GetNdcName() + ".GetAddress(1));");
   tapBridge.push_back("tapBridge_" + this->GetLinkName() + ".SetAttribute (\"Mode\", StringValue (mode_" + this->GetLinkName() + "));");
   tapBridge.push_back("tapBridge_" + this->GetLinkName() + ".SetAttribute (\"DeviceName\", StringValue (tapName_" + this->GetLinkName() + "));");
-  tapBridge.push_back("tapBridge_" + this->GetLinkName() + ".Install (" + this->GetTapName() + ".Get(0), " + this->GetNdcName() + ".Get(0));");
+  tapBridge.push_back("tapBridge_" + this->GetLinkName() + ".Install (" + this->m_tapNode + ".Get(0), " + this->GetNdcName() + ".Get(0));");
 
   return tapBridge;
 }
@@ -90,7 +90,7 @@ std::vector<std::string> Tap::GenerateVarsCpp()
 {
   std::vector<std::string> vars;
   vars.push_back("std::string mode_" + this->GetLinkName() + " = \"ConfigureLocal\";");
-  vars.push_back("std::string tapName_" + this->GetLinkName() + " = \"" + this->GetIfaceName() + "\";");
+  vars.push_back("std::string tapName_" + this->GetLinkName() + " = \"" + this->m_ifaceName + "\";");
   return vars;
 }
 
@@ -125,7 +125,7 @@ std::vector<std::string> Tap::GenerateVarsPython()
 {
   std::vector<std::string> vars;
   vars.push_back("mode_" + this->GetLinkName() + " = \"ConfigureLocal\"");
-  vars.push_back("tapName_" + this->GetLinkName() + " = \"" + this->GetIfaceName() + "\"");
+  vars.push_back("tapName_" + this->GetLinkName() + " = \"" + this->m_ifaceName + "\"");
   return vars;
 }
 
@@ -168,7 +168,7 @@ std::vector<std::string> Tap::GenerateTapBridgePython()
   tapBridge.push_back("tapBridge_" + this->GetLinkName() + " = ns3.TapBridgeHelper(iface_" + this->GetNdcName() + ".GetAddress(1))");
   tapBridge.push_back("tapBridge_" + this->GetLinkName() + ".SetAttribute(\"Mode\", ns3.StringValue (mode_" + this->GetLinkName() + "))");
   tapBridge.push_back("tapBridge_" + this->GetLinkName() + ".SetAttribute(\"DeviceName\", ns3.StringValue (tapName_" + this->GetLinkName() + "))");
-  tapBridge.push_back("tapBridge_" + this->GetLinkName() + ".Install(" + this->GetTapName() + ".Get(0), " + this->GetNdcName() + ".Get(0))");
+  tapBridge.push_back("tapBridge_" + this->GetLinkName() + ".Install(" + this->m_tapNode + ".Get(0), " + this->GetNdcName() + ".Get(0))");
   
   return tapBridge;
 } 

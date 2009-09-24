@@ -30,8 +30,8 @@
 Emu::Emu(const size_t &indice, const std::string &emuNode, const std::string &ifaceName) : Link(indice)
 {
   this->Install(emuNode);
-  this->SetEmuName(emuNode);
-  this->SetIfaceName(ifaceName);
+  this->m_emuNode = emuNode;
+  this->m_ifaceName = ifaceName;
   this->SetLinkName(std::string("emu_" + this->GetIndice()));
   this->SetNdcName(std::string("ndc_" + this->GetLinkName()));
   this->SetAllNodeContainer(std::string("all_" + this->GetLinkName()));
@@ -114,11 +114,11 @@ std::vector<std::string> Emu::GenerateTraceCpp()
   {
     if(this->GetPromisc())
     {
-      trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->GetLinkName() + "\",\"" + this->GetIfaceName() + "\", true);");
+      trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->GetLinkName() + "\",\"" + this->m_ifaceName + "\", true);");
     }
     else
     {
-      trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->GetLinkName() + "\",\"" + this->GetIfaceName() + "\", false);");
+      trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->GetLinkName() + "\",\"" + this->m_ifaceName + "\", false);");
     }
   }
 
@@ -150,7 +150,7 @@ std::vector<std::string> Emu::GenerateNetDevicePython()
 std::vector<std::string> Emu::GenerateVarsPython()
 {
   std::vector<std::string> vars;
-  vars.push_back("emuDevice_" + this->GetLinkName() + " = \"" + this->GetIfaceName() + "\"");
+  vars.push_back("emuDevice_" + this->GetLinkName() + " = \"" + this->m_ifaceName + "\"");
   return vars;
 }
 
@@ -169,11 +169,11 @@ std::vector<std::string> Emu::GenerateTracePython()
   {
     if(this->GetPromisc())
     {
-      trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->GetLinkName() + "\",\"" + this->GetIfaceName() + "\", true)");
+      trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->GetLinkName() + "\",\"" + this->m_ifaceName + "\", true)");
     }
     else
     {
-      trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->GetLinkName() + "\",\"" + this->GetIfaceName() + "\", false)");
+      trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->GetLinkName() + "\",\"" + this->m_ifaceName + "\", false)");
     }
   }
 

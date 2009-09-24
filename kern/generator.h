@@ -249,7 +249,7 @@ class Generator
     /**
      * \brief Configuration list.
      */
-    std::vector<std::string> listConfiguration;
+    std::vector<std::string> m_listConfiguration;
 
     /**
      * \brief Number attribute of term node created.
@@ -291,21 +291,21 @@ class Generator
      * 
      * This attribute is the list of the created instance of node.
      */
-    std::vector<Node*> listNode;
+    std::vector<Node*> m_listNode;
 
     /**
      * \brief List of application created instance.
      * 
      * This attribute is the list of the created instance of application.
      */
-    std::vector<Application*> listApplication;
+    std::vector<Application*> m_listApplication;
 
     /**
      * \brief List of link created instace.
      * 
      * This attribute is the list of the created instance of link.
      */
-    std::vector<Link*> listLink;
+    std::vector<Link*> m_listLink;
 
     /**
      * \brief Number attribute of ping application created.

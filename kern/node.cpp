@@ -32,11 +32,11 @@
 
 Node::Node(const size_t &indice, const std::string &type, const size_t &machinesNumber)
 {
-  this->SetIndice(indice);
-  this->SetNodeName(std::string(type + utils::integerToString(indice)));
-  this->SetIpInterfaceName(std::string("iface_" + this->GetNodeName()));
-  this->SetNsc(std::string(""));	
-  this->SetMachinesNumber(machinesNumber);
+  this->m_indice = indice;
+  this->m_nodeName = std::string(type + utils::integerToString(indice));
+  this->m_ipInterfaceName = std::string("iface_" + this->m_nodeName);
+  this->m_nsc = std::string("");	
+  this->m_machinesNumber = machinesNumber;
 }
 
 Node::~Node()
@@ -60,7 +60,7 @@ std::string Node::GetNodeName()
 
 std::string Node::GetNodeName(const size_t &number)
 {
-  return std::string("NodeContainer(" + this->GetNodeName() + ".Get(" + utils::integerToString(number) + "))");
+  return std::string("NodeContainer(" + this->m_nodeName + ".Get(" + utils::integerToString(number) + "))");
 }
 
 std::string Node::GetIpInterfaceName()
@@ -109,8 +109,8 @@ std::vector<std::string> Node::GenerateHeader()
 std::vector<std::string> Node::GenerateNodeCpp()
 {
   std::vector<std::string> nodes;
-  nodes.push_back("NodeContainer " + this->GetNodeName() + ";");
-  nodes.push_back(this->GetNodeName() + ".Create (" + utils::integerToString(this->GetMachinesNumber()) + ");");
+  nodes.push_back("NodeContainer " + this->m_nodeName + ";");
+  nodes.push_back(this->m_nodeName + ".Create (" + utils::integerToString(this->m_machinesNumber) + ");");
 
   return nodes; 
 }
@@ -119,11 +119,11 @@ std::vector<std::string> Node::GenerateIpStackCpp()
 {
   std::vector<std::string> stack;
   
-  if(this->GetNsc() != "")
+  if(this->m_nsc != "")
   {
     stack.push_back("internetStackH.SetTcp (\"ns3::NscTcpL4Protocol\",\"Library\",StringValue(nscStack));");
   }
-  stack.push_back("internetStackH.Install (" + this->GetNodeName() + ");");
+  stack.push_back("internetStackH.Install (" + this->m_nodeName + ");");
 
   return stack; 
 }
@@ -132,8 +132,8 @@ std::vector<std::string> Node::GenerateNodePython()
 {
   std::vector<std::string> nodes;
   
-  nodes.push_back(this->GetNodeName() + " = ns3.NodeContainer()");
-  nodes.push_back(this->GetNodeName() + ".Create (" + utils::integerToString(this->GetMachinesNumber()) + ")");
+  nodes.push_back(this->m_nodeName + " = ns3.NodeContainer()");
+  nodes.push_back(this->m_nodeName + ".Create (" + utils::integerToString(this->m_machinesNumber) + ")");
   return nodes; 
 }
 
@@ -141,11 +141,11 @@ std::vector<std::string> Node::GenerateIpStackPython()
 {
   std::vector<std::string> stack;
   
-  if(this->GetNsc() != "")
+  if(this->m_nsc != "")
   {
     stack.push_back("internetStackH.SetTcp (\"ns3::NscTcpL4Protocol\",\"Library\",StringValue(nscStack))");
   }
-  stack.push_back("internetStackH.Install (" + this->GetNodeName() + ")");
+  stack.push_back("internetStackH.Install (" + this->m_nodeName + ")");
 
   return stack; 
 }

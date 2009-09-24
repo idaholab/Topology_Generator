@@ -32,11 +32,11 @@
 
 Application::Application(const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime)
 {
-  this->SetIndice(indice);
-  this->SetSenderNode(senderNode);
-  this->SetReceiverNode(receiverNode);
-  this->SetStartTime(startTime);
-  this->SetEndTime(endTime);
+  this->m_indice = indice;
+  this->m_senderNode = senderNode;
+  this->m_receiverNode = receiverNode;
+  this->m_startTime = startTime;
+  this->m_endTime = endTime;
 }
 
 Application::~Application()
