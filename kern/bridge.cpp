@@ -35,7 +35,7 @@ Bridge::Bridge(const size_t &indice, const std::string &nodeBridge) : Link(indic
   this->SetLinkName(std::string("bridge_" + this->GetIndice()));
   this->SetNdcName(std::string("ndc_" + this->GetLinkName()));
   this->SetAllNodeContainer(std::string("all_" + this->GetLinkName()));
-  this->SetNodeBridge(nodeBridge);
+  this->m_nodeBridge = nodeBridge;
 }
 
 Bridge::~Bridge()
@@ -87,13 +87,13 @@ std::vector<std::string> Bridge::GenerateNetDeviceCpp()
 
   ndc.push_back("for (int i = 0; i < " + utils::integerToString(allNodes.size() - 1) + "; i++)");
   ndc.push_back("{");
-  ndc.push_back(" NetDeviceContainer link = csma_" + this->GetLinkName() + ".Install(NodeContainer(" + this->GetAllNodeContainer() + ".Get(i), " + this->GetNodeBridge() + "));");
+  ndc.push_back(" NetDeviceContainer link = csma_" + this->GetLinkName() + ".Install(NodeContainer(" + this->GetAllNodeContainer() + ".Get(i), " + this->m_nodeBridge + "));");
   ndc.push_back(" terminalDevices_" + this->GetLinkName() + ".Add (link.Get(0));");
   ndc.push_back(" BridgeDevices_" + this->GetLinkName() + ".Add (link.Get(1));");
   ndc.push_back("}");
 
   ndc.push_back("BridgeHelper bridge_" + this->GetLinkName() + ";");
-  ndc.push_back("bridge_" + this->GetLinkName() + ".Install (" + this->GetNodeBridge() + ".Get(0), BridgeDevices_" + this->GetLinkName() + ");");
+  ndc.push_back("bridge_" + this->GetLinkName() + ".Install (" + this->m_nodeBridge + ".Get(0), BridgeDevices_" + this->GetLinkName() + ");");
 
   ndc.push_back("NetDeviceContainer ndc_" + this->GetLinkName() + " = terminalDevices_" + this->GetLinkName() + ";"); 
 
@@ -151,7 +151,7 @@ std::vector<std::string> Bridge::GenerateNetDevicePython()
   ndc.push_back("    BridgeDevices_" + this->GetLinkName() + ".Add(link.Get(1))");
 
   ndc.push_back("bridge_" + this->GetLinkName() + " = ns3.BridgeHelper");
-  ndc.push_back("bridge_" + this->GetLinkName() + ".Install(" + this->GetNodeBridge() + ".Get(0), BridgeDevices_" + this->GetLinkName() + ")");
+  ndc.push_back("bridge_" + this->GetLinkName() + ".Install(" + this->m_nodeBridge + ".Get(0), BridgeDevices_" + this->GetLinkName() + ")");
 
   ndc.push_back("ndc_" + this->GetLinkName() + " = terminalDevices_" + this->GetLinkName() + ""); 
 

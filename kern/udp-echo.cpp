@@ -32,12 +32,12 @@
 
 UdpEcho::UdpEcho(const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime, const size_t &port) : Application(indice, senderNode, receiverNode, startTime, endTime)
 {
-  this->SetPort(port);
+  this->m_port = port;
   this->SetAppName(std::string("udpEcho_" + this->GetIndice()));
   /* default values */
-  this->SetPacketSize(1024);
-  this->SetMaxPacketCount(1);
-  this->SetPacketIntervalTime(std::string("1.0"));
+  this->m_packetSize = 1024;
+  this->m_maxPacketCount = 1;
+  this->m_packetIntervalTime = std::string("1.0");
 }
 
 UdpEcho::~UdpEcho()
@@ -94,17 +94,17 @@ std::vector<std::string> UdpEcho::GenerateApplicationCpp(std::string netDeviceCo
 {
   std::vector<std::string> apps;
 
-  apps.push_back("uint16_t port_" + this->GetAppName() + " = " + utils::integerToString(this->GetPort()) + ";"); 
+  apps.push_back("uint16_t port_" + this->GetAppName() + " = " + utils::integerToString(this->m_port) + ";"); 
   apps.push_back("UdpEchoServerHelper server_" + this->GetAppName() + " (port_" + this->GetAppName() + ");");
   apps.push_back("ApplicationContainer apps_" + this->GetAppName() + " = server_" + this->GetAppName() + ".Install (" + this->GetReceiverNode() + ".Get(0));");
   apps.push_back("apps_" + this->GetAppName() + ".Start (Seconds (" + this->GetStartTime() + ".0));");
   apps.push_back("apps_" + this->GetAppName() + ".Stop (Seconds (" + this->GetEndTime() + ".0));");
 
-  apps.push_back("Time interPacketInterval_" + this->GetAppName() + " = Seconds (" + this->GetPacketIntervalTime() + ");");
-  apps.push_back("UdpEchoClientHelper client_" + this->GetAppName() + " (iface_" + netDeviceContainer + ".GetAddress(" + utils::integerToString(numberIntoNetDevice) + "), " + utils::integerToString(this->GetPort()) + ");");
-  apps.push_back("client_" + this->GetAppName() + ".SetAttribute (\"MaxPackets\", UintegerValue (" + utils::integerToString(this->GetMaxPacketCount()) + "));");
+  apps.push_back("Time interPacketInterval_" + this->GetAppName() + " = Seconds (" + this->m_packetIntervalTime + ");");
+  apps.push_back("UdpEchoClientHelper client_" + this->GetAppName() + " (iface_" + netDeviceContainer + ".GetAddress(" + utils::integerToString(numberIntoNetDevice) + "), " + utils::integerToString(this->m_port) + ");");
+  apps.push_back("client_" + this->GetAppName() + ".SetAttribute (\"MaxPackets\", UintegerValue (" + utils::integerToString(this->m_maxPacketCount) + "));");
   apps.push_back("client_" + this->GetAppName() + ".SetAttribute (\"Interval\", TimeValue (interPacketInterval_" + this->GetAppName() + "));");
-  apps.push_back("client_" + this->GetAppName() + ".SetAttribute (\"PacketSize\", UintegerValue (" + utils::integerToString(this->GetPacketSize()) + "));");
+  apps.push_back("client_" + this->GetAppName() + ".SetAttribute (\"PacketSize\", UintegerValue (" + utils::integerToString(this->m_packetSize) + "));");
   apps.push_back("apps_" + this->GetAppName() + " = client_" + this->GetAppName() + ".Install (" + this->GetSenderNode() + ".Get (0));");
   apps.push_back("apps_" + this->GetAppName() + ".Start (Seconds (" + this->GetStartTime() + ".1));");
   apps.push_back("apps_" + this->GetAppName() + ".Stop (Seconds (" + this->GetEndTime() + ".0));");
@@ -115,17 +115,17 @@ std::vector<std::string> UdpEcho::GenerateApplicationCpp(std::string netDeviceCo
 std::vector<std::string> UdpEcho::GenerateApplicationPython(std::string netDeviceContainer, size_t numberIntoNetDevice)
 {
   std::vector<std::string> apps;
-  apps.push_back("port_" + this->GetAppName() + " = " + utils::integerToString(this->GetPort()));
+  apps.push_back("port_" + this->GetAppName() + " = " + utils::integerToString(this->m_port));
   apps.push_back("server_" + this->GetAppName() + " = ns3.UdpEchoServerHelper(port_" + this->GetAppName() + ")");
   apps.push_back("apps_" + this->GetAppName() + " = server_" + this->GetAppName() + ".Install (" + this->GetReceiverNode() + ".Get(0))");
   apps.push_back("apps_" + this->GetAppName() + ".Start (ns3.Seconds (" + this->GetStartTime() + ".0))");
   apps.push_back("apps_" + this->GetAppName() + ".Stop (ns3.Seconds (" + this->GetEndTime() + ".0))");
 
-  apps.push_back("interPacketInterval_" + this->GetAppName() + " = ns3.Seconds (" + this->GetPacketIntervalTime() + ")");
-  apps.push_back("client_" + this->GetAppName() + " = ns3.UdpEchoClientHelper(iface_" + netDeviceContainer + ".GetAddress(" + utils::integerToString(numberIntoNetDevice) + "), " + utils::integerToString(this->GetPort()) + ")");
-  apps.push_back("client_" + this->GetAppName() + ".SetAttribute (\"MaxPackets\", ns3.UintegerValue (" + utils::integerToString(this->GetMaxPacketCount()) + "))");
+  apps.push_back("interPacketInterval_" + this->GetAppName() + " = ns3.Seconds (" + this->m_packetIntervalTime + ")");
+  apps.push_back("client_" + this->GetAppName() + " = ns3.UdpEchoClientHelper(iface_" + netDeviceContainer + ".GetAddress(" + utils::integerToString(numberIntoNetDevice) + "), " + utils::integerToString(this->m_port) + ")");
+  apps.push_back("client_" + this->GetAppName() + ".SetAttribute (\"MaxPackets\", ns3.UintegerValue (" + utils::integerToString(this->m_maxPacketCount) + "))");
   apps.push_back("client_" + this->GetAppName() + ".SetAttribute (\"Interval\", ns3.TimeValue (interPacketInterval_" + this->GetAppName() + "))");
-  apps.push_back("client_" + this->GetAppName() + ".SetAttribute (\"PacketSize\", ns3.UintegerValue (" + utils::integerToString(this->GetPacketSize()) + "))");
+  apps.push_back("client_" + this->GetAppName() + ".SetAttribute (\"PacketSize\", ns3.UintegerValue (" + utils::integerToString(this->m_packetSize) + "))");
   apps.push_back("apps_" + this->GetAppName() + " = client_" + this->GetAppName() + ".Install (" + this->GetSenderNode() + ".Get (0))");
   apps.push_back("apps_" + this->GetAppName() + ".Start (ns3.Seconds (" + this->GetStartTime() + ".1))");
   apps.push_back("apps_" + this->GetAppName() + ".Stop (ns3.Seconds (" + this->GetEndTime() + ".0))");

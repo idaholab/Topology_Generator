@@ -32,7 +32,7 @@
 
 TcpLargeTransfer::TcpLargeTransfer(const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime, const size_t &port) : Application(indice, senderNode, receiverNode, startTime, endTime)
 {
-  this->SetPort(port);
+  this->m_port = port;
   this->SetAppName(std::string("tcp_" + this->GetIndice()));
 }
 
@@ -60,7 +60,7 @@ std::vector<std::string> TcpLargeTransfer::GenerateApplicationCpp(std::string ne
 {
   std::vector<std::string> apps;
 
-  apps.push_back("uint16_t port_" + this->GetAppName() + " = " + utils::integerToString(this->GetPort()) + ";");
+  apps.push_back("uint16_t port_" + this->GetAppName() + " = " + utils::integerToString(this->m_port) + ";");
   apps.push_back("Address sinkLocalAddress_" + this->GetAppName() + " (InetSocketAddress (Ipv4Address::GetAny (), port_" + this->GetAppName() + "));");
   apps.push_back("PacketSinkHelper sinkHelper_" + this->GetAppName() + " (\"ns3::TcpSocketFactory\", sinkLocalAddress_" + this->GetAppName() + ");");
   apps.push_back("ApplicationContainer sinkApp_" + this->GetAppName() + " = sinkHelper_" + this->GetAppName() + ".Install (" + this->GetReceiverNode() + ");");
@@ -86,7 +86,7 @@ std::vector<std::string> TcpLargeTransfer::GenerateApplicationPython(std::string
 {
   std::vector<std::string> apps;
 
-  apps.push_back("port_" + this->GetAppName() + " = " + utils::integerToString(this->GetPort()));
+  apps.push_back("port_" + this->GetAppName() + " = " + utils::integerToString(this->m_port));
   apps.push_back("sinkLocalAddress_" + this->GetAppName() + " = ns3.Address(ns3.InetSocketAddress(ns3.Ipv4Address.GetAny(), port_" + this->GetAppName() + "))");
   apps.push_back("sinkHelper_" + this->GetAppName() + " = ns3.PacketSinkHelper(\"ns3::TcpSocketFactory\", sinkLocalAddress_" + this->GetAppName() + ")");
   apps.push_back("sinkApp_" + this->GetAppName() + " = sinkHelper_" + this->GetAppName() + ".Install(" + this->GetReceiverNode() + ")");

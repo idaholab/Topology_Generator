@@ -33,12 +33,12 @@
 
 Link::Link(const size_t &indice)
 {
-  this->SetIndice(indice);
-  this->SetDataRate(std::string("100000000")); /* 100 Mbps */
-  this->SetLinkDelay(std::string("10000")); /* 10 ms */
+  this->m_indice = indice;
+  this->m_dataRate = std::string("100000000"); /* 100 Mbps */
+  this->m_linkDelay = std::string("10000"); /* 10 ms */
 
-  this->SetTrace(false);
-  this->SetPromisc(false);
+  this->m_enableTrace = false;
+  this->m_tracePromisc = false;
 }
 
 Link::~Link()
@@ -123,15 +123,15 @@ void Link::Install(const std::string &node)
   this->m_nodes.push_back(node);
   std::vector<std::string> trans;
   std::vector<std::string> transWhitoutRouter;
-  for(size_t i = 0; i < (size_t) this->GetInstalledNodes().size(); i++)
+  for(size_t i = 0; i < (size_t) this->m_nodes.size(); i++)
   {
     if((this->m_nodes.at(i)).find("router_") == 0)
     {
-      trans.push_back(this->GetNInstalledNodes(i));
+      trans.push_back(this->m_nodes.at(i));
     }
     else
     {
-      transWhitoutRouter.push_back(this->GetNInstalledNodes(i));
+      transWhitoutRouter.push_back(this->m_nodes.at(i));
     }
   }
   for(size_t i = 0; i < (size_t) transWhitoutRouter.size(); i++)
@@ -154,12 +154,12 @@ void Link::SetAllNodeContainer(const std::string &allNodeContainer)
 std::vector<std::string> Link::GroupAsNodeContainerCpp()
 {
   std::vector<std::string> res;
-  res.push_back("NodeContainer " + this->GetAllNodeContainer() + ";");
-  for(size_t i = 0; i < (size_t) this->GetInstalledNodes().size(); i++)
+  res.push_back("NodeContainer " + this->m_allNodeContainer + ";");
+  for(size_t i = 0; i < (size_t) this->m_nodes.size(); i++)
   {
-    if((this->GetNInstalledNodes(i)).find("ap_") != 0)
+    if((this->m_nodes.at(i)).find("ap_") != 0)
     {
-      res.push_back(this->GetAllNodeContainer() + ".Add (" + this->GetNInstalledNodes(i) + ");");
+      res.push_back(this->m_allNodeContainer + ".Add (" + this->m_nodes.at(i) + ");");
     }
   }
 
@@ -170,12 +170,12 @@ std::vector<std::string> Link::GroupAsNodeContainerPython()
 {
   std::vector<std::string> res;
 
-  res.push_back(this->GetAllNodeContainer() + " = ns3.NodeContainer()");
-  for(size_t i = 0; i < (size_t) this->GetInstalledNodes().size(); i++)
+  res.push_back(this->m_allNodeContainer + " = ns3.NodeContainer()");
+  for(size_t i = 0; i < (size_t) this->m_nodes.size(); i++)
   {
-    if((this->GetNInstalledNodes(i)).find("ap_") != 0)
+    if((this->m_nodes.at(i)).find("ap_") != 0)
     {
-      res.push_back(this->GetAllNodeContainer() + ".Add (" + this->GetNInstalledNodes(i) + ")");
+      res.push_back(this->m_allNodeContainer + ".Add (" + this->m_nodes.at(i) + ")");
     }
   }
   return res;

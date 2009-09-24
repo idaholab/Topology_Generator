@@ -33,9 +33,9 @@ Ap::Ap(const size_t &indice, const std::string &apNode) : Link(indice)
   this->SetLinkName(std::string("ap_" + this->GetIndice()));
   this->SetNdcName(std::string("ndc_" + this->GetLinkName()));
   this->SetAllNodeContainer(std::string("all_" + this->GetLinkName()));
-  this->SetApNode(apNode);
-  this->SetMobility(false);
-  this->SetApName(std::string("wifi-default-" + this->GetIndice()));
+  this->m_apNode = apNode;
+  this->m_mobility = false;
+  this->m_apName = std::string("wifi-default-" + this->GetIndice());
 }
 
 Ap::~Ap()
@@ -103,7 +103,7 @@ std::vector<std::string> Ap::GenerateNetDeviceCpp()
     ndc.push_back(allNodes.at(i));
   }
   ndc.push_back("NetDeviceContainer " + this->GetNdcName() + ";");
-  ndc.push_back("Ssid ssid_" + this->GetLinkName() + " = Ssid (\"" + this->GetApName() + "\");");
+  ndc.push_back("Ssid ssid_" + this->GetLinkName() + " = Ssid (\"" + this->m_apName + "\");");
   ndc.push_back("WifiHelper wifi_" + this->GetLinkName() + " = WifiHelper::Default ();");
   ndc.push_back("NqosWifiMacHelper wifiMac_" + this->GetLinkName() + " = NqosWifiMacHelper::Default ();");
   ndc.push_back("wifi_" + this->GetLinkName() + ".SetRemoteStationManager (\"ns3::ArfWifiManager\");");
@@ -112,7 +112,7 @@ std::vector<std::string> Ap::GenerateNetDeviceCpp()
   ndc.push_back("   \"Ssid\", SsidValue (ssid_" + this->GetLinkName() + "), ");
   ndc.push_back("   \"BeaconGeneration\", BooleanValue (true),"); 
   ndc.push_back("   \"BeaconInterval\", TimeValue (Seconds (2.5)));");
-  ndc.push_back(this->GetNdcName() + ".Add (wifi_" + this->GetLinkName() + ".Install (wifiPhy_" + this->GetLinkName() + ", wifiMac_" + this->GetLinkName() + ", " + this->GetApNode() + "));");
+  ndc.push_back(this->GetNdcName() + ".Add (wifi_" + this->GetLinkName() + ".Install (wifiPhy_" + this->GetLinkName() + ", wifiMac_" + this->GetLinkName() + ", " + this->m_apNode + "));");
 
   ndc.push_back("wifiMac_" + this->GetLinkName() + ".SetType (\"ns3::NqstaWifiMac\",");
   ndc.push_back("   \"Ssid\", SsidValue (ssid_" + this->GetLinkName() + "), ");
@@ -121,9 +121,9 @@ std::vector<std::string> Ap::GenerateNetDeviceCpp()
 
   ndc.push_back("MobilityHelper mobility_" + this->GetLinkName() + ";");
   ndc.push_back("mobility_" + this->GetLinkName() + ".SetMobilityModel (\"ns3::ConstantPositionMobilityModel\");");
-  ndc.push_back("mobility_" + this->GetLinkName() + ".Install (" + this->GetApNode() + ");"); 
+  ndc.push_back("mobility_" + this->GetLinkName() + ".Install (" + this->m_apNode + ");"); 
 
-  if(this->GetMobility())//if random walk is activated.
+  if(this->m_mobility)//if random walk is activated.
   {
     ndc.push_back("mobility_" + this->GetLinkName() + ".SetMobilityModel (\"ns3::RandomWalk2dMobilityModel\",\"Bounds\", RectangleValue (Rectangle (-50, 50, -50, 50)));");
   }
@@ -166,7 +166,7 @@ std::vector<std::string> Ap::GenerateNetDevicePython()
     ndc.push_back(allNodes.at(i));
   }
   ndc.push_back(this->GetNdcName() + " = ns3.NetDeviceContainer()");
-  ndc.push_back("ssid_" + this->GetLinkName() + " = ns3.Ssid(\"" + this->GetApName() + "\")");
+  ndc.push_back("ssid_" + this->GetLinkName() + " = ns3.Ssid(\"" + this->m_apName + "\")");
   ndc.push_back("wifi_" + this->GetLinkName() + " = ns3.WifiHelper.Default()");
   ndc.push_back("wifiMac_" + this->GetLinkName() + " = ns3.NqosWifiMacHelper.Default()");
   ndc.push_back("wifi_" + this->GetLinkName() + ".SetRemoteStationManager(\"ns3::ArfWifiManager\")");
@@ -175,7 +175,7 @@ std::vector<std::string> Ap::GenerateNetDevicePython()
   ndc.push_back("   \"Ssid\", ns3.SsidValue(ssid_" + this->GetLinkName() + "), ");
   ndc.push_back("   \"BeaconGeneration\", ns3.BooleanValue(True),");
   ndc.push_back("   \"BeaconInterval\", ns3.TimeValue(ns3.Seconds(2.5)))");
-  ndc.push_back(this->GetNdcName() + ".Add(wifi_" + this->GetLinkName() + ".Install(wifiPhy_" + this->GetLinkName() + ", wifiMac_" + this->GetLinkName() + ", " + this->GetApNode() + "))");
+  ndc.push_back(this->GetNdcName() + ".Add(wifi_" + this->GetLinkName() + ".Install(wifiPhy_" + this->GetLinkName() + ", wifiMac_" + this->GetLinkName() + ", " + this->m_apNode + "))");
 
   ndc.push_back("wifiMac_" + this->GetLinkName() + ".SetType(\"ns3::NqstaWifiMac\",");
   ndc.push_back("   \"Ssid\", ns3.SsidValue(ssid_" + this->GetLinkName() + "), ");
@@ -184,9 +184,9 @@ std::vector<std::string> Ap::GenerateNetDevicePython()
 
   ndc.push_back("mobility_" + this->GetLinkName() + " = ns3.MobilityHelper()");
   ndc.push_back("mobility_" + this->GetLinkName() + ".SetMobilityModel (\"ns3::ConstantPositionMobilityModel\")");
-  ndc.push_back("mobility_" + this->GetLinkName() + ".Install(" + this->GetApNode() + ")");
+  ndc.push_back("mobility_" + this->GetLinkName() + ".Install(" + this->m_apNode + ")");
 
-  if(this->GetMobility())//if random walk is activated.
+  if(this->m_mobility)//if random walk is activated.
   {
     ndc.push_back("mobility_" + this->GetLinkName() + ".SetMobilityModel (\"ns3::RandomWalk2dMobilityModel\",\"Bounds\", RectangleValue (Rectangle (-50, 50, -50, 50)))");
   }
