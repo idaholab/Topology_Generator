@@ -138,60 +138,227 @@ class DragWidget : public QWidget
      */
     std::string GetLinkType() const;
 
-
+    /**
+     * \brief Set last position.
+     * \param pos new position
+     */
     void SetLastPosition(const QPoint &pos);
+    
+    /**
+     * \brief Get last position.
+     * \return last position
+     */
     QPoint GetLastPosition();
 
+    /**
+     * \brief Set link begin.
+     * \param linkBegin new link begin
+     */
     void SetLinkBegin(const std::string &linkBegin);
+    
+    /**
+     * \brief Get link begin.
+     * \return link begin
+     */
     std::string GetLinkBegin();
 
+    /**
+     * \brief Get main window.
+     * \return main window
+     */
     MainWindow* GetMainWindow();
-
+  
+    /**
+     * \brief Set trace link.
+     * \param state new state
+     */
     void SetTraceLink(const bool &state);
+    
+    /**
+     * \brief Get trace link.
+     * \return trace link
+     */
     bool GetTraceLink();
-
+  
+    /**
+     * \brief Set link end.
+     * \param link new link end
+     */
     void SetLinkEnd(const std::string &link);
+    
+    /**
+     * \brief Get link end.
+     * \return link end
+     */
     std::string GetLinkEnd();
 
+    /**
+     * \brief Set drag lines.
+     * \param lines added draglines
+     */
     void SetDragLines(const DragLines &lines);
+    
+    /**
+     * \brief Get drag lines.
+     * \return dragLines
+     */
     DragLines GetDragLines();
-
+  
+    /**
+     * \brief Add draw line.
+     * \param dl drag line to add
+     */
     void AddDrawLines(const DragLines &dl);
+    
+    /**
+     * \brief Get the index drag lines.
+     * \param index the get index
+     * \return drag lines
+     */
     DragLines GetNDrawLines(const size_t &index);
+    
+    /**
+     * \brief Get draw lines.
+     * \return drawLines
+     */
     std::vector<DragLines> GetDrawLines();
+    
+    /**
+     * \brief Erase the index drag lines.
+     * \param index the index to remove
+     */
     void EraseDrawLines(const size_t &index);
 
+    /**
+     * \brief Set timer.
+     * \param timer new timer
+     */
     void SetTimer(QTimer *timer);
+    
+    /**
+     * \brief Get timer.
+     * \return timer
+     */
     QTimer* GetTimer();
   
+    /**
+     * \brief Set apps server.
+     * \param appsServ new server name
+     */
     void SetAppsServer(const std::string &appsServ);
+
+    /**
+     * \brief Get apps server.
+     * \return apps server name
+     */
     std::string GetAppsServer();
 
+    /**
+     * \brief Set apps client.
+     * \param appsCli the apps client name
+     */
     void SetAppsClient(const std::string &appsCli);
+    
+    /**
+     * \brief Get apps Client.
+     * \return apps client name
+     */
     std::string GetAppsClient();
 
+    /**
+     * \brief Set apps ping.
+     * \param appsPing new apps ping state
+     */
     void SetAppsPing(const bool &appsPing);
+    
+    /**
+     * \brief Get apps ping state
+     * \return apps ping state
+     */
     bool GetAppsPing();
 
+    /**
+     * \brief Set apps udp echo state.
+     * \param appsUdp new state
+     */
     void SetAppsUdpEcho(const bool &appsUdp);
+    
+    /**
+     * \brief Get apps udp echo state.
+     * \return apps udp echo state
+     */
     bool GetAppsUdpEcho();
 
+    /**
+     * \brief Set apps tcp state.
+     * \param appsTcp new apps ctp state
+     */
     void SetAppsTcp(const bool &appsTcp);
+
+    /**
+     * \brief Get apps tcp state.
+     * \return apps tcp state
+     */
     bool GetAppsTcp();
 
+    /**
+     * \brief Set start time.
+     * \param start new start time
+     */
     void SetStartTime(const size_t &start);
+    
+    /**
+     * \brief Get start time.
+     * \return start time
+     */
     size_t GetStartTime();
 
+    /**
+     * \brief Set end time.
+     * \param end new end time
+     */
     void SetEndTime(const size_t &end);
+    
+    /**
+     * \brief Get end time.
+     * \return end time
+     */
     size_t GetEndTime();
 
+    /**
+     * \brief Set port.
+     * \param port new port
+     */
     void SetPort(const size_t &port);
+    
+    /**
+     * \brief Get port.
+     * \return port
+     */
     size_t GetPort();
 
+    /**
+     * \brief Set dialog object.
+     * \param dialog new dialog object
+     */
     void SetDialog(QDialog *dialog);
+    
+    /**
+     * \brief Get dialog object.
+     * \return dialog object
+     */
     QDialog* GetDialog();
-
+  
+    /**
+     * \brief Set apps enable state.
+     * \param state new state
+     */
     void SetAppsEnable(const bool &state);
+    
+    /**
+     * \brief Get apps enable state.
+     * \return apps state
+     */
     bool GetAppsEnable();
 
   private:
