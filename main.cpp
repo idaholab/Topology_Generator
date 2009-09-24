@@ -41,6 +41,12 @@ using namespace std;
 #include "gui/main-window.h"
 
 /**
+ * \var VERSION
+ * \brief Current version.
+ */
+const char* VERSION = "0.1";
+
+/**
  * \brief Signal handler.
  * \param code signal code received
  * \author Sebastien Vincent
@@ -59,6 +65,50 @@ static void signalHandler(int code)
   }
 }
 
+/**
+ * \brief Print help menu.
+ * \param name name of the program
+ * \param version version of the program
+ */
+static void printHelp(const char* name, const char* version)
+{
+  std::cout << "ns-3-generator " << version << std::endl;
+  std::cout << "Usage: " << name << " [-h] [-v]" << std::endl;
+}
+
+/**
+ * \brief Parse the command line arguments.
+ * \param argc number of argument
+ * \param argv array of argument
+ * \return 0 if success, -1 otherwise
+ */
+static void parseCmdline(int argc, char** argv)
+{
+  static const char* optstr = "hv";
+  int s = 0;
+
+  while((s = getopt(argc, argv, optstr)) != -1)
+  {
+    switch(s)
+    {
+      case 'h': /* help */
+        printHelp(argv[0], VERSION);
+        exit(EXIT_SUCCESS);
+        break;
+      case 'v': /* version */
+        std::cout << "ns-3-generator " << VERSION << std::endl;
+        std::cout << "Copyright (C) 2009 University of Strasbourg." << std::endl;
+        std::cout <<"This is free software; see the source for copying conditions.  There is NO" << std::endl;
+        std::cout << "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE." << std::endl << std::endl;
+        exit(EXIT_SUCCESS);
+        break;
+      default:
+        break;
+    }
+  }
+}
+
+#if TEST
 static void printState(Generator *gen)
 {
   std::cout << "Nodes :" << std::endl;
@@ -77,6 +127,7 @@ static void printState(Generator *gen)
     }
   }
 }
+#endif
 
 /**
  * \brief Entry point of program.
@@ -86,11 +137,8 @@ static void printState(Generator *gen)
  */
 int main(int argc, char *argv[])
 {
-  argc = argc;
-  argv = argv;
-
-  QApplication app(argc, argv);
- 
+  /* parse command line arguments */
+  parseCmdline(argc, argv);
 
   /* catch signals */
   if(signal(SIGTERM, signalHandler) == SIG_ERR)
@@ -103,7 +151,9 @@ int main(int argc, char *argv[])
     std::cerr << "SIGINT will not be catched" << std::endl;
   }
 
-  MainWindow* win = new MainWindow(std::string("Simulation-Name"));
+  QApplication app(argc, argv);
+ 
+  MainWindow* win = new MainWindow(std::string("Simulation generator for ns-3"));
   win->setWindowTitle("Generator");
   win->show();
     
@@ -111,7 +161,8 @@ int main(int argc, char *argv[])
 	
   delete win;
 
-  /*Generator *gen = new Generator("Simulation name ...");
+#if TEST
+  Generator *gen = new Generator("Simulation name ...");
   
   gen->AddNode(std::string("Router"));//0
   gen->AddNode(std::string("Pc"), 10);//1
@@ -151,6 +202,8 @@ int main(int argc, char *argv[])
  
   printState(gen);
 
-  delete gen;*/
+  delete gen;
+#endif
+
 }
 
