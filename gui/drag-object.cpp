@@ -34,7 +34,7 @@
 DragObject::DragObject(QWidget *parent) : QLabel(parent)
 {
   this->m_name = "";
-  this->m_toolTipText = "";
+  this->m_tooltip = "";
 }
 
 DragObject::~DragObject()

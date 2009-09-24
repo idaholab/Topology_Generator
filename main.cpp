@@ -80,7 +80,6 @@ static void printHelp(const char* name, const char* version)
  * \brief Parse the command line arguments.
  * \param argc number of argument
  * \param argv array of argument
- * \return 0 if success, -1 otherwise
  */
 static void parseCmdline(int argc, char** argv)
 {
