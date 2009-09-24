@@ -520,7 +520,7 @@ void DragWidget::paintEvent(QPaintEvent * /*event*/)
   {
     if(this->GetChildFromName(this->m_drawLines.at(i).GetFirst())->GetName() != "" && this->GetChildFromName(this->m_drawLines.at(i).GetSecond())->GetName() != "")
     {
-      std::string type = this->m_drawLines.at(i).m_linkType;
+      std::string type = this->m_drawLines.at(i).GetLinkType();
 
       if(type == "WiredLink")
       {
@@ -535,7 +535,7 @@ void DragWidget::paintEvent(QPaintEvent * /*event*/)
         paint.setPen(p2p);
       }
       DragObject *begin = this->GetChildFromName(this->m_drawLines.at(i).GetFirst());
-      DragObject *end = this->GetChildFromName(this->m_rawLines.at(i).GetSecond());
+      DragObject *end = this->GetChildFromName(this->m_drawLines.at(i).GetSecond());
       paint.drawLine((begin->pos().x() + (begin->width() / 2)), (begin->pos().y() + (begin->height() / 2)),
                      (end->pos().x() + (end->width() / 2)), (end->pos().y() + (end->height() / 2)));
     }
@@ -635,25 +635,25 @@ void DragWidget::ShowGuiPing()
   layout->addWidget(button_machineRight, 3, 1);
 
   /* PARAMS. */
-  QLabel *lab_m_startTime = new QLabel("Start time (s):", this->m_dialog);
-  layout->addWidget(lab_m_startTime, 5, 0);
+  QLabel *lab_startTime = new QLabel("Start time (s):", this->m_dialog);
+  layout->addWidget(lab_startTime, 5, 0);
 
-  QLineEdit *line_m_startTime = new QLineEdit(this->m_dialog);
+  QLineEdit *line_startTime = new QLineEdit(this->m_dialog);
   if(this->m_startTime != (size_t) - 1)
   {
-    line_m_startTime->insert(utils::integerToString(this->m_startTime).c_str());
+    line_startTime->insert(utils::integerToString(this->m_startTime).c_str());
   }
-  layout->addWidget(line_m_startTime, 5, 1);
+  layout->addWidget(line_startTime, 5, 1);
 
-  QLabel *lab_m_endTime = new QLabel("End time (s):", this->m_dialog);
-  layout->addWidget(lab_m_endTime, 6, 0);
+  QLabel *lab_endTime = new QLabel("End time (s):", this->m_dialog);
+  layout->addWidget(lab_endTime, 6, 0);
 
-  QLineEdit *line_m_endTime = new QLineEdit(this->m_dialog);
+  QLineEdit *line_endTime = new QLineEdit(this->m_dialog);
   if(this->m_endTime != (size_t) - 1)
   {
-    line_m_endTime->insert(utils::integerToString(this->m_endTime).c_str());
+    line_endTime->insert(utils::integerToString(this->m_endTime).c_str());
   }
-  layout->addWidget(line_m_endTime, 6, 1);
+  layout->addWidget(line_endTime, 6, 1);
 
   /* add OK, CANCEL button */
   QPushButton *cancel = new QPushButton("Cancel", this->m_dialog);
@@ -666,8 +666,8 @@ void DragWidget::ShowGuiPing()
 
   if(this->m_dialog->result() == 1)
   {
-    this->m_startTime = line_m_startTime->text().toInt();
-    this->m_endTime = line_m_endTime->text().toInt();
+    this->m_startTime = line_startTime->text().toInt();
+    this->m_endTime = line_endTime->text().toInt();
 
     if(this->m_appsServer != "" && this->m_appsClient != "" && this->m_startTime != (size_t) - 1 && this->m_startTime != (size_t) - 1)
     {
@@ -787,9 +787,9 @@ void DragWidget::ShowGuiUdpEcho()
   QLineEdit *line_startTime = new QLineEdit(this->m_dialog);
   if(this->m_startTime != (size_t) - 1)
   {
-    line_m_startTime->insert(utils::integerToString(this->m_startTime).c_str());
+    line_startTime->insert(utils::integerToString(this->m_startTime).c_str());
   }
-  layout->addWidget(line_m_startTime, 5, 1);
+  layout->addWidget(line_startTime, 5, 1);
 
   QLabel *lab_endTime = new QLabel("End time (s):", this->m_dialog);
   layout->addWidget(lab_endTime, 6, 0);
@@ -797,7 +797,7 @@ void DragWidget::ShowGuiUdpEcho()
   QLineEdit *line_endTime = new QLineEdit(this->m_dialog);
   if(this->m_endTime != (size_t) - 1)
   {
-    line_m_endTime->insert(utils::integerToString(this->m_endTime).c_str());
+    line_endTime->insert(utils::integerToString(this->m_endTime).c_str());
   }
   layout->addWidget(line_endTime, 6, 1);
 
@@ -807,9 +807,9 @@ void DragWidget::ShowGuiUdpEcho()
   QLineEdit *line_port = new QLineEdit(this->m_dialog);
   if(this->m_port != (size_t) - 1)
   {
-    line_m_port->insert(utils::integerToString(this->m_port).c_str());
+    line_port->insert(utils::integerToString(this->m_port).c_str());
   }
-  layout->addWidget(line_m_port, 7, 1);
+  layout->addWidget(line_port, 7, 1);
 
   /* add OK, CANCEL button */
   QPushButton *cancel = new QPushButton("Cancel", this->m_dialog);
@@ -822,9 +822,9 @@ void DragWidget::ShowGuiUdpEcho()
 
   if(this->m_dialog->result() == 1)
   {
-    this->m_atartTime(line_startTime->text().toInt());
-    this->m_endTime(line_endTime->text().toInt());
-    this->m_port(line_port->text().toInt());
+    this->m_startTime = line_startTime->text().toInt();
+    this->m_endTime = line_endTime->text().toInt();
+    this->m_port = line_port->text().toInt();
 
     if(this->m_appsServer != "" && this->m_appsClient != "" && this->m_startTime != (size_t) - 1 && this->m_startTime != (size_t) - 1 && this->m_port != (size_t) - 1)
     {
@@ -963,7 +963,7 @@ void DragWidget::ShowGuiTcp()
   {
     this->m_startTime = line_startTime->text().toInt();
     this->m_endTime = line_endTime->text().toInt();
-    this->m_port = line_m_port->text().toInt();
+    this->m_port = line_port->text().toInt();
 
     if(this->m_appsServer != "" && this->m_appsClient != "" && this->m_startTime != (size_t) - 1 && this->m_startTime != (size_t) - 1 && this->m_port != (size_t) - 1)
     {
