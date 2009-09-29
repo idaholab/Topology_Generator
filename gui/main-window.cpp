@@ -247,7 +247,7 @@ void MainWindow::CreateEmu()
     return;
   }
 
-  this->m_gen->AddNode("Pc");
+  this->m_gen->AddNode("Emu");
   this->m_gen->AddLink("Emu", this->m_gen->GetNode(this->m_gen->GetNNodes() - 1)->GetNodeName(), text.toStdString());
   this->m_dw->CreateObject("Emu",this->m_gen->GetLink(this->m_gen->GetNLinks() - 1)->GetLinkName());
 }

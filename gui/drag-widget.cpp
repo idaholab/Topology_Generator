@@ -37,6 +37,9 @@
 
 #include "utils.h"
 
+#include "emu.h"
+#include "tap.h"
+
 DragWidget::DragWidget(QWidget *parent) : QWidget(parent)
 {
   setMinimumSize(400, 400);
@@ -160,8 +163,54 @@ void DragWidget::dropEvent(QDropEvent *event)
     if(child)
     {
       label->SetName(child->GetName());
-      label->SetToolTipText(child->GetToolTipText());
-      label->setToolTip(label->GetToolTipText());
+      //label->SetToolTipText(child->GetToolTipText());
+      //label->setToolTip(label->GetToolTipText());
+      std::string  new_tooltip = child->GetName();
+      std::vector<std::string> connectedTo;
+      bool isConnected = false;
+      for(int i = 0; (size_t) i < this->m_mw->GetGenerator()->GetNLinks(); i++)
+      {
+        for(int j = 0; (size_t) j < this->m_mw->GetGenerator()->GetLink(i)->GetInstalledNodes().size(); j++)
+        {
+          if( this->m_mw->GetGenerator()->GetLink(i)->GetInstalledNodes().at(j) == child->GetName() )
+          {
+            std::string iface("");
+            isConnected = true;
+            if(this->m_mw->GetGenerator()->GetLink(i)->GetLinkName().find("emu_") == 0) 
+            {
+              iface = " (" + dynamic_cast<Emu*>(this->m_mw->GetGenerator()->GetLink(i))->GetIfaceName() + ")";
+            }
+            else if( this->m_mw->GetGenerator()->GetLink(i)->GetLinkName().find("tap_") == 0)
+            {
+              iface = " (" + dynamic_cast<Tap*>(this->m_mw->GetGenerator()->GetLink(i))->GetIfaceName() + ")";
+            }
+            
+            connectedTo.push_back("10.0." + utils::integerToString(i) + "." + utils::integerToString(j + 1) + iface);
+          }
+        }
+      }
+      if(isConnected)
+      {
+        for(size_t i = 0; (size_t) i < connectedTo.size(); i++)
+        {
+          new_tooltip += "<br />"+connectedTo.at(i);
+        }
+      }
+
+      for(int i = 0; (size_t) i < this->m_mw->GetGenerator()->GetNApplications(); i++)
+      {
+        if(this->m_mw->GetGenerator()->GetApplication(i)->GetSenderNode() == child->GetName())
+        {
+          new_tooltip += "<br />Sender on " + this->m_mw->GetGenerator()->GetApplication(i)->GetAppName();
+        }
+        else if(this->m_mw->GetGenerator()->GetApplication(i)->GetReceiverNode() == child->GetName())
+        {
+          new_tooltip += "<br />Receiver on " + this->m_mw->GetGenerator()->GetApplication(i)->GetAppName();
+        }
+      }
+
+      label->SetToolTipText(QString(new_tooltip.c_str()));
+      label->setToolTip(QString(new_tooltip.c_str()));
     }
     label->setPixmap(pixmap);
     label->move(event->pos() - offset);
