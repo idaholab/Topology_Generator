@@ -77,8 +77,9 @@ void DragWidget::CreateObject(const std::string &type, const std::string &name)
 {
   DragObject *label = new DragObject(this);
   label->SetName(name);
-  label->SetToolTipText(QString(name.c_str()));
-  label->setToolTip(QString(name.c_str()));
+  std::string new_toolTip = this->UpdateToolTip(name);
+  label->SetToolTipText(QString(new_toolTip.c_str()));
+  label->setToolTip(QString(new_toolTip.c_str()));
   if(type == "Pc")
   {
     label->setPixmap(QPixmap(":/Ico/Pc.png"));
@@ -163,52 +164,7 @@ void DragWidget::dropEvent(QDropEvent *event)
     if(child)
     {
       label->SetName(child->GetName());
-      //label->SetToolTipText(child->GetToolTipText());
-      //label->setToolTip(label->GetToolTipText());
-      std::string  new_tooltip = child->GetName();
-      std::vector<std::string> connectedTo;
-      bool isConnected = false;
-      for(int i = 0; (size_t) i < this->m_mw->GetGenerator()->GetNLinks(); i++)
-      {
-        for(int j = 0; (size_t) j < this->m_mw->GetGenerator()->GetLink(i)->GetInstalledNodes().size(); j++)
-        {
-          if( this->m_mw->GetGenerator()->GetLink(i)->GetInstalledNodes().at(j) == child->GetName() )
-          {
-            std::string iface("");
-            isConnected = true;
-            if(this->m_mw->GetGenerator()->GetLink(i)->GetLinkName().find("emu_") == 0) 
-            {
-              iface = " (" + dynamic_cast<Emu*>(this->m_mw->GetGenerator()->GetLink(i))->GetIfaceName() + ")";
-            }
-            else if( this->m_mw->GetGenerator()->GetLink(i)->GetLinkName().find("tap_") == 0)
-            {
-              iface = " (" + dynamic_cast<Tap*>(this->m_mw->GetGenerator()->GetLink(i))->GetIfaceName() + ")";
-            }
-            
-            connectedTo.push_back("10.0." + utils::integerToString(i) + "." + utils::integerToString(j + 1) + iface);
-          }
-        }
-      }
-      if(isConnected)
-      {
-        for(size_t i = 0; (size_t) i < connectedTo.size(); i++)
-        {
-          new_tooltip += "<br />"+connectedTo.at(i);
-        }
-      }
-
-      for(int i = 0; (size_t) i < this->m_mw->GetGenerator()->GetNApplications(); i++)
-      {
-        if(this->m_mw->GetGenerator()->GetApplication(i)->GetSenderNode() == child->GetName())
-        {
-          new_tooltip += "<br />Sender on " + this->m_mw->GetGenerator()->GetApplication(i)->GetAppName();
-        }
-        else if(this->m_mw->GetGenerator()->GetApplication(i)->GetReceiverNode() == child->GetName())
-        {
-          new_tooltip += "<br />Receiver on " + this->m_mw->GetGenerator()->GetApplication(i)->GetAppName();
-        }
-      }
-
+      std::string new_tooltip = this->UpdateToolTip(child->GetName());
       label->SetToolTipText(QString(new_tooltip.c_str()));
       label->setToolTip(QString(new_tooltip.c_str()));
     }
@@ -1247,5 +1203,53 @@ void DragWidget::SetAppsEnable(const bool &state)
 bool DragWidget::GetAppsEnable()
 {
   return this->m_appsEnable;
+}
+
+std::string DragWidget::UpdateToolTip(const std::string &childName)
+{
+  std::string  new_tooltip = childName;
+  std::vector<std::string> connectedTo;
+  bool isConnected = false;
+  for(int i = 0; (size_t) i < this->m_mw->GetGenerator()->GetNLinks(); i++)
+  {
+    for(int j = 0; (size_t) j < this->m_mw->GetGenerator()->GetLink(i)->GetInstalledNodes().size(); j++)
+    {
+      if( this->m_mw->GetGenerator()->GetLink(i)->GetInstalledNodes().at(j) == childName )
+      {
+        std::string iface("");
+        isConnected = true;
+        if(this->m_mw->GetGenerator()->GetLink(i)->GetLinkName().find("emu_") == 0) 
+        {
+          iface = " (" + dynamic_cast<Emu*>(this->m_mw->GetGenerator()->GetLink(i))->GetIfaceName() + ")";
+        }
+        else if( this->m_mw->GetGenerator()->GetLink(i)->GetLinkName().find("tap_") == 0)
+        {
+          iface = " (" + dynamic_cast<Tap*>(this->m_mw->GetGenerator()->GetLink(i))->GetIfaceName() + ")";
+        }
+        
+        connectedTo.push_back("10.0." + utils::integerToString(i) + "." + utils::integerToString(j + 1) + iface);
+      }
+    }
+  }
+  if(isConnected)
+  {
+    for(size_t i = 0; (size_t) i < connectedTo.size(); i++)
+    {
+      new_tooltip += "<br />"+connectedTo.at(i);
+    }
+  }
+
+  for(int i = 0; (size_t) i < this->m_mw->GetGenerator()->GetNApplications(); i++)
+  {
+    if(this->m_mw->GetGenerator()->GetApplication(i)->GetSenderNode() == childName)
+    {
+      new_tooltip += "<br />Sender on " + this->m_mw->GetGenerator()->GetApplication(i)->GetAppName();
+    }
+    else if(this->m_mw->GetGenerator()->GetApplication(i)->GetReceiverNode() == childName)
+    {
+      new_tooltip += "<br />Receiver on " + this->m_mw->GetGenerator()->GetApplication(i)->GetAppName();
+    }
+  }
+  return new_tooltip;
 }
 

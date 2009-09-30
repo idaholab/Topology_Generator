@@ -361,6 +361,13 @@ class DragWidget : public QWidget
      */
     bool GetAppsEnable();
 
+    /**
+     * \brief Update tool tip text from dragged object
+     * \param childName name of tool tip to update
+     * \return tool tip text
+     */
+    std::string UpdateToolTip(const std::string &childName);
+
   private:
     /**
      * \brief last position of last object which moved.
