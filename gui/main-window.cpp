@@ -209,7 +209,7 @@ void MainWindow::CreatePcGroup()
     return;
   }
 
-  if(number <= (size_t) 0 )
+  if(number <= 0 )
   {
     QMessageBox::about(this, "Error", "The pc number can't be negative ...");
     return;
@@ -230,7 +230,7 @@ void MainWindow::CreateEmu()
   if (ok && !text.isEmpty())
   {
     /* test if the iface is already used. */
-    for(size_t i = 0; i < (size_t) this->m_listIface.size(); i++)
+    for(size_t i = 0; i < this->m_listIface.size(); i++)
     {
       if( text.toStdString() == this->m_listIface.at(i))
       {
@@ -262,7 +262,7 @@ void MainWindow::CreateTap()
       "tap0", &ok);
   if (ok && !text.isEmpty())
   {
-    for(size_t i = 0; i < (size_t) this->m_listIface.size(); i++)
+    for(size_t i = 0; i < this->m_listIface.size(); i++)
     {
       if( text.toStdString() == this->m_listIface.at(i))
       {
@@ -288,7 +288,7 @@ void MainWindow::CleanIface()
 {
   /* remove from list the unused iface. */
   bool used = false;
-  for(size_t i = 0; i < (size_t) this->m_listIface.size(); i++)
+  for(size_t i = 0; i < this->m_listIface.size(); i++)
   {
     used = false;
     for(size_t j = 0; j < this->m_gen->GetNLinks(); j++)
@@ -386,7 +386,7 @@ void MainWindow::ValidLink()
   if(equi.at(0) == "" || equi.at(1) == "" || equi.at(0) == "deleted" || equi.at(1) == "deleted")
   {
     QMessageBox::about(this, "Error", "You don't have selected two equipement.");
-    for(size_t i = 0; i < (size_t) this->m_dw->GetDrawLines().size(); i++)
+    for(size_t i = 0; i < this->m_dw->GetDrawLines().size(); i++)
     {
       if( (equi.at(0) == this->m_dw->GetNDrawLines(i).GetFirst() && equi.at(1) == this->m_dw->GetNDrawLines(i).GetSecond()) ||
           (equi.at(1) == this->m_dw->GetNDrawLines(i).GetFirst() && equi.at(0) == this->m_dw->GetNDrawLines(i).GetSecond()) )
@@ -401,7 +401,7 @@ void MainWindow::ValidLink()
   if(equi.at(0) == equi.at(1))
   {
     QMessageBox::about(this, "Error", "You can't connect object to itself.");
-    for(size_t i = 0; i < (size_t) this->m_dw->GetDrawLines().size(); i++)
+    for(size_t i = 0; i < this->m_dw->GetDrawLines().size(); i++)
     {
       if( (equi.at(0) == this->m_dw->GetNDrawLines(i).GetFirst() && equi.at(1) == this->m_dw->GetNDrawLines(i).GetSecond()) ||
           (equi.at(1) == this->m_dw->GetNDrawLines(i).GetFirst() && equi.at(0) == this->m_dw->GetNDrawLines(i).GetSecond()) )
@@ -423,7 +423,7 @@ void MainWindow::ValidLink()
        (equi.at(1)).find("emu_") == 0 || (equi.at(1).find("tap_") == 0)) )
   {
     QMessageBox::about(this, "Error", "This link can't be etablished. Please use a Pc or a Router.");
-    for(size_t i = 0; i < (size_t) this->m_dw->GetDrawLines().size(); i++)
+    for(size_t i = 0; i < this->m_dw->GetDrawLines().size(); i++)
     {
       if( (equi.at(0) == this->m_dw->GetNDrawLines(i).GetFirst() && equi.at(1) == this->m_dw->GetNDrawLines(i).GetSecond()) ||
           (equi.at(1) == this->m_dw->GetNDrawLines(i).GetFirst() && equi.at(0) == this->m_dw->GetNDrawLines(i).GetSecond()) )
@@ -441,7 +441,7 @@ void MainWindow::ValidLink()
       (equi.at(0)).find("emu_") == 0 || (equi.at(0).find("tap_") == 0 ))
   {
     indic = 0;
-    for(size_t i = 0; i < (size_t) this->m_gen->GetNLinks(); i++)
+    for(size_t i = 0; i < this->m_gen->GetNLinks(); i++)
     { 
       if( this->m_gen->GetLink(i)->GetLinkName() == equi.at(0))
       {
@@ -454,7 +454,7 @@ void MainWindow::ValidLink()
       (equi.at(1)).find("emu_") == 0 || (equi.at(1).find("tap_") == 0 ))
   {
     indic = 0;
-    for(size_t i = 0; i < (size_t) this->m_gen->GetNLinks(); i++)
+    for(size_t i = 0; i < this->m_gen->GetNLinks(); i++)
     { 
       if( this->m_gen->GetLink(i)->GetLinkName() == equi.at(1))
       {
@@ -468,7 +468,7 @@ void MainWindow::ValidLink()
     size_t number = -1;
     size_t number2 = -1;
 
-    for(size_t i = 0; i < (size_t) this->m_gen->GetNLinks(); i++)
+    for(size_t i = 0; i < this->m_gen->GetNLinks(); i++)
     {
       if(equi.at(0) == this->m_gen->GetLink(i)->GetLinkName())
       {
@@ -508,7 +508,7 @@ void MainWindow::ValidLink()
       {
         QMessageBox::about(this, "Error", "An error occured.");
         /* delete the two equi .... */
-        for(size_t i = 0; i < (size_t) this->m_dw->GetDrawLines().size(); i++)
+        for(size_t i = 0; i < this->m_dw->GetDrawLines().size(); i++)
         {
           if(equi.at(0) == this->m_dw->GetNDrawLines(i).GetFirst() || equi.at(1) == this->m_dw->GetNDrawLines(i).GetFirst() )
           {
@@ -591,7 +591,7 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
   catch(const std::out_of_range &e)
   {
     QMessageBox::about(this, "Error", "This link doesn't exist.");
-    for(size_t i = 0; i < (size_t) this->m_dw->GetDrawLines().size(); i++)
+    for(size_t i = 0; i < this->m_dw->GetDrawLines().size(); i++)
     {
       if( (nodeName == this->m_dw->GetNDrawLines(i).GetFirst() && this->m_gen->GetLink(linkNumber)->GetLinkName() == this->m_dw->GetNDrawLines(i).GetSecond()) ||
           (this->m_gen->GetLink(linkNumber)->GetLinkName() == this->m_dw->GetNDrawLines(i).GetFirst() && nodeName == this->m_dw->GetNDrawLines(i).GetSecond()) )
@@ -610,7 +610,7 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
   }
   else
   {
-    for(size_t i = 0; i < (size_t) this->m_gen->GetNNodes(); i++)
+    for(size_t i = 0; i < this->m_gen->GetNNodes(); i++)
     {
       if(nodeName == this->m_gen->GetNode(i)->GetNodeName())
       {
@@ -621,9 +621,9 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
 
   /* get the number of machines also connected. */
   std::vector<std::string> nodes = this->m_gen->GetLink(linkNumber)->GetInstalledNodes();
-  for(size_t i = 0; i < (size_t) nodes.size(); i++)
+  for(size_t i = 0; i < nodes.size(); i++)
   {
-    for(size_t j = 0; j < (size_t) this->m_gen->GetNNodes(); j++)
+    for(size_t j = 0; j < this->m_gen->GetNNodes(); j++)
     {
       if(nodes.at(i) == this->m_gen->GetNode(j)->GetNodeName())
       {
@@ -634,7 +634,7 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
   if( numberOfConnectedMachines > (255 -2) )
   {
     QMessageBox::about(this, "Error", "Limit of machines exceeded.");
-    for(size_t i = 0; i < (size_t) this->m_dw->GetDrawLines().size(); i++)
+    for(size_t i = 0; i < this->m_dw->GetDrawLines().size(); i++)
     {
       if( (nodeName == this->m_dw->GetNDrawLines(i).GetFirst() && this->m_gen->GetLink(linkNumber)->GetLinkName() == this->m_dw->GetNDrawLines(i).GetSecond()) ||
           (this->m_gen->GetLink(linkNumber)->GetLinkName() == this->m_dw->GetNDrawLines(i).GetFirst() && nodeName == this->m_dw->GetNDrawLines(i).GetSecond()) )

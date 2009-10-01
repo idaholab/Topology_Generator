@@ -220,7 +220,7 @@ void Generator::AddNode(const std::string &type, const size_t number)
 void Generator::RemoveNode(const std::string &name)
 {
   size_t startNumber = this->m_listNode.size();
-  for(int i = 0; (size_t) i < this->m_listNode.size(); i++)
+  for(size_t i = 0; i < this->m_listNode.size(); i++)
   {
     if(this->m_listNode.at(i)->GetNodeName() == name)
     {
@@ -309,7 +309,7 @@ void Generator::AddApplication(const std::string &type, const std::string &sende
 void Generator::RemoveApplication(const std::string &name)
 {
   size_t startNumber = this->m_listApplication.size();
-  for(int i = 0; (size_t) i < this->m_listApplication.size(); i++)
+  for(size_t i = 0; i < this->m_listApplication.size(); i++)
   {
     if(this->m_listApplication.at(i)->GetAppName() == name)
     {
@@ -408,7 +408,7 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode, co
 void Generator::RemoveLink(const std::string &name)
 {
   size_t startNumber = this->m_listLink.size();
-  for(int i = 0; (size_t) i < this->m_listLink.size(); i++)
+  for(size_t i = 0; i < this->m_listLink.size(); i++)
   {
     if(this->m_listLink.at(i)->GetLinkName() == name)
     {

@@ -346,10 +346,10 @@ void DragWidget::DeleteSelected()
 
   /* delete connections */
   std::vector<std::string> objDelLink;
-  for(size_t i = 0; i < (size_t) this->m_mw->GetGenerator()->GetNLinks(); i++)
+  for(size_t i = 0; i < this->m_mw->GetGenerator()->GetNLinks(); i++)
   {
     std::vector<std::string> nodes = this->m_mw->GetGenerator()->GetLink(i)->GetInstalledNodes();
-    for(size_t j = 0; j < (size_t) nodes.size(); j++)
+    for(size_t j = 0; j < nodes.size(); j++)
     {
       /* if the child to be deleted is connected ... we must remove it. */
       if(child->GetName() == nodes.at(j))
@@ -369,9 +369,9 @@ void DragWidget::DeleteSelected()
 
   /* delete hide create hub for until two Pc for example. */
   bool isHide = true;
-  for(size_t i = 0; i < (size_t) objDelLink.size(); i++)
+  for(size_t i = 0; i < objDelLink.size(); i++)
   {
-    for(size_t j = 0; j < (size_t) this->m_mw->GetGenerator()->GetNLinks(); j++)
+    for(size_t j = 0; j < this->m_mw->GetGenerator()->GetNLinks(); j++)
     {
       if( objDelLink.at(i) == this->m_mw->GetGenerator()->GetLink(j)->GetLinkName() )
       {
@@ -380,7 +380,7 @@ void DragWidget::DeleteSelected()
           // the link where the deleted object 
           // check if the link is hide. 
           isHide = true;
-          for(size_t k = 0; k < (size_t) this->children().size(); k++)
+          for(size_t k = 0; k < (size_t)this->children().size(); k++)
           {
             if(dynamic_cast<DragObject*>((this->children().at(k))))
             {
@@ -408,7 +408,7 @@ void DragWidget::DeleteSelected()
   {
     this->m_linkEnd = "";
   }
-  for(size_t i = 0; i < (size_t) this->m_drawLines.size(); i++)
+  for(size_t i = 0; i < this->m_drawLines.size(); i++)
   {
     if(child->GetName() == this->GetChildFromName(this->m_drawLines.at(i).GetFirst())->GetName() || child->GetName() == this->GetChildFromName(this->m_drawLines.at(i).GetSecond())->GetName())
     {
@@ -426,7 +426,7 @@ void DragWidget::DeleteSelected()
   /* remove application. */
   std::string sender("");
   std::string receiver("");
-  for(size_t i = 0; i < (size_t) this->m_mw->GetGenerator()->GetNApplications(); i++)
+  for(size_t i = 0; i < this->m_mw->GetGenerator()->GetNApplications(); i++)
   {
     if((child->GetName()).find("nodesGroup_") == 0)
     {
@@ -521,7 +521,7 @@ void DragWidget::paintEvent(QPaintEvent * /*event*/)
   p2p.setCapStyle(Qt::RoundCap);
 
 
-  for(size_t i = 0; i < (size_t) this->m_drawLines.size(); i++)
+  for(size_t i = 0; i < this->m_drawLines.size(); i++)
   {
     if(this->GetChildFromName(this->m_drawLines.at(i).GetFirst())->GetName() != "" && this->GetChildFromName(this->m_drawLines.at(i).GetSecond())->GetName() != "")
     {
@@ -571,7 +571,7 @@ void DragWidget::paintEvent(QPaintEvent * /*event*/)
 
 DragObject* DragWidget::GetChildFromName(const std::string &name)
 {
-  for(size_t i = 0; i < (size_t) this->children().size(); i++)
+  for(size_t i = 0; i < (size_t)this->children().size(); i++)
   {
     DragObject *child = dynamic_cast<DragObject*>(this->children().at(i));
     if(child)
@@ -1210,9 +1210,9 @@ std::string DragWidget::UpdateToolTip(const std::string &childName)
   std::string  new_tooltip = childName;
   std::vector<std::string> connectedTo;
   bool isConnected = false;
-  for(int i = 0; (size_t) i < this->m_mw->GetGenerator()->GetNLinks(); i++)
+  for(size_t i = 0; i < this->m_mw->GetGenerator()->GetNLinks(); i++)
   {
-    for(int j = 0; (size_t) j < this->m_mw->GetGenerator()->GetLink(i)->GetInstalledNodes().size(); j++)
+    for(size_t j = 0; j < this->m_mw->GetGenerator()->GetLink(i)->GetInstalledNodes().size(); j++)
     {
       if( this->m_mw->GetGenerator()->GetLink(i)->GetInstalledNodes().at(j) == childName )
       {
@@ -1233,13 +1233,13 @@ std::string DragWidget::UpdateToolTip(const std::string &childName)
   }
   if(isConnected)
   {
-    for(size_t i = 0; (size_t) i < connectedTo.size(); i++)
+    for(size_t i = 0; i < connectedTo.size(); i++)
     {
       new_tooltip += "<br />"+connectedTo.at(i);
     }
   }
 
-  for(int i = 0; (size_t) i < this->m_mw->GetGenerator()->GetNApplications(); i++)
+  for(size_t i = 0;  i < this->m_mw->GetGenerator()->GetNApplications(); i++)
   {
     if(this->m_mw->GetGenerator()->GetApplication(i)->GetSenderNode() == childName)
     {
