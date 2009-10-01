@@ -111,16 +111,16 @@ static void parseCmdline(int argc, char** argv)
 static void printState(Generator *gen)
 {
   std::cout << "Nodes :" << std::endl;
-  for(int i = 0; (size_t) i < gen->GetNNodes(); i++)
+  for(size_t i = 0; i < gen->GetNNodes(); i++)
   {
     std::cout << "- " << gen->GetNode(i)->GetNodeName() << std::endl;
   }
 
   std::cout << "Link :" << std::endl;
-  for(int i = 0; (size_t) i < gen->GetNLinks(); i++)
+  for(size_t i = 0; i < gen->GetNLinks(); i++)
   {
     std::cout << "- " << gen->GetLink(i)->GetLinkName() << std::endl;
-    for(int j = 0; (size_t) j < gen->GetLink(i)->GetInstalledNodes().size(); j++)
+    for(size_t j = 0; j < gen->GetLink(i)->GetInstalledNodes().size(); j++)
     {
       std::cout << "  -- " << gen->GetLink(i)->GetInstalledNodes().at(j) << std::endl;
     }
