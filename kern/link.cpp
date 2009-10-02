@@ -123,7 +123,7 @@ void Link::Install(const std::string &node)
   this->m_nodes.push_back(node);
   std::vector<std::string> trans;
   std::vector<std::string> transWhitoutRouter;
-  for(size_t i = 0; i < (size_t) this->m_nodes.size(); i++)
+  for(size_t i = 0; i <  this->m_nodes.size(); i++)
   {
     if((this->m_nodes.at(i)).find("router_") == 0)
     {
@@ -134,7 +134,7 @@ void Link::Install(const std::string &node)
       transWhitoutRouter.push_back(this->m_nodes.at(i));
     }
   }
-  for(size_t i = 0; i < (size_t) transWhitoutRouter.size(); i++)
+  for(size_t i = 0; i <  transWhitoutRouter.size(); i++)
   {
     trans.push_back(transWhitoutRouter.at(i));
   }
@@ -155,7 +155,7 @@ std::vector<std::string> Link::GroupAsNodeContainerCpp()
 {
   std::vector<std::string> res;
   res.push_back("NodeContainer " + this->m_allNodeContainer + ";");
-  for(size_t i = 0; i < (size_t) this->m_nodes.size(); i++)
+  for(size_t i = 0; i <  this->m_nodes.size(); i++)
   {
     if((this->m_nodes.at(i)).find("ap_") != 0)
     {
@@ -171,7 +171,7 @@ std::vector<std::string> Link::GroupAsNodeContainerPython()
   std::vector<std::string> res;
 
   res.push_back(this->m_allNodeContainer + " = ns3.NodeContainer()");
-  for(size_t i = 0; i < (size_t) this->m_nodes.size(); i++)
+  for(size_t i = 0; i <  this->m_nodes.size(); i++)
   {
     if((this->m_nodes.at(i)).find("ap_") != 0)
     {

@@ -76,19 +76,19 @@ Generator::Generator(const std::string &simulationName)
 Generator::~Generator()
 {
   /* Node */
-  for(size_t i = 0; i < (size_t) this->m_listNode.size(); i++)
+  for(size_t i = 0; i < this->m_listNode.size(); i++)
   {
     delete this->m_listNode.at(i);
   }
 
   /* Link */
-  for(size_t i = 0; i < (size_t) this->m_listLink.size(); i++)
+  for(size_t i = 0; i < this->m_listLink.size(); i++)
   {
     delete this->m_listLink.at(i);
   }
 
   /* Application */
-  for(size_t i = 0; i < (size_t) this->m_listApplication.size(); i++)
+  for(size_t i = 0; i < this->m_listApplication.size(); i++)
   {
     delete this->m_listApplication.at(i);
   }
@@ -97,7 +97,7 @@ Generator::~Generator()
 void Generator::AddConfig(const std::string &config)
 {
   bool isDuplicate = false;
-  for(size_t i = 0; i < (size_t) this->m_listConfiguration.size(); i++)
+  for(size_t i = 0; i < this->m_listConfiguration.size(); i++)
   {
     if(config == this->m_listConfiguration.at(i))
     {
@@ -471,7 +471,7 @@ void Generator::GenerateCodeCpp()
   std::cout << "#include \"ns3/global-route-manager.h\"" << std::endl;
 
   std::vector<std::string> allHeaders = GenerateHeader();
-  for(size_t i = 0; i < (size_t) allHeaders.size(); i++)
+  for(size_t i = 0; i <  allHeaders.size(); i++)
   {
     std::cout << "" << allHeaders.at(i) << std::endl;
   }
@@ -487,7 +487,7 @@ void Generator::GenerateCodeCpp()
   // Tap/Emu variables
   //
   std::vector<std::string> allVars = GenerateVarsCpp();
-  for(size_t i = 0; i < (size_t) allVars.size(); i++)
+  for(size_t i = 0; i <  allVars.size(); i++)
   {
     std::cout << "  " << allVars.at(i) << std::endl;
     std::cout << "" << std::endl;
@@ -499,7 +499,7 @@ void Generator::GenerateCodeCpp()
   std::cout << "  CommandLine cmd;" << std::endl;
 
   std::vector<std::string> allCmdLine = GenerateCmdLineCpp();
-  for(size_t i = 0; i < (size_t) allCmdLine.size(); i++)
+  for(size_t i = 0; i <  allCmdLine.size(); i++)
   {
     std::cout << "  " << allCmdLine.at(i) << std::endl;
   } 
@@ -512,7 +512,7 @@ void Generator::GenerateCodeCpp()
   std::cout << "" << std::endl;
   std::cout << "  /* Configuration. */" << std::endl;
   std::vector<std::string> conf = GenerateConfigCpp();
-  for(size_t i = 0; i < (size_t) conf.size(); i++)
+  for(size_t i = 0; i <  conf.size(); i++)
   {
     std::cout << "  " << conf.at(i) << std::endl;
   }
@@ -523,7 +523,7 @@ void Generator::GenerateCodeCpp()
   std::cout << "" << std::endl;
   std::cout << "  /* Build nodes. */" << std::endl;
   std::vector<std::string> nodeBuild = GenerateNodeCpp();
-  for(size_t i = 0; i < (size_t) nodeBuild.size(); i++)
+  for(size_t i = 0; i <  nodeBuild.size(); i++)
   {
     std::cout << "  " << nodeBuild.at(i) << std::endl;
   }
@@ -534,7 +534,7 @@ void Generator::GenerateCodeCpp()
   std::cout << "" << std::endl;
   std::cout << "  /* Build link. */" << std::endl;
   std::vector<std::string> linkBuild = GenerateLinkCpp(); 
-  for(size_t i = 0; i < (size_t) linkBuild.size(); i++)
+  for(size_t i = 0; i <  linkBuild.size(); i++)
   {
     std::cout << "  " << linkBuild.at(i) << std::endl;
   }
@@ -545,7 +545,7 @@ void Generator::GenerateCodeCpp()
   std::cout << "" << std::endl;
   std::cout << "  /* Build link net device container. */" << std::endl;
   std::vector<std::string> linkNdcBuild = GenerateNetDeviceCpp(); 
-  for(size_t i = 0; i < (size_t) linkNdcBuild.size(); i++)
+  for(size_t i = 0; i <  linkNdcBuild.size(); i++)
   {
     std::cout << "  " << linkNdcBuild.at(i) << std::endl;
   }
@@ -556,7 +556,7 @@ void Generator::GenerateCodeCpp()
   std::cout << "" << std::endl;
   std::cout << "  /* Install the IP stack. */" << std::endl;
   std::vector<std::string> allStacks = GenerateIpStackCpp();
-  for(size_t i = 0; i < (size_t) allStacks.size(); i++)
+  for(size_t i = 0; i <  allStacks.size(); i++)
   {
     std::cout << "  " << allStacks.at(i) << std::endl;
   }
@@ -567,7 +567,7 @@ void Generator::GenerateCodeCpp()
   std::cout << "" << std::endl;
   std::cout << "  /* IP assign. */" << std::endl;
   std::vector<std::string> allAssign = GenerateIpAssignCpp();
-  for(size_t i = 0; i < (size_t) allAssign.size(); i++)
+  for(size_t i = 0; i <  allAssign.size(); i++)
   {
     std::cout << "  " << allAssign.at(i) << std::endl;
   } 
@@ -581,7 +581,7 @@ void Generator::GenerateCodeCpp()
     std::cout << "" << std::endl;
     std::cout << "  /* Tap Bridge. */" << std::endl;
   }
-  for(size_t i = 0; i < (size_t) allTapBridge.size(); i++)
+  for(size_t i = 0; i <  allTapBridge.size(); i++)
   {
     std::cout << "  " << allTapBridge.at(i) << std::endl;
   } 
@@ -592,7 +592,7 @@ void Generator::GenerateCodeCpp()
   std::cout << "" << std::endl;
   std::cout << "  /* Generate Route. */" << std::endl;
   std::vector<std::string> allRoutes = GenerateRouteCpp();
-  for(size_t i = 0; i < (size_t) allRoutes.size(); i++)
+  for(size_t i = 0; i <  allRoutes.size(); i++)
   {
     std::cout << "  " << allRoutes.at(i) << std::endl;
   } 
@@ -603,7 +603,7 @@ void Generator::GenerateCodeCpp()
   std::cout << "" << std::endl;
   std::cout << "  /* Generate Application. */" << std::endl;
   std::vector<std::string> allApps = GenerateApplicationCpp();
-  for(size_t i = 0; i < (size_t) allApps.size(); i++)
+  for(size_t i = 0; i <  allApps.size(); i++)
   {
     std::cout << "  " << allApps.at(i) << std::endl;
   } 
@@ -617,14 +617,14 @@ void Generator::GenerateCodeCpp()
 
   std::cout << "  /* Pcap output. */" << std::endl;
   std::vector<std::string> allTrace = GenerateTraceCpp();
-  for(size_t i = 0; i < (size_t) allTrace.size(); i++)
+  for(size_t i = 0; i <  allTrace.size(); i++)
   {
     std::cout << "  " << allTrace.at(i) << std::endl;
   } 
 
   /* Set stop time. */
   size_t stopTime = 0;/* default stop time. */
-  for(size_t i = 0; i < (size_t) this->m_listApplication.size(); i++)
+  for(size_t i = 0; i <  this->m_listApplication.size(); i++)
   {
     if( (this->m_listApplication.at(i))->GetEndTimeNumber() > stopTime)
     {
@@ -649,28 +649,28 @@ std::vector<std::string> Generator::GenerateHeader()
   std::vector<std::string> allHeaders;
   // get all headers.
   /* from m_listNode. */
-  for(size_t i = 0; i < (size_t) this->m_listNode.size(); i++)
+  for(size_t i = 0; i <  this->m_listNode.size(); i++)
   {
     std::vector<std::string> trans = (this->m_listNode.at(i))->GenerateHeader();
-    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    for(size_t j = 0; j <  trans.size(); j++)
     {
       allHeaders.push_back(trans.at(j));
     }
   }
   /* from m_listLink */
-  for(size_t i = 0; i < (size_t) this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listLink.size(); i++)
   {
     std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateHeader();
-    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    for(size_t j = 0; j <  trans.size(); j++)
     {
       allHeaders.push_back(trans.at(j));
     }
   }
   /* from m_listApplication */
-  for(size_t i = 0; i < (size_t) this->m_listApplication.size(); i++)
+  for(size_t i = 0; i <  this->m_listApplication.size(); i++)
   {
     std::vector<std::string> trans = (this->m_listApplication.at(i))->GenerateHeader();
-    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    for(size_t j = 0; j <  trans.size(); j++)
     {
       allHeaders.push_back(trans.at(j));
     }
@@ -680,11 +680,11 @@ std::vector<std::string> Generator::GenerateHeader()
   std::vector<std::string> headersWithoutDuplicateElem;
   bool isDuplicate = false;
   /* iterate all headers string */
-  for(size_t i = 0; i < (size_t) allHeaders.size(); i++)
+  for(size_t i = 0; i <  allHeaders.size(); i++)
   {
     isDuplicate = false;
     /* iterate the vector whith no duplicate */
-    for(size_t j = 0; j < (size_t) headersWithoutDuplicateElem.size(); j++)
+    for(size_t j = 0; j <  headersWithoutDuplicateElem.size(); j++)
     {
       /* check if the string into the allHeaders vector is also in the vector without duplicate */
       if( allHeaders.at(i) == headersWithoutDuplicateElem.at(j))
@@ -706,17 +706,17 @@ std::vector<std::string> Generator::GenerateHeader()
 std::vector<std::string> Generator::GenerateVarsCpp()
 {
   std::vector<std::string> allVars;
-  for(size_t i = 0; i < (size_t) this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listLink.size(); i++)
   {
     std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateVarsCpp();
-    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    for(size_t j = 0; j <  trans.size(); j++)
     {
       allVars.push_back(trans.at(j));
     }
   }
 
   /* add nsc var if used. */
-  for(size_t i = 0; i < (size_t) this->m_listNode.size(); i++)
+  for(size_t i = 0; i <  this->m_listNode.size(); i++)
   {
     if( (this->m_listNode.at(i))->GetNsc() != "")
     {
@@ -729,10 +729,10 @@ std::vector<std::string> Generator::GenerateVarsCpp()
 std::vector<std::string> Generator::GenerateCmdLineCpp() 
 {
   std::vector<std::string> allCmdLine;
-  for(size_t i = 0; i < (size_t) this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listLink.size(); i++)
   {
     std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateCmdLineCpp();
-    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    for(size_t j = 0; j <  trans.size(); j++)
     {
       allCmdLine.push_back(trans.at(j));
     }
@@ -742,7 +742,7 @@ std::vector<std::string> Generator::GenerateCmdLineCpp()
 
 std::vector<std::string> Generator::GenerateConfigCpp() 
 {
-  for(size_t i = 0; i < (size_t) this->m_listNode.size(); i++)
+  for(size_t i = 0; i <  this->m_listNode.size(); i++)
   {
     if( ((this->m_listNode.at(i))->GetNodeName()).find("tap_") == 0)
     {
@@ -751,7 +751,7 @@ std::vector<std::string> Generator::GenerateConfigCpp()
     }
   }
 
-  for(size_t i = 0; i < (size_t) this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listLink.size(); i++)
   { 
     if( ((this->m_listLink.at(i))->GetLinkName()).find("emu_") == 0 )
     {
@@ -761,7 +761,7 @@ std::vector<std::string> Generator::GenerateConfigCpp()
   } 
 
   std::vector<std::string> allConf;
-  for(size_t i = 0; i < (size_t) this->m_listConfiguration.size(); i++)
+  for(size_t i = 0; i <  this->m_listConfiguration.size(); i++)
   {
     allConf.push_back(this->m_listConfiguration.at(i));
   }
@@ -773,10 +773,10 @@ std::vector<std::string> Generator::GenerateNodeCpp()
 {
   std::vector<std::string> allNodes;
   /* get all the node code. */
-  for(size_t i = 0; i < (size_t) this->m_listNode.size(); i++)
+  for(size_t i = 0; i <  this->m_listNode.size(); i++)
   {
     std::vector<std::string> trans = (this->m_listNode.at(i))->GenerateNodeCpp();
-    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    for(size_t j = 0; j <  trans.size(); j++)
     {
       allNodes.push_back(trans.at(j));
     }
@@ -788,10 +788,10 @@ std::vector<std::string> Generator::GenerateLinkCpp()
 {
   std::vector<std::string> allLink;
   /* get all the link build code. */
-  for(size_t i = 0; i < (size_t) this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listLink.size(); i++)
   {
     std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateLinkCpp();
-    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    for(size_t j = 0; j <  trans.size(); j++)
     {
       allLink.push_back(trans.at(j));
     }
@@ -802,10 +802,10 @@ std::vector<std::string> Generator::GenerateNetDeviceCpp()
 {
   std::vector<std::string> allNdc;
   /* get all the link build code. */
-  for(size_t i = 0; i < (size_t) this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listLink.size(); i++)
   {
     std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateNetDeviceCpp();
-    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    for(size_t j = 0; j <  trans.size(); j++)
     {
       allNdc.push_back(trans.at(j));
     }
@@ -820,14 +820,14 @@ std::vector<std::string> Generator::GenerateIpStackCpp()
   /* construct node without bridge Node. */
   allStack.push_back("InternetStackHelper internetStackH;");
   std::string nodeName = "";
-  for(size_t i = 0; i < (size_t) this->m_listNode.size(); i++)
+  for(size_t i = 0; i <  this->m_listNode.size(); i++)
   {
     nodeName = (this->m_listNode.at(i))->GetNodeName();
     /* if it is not a bridge you can add it. */
     if(nodeName.find("bridge_") != 0)
     {
       std::vector<std::string> trans = (this->m_listNode.at(i)->GenerateIpStackCpp());
-      for(size_t j = 0; j < (size_t) trans.size(); j++)
+      for(size_t j = 0; j <  trans.size(); j++)
       {
         allStack.push_back(trans.at(j));
       }
@@ -843,7 +843,7 @@ std::vector<std::string> Generator::GenerateIpAssignCpp()
   ipAssign.push_back("Ipv4AddressHelper ipv4;");
 
   size_t ipRange = 0;
-  for(size_t i = 0; i < (size_t) this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listLink.size(); i++)
   {
     ipAssign.push_back("ipv4.SetBase (\"10.0." + utils::integerToString(ipRange) + ".0\", \"255.255.255.0\");");
     ipAssign.push_back("Ipv4InterfaceContainer iface_" + this->m_listLink.at(i)->GetNdcName() + " = ipv4.Assign (" + this->m_listLink.at(i)->GetNdcName() + ");");
@@ -869,7 +869,7 @@ std::vector<std::string> Generator::GenerateApplicationCpp()
   size_t linkNumber = 0;
   std::vector<std::string> allApps;
   /* get all the ip assign code. */
-  for(size_t i = 0; i < (size_t) this->m_listApplication.size(); i++)
+  for(size_t i = 0; i <  this->m_listApplication.size(); i++)
   {
     /* get NetDeviceContainer and number from the receiver. */
     std::string receiverName = this->m_listApplication.at(i)->GetReceiverNode();
@@ -919,12 +919,12 @@ std::vector<std::string> Generator::GenerateApplicationCpp()
     }
     else
     {
-      for(size_t j = 0; j < (size_t) this->m_listLink.size(); j++)
+      for(size_t j = 0; j <  this->m_listLink.size(); j++)
       {
         nodeNumber = 0;
         linkNumber = 0;
         std::vector<std::string> nodes = (this->m_listLink.at(j))->GetInstalledNodes();
-        for(size_t k = 0; k < (size_t) nodes.size(); k++)
+        for(size_t k = 0; k <  nodes.size(); k++)
         {
           if( nodes.at(k) == receiverName)
           {
@@ -933,7 +933,7 @@ std::vector<std::string> Generator::GenerateApplicationCpp()
           }
           else
           {
-            for(size_t l = 0; l < (size_t) this->m_listNode.size(); l++)
+            for(size_t l = 0; l <  this->m_listNode.size(); l++)
             {
               if(this->m_listNode.at(l)->GetNodeName() == nodes.at(k))
               {
@@ -951,7 +951,7 @@ std::vector<std::string> Generator::GenerateApplicationCpp()
     }
     /* get the application code with param. */
     std::vector<std::string> trans = (this->m_listApplication.at(i)->GenerateApplicationCpp(ndcName, nodeNumber));
-    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    for(size_t j = 0; j <  trans.size(); j++)
     {
       allApps.push_back(trans.at(j));
     }
@@ -964,10 +964,10 @@ std::vector<std::string> Generator::GenerateTapBridgeCpp()
 {
   std::vector<std::string> allTapBridge;
 
-  for(size_t i = 0; i < (size_t) this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listLink.size(); i++)
   {
     std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateTapBridgeCpp();
-    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    for(size_t j = 0; j <  trans.size(); j++)
     {
       allTapBridge.push_back(trans.at(j));
     }
@@ -980,10 +980,10 @@ std::vector<std::string> Generator::GenerateTraceCpp()
 {
   std::vector<std::string> allTrace;
 
-  for(size_t i = 0; i < (size_t) this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listLink.size(); i++)
   {
     std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateTraceCpp();
-    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    for(size_t j = 0; j <  trans.size(); j++)
     {
       allTrace.push_back(trans.at(j));
     }
@@ -1011,7 +1011,7 @@ void Generator::GenerateCodePython()
   // Tap/Emu variables
   //
   std::vector<std::string> allVars = GenerateVarsPython();
-  for(size_t i = 0; i < (size_t) allVars.size(); i++)
+  for(size_t i = 0; i <  allVars.size(); i++)
   {
     std::cout << "    " << allVars.at(i) << std::endl;
     std::cout << "" << std::endl;
@@ -1023,7 +1023,7 @@ void Generator::GenerateCodePython()
   std::cout << "    cmd = ns3.CommandLine()" << std::endl;
 
   std::vector<std::string> allCmdLine = GenerateCmdLinePython();
-  for(size_t i = 0; i < (size_t) allCmdLine.size(); i++)
+  for(size_t i = 0; i <  allCmdLine.size(); i++)
   {
     std::cout << "    " << allCmdLine.at(i) << std::endl;
   } 
@@ -1036,7 +1036,7 @@ void Generator::GenerateCodePython()
   std::cout << "" << std::endl;
   std::cout << "    # Configuration." << std::endl;
   std::vector<std::string> conf = GenerateConfigPython();
-  for(size_t i = 0; i < (size_t) conf.size(); i++)
+  for(size_t i = 0; i <  conf.size(); i++)
   {
     std::cout << "    " << conf.at(i) << std::endl;
   }
@@ -1047,7 +1047,7 @@ void Generator::GenerateCodePython()
   std::cout << "" << std::endl;
   std::cout << "    # Build nodes" << std::endl;
   std::vector<std::string> nodeBuild = GenerateNodePython();
-  for(size_t i = 0; i < (size_t) nodeBuild.size(); i++)
+  for(size_t i = 0; i <  nodeBuild.size(); i++)
   {
     std::cout << "    " << nodeBuild.at(i) << std::endl;
   }
@@ -1058,7 +1058,7 @@ void Generator::GenerateCodePython()
   std::cout << "" << std::endl;
   std::cout << "    # Build link." << std::endl;
   std::vector<std::string> linkBuild = GenerateLinkPython();
-  for(size_t i = 0; i < (size_t) linkBuild.size(); i++)
+  for(size_t i = 0; i <  linkBuild.size(); i++)
   {
     std::cout << "    " << linkBuild.at(i) << std::endl;
   }
@@ -1069,7 +1069,7 @@ void Generator::GenerateCodePython()
   std::cout << "" << std::endl;
   std::cout << "    # Build link net device container." << std::endl;
   std::vector<std::string> linkNdcBuild = GenerateNetDevicePython(); 
-  for(size_t i = 0; i < (size_t) linkNdcBuild.size(); i++)
+  for(size_t i = 0; i <  linkNdcBuild.size(); i++)
   {
     std::cout << "    " << linkNdcBuild.at(i) << std::endl;
   }
@@ -1080,7 +1080,7 @@ void Generator::GenerateCodePython()
   std::cout << "" << std::endl;
   std::cout << "    # Install the IP stack." << std::endl;
   std::vector<std::string> allStacks = GenerateIpStackPython();
-  for(size_t i = 0; i < (size_t) allStacks.size(); i++)
+  for(size_t i = 0; i <  allStacks.size(); i++)
   {
     std::cout << "    " << allStacks.at(i) << std::endl;
   }
@@ -1091,7 +1091,7 @@ void Generator::GenerateCodePython()
   std::cout << "" << std::endl;
   std::cout << "    # IP assign." << std::endl;
   std::vector<std::string> allAssign = GenerateIpAssignPython();
-  for(size_t i = 0; i < (size_t) allAssign.size(); i++)
+  for(size_t i = 0; i <  allAssign.size(); i++)
   {
     std::cout << "    " << allAssign.at(i) << std::endl;
   } 
@@ -1105,7 +1105,7 @@ void Generator::GenerateCodePython()
     std::cout << "" << std::endl;
     std::cout << "    # Tap Bridge." << std::endl;
   }
-  for(size_t i = 0; i < (size_t) allTapBridge.size(); i++)
+  for(size_t i = 0; i <  allTapBridge.size(); i++)
   {
     std::cout << "    " << allTapBridge.at(i) << std::endl;
   } 
@@ -1116,7 +1116,7 @@ void Generator::GenerateCodePython()
   std::cout << "" << std::endl;
   std::cout << "    # Generate Route." << std::endl;
   std::vector<std::string> allRoutes = GenerateRoutePython();
-  for(size_t i = 0; i < (size_t) allRoutes.size(); i++)
+  for(size_t i = 0; i <  allRoutes.size(); i++)
   {
     std::cout << "    " << allRoutes.at(i) << std::endl;
   } 
@@ -1127,7 +1127,7 @@ void Generator::GenerateCodePython()
   std::cout << "" << std::endl;
   std::cout << "    # Generate Application." << std::endl;
   std::vector<std::string> allApps = GenerateApplicationPython();
-  for(size_t i = 0; i < (size_t) allApps.size(); i++)
+  for(size_t i = 0; i <  allApps.size(); i++)
   {
     std::cout << "    " << allApps.at(i) << std::endl;
   } 
@@ -1141,14 +1141,14 @@ void Generator::GenerateCodePython()
 
   std::cout << "    # Pcap output." << std::endl;
   std::vector<std::string> allTrace = GenerateTracePython();
-  for(size_t i = 0; i < (size_t) allTrace.size(); i++)
+  for(size_t i = 0; i <  allTrace.size(); i++)
   {
     std::cout << "    " << allTrace.at(i) << std::endl;
   } 
 
   /* Set stop time. */
   size_t stopTime = 0;/* default stop time. */
-  for(size_t i = 0; i < (size_t) this->m_listApplication.size(); i++)
+  for(size_t i = 0; i <  this->m_listApplication.size(); i++)
   {
     if( (this->m_listApplication.at(i))->GetEndTimeNumber() > stopTime)
     {
@@ -1182,10 +1182,10 @@ std::vector<std::string> Generator::GenerateCmdLinePython()
 {
   std::vector<std::string> allCmdLine;
 
-  for(size_t i = 0; i < (size_t) this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listLink.size(); i++)
   {
     std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateCmdLinePython();
-    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    for(size_t j = 0; j <  trans.size(); j++)
     {
       allCmdLine.push_back(trans.at(j));
     }
@@ -1195,7 +1195,7 @@ std::vector<std::string> Generator::GenerateCmdLinePython()
 
 std::vector<std::string> Generator::GenerateConfigPython()
 {
-  for(size_t i = 0; i < (size_t) this->m_listNode.size(); i++)
+  for(size_t i = 0; i <  this->m_listNode.size(); i++)
   {
     if( ((this->m_listNode.at(i))->GetNodeName()).find("tap_") == 0)
     {
@@ -1204,7 +1204,7 @@ std::vector<std::string> Generator::GenerateConfigPython()
     }
   }
 
-  for(size_t i = 0; i < (size_t) this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listLink.size(); i++)
   {
     if( ((this->m_listLink.at(i))->GetLinkName()).find("emu_") == 0 )
     {
@@ -1214,7 +1214,7 @@ std::vector<std::string> Generator::GenerateConfigPython()
   }
 
   std::vector<std::string> allConf;
-  for(size_t i = 0; i < (size_t) this->m_listConfiguration.size(); i++)
+  for(size_t i = 0; i <  this->m_listConfiguration.size(); i++)
   {
     allConf.push_back(this->m_listConfiguration.at(i));
   }
@@ -1226,10 +1226,10 @@ std::vector<std::string> Generator::GenerateNodePython()
 {
   std::vector<std::string> allNodes;
   /* get all the node code. */
-  for(size_t i = 0; i < (size_t) this->m_listNode.size(); i++)
+  for(size_t i = 0; i <  this->m_listNode.size(); i++)
   {
     std::vector<std::string> trans = (this->m_listNode.at(i))->GenerateNodePython();
-    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    for(size_t j = 0; j <  trans.size(); j++)
     {
       allNodes.push_back(trans.at(j));
     }
@@ -1241,10 +1241,10 @@ std::vector<std::string> Generator::GenerateLinkPython()
 {
   std::vector<std::string> allLink;
   /* get all the link build code. */
-  for(size_t i = 0; i < (size_t) this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listLink.size(); i++)
   {
     std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateLinkPython();
-    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    for(size_t j = 0; j <  trans.size(); j++)
     {
       allLink.push_back(trans.at(j));
     }
@@ -1256,10 +1256,10 @@ std::vector<std::string> Generator::GenerateNetDevicePython()
 {
   std::vector<std::string> allNdc;
   /* get all the link build code. */
-  for(size_t i = 0; i < (size_t) this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listLink.size(); i++)
   {
     std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateNetDevicePython();
-    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    for(size_t j = 0; j <  trans.size(); j++)
     {
       allNdc.push_back(trans.at(j));
     }
@@ -1274,14 +1274,14 @@ std::vector<std::string> Generator::GenerateIpStackPython()
   /* construct node without bridge Node. */
   allStack.push_back("internetStackH = ns3.InternetStackHelper()");
   std::string nodeName = "";
-  for(size_t i = 0; i < (size_t) this->m_listNode.size(); i++)
+  for(size_t i = 0; i <  this->m_listNode.size(); i++)
   {
     nodeName = (this->m_listNode.at(i))->GetNodeName();
     /* if it is not a bridge you can add it. */
     if(nodeName.find("bridge_") != 0)
     {
       std::vector<std::string> trans = (this->m_listNode.at(i)->GenerateIpStackPython());
-      for(size_t j = 0; j < (size_t) trans.size(); j++)
+      for(size_t j = 0; j <  trans.size(); j++)
       {
         allStack.push_back(trans.at(j));
       }
@@ -1297,7 +1297,7 @@ std::vector<std::string> Generator::GenerateIpAssignPython()
   ipAssign.push_back("ipv4 = ns3.Ipv4AddressHelper()");
 
   size_t ipRange = 0;
-  for(size_t i = 0; i < (size_t) this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listLink.size(); i++)
   {
     ipAssign.push_back("ipv4.SetBase (ns3.Ipv4Address(\"10.0." + utils::integerToString(ipRange) + ".0\"), ns3.Ipv4Mask(\"255.255.255.0\"))");
     ipAssign.push_back("iface_" + this->m_listLink.at(i)->GetNdcName() + " = ipv4.Assign (" + this->m_listLink.at(i)->GetNdcName() + ")");
@@ -1311,10 +1311,10 @@ std::vector<std::string> Generator::GenerateTapBridgePython()
 {
   std::vector<std::string> allTapBridge;
 
-  for(size_t i = 0; i < (size_t) this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listLink.size(); i++)
   {
     std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateTapBridgePython();
-    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    for(size_t j = 0; j <  trans.size(); j++)
     {
       allTapBridge.push_back(trans.at(j));
     }
@@ -1340,7 +1340,7 @@ std::vector<std::string> Generator::GenerateApplicationPython()
   std::vector<std::string> allApps;
   
   /* get all the ip assign code. */
-  for(size_t i = 0; i < (size_t) this->m_listApplication.size(); i++)
+  for(size_t i = 0; i <  this->m_listApplication.size(); i++)
   {
     /* get NetDeviceContainer and number from the receiver. */
     std::string receiverName = this->m_listApplication.at(i)->GetReceiverNode();
@@ -1390,12 +1390,12 @@ std::vector<std::string> Generator::GenerateApplicationPython()
     }
     else
     {
-      for(size_t j = 0; j < (size_t) this->m_listLink.size(); j++)
+      for(size_t j = 0; j <  this->m_listLink.size(); j++)
       {
         nodeNumber = 0;
         linkNumber = 0;
         std::vector<std::string> nodes = (this->m_listLink.at(j))->GetInstalledNodes();
-        for(size_t k = 0; k < (size_t) nodes.size(); k++)
+        for(size_t k = 0; k <  nodes.size(); k++)
         {
           if( nodes.at(k) == receiverName)
           {
@@ -1404,7 +1404,7 @@ std::vector<std::string> Generator::GenerateApplicationPython()
           }
           else
           {
-            for(size_t l = 0; l < (size_t) this->m_listNode.size(); l++)
+            for(size_t l = 0; l <  this->m_listNode.size(); l++)
             {
               if(this->m_listNode.at(l)->GetNodeName() == nodes.at(k))
               {
@@ -1422,7 +1422,7 @@ std::vector<std::string> Generator::GenerateApplicationPython()
     }
     /* get the application code with param. */
     std::vector<std::string> trans = (this->m_listApplication.at(i)->GenerateApplicationPython(ndcName, nodeNumber));
-    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    for(size_t j = 0; j <  trans.size(); j++)
     {
       allApps.push_back(trans.at(j));
     }
@@ -1435,10 +1435,10 @@ std::vector<std::string> Generator::GenerateTracePython()
 {
   std::vector<std::string> allTrace;
 
-  for(size_t i = 0; i < (size_t) this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listLink.size(); i++)
   {
     std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateTracePython();
-    for(size_t j = 0; j < (size_t) trans.size(); j++)
+    for(size_t j = 0; j <  trans.size(); j++)
     {
       allTrace.push_back(trans.at(j));
     }

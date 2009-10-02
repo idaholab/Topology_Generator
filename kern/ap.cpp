@@ -98,7 +98,7 @@ std::vector<std::string> Ap::GenerateNetDeviceCpp()
   std::vector<std::string> ndc;
 
   std::vector<std::string> allNodes = this->GroupAsNodeContainerCpp(); //all station nodes !
-  for(size_t i = 0; i < (size_t) allNodes.size(); i++)
+  for(size_t i = 0; i <  allNodes.size(); i++)
   {
     ndc.push_back(allNodes.at(i));
   }
@@ -161,7 +161,7 @@ std::vector<std::string> Ap::GenerateNetDevicePython()
   std::vector<std::string> ndc;
 
   std::vector<std::string> allNodes = this->GroupAsNodeContainerPython(); //all station nodes !
-  for(size_t i = 0; i < (size_t) allNodes.size(); i++)
+  for(size_t i = 0; i <  allNodes.size(); i++)
   {
     ndc.push_back(allNodes.at(i));
   }
