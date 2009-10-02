@@ -83,7 +83,7 @@ std::vector<std::string> Emu::GenerateNetDeviceCpp()
 {
   std::vector<std::string> ndc;
   std::vector<std::string> allNodes = this->GroupAsNodeContainerCpp();
-  for(size_t i = 0; i < (size_t) allNodes.size(); i++)
+  for(size_t i = 0; i <  allNodes.size(); i++)
   {
     ndc.push_back(allNodes.at(i));
   }
@@ -138,7 +138,7 @@ std::vector<std::string> Emu::GenerateNetDevicePython()
 {
   std::vector<std::string> ndc;
   std::vector<std::string> allNodes = this->GroupAsNodeContainerPython();
-  for(size_t i = 0; i < (size_t) allNodes.size(); i++)
+  for(size_t i = 0; i <  allNodes.size(); i++)
   {
     ndc.push_back(allNodes.at(i));
   }

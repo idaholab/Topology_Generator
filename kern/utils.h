@@ -54,10 +54,10 @@ std::string integerToString(const size_t nb);
 /**
  * \brief Convert strint to size_t (integer).
  * \param str string to convert
- * \return number
+ * \return 0 if success, -1 otherwise
  * \throw std::runtime_exception is thrown if cannot convert
  */
-size_t stringToInteger(const std::string& str) throw (std::runtime_error);
+int stringToInteger(const std::string& str) throw (std::runtime_error);
 
 } /* namespace utils */
 
