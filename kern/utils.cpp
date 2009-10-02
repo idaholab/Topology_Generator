@@ -56,7 +56,7 @@ std::string integerToString(const size_t nb)
   return out.str();
 }
 
-size_t stringToInteger(const std::string& str) throw(std::runtime_error)
+int stringToInteger(const std::string& str) throw(std::runtime_error)
 {
   uint64_t ret = 0;
   std::istringstream in(str);
@@ -64,7 +64,7 @@ size_t stringToInteger(const std::string& str) throw(std::runtime_error)
   if(!(in >> ret))
   {
     throw std::runtime_error("Cannot convert string to uint64_t");
-    return (size_t)-1;
+    return -1;
   }
   return ret;
 }

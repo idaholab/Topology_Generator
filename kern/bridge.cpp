@@ -77,7 +77,7 @@ std::vector<std::string> Bridge::GenerateNetDeviceCpp()
   //ndc.push_back("NetDeviceContainer " + this->GetNdcName() + " = csma_" + this->GetLinkName() + ".Install (" + this->GetAllNodeContainer() + ");");
 
   std::vector<std::string> allNodes = this->GroupAsNodeContainerCpp();
-  for(size_t i = 0; i < (size_t) allNodes.size(); i++)
+  for(size_t i = 0; i <  allNodes.size(); i++)
   {
     ndc.push_back(allNodes.at(i));
   }
@@ -137,7 +137,7 @@ std::vector<std::string> Bridge::GenerateNetDevicePython()
   //ndc.push_back("" + this->GetNdcName() + " = csma_" + this->GetLinkName() + ".Install(" + this->GetAllNodeContainer() + ")");
 
   std::vector<std::string> allNodes = this->GroupAsNodeContainerPython();
-  for(size_t i = 0; i < (size_t) allNodes.size(); i++)
+  for(size_t i = 0; i <  allNodes.size(); i++)
   {
     ndc.push_back(allNodes.at(i));
   }
