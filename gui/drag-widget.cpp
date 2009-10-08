@@ -209,6 +209,7 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
   this->m_lastPosition = event->pos();
 
   /* trace link ... */
+  DragObject *child2 = NULL;
   if(this->m_traceLink)
   {
     /* update if we drag an existant object. */
@@ -226,7 +227,7 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
     else if(this->m_linkEnd == "")
     {
       /* we got the last equipement. */
-      DragObject *child2 = this->GetChildFromName(this->m_linkBegin);
+      child2 = this->GetChildFromName(this->m_linkBegin);
       if(child2)
       {
         if( child->GetName() != child2->GetName())
@@ -243,8 +244,6 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
       }
     }
   } 
-
-
 
   QPixmap pixmap = *child->pixmap();
 
@@ -309,6 +308,16 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
     ShowGuiTcp();
   }
 
+
+  std::string new_tooltip = this->UpdateToolTip(child->GetName());
+  child->SetToolTipText(QString(new_tooltip.c_str()));
+  child->setToolTip(QString(new_tooltip.c_str()));
+  if(child2)
+  {
+    std::string new_tooltip = this->UpdateToolTip(child2->GetName());
+    child2->SetToolTipText(QString(new_tooltip.c_str()));
+    child2->setToolTip(QString(new_tooltip.c_str()));
+  }
   //~ this->m_appsEnable = false;
 }
 
