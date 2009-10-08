@@ -32,8 +32,14 @@
 #include "drag-widget.h"
 #include "drag-object.h"
 
+#include "ap.h"
 #include "tap.h"
 #include "emu.h"
+
+#include "tcp-large-transfer.h"
+#include "udp-echo.h"
+
+#include "utils.h"
 
 MainWindow::MainWindow(const std::string &simulationName)
 {
@@ -69,6 +75,8 @@ MainWindow::MainWindow(const std::string &simulationName)
   connect(actionCpp, SIGNAL(triggered()), this, SLOT(GenerateCpp())); 
   QAction *actionPython = menuView->addAction("&Python");
   connect(actionPython, SIGNAL(triggered()), this, SLOT(GeneratePython()));
+  QAction *actionXml = menuView->addAction("&Xml");
+  connect(actionXml, SIGNAL(triggered()), this, SLOT(SaveXml()));
 
   QMenu *menuHelp = menuBar()->addMenu("&Help");
   QAction *menuOnlineHelp = menuHelp->addAction("Online Help");
@@ -833,3 +841,189 @@ void MainWindow::EraseIfaceList(const size_t &index)
   this->m_listIface.erase(this->m_listIface.begin() + index);
 }
 
+void MainWindow::SaveXml()
+{
+  QString fileName = "";
+  QFileDialog dlg(this, tr("Save image"));
+
+  dlg.setFileMode(QFileDialog::AnyFile);
+ 
+  if(dlg.exec())
+  {
+    fileName = dlg.selectedFiles().at(0);
+
+    /* check if file exists and notificate the user */
+    if(QFile(fileName).exists())
+    {
+      if(QMessageBox(QMessageBox::Question, "File exists", "File already exists. Overwrite ?", 
+            QMessageBox::Ok | QMessageBox::No).exec() != QMessageBox::Ok)
+      {
+        return;
+      }
+    }
+  }
+
+  //QString fileName = "test.xml";
+  QFile file(fileName);
+  file.open(QFile::WriteOnly | QFile::Text);
+  QXmlStreamWriter writer(&file);
+  writer.setAutoFormatting(true);
+  writer.writeStartDocument();
+
+  writer.writeStartElement("Gen");
+    
+  //
+  // Dump Node list
+  //
+  writer.writeStartElement("Nodes");
+  for(size_t i = 0; i < this->m_gen->GetNNodes(); i++)
+  { 
+    for(size_t j = 0; j < (size_t)this->m_dw->children().size(); j++)
+    {
+      DragObject *child = dynamic_cast<DragObject*>(this->m_dw->children().at(j));
+      if(child)
+      {
+        if(child->GetName() == this->m_gen->GetNode(i)->GetNodeName() && child->GetName() != "" && child->GetName() != "deleted")
+        {
+          writer.writeStartElement("node");
+          writer.writeTextElement("name", QString((this->m_gen->GetNode(i)->GetNodeName()).c_str()));
+          writer.writeTextElement("nsc", QString((this->m_gen->GetNode(i)->GetNsc()).c_str()));
+          writer.writeTextElement("nodeNbr", QString((utils::integerToString(this->m_gen->GetNode(i)->GetMachinesNumber())).c_str()));
+          writer.writeTextElement("x", QString((utils::integerToString(child->pos().x())).c_str()));
+          writer.writeTextElement("y", QString((utils::integerToString(child->pos().y())).c_str())); 
+          writer.writeEndElement();//</node>
+        }
+      }
+    }
+  }
+  writer.writeEndElement();//</Nodes>
+
+  //
+  // Dump Link list
+  //
+  bool hidden = true;
+  writer.writeStartElement("NetworkHardwares");
+  for(size_t i = 0; i < this->m_gen->GetNLinks(); i++)
+  {
+    hidden = true;
+    writer.writeStartElement("networkHardware");
+    // check if link is hidden or not.
+    for(size_t j = 0; j < (size_t)this->m_dw->children().size(); j++)
+    {
+      DragObject *child = dynamic_cast<DragObject*>(this->m_dw->children().at(j));
+      if(child)
+      {
+        if(child->GetName() == this->m_gen->GetLink(i)->GetLinkName())
+        {
+          hidden = false;
+          break;
+        }
+      }
+    }
+    if(hidden)
+    {
+      writer.writeTextElement("hidden", "true");
+    }
+    else
+    {
+      writer.writeTextElement("hidden", "false");
+    }
+    writer.writeTextElement("name", QString((this->m_gen->GetLink(i)->GetLinkName()).c_str()));     
+    writer.writeTextElement("dataRate", QString((this->m_gen->GetLink(i)->GetDataRate()).c_str()));
+    writer.writeTextElement("linkDelay", QString((this->m_gen->GetLink(i)->GetLinkDelay()).c_str()));
+    if(this->m_gen->GetLink(i)->GetTrace())
+    {
+      writer.writeTextElement("enableTrace", "true");
+    }
+    else
+    {
+      writer.writeTextElement("enableTrace", "false");
+    }
+    if(this->m_gen->GetLink(i)->GetPromisc())
+    {
+      writer.writeTextElement("tracePromisc", "true");
+    }
+    else
+    {
+      writer.writeTextElement("tracePromisc", "false");
+    } 
+    writer.writeStartElement("installedNodes");  
+    for(size_t j = 0; j < this->m_gen->GetLink(i)->GetInstalledNodes().size(); j++)
+    {
+      writer.writeTextElement("name", QString((this->m_gen->GetLink(i)->GetNInstalledNodes(j)).c_str()));
+    }
+    writer.writeEndElement();
+    
+    // for each link, put his own spécial configs
+    writer.writeStartElement("special");
+    if(this->m_gen->GetLink(i)->GetLinkName().find("ap_") == 0)
+    {
+      Ap *ap = dynamic_cast<Ap*>(this->m_gen->GetLink(i));
+      if(ap->GetMobility())
+      {
+        writer.writeTextElement("mobility", "true");
+      }
+      else
+      {
+        writer.writeTextElement("mobility", "false");
+      }
+      //delete ap;
+    }
+    else if(this->m_gen->GetLink(i)->GetLinkName().find("emu_") == 0)
+    {
+      Emu *emu = dynamic_cast<Emu*>(this->m_gen->GetLink(i));
+      writer.writeTextElement("iface", QString((emu->GetIfaceName()).c_str()));
+      //delete emu;
+    }
+    else if(this->m_gen->GetLink(i)->GetLinkName().find("tap_") == 0)
+    {
+      Tap *tap = dynamic_cast<Tap*>(this->m_gen->GetLink(i));
+      writer.writeTextElement("iface", QString((tap->GetIfaceName()).c_str()));
+      //delete tap;
+    }
+    writer.writeEndElement();//</special>
+    writer.writeEndElement();//</networkHardware>
+  }
+  writer.writeEndElement();//</NetworkHardwares>
+    
+  //
+  // Dump Application List
+  //
+  writer.writeStartElement("Applications");
+  for(size_t i = 0; i < this->m_gen->GetNApplications(); i++)
+  {
+    writer.writeStartElement("application");
+    
+    writer.writeTextElement("name", QString((this->m_gen->GetApplication(i)->GetAppName()).c_str()));
+    writer.writeTextElement("sender", QString((this->m_gen->GetApplication(i)->GetSenderNode()).c_str()));
+    writer.writeTextElement("receiver", QString((this->m_gen->GetApplication(i)->GetReceiverNode()).c_str()));
+    writer.writeTextElement("startTime", QString((this->m_gen->GetApplication(i)->GetStartTime()).c_str()));
+    writer.writeTextElement("endTime", QString((this->m_gen->GetApplication(i)->GetEndTime()).c_str()));
+
+    writer.writeStartElement("special");
+    if(this->m_gen->GetApplication(i)->GetAppName().find("tcp_") == 0)
+    {
+      TcpLargeTransfer *tcp = dynamic_cast<TcpLargeTransfer*>(this->m_gen->GetApplication(i));
+      writer.writeTextElement("port", QString(tcp->GetPort()));
+      //delete tcp;
+    } 
+    else if(this->m_gen->GetApplication(i)->GetAppName().find("udpEcho_") == 0)
+    {
+      UdpEcho *udp = dynamic_cast<UdpEcho*>(this->m_gen->GetApplication(i));
+      writer.writeTextElement("port", QString(udp->GetPort()));
+      writer.writeTextElement("packetSize", QString(udp->GetPacketSize()));
+      writer.writeTextElement("maxPacketCount", QString(udp->GetMaxPacketCount()));
+      writer.writeTextElement("packetIntervalTime", QString((udp->GetPacketIntervalTime()).c_str()));
+      //delete udp;
+    }
+
+    writer.writeEndElement();//</special>
+    writer.writeEndElement();//</application>
+  }
+  writer.writeEndElement();//</Applications>
+
+  writer.writeEndDocument();//</Gen>
+  file.close();
+
+  QMessageBox(QMessageBox::Information, "Save Simulation", "Simulation saved at " + fileName).exec();
+}

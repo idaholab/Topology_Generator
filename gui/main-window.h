@@ -260,6 +260,11 @@ class MainWindow : public QMainWindow
      * \brief Save simulation as a picture.
      */
     void SavePicture();
+
+    /**
+     * \brief Save Simulation into xml file.
+     */
+    void SaveXml();
 };
 
 #endif /* MAIN_WINDOW_H */
