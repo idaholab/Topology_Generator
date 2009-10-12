@@ -1004,15 +1004,15 @@ void MainWindow::SaveXml()
     if(this->m_gen->GetApplication(i)->GetAppName().find("tcp_") == 0)
     {
       TcpLargeTransfer *tcp = dynamic_cast<TcpLargeTransfer*>(this->m_gen->GetApplication(i));
-      writer.writeTextElement("port", QString(tcp->GetPort()));
+      writer.writeTextElement("port", QString((uint)tcp->GetPort()));
       //delete tcp;
     } 
     else if(this->m_gen->GetApplication(i)->GetAppName().find("udpEcho_") == 0)
     {
       UdpEcho *udp = dynamic_cast<UdpEcho*>(this->m_gen->GetApplication(i));
-      writer.writeTextElement("port", QString(udp->GetPort()));
-      writer.writeTextElement("packetSize", QString(udp->GetPacketSize()));
-      writer.writeTextElement("maxPacketCount", QString(udp->GetMaxPacketCount()));
+      writer.writeTextElement("port", QString((uint)udp->GetPort()));
+      writer.writeTextElement("packetSize", QString((uint)udp->GetPacketSize()));
+      writer.writeTextElement("maxPacketCount", QString((uint)udp->GetMaxPacketCount()));
       writer.writeTextElement("packetIntervalTime", QString((udp->GetPacketIntervalTime()).c_str()));
       //delete udp;
     }
