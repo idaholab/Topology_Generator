@@ -80,12 +80,12 @@ std::vector<std::string> Link::GetInstalledNodes()
   return this->m_nodes;
 }
 
-std::string Link::GetNInstalledNodes(const size_t &i)
+std::string Link::GetInstalledNode(const size_t &i)
 {
   return this->m_nodes.at(i);
 }
 
-void Link::removeInstalledNodes(const size_t &nb)
+void Link::removeInstalledNode(const size_t &nb)
 {
   try
   {

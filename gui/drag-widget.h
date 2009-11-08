@@ -91,7 +91,7 @@ class DragWidget : public QWidget
     /**
      * \brief Draw the link.
      */
-    void DrawLine();
+    void DrawLines();
 
     /**
      * \brief Paint widget.
@@ -196,7 +196,7 @@ class DragWidget : public QWidget
      * \brief Set drag lines.
      * \param lines added draglines
      */
-    void SetDragLines(const DragLines &lines);
+    void SetDragLine(const DragLines &lines);
     
     /**
      * \brief Get drag lines.
@@ -208,14 +208,14 @@ class DragWidget : public QWidget
      * \brief Add draw line.
      * \param dl drag line to add
      */
-    void AddDrawLines(const DragLines &dl);
+    void AddDrawLine(const DragLines &dl);
     
     /**
      * \brief Get the index drag lines.
      * \param index the get index
      * \return drag lines
      */
-    DragLines GetNDrawLines(const size_t &index);
+    DragLines GetDrawLine(const size_t &index);
     
     /**
      * \brief Get draw lines.
@@ -227,7 +227,7 @@ class DragWidget : public QWidget
      * \brief Erase the index drag lines.
      * \param index the index to remove
      */
-    void EraseDrawLines(const size_t &index);
+    void EraseDrawLine(const size_t &index);
 
     /**
      * \brief Set timer.
