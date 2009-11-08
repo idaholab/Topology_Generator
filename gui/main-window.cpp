@@ -60,7 +60,9 @@ MainWindow::MainWindow(const std::string &simulationName)
   menuSaveAs->setDisabled(true);
   QAction *menuSavePix = menuFichier->addAction("Save as picture");
   connect(menuSavePix, SIGNAL(triggered()), this, SLOT(SavePicture()));
-  /* menuSavePix->setDisabled(true); */
+  /* menuSavePix->setDisabled(true); */  
+  QAction *menuXml = menuFichier->addAction("Save as XML");
+  connect(menuXml, SIGNAL(triggered()), this, SLOT(SaveXml()));
 
   QAction *actionQuit = menuFichier->addAction("Quit");
   connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
@@ -75,8 +77,6 @@ MainWindow::MainWindow(const std::string &simulationName)
   connect(actionCpp, SIGNAL(triggered()), this, SLOT(GenerateCpp())); 
   QAction *actionPython = menuView->addAction("&Python");
   connect(actionPython, SIGNAL(triggered()), this, SLOT(GeneratePython()));
-  QAction *actionXml = menuView->addAction("&Xml");
-  connect(actionXml, SIGNAL(triggered()), this, SLOT(SaveXml()));
 
   QMenu *menuHelp = menuBar()->addMenu("&Help");
   QAction *menuOnlineHelp = menuHelp->addAction("Online Help");
@@ -396,10 +396,10 @@ void MainWindow::ValidLink()
     QMessageBox::about(this, "Error", "You don't have selected two equipement.");
     for(size_t i = 0; i < this->m_dw->GetDrawLines().size(); i++)
     {
-      if( (equi.at(0) == this->m_dw->GetNDrawLines(i).GetFirst() && equi.at(1) == this->m_dw->GetNDrawLines(i).GetSecond()) ||
-          (equi.at(1) == this->m_dw->GetNDrawLines(i).GetFirst() && equi.at(0) == this->m_dw->GetNDrawLines(i).GetSecond()) )
+      if( (equi.at(0) == this->m_dw->GetDrawLine(i).GetFirst() && equi.at(1) == this->m_dw->GetDrawLine(i).GetSecond()) ||
+          (equi.at(1) == this->m_dw->GetDrawLine(i).GetFirst() && equi.at(0) == this->m_dw->GetDrawLine(i).GetSecond()) )
       {
-        this->m_dw->EraseDrawLines(i);
+        this->m_dw->EraseDrawLine(i);
       }
     }
     this->m_dw->ResetSelected();
@@ -411,10 +411,10 @@ void MainWindow::ValidLink()
     QMessageBox::about(this, "Error", "You can't connect object to itself.");
     for(size_t i = 0; i < this->m_dw->GetDrawLines().size(); i++)
     {
-      if( (equi.at(0) == this->m_dw->GetNDrawLines(i).GetFirst() && equi.at(1) == this->m_dw->GetNDrawLines(i).GetSecond()) ||
-          (equi.at(1) == this->m_dw->GetNDrawLines(i).GetFirst() && equi.at(0) == this->m_dw->GetNDrawLines(i).GetSecond()) )
+      if( (equi.at(0) == this->m_dw->GetDrawLine(i).GetFirst() && equi.at(1) == this->m_dw->GetDrawLine(i).GetSecond()) ||
+          (equi.at(1) == this->m_dw->GetDrawLine(i).GetFirst() && equi.at(0) == this->m_dw->GetDrawLine(i).GetSecond()) )
       {
-        this->m_dw->EraseDrawLines(i);
+        this->m_dw->EraseDrawLine(i);
       }
     }
     this->m_dw->ResetSelected();
@@ -433,10 +433,10 @@ void MainWindow::ValidLink()
     QMessageBox::about(this, "Error", "This link can't be etablished. Please use a Pc or a Router.");
     for(size_t i = 0; i < this->m_dw->GetDrawLines().size(); i++)
     {
-      if( (equi.at(0) == this->m_dw->GetNDrawLines(i).GetFirst() && equi.at(1) == this->m_dw->GetNDrawLines(i).GetSecond()) ||
-          (equi.at(1) == this->m_dw->GetNDrawLines(i).GetFirst() && equi.at(0) == this->m_dw->GetNDrawLines(i).GetSecond()) )
+      if( (equi.at(0) == this->m_dw->GetDrawLine(i).GetFirst() && equi.at(1) == this->m_dw->GetDrawLine(i).GetSecond()) ||
+          (equi.at(1) == this->m_dw->GetDrawLine(i).GetFirst() && equi.at(0) == this->m_dw->GetDrawLine(i).GetSecond()) )
       {
-        this->m_dw->EraseDrawLines(i);
+        this->m_dw->EraseDrawLine(i);
       }
     }
     this->m_dw->ResetSelected();
@@ -518,9 +518,9 @@ void MainWindow::ValidLink()
         /* delete the two equi .... */
         for(size_t i = 0; i < this->m_dw->GetDrawLines().size(); i++)
         {
-          if(equi.at(0) == this->m_dw->GetNDrawLines(i).GetFirst() || equi.at(1) == this->m_dw->GetNDrawLines(i).GetFirst() )
+          if(equi.at(0) == this->m_dw->GetDrawLine(i).GetFirst() || equi.at(1) == this->m_dw->GetDrawLine(i).GetFirst() )
           {
-            this->m_dw->EraseDrawLines(i);
+            this->m_dw->EraseDrawLine(i);
           }
         }
       }
@@ -528,7 +528,7 @@ void MainWindow::ValidLink()
   }
 
   /* Draw the connection. */
-  this->m_dw->DrawLine();
+  this->m_dw->DrawLines();
   this->m_dw->ResetSelected();
 }
 
@@ -601,10 +601,10 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
     QMessageBox::about(this, "Error", "This link doesn't exist.");
     for(size_t i = 0; i < this->m_dw->GetDrawLines().size(); i++)
     {
-      if( (nodeName == this->m_dw->GetNDrawLines(i).GetFirst() && this->m_gen->GetLink(linkNumber)->GetLinkName() == this->m_dw->GetNDrawLines(i).GetSecond()) ||
-          (this->m_gen->GetLink(linkNumber)->GetLinkName() == this->m_dw->GetNDrawLines(i).GetFirst() && nodeName == this->m_dw->GetNDrawLines(i).GetSecond()) )
+      if( (nodeName == this->m_dw->GetDrawLine(i).GetFirst() && this->m_gen->GetLink(linkNumber)->GetLinkName() == this->m_dw->GetDrawLine(i).GetSecond()) ||
+          (this->m_gen->GetLink(linkNumber)->GetLinkName() == this->m_dw->GetDrawLine(i).GetFirst() && nodeName == this->m_dw->GetDrawLine(i).GetSecond()) )
       {
-        this->m_dw->EraseDrawLines(i);
+        this->m_dw->EraseDrawLine(i);
       }
     }
     return;
@@ -644,10 +644,10 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
     QMessageBox::about(this, "Error", "Limit of machines exceeded.");
     for(size_t i = 0; i < this->m_dw->GetDrawLines().size(); i++)
     {
-      if( (nodeName == this->m_dw->GetNDrawLines(i).GetFirst() && this->m_gen->GetLink(linkNumber)->GetLinkName() == this->m_dw->GetNDrawLines(i).GetSecond()) ||
-          (this->m_gen->GetLink(linkNumber)->GetLinkName() == this->m_dw->GetNDrawLines(i).GetFirst() && nodeName == this->m_dw->GetNDrawLines(i).GetSecond()) )
+      if( (nodeName == this->m_dw->GetDrawLine(i).GetFirst() && this->m_gen->GetLink(linkNumber)->GetLinkName() == this->m_dw->GetDrawLine(i).GetSecond()) ||
+          (this->m_gen->GetLink(linkNumber)->GetLinkName() == this->m_dw->GetDrawLine(i).GetFirst() && nodeName == this->m_dw->GetDrawLine(i).GetSecond()) )
       {
-        this->m_dw->EraseDrawLines(i);
+        this->m_dw->EraseDrawLine(i);
       }
     }
     return;
@@ -826,12 +826,12 @@ void MainWindow::AddIfaceList(const std::string &str)
   this->m_listIface.push_back(str);
 }
 
-std::vector<std::string> MainWindow::GetIfaceList()
+std::vector<std::string> MainWindow::GetIfaceLists()
 {
   return this->m_listIface;
 }
 
-std::string MainWindow::GetNIfaceList(const size_t &index)
+std::string MainWindow::GetIfaceList(const size_t &index)
 {
   return this->m_listIface.at(index);
 }
@@ -844,7 +844,7 @@ void MainWindow::EraseIfaceList(const size_t &index)
 void MainWindow::SaveXml()
 {
   QString fileName = "";
-  QFileDialog dlg(this, tr("Save image"));
+  QFileDialog dlg(this, tr("Save XML"));
 
   dlg.setFileMode(QFileDialog::AnyFile);
  
@@ -947,10 +947,10 @@ void MainWindow::SaveXml()
     {
       writer.writeTextElement("tracePromisc", "false");
     } 
-    writer.writeStartElement("installedNodes");  
+    writer.writeStartElement("connectedNodes");  
     for(size_t j = 0; j < this->m_gen->GetLink(i)->GetInstalledNodes().size(); j++)
     {
-      writer.writeTextElement("name", QString((this->m_gen->GetLink(i)->GetNInstalledNodes(j)).c_str()));
+      writer.writeTextElement("name", QString((this->m_gen->GetLink(i)->GetInstalledNode(j)).c_str()));
     }
     writer.writeEndElement();
     

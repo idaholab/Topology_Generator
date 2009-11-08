@@ -259,13 +259,13 @@ class Link
      * \brief Get n node.
      * \param i index from Get node
      */
-    std::string GetNInstalledNodes(const size_t &i);
+    std::string GetInstalledNode(const size_t &i);
 
     /**
      * \brief Remove installed selected node.
      * \param nb remove node index
      */
-    void removeInstalledNodes(const size_t &nb);
+    void removeInstalledNode(const size_t &nb);
 
     /**
      * \brief Set link rate.

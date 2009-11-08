@@ -366,7 +366,7 @@ void DragWidget::DeleteSelected()
         objDelLink.push_back(this->m_mw->GetGenerator()->GetLink(i)->GetLinkName());
         try
         {
-          this->m_mw->GetGenerator()->GetLink(i)->removeInstalledNodes(j);
+          this->m_mw->GetGenerator()->GetLink(i)->removeInstalledNode(j);
         }
         catch(const std::out_of_range &e)
         {
@@ -499,7 +499,7 @@ std::vector<std::string> DragWidget::GetLastSelected()
   return res;
 }
 
-void DragWidget::DrawLine()
+void DragWidget::DrawLines()
 {
   update();
 }
@@ -1074,7 +1074,7 @@ std::string DragWidget::GetLinkEnd()
   return this->m_linkEnd;
 }
 
-void DragWidget::SetDragLines(const DragLines &lines)
+void DragWidget::SetDragLine(const DragLines &lines)
 {
   this->m_lines = lines;
 }
@@ -1084,12 +1084,12 @@ DragLines DragWidget::GetDragLines()
   return this->m_lines;
 }
 
-void DragWidget::AddDrawLines(const DragLines &dl)
+void DragWidget::AddDrawLine(const DragLines &dl)
 {
   this->m_drawLines.push_back(dl);
 }
 
-DragLines DragWidget::GetNDrawLines(const size_t &index)
+DragLines DragWidget::GetDrawLine(const size_t &index)
 {
   return this->m_drawLines.at(index);
 }
@@ -1099,7 +1099,7 @@ std::vector<DragLines> DragWidget::GetDrawLines()
   return this->m_drawLines;
 }
 
-void DragWidget::EraseDrawLines(const size_t &index)
+void DragWidget::EraseDrawLine(const size_t &index)
 {
   this->m_drawLines.erase(this->m_drawLines.begin() + index);
 }

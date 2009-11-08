@@ -123,14 +123,14 @@ class MainWindow : public QMainWindow
      * \brief Get the iface list.
      * \return iface list
      */
-    std::vector<std::string> GetIfaceList();
+    std::vector<std::string> GetIfaceLists();
     
     /**
      * \brief Get the N element from the iface list.
      * \param index the n element index
      * \return the n element
      */
-    std::string GetNIfaceList(const size_t &index);
+    std::string GetIfaceList(const size_t &index);
 
     /**
      * \brief Erase the N element from iface list.
