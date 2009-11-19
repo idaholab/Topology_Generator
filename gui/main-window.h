@@ -57,7 +57,7 @@ class MainWindow : public QMainWindow
     /**
      * \brief Valid links.
      */
-    void ValidLink();
+    void ValidNetworkHardware();
 
     /**
      * \brief Valid applications install.
@@ -209,17 +209,17 @@ class MainWindow : public QMainWindow
     /**
      * \brief Create a wired link from equipement to equipement.
      */
-    void CreateWiredLink();
+    void CreateWiredNetworkHardware();
 
     /**
      * \brief Create a link from station to AP.
      */
-    void CreateStationLink();
+    void CreateStationNetworkHardware();
 
     /**
      * \brief Procedure to create a p2p link from equipement to equipement.
      */
-    void CreateP2pLink();
+    void CreateP2pNetworkHardware();
 
     /**
      * \brief Procedure called by the tool bar to delete an object.

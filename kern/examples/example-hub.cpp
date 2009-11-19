@@ -42,16 +42,16 @@ int main(int argc, char *argv[])
   gen->AddNode("Pc");
   gen->AddNode("Pc"); 
 
-  /* Add the Link (csma) */
-  gen->AddLink("Hub"); 
+  /* Add the NetworkHardware (csma) */
+  gen->AddNetworkHardware("Hub"); 
   /* Add equipement to te link */
-  gen->GetLink(0)->Install(gen->GetNode(0)->GetNodeName());
-  gen->GetLink(0)->Install(gen->GetNode(1)->GetNodeName());
+  gen->GetNetworkHardware(0)->Install(gen->GetNode(0)->GetNodeName());
+  gen->GetNetworkHardware(0)->Install(gen->GetNode(1)->GetNodeName());
   /* Enable trace... */
-  gen->GetLink(0)->SetTrace(true);
+  gen->GetNetworkHardware(0)->SetTrace(true);
   /* Set link rate and delay. */
-  gen->GetLink(0)->SetDataRate(std::string("10000000"));
-  gen->GetLink(0)->SetLinkDelay(std::string("1000"));
+  gen->GetNetworkHardware(0)->SetDataRate(std::string("10000000"));
+  gen->GetNetworkHardware(0)->SetNetworkHardwareDelay(std::string("1000"));
 
   /* Add Ping application from pc to pc. */
   gen->AddApplication("Ping", gen->GetNode(0)->GetNodeName(), gen->GetNode(1)->GetNodeName(), 0, 5);// 0 start time - 5 end time

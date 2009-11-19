@@ -46,11 +46,11 @@ DragWidget::DragWidget(QWidget *parent) : QWidget(parent)
   setAcceptDrops(true);
   setMouseTracking(true);
 
-  this->m_traceLink = false;
+  this->m_traceNetworkHardware = false;
 
-  this->m_linkBegin = "";
-  this->m_linkEnd = "";
-  this->m_linkType = "";
+  this->m_networkHardwareBegin = "";
+  this->m_networkHardwareEnd = "";
+  this->m_networkHardwareType = "";
 
   this->m_appsEnable = false;
   this->m_appsPing = false;
@@ -80,42 +80,44 @@ void DragWidget::CreateObject(const std::string &type, const std::string &name)
   std::string new_toolTip = this->UpdateToolTip(name);
   label->SetToolTipText(QString(new_toolTip.c_str()));
   label->setToolTip(QString(new_toolTip.c_str()));
+
   if(type == "Pc")
   {
     label->setPixmap(QPixmap(":/Ico/Pc.png"));
-  } 
-  if(type == "Pc-group")
+  }
+  else if(type == "Pc-group")
   {
     label->setPixmap(QPixmap(":/Ico/Pc-group.png"));
-  } 
+  }
   else if(type == "Emu")
   {
     label->setPixmap(QPixmap(":/Ico/Emu.png"));
-  } 
+  }
   else if(type == "Tap")
   {
     label->setPixmap(QPixmap(":/Ico/Tap.png"));
-  } 
+  }
   else if(type == "Ap")
   {
     label->setPixmap(QPixmap(":/Ico/Ap-Wifi.png"));
-  } 
+  }
   else if(type == "Station")
   {
     label->setPixmap(QPixmap(":/Ico/StationWifi.png"));
-  } 
+  }
   else if(type == "Hub")
   {
     label->setPixmap(QPixmap(":/Ico/Hub.png"));
-  } 
+  }
   else if(type == "Switch")
   {
     label->setPixmap(QPixmap(":/Ico/Switch.png"));
-  } 
+  }
   else if(type == "Router")
   {
     label->setPixmap(QPixmap(":/Ico/Router.png"));
-  }
+  } 
+  
   label->move(10, 10);
   label->show();
   label->setAttribute(Qt::WA_DeleteOnClose);
@@ -123,7 +125,6 @@ void DragWidget::CreateObject(const std::string &type, const std::string &name)
   this->m_timer = new QTimer();
   this->m_timer->start(100);
   connect(this->m_timer, SIGNAL(timeout()), this, SLOT(update()));
-
 }
 
 void DragWidget::dragEnterEvent(QDragEnterEvent *event)
@@ -157,8 +158,6 @@ void DragWidget::dropEvent(QDropEvent *event)
     QPoint offset;
     dataStream >> pixmap >> offset;
 
-    /* get the name from the last draged label */
-    /* change the at number ... we are already on drag an elem. */
     DragObject *child = static_cast<DragObject*>(childAt( this->m_lastPosition ));
     DragObject *label = new DragObject(this);
     if(child)
@@ -201,45 +200,35 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
   }
   if(child->GetName() == "deleted")
   {
-    /* the child has been deleted ... */
     return;
   }
   this->m_mw->GetDelQAction()->setDisabled(false);
 
   this->m_lastPosition = event->pos();
 
-  /* trace link ... */
+  /* draw lines */
   DragObject *child2 = NULL;
-  if(this->m_traceLink)
+  if(this->m_traceNetworkHardware)
   {
-    /* update if we drag an existant object. */
-
-    /*il faut utiliser les noms des objects et non pas les positions ... les positions chanGetGenerator()t quand on drag et du coup après ont peut
-      plus cast pour recup le child 
-      ....*/
-
-    /* set the attribute. */
-    if(this->m_linkBegin == "")
+    if(this->m_networkHardwareBegin == "")
     {
-      /* begin is not used. */
-      this->m_linkBegin = child->GetName();
+      this->m_networkHardwareBegin = child->GetName();
     }
-    else if(this->m_linkEnd == "")
+    else if(this->m_networkHardwareEnd == "")
     {
-      /* we got the last equipement. */
-      child2 = this->GetChildFromName(this->m_linkBegin);
+      child2 = this->GetChildFromName(this->m_networkHardwareBegin);
       if(child2)
       {
         if( child->GetName() != child2->GetName())
         {
-          this->m_linkEnd = child->GetName();
+          this->m_networkHardwareEnd = child->GetName();
           DragLines lig;
-          lig.SetFirst(this->m_linkBegin);
-          lig.SetSecond(this->m_linkEnd);
-          lig.SetLinkType(this->m_linkType);
+          lig.SetFirst(this->m_networkHardwareBegin);
+          lig.SetSecond(this->m_networkHardwareEnd);
+          lig.SetNetworkHardwareType(this->m_networkHardwareType);
           this->m_drawLines.push_back(lig);
 
-          this->m_mw->ValidLink();
+          this->m_mw->ValidNetworkHardware();
         }
       }
     }
@@ -318,7 +307,6 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
     child2->SetToolTipText(QString(new_tooltip.c_str()));
     child2->setToolTip(QString(new_tooltip.c_str()));
   }
-  //~ this->m_appsEnable = false;
 }
 
 void DragWidget::mouseMoveEvent(QMouseEvent * /*event*/)
@@ -345,28 +333,27 @@ void DragWidget::DeleteSelected()
   {}
 
   /* delete link. */
-  /* Attention, if you delete a Link wich need a Node, you must delete it ! */
   try
   {
-    this->m_mw->GetGenerator()->RemoveLink(child->GetName());
+    this->m_mw->GetGenerator()->RemoveNetworkHardware(child->GetName());
   }
   catch(const std::exception)
   {}
 
   /* delete connections */
   std::vector<std::string> objDelLink;
-  for(size_t i = 0; i < this->m_mw->GetGenerator()->GetNLinks(); i++)
+  for(size_t i = 0; i < this->m_mw->GetGenerator()->GetNNetworkHardwares(); i++)
   {
-    std::vector<std::string> nodes = this->m_mw->GetGenerator()->GetLink(i)->GetInstalledNodes();
+    std::vector<std::string> nodes = this->m_mw->GetGenerator()->GetNetworkHardware(i)->GetInstalledNodes();
     for(size_t j = 0; j < nodes.size(); j++)
     {
       /* if the child to be deleted is connected ... we must remove it. */
       if(child->GetName() == nodes.at(j))
       {
-        objDelLink.push_back(this->m_mw->GetGenerator()->GetLink(i)->GetLinkName());
+        objDelLink.push_back(this->m_mw->GetGenerator()->GetNetworkHardware(i)->GetNetworkHardwareName());
         try
         {
-          this->m_mw->GetGenerator()->GetLink(i)->removeInstalledNode(j);
+          this->m_mw->GetGenerator()->GetNetworkHardware(i)->removeInstalledNode(j);
         }
         catch(const std::out_of_range &e)
         {
@@ -376,15 +363,15 @@ void DragWidget::DeleteSelected()
     }
   }
 
-  /* delete hide create hub for until two Pc for example. */
+  /* delete hide hub for until two Pc for example. */
   bool isHide = true;
   for(size_t i = 0; i < objDelLink.size(); i++)
   {
-    for(size_t j = 0; j < this->m_mw->GetGenerator()->GetNLinks(); j++)
+    for(size_t j = 0; j < this->m_mw->GetGenerator()->GetNNetworkHardwares(); j++)
     {
-      if( objDelLink.at(i) == this->m_mw->GetGenerator()->GetLink(j)->GetLinkName() )
+      if( objDelLink.at(i) == this->m_mw->GetGenerator()->GetNetworkHardware(j)->GetNetworkHardwareName() )
       {
-        if(this->m_mw->GetGenerator()->GetLink(j)->GetInstalledNodes().size() <= 1)
+        if(this->m_mw->GetGenerator()->GetNetworkHardware(j)->GetInstalledNodes().size() <= 1)
         {
           // the link where the deleted object 
           // check if the link is hide. 
@@ -393,7 +380,7 @@ void DragWidget::DeleteSelected()
           {
             if(dynamic_cast<DragObject*>((this->children().at(k))))
             {
-              if( dynamic_cast<DragObject*>((this->children().at(k)))->GetName() == this->m_mw->GetGenerator()->GetLink(j)->GetLinkName())
+              if( dynamic_cast<DragObject*>((this->children().at(k)))->GetName() == this->m_mw->GetGenerator()->GetNetworkHardware(j)->GetNetworkHardwareName())
               {
                 isHide = false;
               }
@@ -401,7 +388,7 @@ void DragWidget::DeleteSelected()
           }
           if(isHide)
           {
-            this->m_mw->GetGenerator()->RemoveLink(this->m_mw->GetGenerator()->GetLink(j)->GetLinkName());
+            this->m_mw->GetGenerator()->RemoveNetworkHardware(this->m_mw->GetGenerator()->GetNetworkHardware(j)->GetNetworkHardwareName());
           }
         }
       }
@@ -409,13 +396,13 @@ void DragWidget::DeleteSelected()
   }
 
   /* remove from link part ... */
-  if(child->GetName() == this->GetChildFromName(this->m_linkBegin)->GetName())
+  if(child->GetName() == this->GetChildFromName(this->m_networkHardwareBegin)->GetName())
   {
-    this->m_linkBegin = "";
+    this->m_networkHardwareBegin = "";
   }
-  if(child->GetName() == this->GetChildFromName(this->m_linkEnd)->GetName())
+  if(child->GetName() == this->GetChildFromName(this->m_networkHardwareEnd)->GetName())
   {
-    this->m_linkEnd = "";
+    this->m_networkHardwareEnd = "";
   }
   for(size_t i = 0; i < this->m_drawLines.size(); i++)
   {
@@ -474,8 +461,8 @@ void DragWidget::DeleteSelected()
 std::vector<std::string> DragWidget::GetLastSelected()
 {
   std::vector<std::string> res;
-  DragObject *child = this->GetChildFromName(this->m_linkBegin);
-  DragObject *child2 = this->GetChildFromName(this->m_linkEnd);
+  DragObject *child = this->GetChildFromName(this->m_networkHardwareBegin);
+  DragObject *child2 = this->GetChildFromName(this->m_networkHardwareEnd);
   if (child)
   {
     res.push_back(child->GetName());
@@ -494,7 +481,7 @@ std::vector<std::string> DragWidget::GetLastSelected()
     res.push_back("");
   }
 
-  res.push_back(this->m_linkType);
+  res.push_back(this->m_networkHardwareType);
 
   return res;
 }
@@ -506,9 +493,9 @@ void DragWidget::DrawLines()
 
 void DragWidget::ResetSelected()
 {
-  this->m_linkBegin = "";
-  this->m_linkEnd = "";
-  this->m_linkType = "";
+  this->m_networkHardwareBegin = "";
+  this->m_networkHardwareEnd = "";
+  this->m_networkHardwareType = "";
 }
 
 void DragWidget::paintEvent(QPaintEvent * /*event*/)
@@ -534,7 +521,7 @@ void DragWidget::paintEvent(QPaintEvent * /*event*/)
   {
     if(this->GetChildFromName(this->m_drawLines.at(i).GetFirst())->GetName() != "" && this->GetChildFromName(this->m_drawLines.at(i).GetSecond())->GetName() != "")
     {
-      std::string type = this->m_drawLines.at(i).GetLinkType();
+      std::string type = this->m_drawLines.at(i).GetNetworkHardwareType();
 
       if(type == "WiredLink")
       {
@@ -554,24 +541,24 @@ void DragWidget::paintEvent(QPaintEvent * /*event*/)
                      (end->pos().x() + (end->width() / 2)), (end->pos().y() + (end->height() / 2)));
     }
   }
-  if(this->m_traceLink)
+  if(this->m_traceNetworkHardware)
   {
-    if(this->m_linkBegin != "" && this->m_linkEnd == "")
+    if(this->m_networkHardwareBegin != "" && this->m_networkHardwareEnd == "")
     {
-      if(this->m_linkType == "WiredLink")
+      if(this->m_networkHardwareType == "WiredLink")
       {
         paint.setPen(pen);
       }
-      else if(this->m_linkType == "WifiLink")
+      else if(this->m_networkHardwareType == "WifiLink")
       {
         paint.setPen(point);
       }
-      else if(this->m_linkType == "P2pLink")
+      else if(this->m_networkHardwareType == "P2pLink")
       {
         paint.setPen(p2p);
       }
-      paint.drawLine((this->GetChildFromName(this->m_linkBegin))->pos().x() + ((this->GetChildFromName(this->m_linkBegin))->width() / 2),
-          (this->GetChildFromName(this->m_linkBegin))->pos().y() + ((this->GetChildFromName(this->m_linkBegin))->height() / 2),
+      paint.drawLine((this->GetChildFromName(this->m_networkHardwareBegin))->pos().x() + ((this->GetChildFromName(this->m_networkHardwareBegin))->width() / 2),
+          (this->GetChildFromName(this->m_networkHardwareBegin))->pos().y() + ((this->GetChildFromName(this->m_networkHardwareBegin))->height() / 2),
           mapFromGlobal(QCursor::pos()).x(),  mapFromGlobal(QCursor::pos()).y());
     }
   }
@@ -587,7 +574,6 @@ DragObject* DragWidget::GetChildFromName(const std::string &name)
     {
       if( child->GetName() == name)
       {
-        /* we got the right child ... */
         return child;
       }
     }
@@ -1019,14 +1005,14 @@ void DragWidget::ShowGuiTcp()
   }
 }
 
-void DragWidget::SetLinkType(const std::string& linkType)
+void DragWidget::SetNetworkHardwareType(const std::string& linkType)
 {
-  this->m_linkType = linkType;
+  this->m_networkHardwareType = linkType;
 }
 
-std::string DragWidget::GetLinkType() const
+std::string DragWidget::GetNetworkHardwareType() const
 {
-  return this->m_linkType;
+  return this->m_networkHardwareType;
 }
 
 void DragWidget::SetLastPosition(const QPoint &pos)
@@ -1039,14 +1025,14 @@ QPoint DragWidget::GetLastPosition()
   return this->m_lastPosition;
 }
 
-void DragWidget::SetLinkBegin(const std::string &linkBegin)
+void DragWidget::SetNetworkHardwareBegin(const std::string &linkBegin)
 {
-  this->m_linkBegin = linkBegin;
+  this->m_networkHardwareBegin = linkBegin;
 }
 
-std::string DragWidget::GetLinkBegin()
+std::string DragWidget::GetNetworkHardwareBegin()
 {
-  return this->m_linkBegin;
+  return this->m_networkHardwareBegin;
 }
 
 MainWindow* DragWidget::GetMainWindow()
@@ -1054,24 +1040,24 @@ MainWindow* DragWidget::GetMainWindow()
   return m_mw;
 }
 
-void DragWidget::SetTraceLink(const bool &state)
+void DragWidget::SetTraceNetworkHardware(const bool &state)
 {
-  this->m_traceLink = state;
+  this->m_traceNetworkHardware = state;
 }
 
-bool DragWidget::GetTraceLink()
+bool DragWidget::GetTraceNetworkHardware()
 {
-  return this->m_traceLink;
+  return this->m_traceNetworkHardware;
 }
 
-void DragWidget::SetLinkEnd(const std::string &link)
+void DragWidget::SetNetworkHardwareEnd(const std::string &link)
 {
-  this->m_linkEnd = link;
+  this->m_networkHardwareEnd = link;
 }
 
-std::string DragWidget::GetLinkEnd()
+std::string DragWidget::GetNetworkHardwareEnd()
 {
-  return this->m_linkEnd;
+  return this->m_networkHardwareEnd;
 }
 
 void DragWidget::SetDragLine(const DragLines &lines)
@@ -1219,21 +1205,21 @@ std::string DragWidget::UpdateToolTip(const std::string &childName)
   std::string  new_tooltip = childName;
   std::vector<std::string> connectedTo;
   bool isConnected = false;
-  for(size_t i = 0; i < this->m_mw->GetGenerator()->GetNLinks(); i++)
+  for(size_t i = 0; i < this->m_mw->GetGenerator()->GetNNetworkHardwares(); i++)
   {
-    for(size_t j = 0; j < this->m_mw->GetGenerator()->GetLink(i)->GetInstalledNodes().size(); j++)
+    for(size_t j = 0; j < this->m_mw->GetGenerator()->GetNetworkHardware(i)->GetInstalledNodes().size(); j++)
     {
-      if( this->m_mw->GetGenerator()->GetLink(i)->GetInstalledNodes().at(j) == childName )
+      if( this->m_mw->GetGenerator()->GetNetworkHardware(i)->GetInstalledNodes().at(j) == childName )
       {
         std::string iface("");
         isConnected = true;
-        if(this->m_mw->GetGenerator()->GetLink(i)->GetLinkName().find("emu_") == 0) 
+        if(this->m_mw->GetGenerator()->GetNetworkHardware(i)->GetNetworkHardwareName().find("emu_") == 0) 
         {
-          iface = " (" + dynamic_cast<Emu*>(this->m_mw->GetGenerator()->GetLink(i))->GetIfaceName() + ")";
+          iface = " (" + dynamic_cast<Emu*>(this->m_mw->GetGenerator()->GetNetworkHardware(i))->GetIfaceName() + ")";
         }
-        else if( this->m_mw->GetGenerator()->GetLink(i)->GetLinkName().find("tap_") == 0)
+        else if( this->m_mw->GetGenerator()->GetNetworkHardware(i)->GetNetworkHardwareName().find("tap_") == 0)
         {
-          iface = " (" + dynamic_cast<Tap*>(this->m_mw->GetGenerator()->GetLink(i))->GetIfaceName() + ")";
+          iface = " (" + dynamic_cast<Tap*>(this->m_mw->GetGenerator()->GetNetworkHardware(i))->GetIfaceName() + ")";
         }
         
         connectedTo.push_back("10.0." + utils::integerToString(i) + "." + utils::integerToString(j + 1) + iface);

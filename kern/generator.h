@@ -29,7 +29,7 @@
 #define GENERATOR_H
 
 #include "node.h"
-#include "link.h"
+#include "network-hardware.h"
 #include "application.h"
 
 
@@ -52,7 +52,7 @@
  *    - add nodes,
  *      gen->AddNode(std::string("Pc"));// or router, wifi station, ...
  *    - add links,
- *      gen->AddLink(std::string("Hub"));// or ap, bridge, ....
+ *      gen->AddNetworkHardware(std::string("Hub"));// or ap, bridge, ....
  *    - connect nodes to link,
  *      gen->(link)->Install(Node name);
  *    - add applications,
@@ -178,7 +178,7 @@ class Generator
      * 
      * \param type type of the link. (point-to-point, csma,...)
      */
-    void AddLink(const std::string &type);
+    void AddNetworkHardware(const std::string &type);
 
     /**
      * \brief Add link and his linkNode.
@@ -188,7 +188,7 @@ class Generator
      * \param type link type
      * \param linkNode node name
      */
-    void AddLink(const std::string &type, const std::string &linkNode);
+    void AddNetworkHardware(const std::string &type, const std::string &linkNode);
 
     /**
      * \brief Add link with her linkNode and ifaceName.
@@ -197,32 +197,32 @@ class Generator
      * \param linkNode node name
      * \param ifaceName iface name
      */
-    void AddLink(const std::string &type, const std::string &linkNode, const std::string &ifaceName);
+    void AddNetworkHardware(const std::string &type, const std::string &linkNode, const std::string &ifaceName);
 
     /**
      * \brief Remove an link element.
      * \param name link name to remove
      */
-    void RemoveLink(const std::string &name);
+    void RemoveNetworkHardware(const std::string &name);
 
     /**
      * \brief Remove an link element.
      * \param index index of the link to remove
      */
-    void RemoveLink(const size_t index);
+    void RemoveNetworkHardware(const size_t index);
 
     /**
      * \brief Get link at specified index.
      * \param index index
      * \return link pointer
      */
-    Link* GetLink(const size_t index);
+    NetworkHardware* GetNetworkHardware(const size_t index);
 
     /**
      * \brief Get number of links.
      * \return number of links
      */
-    size_t GetNLinks() const;
+    size_t GetNNetworkHardwares() const;
 
     /**
      * \brief Generate ns-3 C++ code.
@@ -305,7 +305,7 @@ class Generator
      * 
      * This attribute is the list of the created instance of link.
      */
-    std::vector<Link*> m_listLink;
+    std::vector<NetworkHardware*> m_listNetworkHardware;
 
     /**
      * \brief Number attribute of ping application created.
@@ -325,32 +325,32 @@ class Generator
     /**
      * \brief Number attribute of ap link created.
      */
-    size_t m_indiceLinkAp;
+    size_t m_indiceNetworkHardwareAp;
 
     /**
      * \brief Number attribute of emu link created.
      */
-    size_t m_indiceLinkEmu;
+    size_t m_indiceNetworkHardwareEmu;
 
     /**
      * \brief Number attribute of point-to-point link created.
      */
-    size_t m_indiceLinkPointToPoint;
+    size_t m_indiceNetworkHardwarePointToPoint;
 
     /**
      * \brief Number attribute of tap link created.
      */
-    size_t m_indiceLinkTap;
+    size_t m_indiceNetworkHardwareTap;
 
     /**
      * \brief Number attribute of hub link created.
      */
-    size_t m_indiceLinkHub;
+    size_t m_indiceNetworkHardwareHub;
 
     /**
      * \brief Number attribute of bridge link created.
      */
-    size_t m_indiceLinkBridge; 
+    size_t m_indiceNetworkHardwareBridge; 
 
     //
     // C++ code generation operation part
@@ -395,7 +395,7 @@ class Generator
      * \brief Generate link C++ code.
      * \return link code
      */
-    std::vector<std::string> GenerateLinkCpp();
+    std::vector<std::string> GenerateNetworkHardwareCpp();
 
     /**
      * \brief Generate net device C++ code.
@@ -474,7 +474,7 @@ class Generator
      * \brief Generate link python code.
      * \return link code
      */
-    std::vector<std::string> GenerateLinkPython();
+    std::vector<std::string> GenerateNetworkHardwarePython();
 
     /**
      * \brief Generate net device python code.

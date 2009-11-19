@@ -27,14 +27,14 @@
 
 #include "emu.h"
 
-Emu::Emu(const size_t &indice, const std::string &emuNode, const std::string &ifaceName) : Link(indice)
+Emu::Emu(const size_t &indice, const std::string &emuNode, const std::string &ifaceName) : NetworkHardware(indice)
 {
   this->Install(emuNode);
   this->m_emuNode = emuNode;
   this->m_ifaceName = ifaceName;
-  this->SetLinkName(std::string("emu_" + this->GetIndice()));
-  this->SetNdcName(std::string("ndc_" + this->GetLinkName()));
-  this->SetAllNodeContainer(std::string("all_" + this->GetLinkName()));
+  this->SetNetworkHardwareName(std::string("emu_" + this->GetIndice()));
+  this->SetNdcName(std::string("ndc_" + this->GetNetworkHardwareName()));
+  this->SetAllNodeContainer(std::string("all_" + this->GetNetworkHardwareName()));
 }
 
 Emu::~Emu()
@@ -70,11 +70,11 @@ std::vector<std::string> Emu::GenerateHeader()
   return headers;
 }
 
-std::vector<std::string> Emu::GenerateLinkCpp()
+std::vector<std::string> Emu::GenerateNetworkHardwareCpp()
 {
   std::vector<std::string> generatedLink;
-  generatedLink.push_back("EmuHelper " + this->GetLinkName() + ";");
-  generatedLink.push_back(this->GetLinkName() + ".SetAttribute (\"DeviceName\", StringValue (emuDevice_" + this->GetLinkName() + "));");
+  generatedLink.push_back("EmuHelper " + this->GetNetworkHardwareName() + ";");
+  generatedLink.push_back(this->GetNetworkHardwareName() + ".SetAttribute (\"DeviceName\", StringValue (emuDevice_" + this->GetNetworkHardwareName() + "));");
 
   return generatedLink;
 }
@@ -87,7 +87,7 @@ std::vector<std::string> Emu::GenerateNetDeviceCpp()
   {
     ndc.push_back(allNodes.at(i));
   }
-  ndc.push_back("NetDeviceContainer " + this->GetNdcName() + " = " + this->GetLinkName() + ".Install (" + this->GetAllNodeContainer() + ");");
+  ndc.push_back("NetDeviceContainer " + this->GetNdcName() + " = " + this->GetNetworkHardwareName() + ".Install (" + this->GetAllNodeContainer() + ");");
 
   return ndc;
 }
@@ -95,14 +95,14 @@ std::vector<std::string> Emu::GenerateNetDeviceCpp()
 std::vector<std::string> Emu::GenerateVarsCpp()
 {
   std::vector<std::string> vars;
-  vars.push_back("std::string emuDevice_" + this->GetLinkName() + " = \"" + this->GetIfaceName() + "\";");
+  vars.push_back("std::string emuDevice_" + this->GetNetworkHardwareName() + " = \"" + this->GetIfaceName() + "\";");
   return vars;
 }
 
 std::vector<std::string> Emu::GenerateCmdLineCpp()
 {
   std::vector<std::string> cmdLine;
-  cmdLine.push_back("cmd.AddValue(\"deviceName_" + this->GetLinkName() + "\", \"device name\", emuDevice_" + this->GetLinkName() + ");");
+  cmdLine.push_back("cmd.AddValue(\"deviceName_" + this->GetNetworkHardwareName() + "\", \"device name\", emuDevice_" + this->GetNetworkHardwareName() + ");");
   return cmdLine;
 }
 
@@ -114,22 +114,22 @@ std::vector<std::string> Emu::GenerateTraceCpp()
   {
     if(this->GetPromisc())
     {
-      trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->GetLinkName() + "\",\"" + this->m_ifaceName + "\", true);");
+      trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->GetNetworkHardwareName() + "\",\"" + this->m_ifaceName + "\", true);");
     }
     else
     {
-      trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->GetLinkName() + "\",\"" + this->m_ifaceName + "\", false);");
+      trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->GetNetworkHardwareName() + "\",\"" + this->m_ifaceName + "\", false);");
     }
   }
 
   return trace;
 }
 
-std::vector<std::string> Emu::GenerateLinkPython()
+std::vector<std::string> Emu::GenerateNetworkHardwarePython()
 {
   std::vector<std::string> generatedLink;
-  generatedLink.push_back(this->GetLinkName() + " = ns3.EmuHelper()");
-  generatedLink.push_back(this->GetLinkName() + ".SetAttribute (\"DeviceName\", StringValue (emuDevice_" + this->GetLinkName() + "))");
+  generatedLink.push_back(this->GetNetworkHardwareName() + " = ns3.EmuHelper()");
+  generatedLink.push_back(this->GetNetworkHardwareName() + ".SetAttribute (\"DeviceName\", StringValue (emuDevice_" + this->GetNetworkHardwareName() + "))");
 
   return generatedLink;
 }
@@ -142,7 +142,7 @@ std::vector<std::string> Emu::GenerateNetDevicePython()
   {
     ndc.push_back(allNodes.at(i));
   }
-  ndc.push_back(this->GetNdcName() + " = " + this->GetLinkName() + ".Install (" + this->GetAllNodeContainer() + ")");
+  ndc.push_back(this->GetNdcName() + " = " + this->GetNetworkHardwareName() + ".Install (" + this->GetAllNodeContainer() + ")");
 
   return ndc;
 }
@@ -150,14 +150,14 @@ std::vector<std::string> Emu::GenerateNetDevicePython()
 std::vector<std::string> Emu::GenerateVarsPython()
 {
   std::vector<std::string> vars;
-  vars.push_back("emuDevice_" + this->GetLinkName() + " = \"" + this->m_ifaceName + "\"");
+  vars.push_back("emuDevice_" + this->GetNetworkHardwareName() + " = \"" + this->m_ifaceName + "\"");
   return vars;
 }
 
 std::vector<std::string> Emu::GenerateCmdLinePython()
 {
   std::vector<std::string> cmdLine;
-  cmdLine.push_back("cmd.AddValue(\"deviceName_" + this->GetLinkName() + "\", \"device name\", emuDevice_" + this->GetLinkName() + ")");
+  cmdLine.push_back("cmd.AddValue(\"deviceName_" + this->GetNetworkHardwareName() + "\", \"device name\", emuDevice_" + this->GetNetworkHardwareName() + ")");
   return cmdLine;
 }
 
@@ -169,11 +169,11 @@ std::vector<std::string> Emu::GenerateTracePython()
   {
     if(this->GetPromisc())
     {
-      trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->GetLinkName() + "\",\"" + this->m_ifaceName + "\", true)");
+      trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->GetNetworkHardwareName() + "\",\"" + this->m_ifaceName + "\", true)");
     }
     else
     {
-      trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->GetLinkName() + "\",\"" + this->m_ifaceName + "\", false)");
+      trace.push_back("EmuHelper::EnablePcap (\"Emu-" + this->GetNetworkHardwareName() + "\",\"" + this->m_ifaceName + "\", false)");
     }
   }
 

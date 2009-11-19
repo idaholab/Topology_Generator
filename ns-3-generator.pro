@@ -18,7 +18,7 @@ HEADERS += gui/drag-lines.h \
            kern/emu.h \
            kern/generator.h \
            kern/hub.h \
-           kern/link.h \
+           kern/network-hardware.h \
            kern/node.h \
            kern/ping.h \
            kern/point-to-point.h \
@@ -37,7 +37,7 @@ SOURCES += main.cpp \
            kern/emu.cpp \
            kern/generator.cpp \
            kern/hub.cpp \
-           kern/link.cpp \
+           kern/network-hardware.cpp \
            kern/node.cpp \
            kern/ping.cpp \
            kern/point-to-point.cpp \

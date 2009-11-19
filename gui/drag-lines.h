@@ -73,13 +73,13 @@ class DragLines
      * \brief Set link type.
      * \param linkType link type
      */
-    void SetLinkType(const std::string& linkType);
+    void SetNetworkHardwareType(const std::string& linkType);
 
     /**
      * \brief Get link type.
      * \return link type
      */
-    std::string GetLinkType() const;
+    std::string GetNetworkHardwareType() const;
 
   private:
     /**
@@ -95,7 +95,7 @@ class DragLines
     /**
      * \brief Type of link (wired, Wi-Fi, ...).
      */
-    std::string m_linkType;
+    std::string m_networkHardwareType;
 };
 
 #endif /* DRAG_LINES_H */

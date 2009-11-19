@@ -130,13 +130,13 @@ class DragWidget : public QWidget
      * \brief Set link type.
      * \param linkType link type
      */
-    void SetLinkType(const std::string& linkType);
+    void SetNetworkHardwareType(const std::string& linkType);
 
     /**
      * \brief Get link type.
      * \return link type
      */
-    std::string GetLinkType() const;
+    std::string GetNetworkHardwareType() const;
 
     /**
      * \brief Set last position.
@@ -154,13 +154,13 @@ class DragWidget : public QWidget
      * \brief Set link begin.
      * \param linkBegin new link begin
      */
-    void SetLinkBegin(const std::string &linkBegin);
+    void SetNetworkHardwareBegin(const std::string &linkBegin);
     
     /**
      * \brief Get link begin.
      * \return link begin
      */
-    std::string GetLinkBegin();
+    std::string GetNetworkHardwareBegin();
 
     /**
      * \brief Get main window.
@@ -172,25 +172,25 @@ class DragWidget : public QWidget
      * \brief Set trace link.
      * \param state new state
      */
-    void SetTraceLink(const bool &state);
+    void SetTraceNetworkHardware(const bool &state);
     
     /**
      * \brief Get trace link.
      * \return trace link
      */
-    bool GetTraceLink();
+    bool GetTraceNetworkHardware();
   
     /**
      * \brief Set link end.
      * \param link new link end
      */
-    void SetLinkEnd(const std::string &link);
+    void SetNetworkHardwareEnd(const std::string &link);
     
     /**
      * \brief Get link end.
      * \return link end
      */
-    std::string GetLinkEnd();
+    std::string GetNetworkHardwareEnd();
 
     /**
      * \brief Set drag lines.
@@ -377,7 +377,7 @@ class DragWidget : public QWidget
     /**
      * \brief Link begin.
      */
-    std::string m_linkBegin;
+    std::string m_networkHardwareBegin;
 
     /**
      * \brief Main window.
@@ -387,17 +387,17 @@ class DragWidget : public QWidget
     /**
      * \brief If we trace link or not.
      */
-    bool m_traceLink;
+    bool m_traceNetworkHardware;
 
      /**
      * \brief Link type.
      */
-    std::string m_linkType;
+    std::string m_networkHardwareType;
 
     /**
      * \brief Link end.
      */
-    std::string m_linkEnd;
+    std::string m_networkHardwareEnd;
 
     /**
      * \brief Lines.

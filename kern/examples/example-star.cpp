@@ -47,53 +47,53 @@ int main(int argc, char *argv[])
   gen->AddNode("Pc", 9);
   
   /* Add the bridge. */
-  gen->AddLink("Hub");
-  gen->GetLink(0)->Install(gen->GetNode(0)->GetNodeName(0));
-  gen->GetLink(0)->Install(gen->GetNode(0)->GetNodeName(1));
+  gen->AddNetworkHardware("Hub");
+  gen->GetNetworkHardware(0)->Install(gen->GetNode(0)->GetNodeName(0));
+  gen->GetNetworkHardware(0)->Install(gen->GetNode(0)->GetNodeName(1));
   /* Enable trace... */
-  gen->GetLink(0)->SetTrace(true);
+  gen->GetNetworkHardware(0)->SetTrace(true);
   
-  gen->AddLink("Hub");
-  gen->GetLink(1)->Install(gen->GetNode(0)->GetNodeName(0));
-  gen->GetLink(1)->Install(gen->GetNode(0)->GetNodeName(2));
+  gen->AddNetworkHardware("Hub");
+  gen->GetNetworkHardware(1)->Install(gen->GetNode(0)->GetNodeName(0));
+  gen->GetNetworkHardware(1)->Install(gen->GetNode(0)->GetNodeName(2));
   /* Enable trace... */
-  gen->GetLink(1)->SetTrace(true);
+  gen->GetNetworkHardware(1)->SetTrace(true);
   
-  gen->AddLink("Hub");
-  gen->GetLink(2)->Install(gen->GetNode(0)->GetNodeName(0));
-  gen->GetLink(2)->Install(gen->GetNode(0)->GetNodeName(3));
+  gen->AddNetworkHardware("Hub");
+  gen->GetNetworkHardware(2)->Install(gen->GetNode(0)->GetNodeName(0));
+  gen->GetNetworkHardware(2)->Install(gen->GetNode(0)->GetNodeName(3));
   /* Enable trace... */
-  //gen->GetLink(2)->SetTrace(true);
+  //gen->GetNetworkHardware(2)->SetTrace(true);
   
-  gen->AddLink("Hub");
-  gen->GetLink(3)->Install(gen->GetNode(0)->GetNodeName(0));
-  gen->GetLink(3)->Install(gen->GetNode(0)->GetNodeName(4));
+  gen->AddNetworkHardware("Hub");
+  gen->GetNetworkHardware(3)->Install(gen->GetNode(0)->GetNodeName(0));
+  gen->GetNetworkHardware(3)->Install(gen->GetNode(0)->GetNodeName(4));
   /* Enable trace... */
-  //gen->GetLink(3)->SetTrace(true);
+  //gen->GetNetworkHardware(3)->SetTrace(true);
   
-  gen->AddLink("Hub");
-  gen->GetLink(4)->Install(gen->GetNode(0)->GetNodeName(0));
-  gen->GetLink(4)->Install(gen->GetNode(0)->GetNodeName(5));
+  gen->AddNetworkHardware("Hub");
+  gen->GetNetworkHardware(4)->Install(gen->GetNode(0)->GetNodeName(0));
+  gen->GetNetworkHardware(4)->Install(gen->GetNode(0)->GetNodeName(5));
   /* Enable trace... */
-  gen->GetLink(4)->SetTrace(true);
+  gen->GetNetworkHardware(4)->SetTrace(true);
   
-  gen->AddLink("Hub");
-  gen->GetLink(5)->Install(gen->GetNode(0)->GetNodeName(0));
-  gen->GetLink(5)->Install(gen->GetNode(0)->GetNodeName(6));
+  gen->AddNetworkHardware("Hub");
+  gen->GetNetworkHardware(5)->Install(gen->GetNode(0)->GetNodeName(0));
+  gen->GetNetworkHardware(5)->Install(gen->GetNode(0)->GetNodeName(6));
   /* Enable trace... */
-  //gen->GetLink(5)->SetTrace(true);
+  //gen->GetNetworkHardware(5)->SetTrace(true);
   
-  gen->AddLink("Hub");
-  gen->GetLink(6)->Install(gen->GetNode(0)->GetNodeName(0));
-  gen->GetLink(6)->Install(gen->GetNode(0)->GetNodeName(7));
+  gen->AddNetworkHardware("Hub");
+  gen->GetNetworkHardware(6)->Install(gen->GetNode(0)->GetNodeName(0));
+  gen->GetNetworkHardware(6)->Install(gen->GetNode(0)->GetNodeName(7));
   /* Enable trace... */
-  //gen->GetLink(6)->SetTrace(true);
+  //gen->GetNetworkHardware(6)->SetTrace(true);
   
-  gen->AddLink("Hub");
-  gen->GetLink(7)->Install(gen->GetNode(0)->GetNodeName(0));
-  gen->GetLink(7)->Install(gen->GetNode(0)->GetNodeName(8));
+  gen->AddNetworkHardware("Hub");
+  gen->GetNetworkHardware(7)->Install(gen->GetNode(0)->GetNodeName(0));
+  gen->GetNetworkHardware(7)->Install(gen->GetNode(0)->GetNodeName(8));
   /* Enable trace... */
-  //gen->GetLink(7)->SetTrace(true);
+  //gen->GetNetworkHardware(7)->SetTrace(true);
   
   /* Add an application */
   gen->AddApplication("Ping", gen->GetNode(0)->GetNodeName(1), gen->GetNode(0)->GetNodeName(5), 0, 5);// 0 start time - 5 end time

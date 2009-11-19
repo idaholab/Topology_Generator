@@ -55,21 +55,21 @@ int main(int argc, char *argv[])
   
     
   /* Add the bridge. */
-  gen->AddLink("Bridge", gen->GetNode(2)->GetNodeName());//link 0
-  gen->GetLink(0)->Install(gen->GetNode(0)->GetNodeName());
-  gen->GetLink(0)->Install(gen->GetNode(1)->GetNodeName());
+  gen->AddNetworkHardware("Bridge", gen->GetNode(2)->GetNodeName());//link 0
+  gen->GetNetworkHardware(0)->Install(gen->GetNode(0)->GetNodeName());
+  gen->GetNetworkHardware(0)->Install(gen->GetNode(1)->GetNodeName());
   /* Enable trace... */
-  gen->GetLink(0)->SetTrace(true);
+  gen->GetNetworkHardware(0)->SetTrace(true);
   
-  gen->AddLink("Bridge", gen->GetNode(4)->GetNodeName());//link 1
-  gen->GetLink(1)->Install(gen->GetNode(5)->GetNodeName());
-  gen->GetLink(1)->Install(gen->GetNode(6)->GetNodeName());
+  gen->AddNetworkHardware("Bridge", gen->GetNode(4)->GetNodeName());//link 1
+  gen->GetNetworkHardware(1)->Install(gen->GetNode(5)->GetNodeName());
+  gen->GetNetworkHardware(1)->Install(gen->GetNode(6)->GetNodeName());
   /* Enable trace... */
-  gen->GetLink(1)->SetTrace(true);
+  gen->GetNetworkHardware(1)->SetTrace(true);
   
   /* link switch to router. */
-  gen->GetLink(0)->Install(gen->GetNode(3)->GetNodeName());
-  gen->GetLink(1)->Install(gen->GetNode(3)->GetNodeName());
+  gen->GetNetworkHardware(0)->Install(gen->GetNode(3)->GetNodeName());
+  gen->GetNetworkHardware(1)->Install(gen->GetNode(3)->GetNodeName());
   
   
   /* Add an application */
