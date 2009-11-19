@@ -28,7 +28,7 @@
 #ifndef BRIDGE_H
 #define BRIDGE_H
 
-#include "link.h"
+#include "network-hardware.h"
 
 #include <iostream>
 #include <string>
@@ -47,7 +47,7 @@
  *    - Create an bridge with generator object.
  *    - Install nodes with install method.
  */
-class Bridge : public Link
+class Bridge : public NetworkHardware
 {
   private:
     /**
@@ -90,7 +90,7 @@ class Bridge : public Link
      * \brief Generate build link C++ code.
      * \return build link code
      */
-    virtual std::vector<std::string> GenerateLinkCpp();
+    virtual std::vector<std::string> GenerateNetworkHardwareCpp();
 
     /**
      * \brief Generate build of the net device container for C++.
@@ -108,7 +108,7 @@ class Bridge : public Link
      * \brief Generate build link python code.
      * \return build link code
      */
-    virtual std::vector<std::string> GenerateLinkPython();
+    virtual std::vector<std::string> GenerateNetworkHardwarePython();
 
     /**
      * \brief Generate build of the net device container for python.

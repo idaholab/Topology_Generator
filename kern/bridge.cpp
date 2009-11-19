@@ -30,11 +30,11 @@
 
 #include "utils.h"
 
-Bridge::Bridge(const size_t &indice, const std::string &nodeBridge) : Link(indice)
+Bridge::Bridge(const size_t &indice, const std::string &nodeBridge) : NetworkHardware(indice)
 {
-  this->SetLinkName(std::string("bridge_" + this->GetIndice()));
-  this->SetNdcName(std::string("ndc_" + this->GetLinkName()));
-  this->SetAllNodeContainer(std::string("all_" + this->GetLinkName()));
+  this->SetNetworkHardwareName(std::string("bridge_" + this->GetIndice()));
+  this->SetNdcName(std::string("ndc_" + this->GetNetworkHardwareName()));
+  this->SetAllNodeContainer(std::string("all_" + this->GetNetworkHardwareName()));
   this->m_nodeBridge = nodeBridge;
 }
 
@@ -60,13 +60,13 @@ std::vector<std::string> Bridge::GenerateHeader()
   return headers;
 }
 
-std::vector<std::string> Bridge::GenerateLinkCpp()
+std::vector<std::string> Bridge::GenerateNetworkHardwareCpp()
 {
   std::vector<std::string> generatedLink;
   /* creation of the link. */
-  generatedLink.push_back("CsmaHelper csma_" + this->GetLinkName() + ";");
-  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute (\"DataRate\", DataRateValue (" + this->GetDataRate() + "));");
-  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute (\"Delay\",  TimeValue (MilliSeconds (" + this->GetLinkDelay() + ")));");
+  generatedLink.push_back("CsmaHelper csma_" + this->GetNetworkHardwareName() + ";");
+  generatedLink.push_back("csma_" + this->GetNetworkHardwareName() + ".SetChannelAttribute (\"DataRate\", DataRateValue (" + this->GetDataRate() + "));");
+  generatedLink.push_back("csma_" + this->GetNetworkHardwareName() + ".SetChannelAttribute (\"Delay\",  TimeValue (MilliSeconds (" + this->GetNetworkHardwareDelay() + ")));");
 
   return generatedLink;
 }
@@ -74,7 +74,7 @@ std::vector<std::string> Bridge::GenerateLinkCpp()
 std::vector<std::string> Bridge::GenerateNetDeviceCpp()
 {
   std::vector<std::string> ndc;
-  //ndc.push_back("NetDeviceContainer " + this->GetNdcName() + " = csma_" + this->GetLinkName() + ".Install (" + this->GetAllNodeContainer() + ");");
+  //ndc.push_back("NetDeviceContainer " + this->GetNdcName() + " = csma_" + this->GetNetworkHardwareName() + ".Install (" + this->GetAllNodeContainer() + ");");
 
   std::vector<std::string> allNodes = this->GroupAsNodeContainerCpp();
   for(size_t i = 0; i <  allNodes.size(); i++)
@@ -82,20 +82,20 @@ std::vector<std::string> Bridge::GenerateNetDeviceCpp()
     ndc.push_back(allNodes.at(i));
   }
 
-  ndc.push_back("NetDeviceContainer terminalDevices_" + this->GetLinkName() + ";");
-  ndc.push_back("NetDeviceContainer BridgeDevices_" + this->GetLinkName() + ";");
+  ndc.push_back("NetDeviceContainer terminalDevices_" + this->GetNetworkHardwareName() + ";");
+  ndc.push_back("NetDeviceContainer BridgeDevices_" + this->GetNetworkHardwareName() + ";");
 
   ndc.push_back("for (int i = 0; i < " + utils::integerToString(allNodes.size() - 1) + "; i++)");
   ndc.push_back("{");
-  ndc.push_back(" NetDeviceContainer link = csma_" + this->GetLinkName() + ".Install(NodeContainer(" + this->GetAllNodeContainer() + ".Get(i), " + this->m_nodeBridge + "));");
-  ndc.push_back(" terminalDevices_" + this->GetLinkName() + ".Add (link.Get(0));");
-  ndc.push_back(" BridgeDevices_" + this->GetLinkName() + ".Add (link.Get(1));");
+  ndc.push_back(" NetDeviceContainer link = csma_" + this->GetNetworkHardwareName() + ".Install(NodeContainer(" + this->GetAllNodeContainer() + ".Get(i), " + this->m_nodeBridge + "));");
+  ndc.push_back(" terminalDevices_" + this->GetNetworkHardwareName() + ".Add (link.Get(0));");
+  ndc.push_back(" BridgeDevices_" + this->GetNetworkHardwareName() + ".Add (link.Get(1));");
   ndc.push_back("}");
 
-  ndc.push_back("BridgeHelper bridge_" + this->GetLinkName() + ";");
-  ndc.push_back("bridge_" + this->GetLinkName() + ".Install (" + this->m_nodeBridge + ".Get(0), BridgeDevices_" + this->GetLinkName() + ");");
+  ndc.push_back("BridgeHelper bridge_" + this->GetNetworkHardwareName() + ";");
+  ndc.push_back("bridge_" + this->GetNetworkHardwareName() + ".Install (" + this->m_nodeBridge + ".Get(0), BridgeDevices_" + this->GetNetworkHardwareName() + ");");
 
-  ndc.push_back("NetDeviceContainer ndc_" + this->GetLinkName() + " = terminalDevices_" + this->GetLinkName() + ";"); 
+  ndc.push_back("NetDeviceContainer ndc_" + this->GetNetworkHardwareName() + " = terminalDevices_" + this->GetNetworkHardwareName() + ";"); 
 
   return ndc;
 }
@@ -108,25 +108,25 @@ std::vector<std::string> Bridge::GenerateTraceCpp()
   {
     if(this->GetPromisc())
     {
-      trace.push_back("csma_" + this->GetLinkName() + ".EnablePcapAll (\"csma_" + this->GetLinkName() + "\", true);");
+      trace.push_back("csma_" + this->GetNetworkHardwareName() + ".EnablePcapAll (\"csma_" + this->GetNetworkHardwareName() + "\", true);");
     }
     else
     {
-      trace.push_back("csma_" + this->GetLinkName() + ".EnablePcapAll (\"csma_" + this->GetLinkName() + "\", false);");
+      trace.push_back("csma_" + this->GetNetworkHardwareName() + ".EnablePcapAll (\"csma_" + this->GetNetworkHardwareName() + "\", false);");
     }
   }
 
   return trace;
 }
 
-std::vector<std::string> Bridge::GenerateLinkPython()
+std::vector<std::string> Bridge::GenerateNetworkHardwarePython()
 {
   std::vector<std::string> generatedLink;
 
   /* creation of the link. */
-  generatedLink.push_back("csma_" + this->GetLinkName() + " = ns3.CsmaHelper();");
-  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute(\"DataRate\", ns3.DataRateValue (ns3.DataRate(" + this->GetDataRate() + ")))");
-  generatedLink.push_back("csma_" + this->GetLinkName() + ".SetChannelAttribute(\"Delay\",  ns3.TimeValue (ns3.MilliSeconds(" + this->GetLinkDelay() + ")))");
+  generatedLink.push_back("csma_" + this->GetNetworkHardwareName() + " = ns3.CsmaHelper();");
+  generatedLink.push_back("csma_" + this->GetNetworkHardwareName() + ".SetChannelAttribute(\"DataRate\", ns3.DataRateValue (ns3.DataRate(" + this->GetDataRate() + ")))");
+  generatedLink.push_back("csma_" + this->GetNetworkHardwareName() + ".SetChannelAttribute(\"Delay\",  ns3.TimeValue (ns3.MilliSeconds(" + this->GetNetworkHardwareDelay() + ")))");
 
   return generatedLink;
 }
@@ -134,7 +134,7 @@ std::vector<std::string> Bridge::GenerateLinkPython()
 std::vector<std::string> Bridge::GenerateNetDevicePython()
 {
   std::vector<std::string> ndc;
-  //ndc.push_back("" + this->GetNdcName() + " = csma_" + this->GetLinkName() + ".Install(" + this->GetAllNodeContainer() + ")");
+  //ndc.push_back("" + this->GetNdcName() + " = csma_" + this->GetNetworkHardwareName() + ".Install(" + this->GetAllNodeContainer() + ")");
 
   std::vector<std::string> allNodes = this->GroupAsNodeContainerPython();
   for(size_t i = 0; i <  allNodes.size(); i++)
@@ -142,18 +142,18 @@ std::vector<std::string> Bridge::GenerateNetDevicePython()
     ndc.push_back(allNodes.at(i));
   }
 
-  ndc.push_back("terminalDevices_" + this->GetLinkName() + " = ns3.NetDeviceContainer()");
-  ndc.push_back("BridgeDevices_" + this->GetLinkName() + " = ns3.NetDeviceContainer()");
+  ndc.push_back("terminalDevices_" + this->GetNetworkHardwareName() + " = ns3.NetDeviceContainer()");
+  ndc.push_back("BridgeDevices_" + this->GetNetworkHardwareName() + " = ns3.NetDeviceContainer()");
 
   ndc.push_back("for i in range(" + utils::integerToString(allNodes.size() - 1) + "):");
-  ndc.push_back("    link = csma_" + this->GetLinkName() + ".Install(NodeContainer(" + this->GetAllNodeContainer() + ".Get(i), " + this->GetNodeBridge() + "))");
-  ndc.push_back("    terminalDevices_" + this->GetLinkName() + ".Add(link.Get(0))");
-  ndc.push_back("    BridgeDevices_" + this->GetLinkName() + ".Add(link.Get(1))");
+  ndc.push_back("    link = csma_" + this->GetNetworkHardwareName() + ".Install(NodeContainer(" + this->GetAllNodeContainer() + ".Get(i), " + this->GetNodeBridge() + "))");
+  ndc.push_back("    terminalDevices_" + this->GetNetworkHardwareName() + ".Add(link.Get(0))");
+  ndc.push_back("    BridgeDevices_" + this->GetNetworkHardwareName() + ".Add(link.Get(1))");
 
-  ndc.push_back("bridge_" + this->GetLinkName() + " = ns3.BridgeHelper");
-  ndc.push_back("bridge_" + this->GetLinkName() + ".Install(" + this->m_nodeBridge + ".Get(0), BridgeDevices_" + this->GetLinkName() + ")");
+  ndc.push_back("bridge_" + this->GetNetworkHardwareName() + " = ns3.BridgeHelper");
+  ndc.push_back("bridge_" + this->GetNetworkHardwareName() + ".Install(" + this->m_nodeBridge + ".Get(0), BridgeDevices_" + this->GetNetworkHardwareName() + ")");
 
-  ndc.push_back("ndc_" + this->GetLinkName() + " = terminalDevices_" + this->GetLinkName() + ""); 
+  ndc.push_back("ndc_" + this->GetNetworkHardwareName() + " = terminalDevices_" + this->GetNetworkHardwareName() + ""); 
 
   return ndc;
 }
@@ -166,11 +166,11 @@ std::vector<std::string> Bridge::GenerateTracePython()
   {
     if(this->GetPromisc())
     {
-      trace.push_back("csma_" + this->GetLinkName() + ".EnablePcapAll(\"csma_" + this->GetLinkName() + "\", true)");
+      trace.push_back("csma_" + this->GetNetworkHardwareName() + ".EnablePcapAll(\"csma_" + this->GetNetworkHardwareName() + "\", true)");
     }
     else
     {
-      trace.push_back("csma_" + this->GetLinkName() + ".EnablePcapAll(\"csma_" + this->GetLinkName() + "\", false)");
+      trace.push_back("csma_" + this->GetNetworkHardwareName() + ".EnablePcapAll(\"csma_" + this->GetNetworkHardwareName() + "\", false)");
     }
   }
 

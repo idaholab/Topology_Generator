@@ -28,7 +28,7 @@
 #ifndef TAP_H
 #define TAP_H
 
-#include "link.h"
+#include "network-hardware.h"
 
 #include <iostream>
 #include <string>
@@ -59,7 +59,7 @@
  *  - Create it from generator object
  *  - Install node with Install method.
  */
-class Tap : public Link
+class Tap : public NetworkHardware
 {
   private:
     /**
@@ -120,7 +120,7 @@ class Tap : public Link
      * \brief Generate link C++ code.
      * \return link code
      */
-    virtual std::vector<std::string> GenerateLinkCpp();
+    virtual std::vector<std::string> GenerateNetworkHardwareCpp();
 
     /**
      * \brief Generate net device container C++ code.
@@ -168,7 +168,7 @@ class Tap : public Link
      * \brief Generate link python code.
      * \return link code
      */
-    virtual std::vector<std::string> GenerateLinkPython();
+    virtual std::vector<std::string> GenerateNetworkHardwarePython();
 
     /**
      * \brief Generate net device container python code.

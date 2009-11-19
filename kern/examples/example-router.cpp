@@ -52,21 +52,21 @@ int main(int argc, char *argv[])
   gen->AddNode("Pc");//4
   
   /* Add it to a Csma network. */
-  gen->AddLink("Hub");//0
-  gen->GetLink(0)->Install(gen->GetNode(0)->GetNodeName());
-  gen->GetLink(0)->Install(gen->GetNode(1)->GetNodeName());
+  gen->AddNetworkHardware("Hub");//0
+  gen->GetNetworkHardware(0)->Install(gen->GetNode(0)->GetNodeName());
+  gen->GetNetworkHardware(0)->Install(gen->GetNode(1)->GetNodeName());
   /* Enable trace... */
-  gen->GetLink(0)->SetTrace(true);
+  gen->GetNetworkHardware(0)->SetTrace(true);
   
-  gen->AddLink("Hub");//1
-  gen->GetLink(1)->Install(gen->GetNode(3)->GetNodeName());
-  gen->GetLink(1)->Install(gen->GetNode(4)->GetNodeName());
+  gen->AddNetworkHardware("Hub");//1
+  gen->GetNetworkHardware(1)->Install(gen->GetNode(3)->GetNodeName());
+  gen->GetNetworkHardware(1)->Install(gen->GetNode(4)->GetNodeName());
   /* Enable trace... */
-  gen->GetLink(1)->SetTrace(true);
+  gen->GetNetworkHardware(1)->SetTrace(true);
   
   /* link the two subnetworks to the router. */
-  gen->GetLink(0)->Install(gen->GetNode(2)->GetNodeName());
-  gen->GetLink(1)->Install(gen->GetNode(2)->GetNodeName());
+  gen->GetNetworkHardware(0)->Install(gen->GetNode(2)->GetNodeName());
+  gen->GetNetworkHardware(1)->Install(gen->GetNode(2)->GetNodeName());
   
   /* Add an application */
   gen->AddApplication("Ping", gen->GetNode(0)->GetNodeName(), gen->GetNode(4)->GetNodeName(), 0, 5);// 0 start time - 5 end time

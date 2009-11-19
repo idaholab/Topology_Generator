@@ -51,25 +51,25 @@ int main(int argc, char *argv[])
   gen->AddNode("Pc");//5
   
   /* Add the bridge. */
-  gen->AddLink("Hub");
-  gen->GetLink(0)->Install(gen->GetNode(0)->GetNodeName());
-  gen->GetLink(0)->Install(gen->GetNode(1)->GetNodeName());
-  gen->GetLink(0)->Install(gen->GetNode(2)->GetNodeName());
+  gen->AddNetworkHardware("Hub");
+  gen->GetNetworkHardware(0)->Install(gen->GetNode(0)->GetNodeName());
+  gen->GetNetworkHardware(0)->Install(gen->GetNode(1)->GetNodeName());
+  gen->GetNetworkHardware(0)->Install(gen->GetNode(2)->GetNodeName());
   /* Enable trace... */
-  gen->GetLink(0)->SetTrace(true);
+  gen->GetNetworkHardware(0)->SetTrace(true);
   
-  gen->AddLink("PointToPoint");
-  gen->GetLink(1)->Install(gen->GetNode(2)->GetNodeName());
-  gen->GetLink(1)->Install(gen->GetNode(3)->GetNodeName());
+  gen->AddNetworkHardware("PointToPoint");
+  gen->GetNetworkHardware(1)->Install(gen->GetNode(2)->GetNodeName());
+  gen->GetNetworkHardware(1)->Install(gen->GetNode(3)->GetNodeName());
   /* Enable trace... */
-  gen->GetLink(1)->SetTrace(true);
+  gen->GetNetworkHardware(1)->SetTrace(true);
   
-  gen->AddLink("Hub");
-  gen->GetLink(2)->Install(gen->GetNode(3)->GetNodeName());
-  gen->GetLink(2)->Install(gen->GetNode(4)->GetNodeName());
-  gen->GetLink(2)->Install(gen->GetNode(5)->GetNodeName());
+  gen->AddNetworkHardware("Hub");
+  gen->GetNetworkHardware(2)->Install(gen->GetNode(3)->GetNodeName());
+  gen->GetNetworkHardware(2)->Install(gen->GetNode(4)->GetNodeName());
+  gen->GetNetworkHardware(2)->Install(gen->GetNode(5)->GetNodeName());
   /* Enable trace... */
-  gen->GetLink(2)->SetTrace(true);
+  gen->GetNetworkHardware(2)->SetTrace(true);
   
   /* Add an application */
   gen->AddApplication("Ping", gen->GetNode(0)->GetNodeName(), gen->GetNode(5)->GetNodeName(), 0, 5);// 0 start time - 5 end time

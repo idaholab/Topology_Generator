@@ -48,15 +48,15 @@ int main(int argc, char *argv[])
   gen->AddNode("Station");//3
   
   /* Add the bridge. */
-  gen->AddLink("Ap", gen->GetNode(0)->GetNodeName());
-  Ap *ap = dynamic_cast<Ap*>(gen->GetLink(0));
+  gen->AddNetworkHardware("Ap", gen->GetNode(0)->GetNodeName());
+  Ap *ap = dynamic_cast<Ap*>(gen->GetNetworkHardware(0));
   ap->SetMobility(true);
-  gen->GetLink(0)->Install(gen->GetNode(1)->GetNodeName());
-  gen->GetLink(0)->Install(gen->GetNode(2)->GetNodeName());
-  gen->GetLink(0)->Install(gen->GetNode(3)->GetNodeName());
+  gen->GetNetworkHardware(0)->Install(gen->GetNode(1)->GetNodeName());
+  gen->GetNetworkHardware(0)->Install(gen->GetNode(2)->GetNodeName());
+  gen->GetNetworkHardware(0)->Install(gen->GetNode(3)->GetNodeName());
   
   /* Enable trace... */
-  gen->GetLink(0)->SetTrace(true);
+  gen->GetNetworkHardware(0)->SetTrace(true);
   
   /* Add an application */
   gen->AddApplication("Ping", gen->GetNode(1)->GetNodeName(), gen->GetNode(2)->GetNodeName(), 0, 5);// 0 start time - 5 end time

@@ -28,7 +28,7 @@
 #ifndef POINT_TO_POINT_H
 #define POINT_TO_POINT_H
 
-#include "link.h"
+#include "network-hardware.h"
 
 #include <iostream>
 #include <string>
@@ -47,7 +47,7 @@
  *    - Create an hub with generator object.
  *    - Install nodes with install method.
  */
-class PointToPoint : public Link
+class PointToPoint : public NetworkHardware
 {
   public:
     /**
@@ -72,7 +72,7 @@ class PointToPoint : public Link
      * \brief Generate link C++ code.
      * \return link code
      */
-    virtual std::vector<std::string> GenerateLinkCpp();
+    virtual std::vector<std::string> GenerateNetworkHardwareCpp();
 
     /**
      * \brief Generate net device container C++ code.
@@ -90,7 +90,7 @@ class PointToPoint : public Link
      * \brief Generate link python code.
      * \return link code
      */
-    virtual std::vector<std::string> GenerateLinkPython();
+    virtual std::vector<std::string> GenerateNetworkHardwarePython();
 
     /**
      * \brief Generate net device container python code.

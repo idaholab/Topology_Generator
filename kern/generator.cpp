@@ -59,12 +59,12 @@ Generator::Generator(const std::string &simulationName)
   this->m_indiceNodeEmu = 0;
 
   /* Link */
-  this->m_indiceLinkAp = 0;
-  this->m_indiceLinkEmu = 0;
-  this->m_indiceLinkPointToPoint = 0;
-  this->m_indiceLinkTap = 0;
-  this->m_indiceLinkHub = 0;
-  this->m_indiceLinkBridge = 0;
+  this->m_indiceNetworkHardwareAp = 0;
+  this->m_indiceNetworkHardwareEmu = 0;
+  this->m_indiceNetworkHardwarePointToPoint = 0;
+  this->m_indiceNetworkHardwareTap = 0;
+  this->m_indiceNetworkHardwareHub = 0;
+  this->m_indiceNetworkHardwareBridge = 0;
 
   /* Application */
   this->m_indiceApplicationPing = 0; 
@@ -82,9 +82,9 @@ Generator::~Generator()
   }
 
   /* Link */
-  for(size_t i = 0; i < this->m_listLink.size(); i++)
+  for(size_t i = 0; i < this->m_listNetworkHardware.size(); i++)
   {
-    delete this->m_listLink.at(i);
+    delete this->m_listNetworkHardware.at(i);
   }
 
   /* Application */
@@ -344,20 +344,20 @@ size_t Generator::GetNApplications() const
 //
 // Part of Link.
 //
-void Generator::AddLink(const std::string &type) 
+void Generator::AddNetworkHardware(const std::string &type) 
 {
   // call to the right type constructor. 
   if(type == "Hub")
   {
-    Hub *link = new Hub(this->m_indiceLinkHub);
-    this->m_indiceLinkHub += 1;
-    this->m_listLink.push_back(link);
+    Hub *link = new Hub(this->m_indiceNetworkHardwareHub);
+    this->m_indiceNetworkHardwareHub += 1;
+    this->m_listNetworkHardware.push_back(link);
   } 
   else if(type == "PointToPoint")
   {
-    PointToPoint *link = new PointToPoint(this->m_indiceLinkPointToPoint);
-    this->m_indiceLinkPointToPoint += 1;
-    this->m_listLink.push_back(link);
+    PointToPoint *link = new PointToPoint(this->m_indiceNetworkHardwarePointToPoint);
+    this->m_indiceNetworkHardwarePointToPoint += 1;
+    this->m_listNetworkHardware.push_back(link);
   } 
   else
   {
@@ -365,19 +365,19 @@ void Generator::AddLink(const std::string &type)
   }
 }
 
-void Generator::AddLink(const std::string &type, const std::string &linkNode) 
+void Generator::AddNetworkHardware(const std::string &type, const std::string &linkNode) 
 {
   if(type == "Bridge")
   {
-    Bridge *link = new Bridge(this->m_indiceLinkBridge, linkNode);
-    this->m_indiceLinkBridge += 1;
-    this->m_listLink.push_back(link);
+    Bridge *link = new Bridge(this->m_indiceNetworkHardwareBridge, linkNode);
+    this->m_indiceNetworkHardwareBridge += 1;
+    this->m_listNetworkHardware.push_back(link);
   } 
   else if(type == "Ap")
   {
-    Ap *link = new Ap(this->m_indiceLinkAp, linkNode);
-    this->m_indiceLinkAp += 1;
-    this->m_listLink.push_back(link);
+    Ap *link = new Ap(this->m_indiceNetworkHardwareAp, linkNode);
+    this->m_indiceNetworkHardwareAp += 1;
+    this->m_listNetworkHardware.push_back(link);
   } 
   else
   {
@@ -385,19 +385,19 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode)
   }
 }
 
-void Generator::AddLink(const std::string &type, const std::string &linkNode, const std::string &ifaceName)
+void Generator::AddNetworkHardware(const std::string &type, const std::string &linkNode, const std::string &ifaceName)
 { 
   if(type == "Emu")
   {
-    Emu *link = new Emu(this->m_indiceLinkEmu, linkNode, ifaceName);
-    this->m_indiceLinkEmu += 1;
-    this->m_listLink.push_back(link);
+    Emu *link = new Emu(this->m_indiceNetworkHardwareEmu, linkNode, ifaceName);
+    this->m_indiceNetworkHardwareEmu += 1;
+    this->m_listNetworkHardware.push_back(link);
   } 
   else if(type == "Tap")
   {
-    Tap *link = new Tap(this->m_indiceLinkTap, linkNode, ifaceName);
-    this->m_indiceLinkTap += 1;
-    this->m_listLink.push_back(link);
+    Tap *link = new Tap(this->m_indiceNetworkHardwareTap, linkNode, ifaceName);
+    this->m_indiceNetworkHardwareTap += 1;
+    this->m_listNetworkHardware.push_back(link);
   } 
   else
   {
@@ -405,51 +405,51 @@ void Generator::AddLink(const std::string &type, const std::string &linkNode, co
   }
 }
 
-void Generator::RemoveLink(const std::string &name)
+void Generator::RemoveNetworkHardware(const std::string &name)
 {
-  size_t startNumber = this->m_listLink.size();
-  for(size_t i = 0; i < this->m_listLink.size(); i++)
+  size_t startNumber = this->m_listNetworkHardware.size();
+  for(size_t i = 0; i < this->m_listNetworkHardware.size(); i++)
   {
-    if(this->m_listLink.at(i)->GetLinkName() == name)
+    if(this->m_listNetworkHardware.at(i)->GetNetworkHardwareName() == name)
     {
-      delete this->m_listLink[i];
-      this->m_listLink.erase(this->m_listLink.begin() + i);
+      delete this->m_listNetworkHardware[i];
+      this->m_listNetworkHardware.erase(this->m_listNetworkHardware.begin() + i);
       break;
     }
   }
-  size_t endNumber = this->m_listLink.size();
+  size_t endNumber = this->m_listNetworkHardware.size();
   if(startNumber == endNumber)
   {
     throw std::logic_error("Link remove failed! (" + name + ") not found.");
   }
 }
 
-void Generator::RemoveLink(const size_t index)
+void Generator::RemoveNetworkHardware(const size_t index)
 {
-  if(this->m_listLink.size() < index)
+  if(this->m_listNetworkHardware.size() < index)
   {
     throw std::out_of_range("Link remove failed! (index not exists).");
     return;
   }
 
-  delete this->m_listLink[index];
-  this->m_listLink.erase(this->m_listLink.begin() + index);
+  delete this->m_listNetworkHardware[index];
+  this->m_listNetworkHardware.erase(this->m_listNetworkHardware.begin() + index);
 }
 
-Link* Generator::GetLink(const size_t index)
+NetworkHardware* Generator::GetNetworkHardware(const size_t index)
 {
-  if(this->m_listLink.size() < index)
+  if(this->m_listNetworkHardware.size() < index)
   {
     throw std::out_of_range("Index does not exist.");
     return 0;
   }
  
-  return this->m_listLink.at(index);
+  return this->m_listNetworkHardware.at(index);
 }
 
-size_t Generator::GetNLinks() const
+size_t Generator::GetNNetworkHardwares() const
 {
-  return this->m_listLink.size();
+  return this->m_listNetworkHardware.size();
 }
 
 //
@@ -533,7 +533,7 @@ void Generator::GenerateCodeCpp()
   //
   std::cout << "" << std::endl;
   std::cout << "  /* Build link. */" << std::endl;
-  std::vector<std::string> linkBuild = GenerateLinkCpp(); 
+  std::vector<std::string> linkBuild = GenerateNetworkHardwareCpp(); 
   for(size_t i = 0; i <  linkBuild.size(); i++)
   {
     std::cout << "  " << linkBuild.at(i) << std::endl;
@@ -658,9 +658,9 @@ std::vector<std::string> Generator::GenerateHeader()
     }
   }
   /* from m_listLink */
-  for(size_t i = 0; i <  this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listNetworkHardware.size(); i++)
   {
-    std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateHeader();
+    std::vector<std::string> trans = (this->m_listNetworkHardware.at(i))->GenerateHeader();
     for(size_t j = 0; j <  trans.size(); j++)
     {
       allHeaders.push_back(trans.at(j));
@@ -706,9 +706,9 @@ std::vector<std::string> Generator::GenerateHeader()
 std::vector<std::string> Generator::GenerateVarsCpp()
 {
   std::vector<std::string> allVars;
-  for(size_t i = 0; i <  this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listNetworkHardware.size(); i++)
   {
-    std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateVarsCpp();
+    std::vector<std::string> trans = (this->m_listNetworkHardware.at(i))->GenerateVarsCpp();
     for(size_t j = 0; j <  trans.size(); j++)
     {
       allVars.push_back(trans.at(j));
@@ -729,9 +729,9 @@ std::vector<std::string> Generator::GenerateVarsCpp()
 std::vector<std::string> Generator::GenerateCmdLineCpp() 
 {
   std::vector<std::string> allCmdLine;
-  for(size_t i = 0; i <  this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listNetworkHardware.size(); i++)
   {
-    std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateCmdLineCpp();
+    std::vector<std::string> trans = (this->m_listNetworkHardware.at(i))->GenerateCmdLineCpp();
     for(size_t j = 0; j <  trans.size(); j++)
     {
       allCmdLine.push_back(trans.at(j));
@@ -751,9 +751,9 @@ std::vector<std::string> Generator::GenerateConfigCpp()
     }
   }
 
-  for(size_t i = 0; i <  this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listNetworkHardware.size(); i++)
   { 
-    if( ((this->m_listLink.at(i))->GetLinkName()).find("emu_") == 0 )
+    if( ((this->m_listNetworkHardware.at(i))->GetNetworkHardwareName()).find("emu_") == 0 )
     {
       this->AddConfig("GlobalValue::Bind (\"SimulatorImplementationType\", StringValue (\"ns3::RealtimeSimulatorImpl\"));");
       this->AddConfig("GlobalValue::Bind (\"ChecksumEnabled\", BooleanValue (true));");
@@ -784,13 +784,13 @@ std::vector<std::string> Generator::GenerateNodeCpp()
   return allNodes;
 }
 
-std::vector<std::string> Generator::GenerateLinkCpp() 
+std::vector<std::string> Generator::GenerateNetworkHardwareCpp() 
 {
   std::vector<std::string> allLink;
   /* get all the link build code. */
-  for(size_t i = 0; i <  this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listNetworkHardware.size(); i++)
   {
-    std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateLinkCpp();
+    std::vector<std::string> trans = (this->m_listNetworkHardware.at(i))->GenerateNetworkHardwareCpp();
     for(size_t j = 0; j <  trans.size(); j++)
     {
       allLink.push_back(trans.at(j));
@@ -802,9 +802,9 @@ std::vector<std::string> Generator::GenerateNetDeviceCpp()
 {
   std::vector<std::string> allNdc;
   /* get all the link build code. */
-  for(size_t i = 0; i <  this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listNetworkHardware.size(); i++)
   {
-    std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateNetDeviceCpp();
+    std::vector<std::string> trans = (this->m_listNetworkHardware.at(i))->GenerateNetDeviceCpp();
     for(size_t j = 0; j <  trans.size(); j++)
     {
       allNdc.push_back(trans.at(j));
@@ -843,10 +843,10 @@ std::vector<std::string> Generator::GenerateIpAssignCpp()
   ipAssign.push_back("Ipv4AddressHelper ipv4;");
 
   size_t ipRange = 0;
-  for(size_t i = 0; i <  this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listNetworkHardware.size(); i++)
   {
     ipAssign.push_back("ipv4.SetBase (\"10.0." + utils::integerToString(ipRange) + ".0\", \"255.255.255.0\");");
-    ipAssign.push_back("Ipv4InterfaceContainer iface_" + this->m_listLink.at(i)->GetNdcName() + " = ipv4.Assign (" + this->m_listLink.at(i)->GetNdcName() + ");");
+    ipAssign.push_back("Ipv4InterfaceContainer iface_" + this->m_listNetworkHardware.at(i)->GetNdcName() + " = ipv4.Assign (" + this->m_listNetworkHardware.at(i)->GetNdcName() + ");");
     ipRange += 1;
   } 
 
@@ -890,14 +890,14 @@ std::vector<std::string> Generator::GenerateApplicationCpp()
       split(tab_name2, str_get, '.');
       
       receiverName = tab_name2.at(0);
-      for(size_t x = 0;  x < this->m_listLink.size(); x++)
+      for(size_t x = 0;  x < this->m_listNetworkHardware.size(); x++)
       {
         nodeNumber = 0;
-        for(size_t y = 0; y < this->m_listLink.at(x)->GetInstalledNodes().size(); y++)
+        for(size_t y = 0; y < this->m_listNetworkHardware.at(x)->GetInstalledNodes().size(); y++)
         {
-          if(this->m_listLink.at(x)->GetInstalledNodes().at(y) == receiverName || this->m_listLink.at(x)->GetInstalledNodes().at(y) == oldReceiverName)
+          if(this->m_listNetworkHardware.at(x)->GetInstalledNodes().at(y) == receiverName || this->m_listNetworkHardware.at(x)->GetInstalledNodes().at(y) == oldReceiverName)
           {
-            ndcName = (this->m_listLink.at(x))->GetNdcName();
+            ndcName = (this->m_listNetworkHardware.at(x))->GetNdcName();
             linkNumber = x;
             break;
           }
@@ -907,7 +907,7 @@ std::vector<std::string> Generator::GenerateApplicationCpp()
           }
         }
       }
-      std::vector<std::string> linksNode = this->m_listLink.at(linkNumber)->GetInstalledNodes();
+      std::vector<std::string> linksNode = this->m_listNetworkHardware.at(linkNumber)->GetInstalledNodes();
       for(size_t j = 0; j < linksNode.size(); j++)
       {
         if(linksNode.at(j) == oldReceiverName)
@@ -919,16 +919,16 @@ std::vector<std::string> Generator::GenerateApplicationCpp()
     }
     else
     {
-      for(size_t j = 0; j <  this->m_listLink.size(); j++)
+      for(size_t j = 0; j <  this->m_listNetworkHardware.size(); j++)
       {
         nodeNumber = 0;
         linkNumber = 0;
-        std::vector<std::string> nodes = (this->m_listLink.at(j))->GetInstalledNodes();
+        std::vector<std::string> nodes = (this->m_listNetworkHardware.at(j))->GetInstalledNodes();
         for(size_t k = 0; k <  nodes.size(); k++)
         {
           if( nodes.at(k) == receiverName)
           {
-            ndcName = (this->m_listLink.at(j))->GetNdcName();
+            ndcName = (this->m_listNetworkHardware.at(j))->GetNdcName();
             break;
           }
           else
@@ -964,9 +964,9 @@ std::vector<std::string> Generator::GenerateTapBridgeCpp()
 {
   std::vector<std::string> allTapBridge;
 
-  for(size_t i = 0; i <  this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listNetworkHardware.size(); i++)
   {
-    std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateTapBridgeCpp();
+    std::vector<std::string> trans = (this->m_listNetworkHardware.at(i))->GenerateTapBridgeCpp();
     for(size_t j = 0; j <  trans.size(); j++)
     {
       allTapBridge.push_back(trans.at(j));
@@ -980,9 +980,9 @@ std::vector<std::string> Generator::GenerateTraceCpp()
 {
   std::vector<std::string> allTrace;
 
-  for(size_t i = 0; i <  this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listNetworkHardware.size(); i++)
   {
-    std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateTraceCpp();
+    std::vector<std::string> trans = (this->m_listNetworkHardware.at(i))->GenerateTraceCpp();
     for(size_t j = 0; j <  trans.size(); j++)
     {
       allTrace.push_back(trans.at(j));
@@ -1057,7 +1057,7 @@ void Generator::GenerateCodePython()
   //
   std::cout << "" << std::endl;
   std::cout << "    # Build link." << std::endl;
-  std::vector<std::string> linkBuild = GenerateLinkPython();
+  std::vector<std::string> linkBuild = GenerateNetworkHardwarePython();
   for(size_t i = 0; i <  linkBuild.size(); i++)
   {
     std::cout << "    " << linkBuild.at(i) << std::endl;
@@ -1182,9 +1182,9 @@ std::vector<std::string> Generator::GenerateCmdLinePython()
 {
   std::vector<std::string> allCmdLine;
 
-  for(size_t i = 0; i <  this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listNetworkHardware.size(); i++)
   {
-    std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateCmdLinePython();
+    std::vector<std::string> trans = (this->m_listNetworkHardware.at(i))->GenerateCmdLinePython();
     for(size_t j = 0; j <  trans.size(); j++)
     {
       allCmdLine.push_back(trans.at(j));
@@ -1204,9 +1204,9 @@ std::vector<std::string> Generator::GenerateConfigPython()
     }
   }
 
-  for(size_t i = 0; i <  this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listNetworkHardware.size(); i++)
   {
-    if( ((this->m_listLink.at(i))->GetLinkName()).find("emu_") == 0 )
+    if( ((this->m_listNetworkHardware.at(i))->GetNetworkHardwareName()).find("emu_") == 0 )
     {
       this->AddConfig("ns3.GlobalValue.Bind (\"SimulatorImplementationType\", ns3.StringValue (\"ns3::RealtimeSimulatorImpl\"));");
       this->AddConfig("ns3.GlobalValue.Bind (\"ChecksumEnabled\", ns3.BooleanValue (true));");
@@ -1237,13 +1237,13 @@ std::vector<std::string> Generator::GenerateNodePython()
   return allNodes;
 }
 
-std::vector<std::string> Generator::GenerateLinkPython()
+std::vector<std::string> Generator::GenerateNetworkHardwarePython()
 {
   std::vector<std::string> allLink;
   /* get all the link build code. */
-  for(size_t i = 0; i <  this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listNetworkHardware.size(); i++)
   {
-    std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateLinkPython();
+    std::vector<std::string> trans = (this->m_listNetworkHardware.at(i))->GenerateNetworkHardwarePython();
     for(size_t j = 0; j <  trans.size(); j++)
     {
       allLink.push_back(trans.at(j));
@@ -1256,9 +1256,9 @@ std::vector<std::string> Generator::GenerateNetDevicePython()
 {
   std::vector<std::string> allNdc;
   /* get all the link build code. */
-  for(size_t i = 0; i <  this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listNetworkHardware.size(); i++)
   {
-    std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateNetDevicePython();
+    std::vector<std::string> trans = (this->m_listNetworkHardware.at(i))->GenerateNetDevicePython();
     for(size_t j = 0; j <  trans.size(); j++)
     {
       allNdc.push_back(trans.at(j));
@@ -1297,10 +1297,10 @@ std::vector<std::string> Generator::GenerateIpAssignPython()
   ipAssign.push_back("ipv4 = ns3.Ipv4AddressHelper()");
 
   size_t ipRange = 0;
-  for(size_t i = 0; i <  this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listNetworkHardware.size(); i++)
   {
     ipAssign.push_back("ipv4.SetBase (ns3.Ipv4Address(\"10.0." + utils::integerToString(ipRange) + ".0\"), ns3.Ipv4Mask(\"255.255.255.0\"))");
-    ipAssign.push_back("iface_" + this->m_listLink.at(i)->GetNdcName() + " = ipv4.Assign (" + this->m_listLink.at(i)->GetNdcName() + ")");
+    ipAssign.push_back("iface_" + this->m_listNetworkHardware.at(i)->GetNdcName() + " = ipv4.Assign (" + this->m_listNetworkHardware.at(i)->GetNdcName() + ")");
     ipRange += 1;
   }
 
@@ -1311,9 +1311,9 @@ std::vector<std::string> Generator::GenerateTapBridgePython()
 {
   std::vector<std::string> allTapBridge;
 
-  for(size_t i = 0; i <  this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listNetworkHardware.size(); i++)
   {
-    std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateTapBridgePython();
+    std::vector<std::string> trans = (this->m_listNetworkHardware.at(i))->GenerateTapBridgePython();
     for(size_t j = 0; j <  trans.size(); j++)
     {
       allTapBridge.push_back(trans.at(j));
@@ -1361,14 +1361,14 @@ std::vector<std::string> Generator::GenerateApplicationPython()
       split(tab_name2, str_get, '.');
       
       receiverName = tab_name2.at(0);
-      for(size_t x = 0;  x < this->m_listLink.size(); x++)
+      for(size_t x = 0;  x < this->m_listNetworkHardware.size(); x++)
       {
         nodeNumber = 0;
-        for(size_t y = 0; y < this->m_listLink.at(x)->GetInstalledNodes().size(); y++)
+        for(size_t y = 0; y < this->m_listNetworkHardware.at(x)->GetInstalledNodes().size(); y++)
         {
-          if(this->m_listLink.at(x)->GetInstalledNodes().at(y) == receiverName || this->m_listLink.at(x)->GetInstalledNodes().at(y) == oldReceiverName)
+          if(this->m_listNetworkHardware.at(x)->GetInstalledNodes().at(y) == receiverName || this->m_listNetworkHardware.at(x)->GetInstalledNodes().at(y) == oldReceiverName)
           {
-            ndcName = (this->m_listLink.at(x))->GetNdcName();
+            ndcName = (this->m_listNetworkHardware.at(x))->GetNdcName();
             linkNumber = x;
             break;
           }
@@ -1378,7 +1378,7 @@ std::vector<std::string> Generator::GenerateApplicationPython()
           }
         }
       }
-      std::vector<std::string> linksNode = this->m_listLink.at(linkNumber)->GetInstalledNodes();
+      std::vector<std::string> linksNode = this->m_listNetworkHardware.at(linkNumber)->GetInstalledNodes();
       for(size_t j = 0; j < linksNode.size(); j++)
       {
         if(linksNode.at(j) == oldReceiverName)
@@ -1390,16 +1390,16 @@ std::vector<std::string> Generator::GenerateApplicationPython()
     }
     else
     {
-      for(size_t j = 0; j <  this->m_listLink.size(); j++)
+      for(size_t j = 0; j <  this->m_listNetworkHardware.size(); j++)
       {
         nodeNumber = 0;
         linkNumber = 0;
-        std::vector<std::string> nodes = (this->m_listLink.at(j))->GetInstalledNodes();
+        std::vector<std::string> nodes = (this->m_listNetworkHardware.at(j))->GetInstalledNodes();
         for(size_t k = 0; k <  nodes.size(); k++)
         {
           if( nodes.at(k) == receiverName)
           {
-            ndcName = (this->m_listLink.at(j))->GetNdcName();
+            ndcName = (this->m_listNetworkHardware.at(j))->GetNdcName();
             break;
           }
           else
@@ -1435,9 +1435,9 @@ std::vector<std::string> Generator::GenerateTracePython()
 {
   std::vector<std::string> allTrace;
 
-  for(size_t i = 0; i <  this->m_listLink.size(); i++)
+  for(size_t i = 0; i <  this->m_listNetworkHardware.size(); i++)
   {
-    std::vector<std::string> trans = (this->m_listLink.at(i))->GenerateTracePython();
+    std::vector<std::string> trans = (this->m_listNetworkHardware.at(i))->GenerateTracePython();
     for(size_t j = 0; j <  trans.size(); j++)
     {
       allTrace.push_back(trans.at(j));

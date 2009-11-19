@@ -28,7 +28,7 @@
 #ifndef AP_H
 #define AP_H
 
-#include "link.h"
+#include "network-hardware.h"
 
 #include <iostream>
 #include <string>
@@ -47,7 +47,7 @@
  *    - Create an ap with generator object.
  *    - Install nodes (wifi station) with install method.
  */
-class Ap : public Link
+class Ap : public NetworkHardware
 {
   private:
     /**
@@ -124,7 +124,7 @@ class Ap : public Link
      * \brief Generate the build link C++ code.
      * \return build link code.
      */
-    virtual std::vector<std::string> GenerateLinkCpp();
+    virtual std::vector<std::string> GenerateNetworkHardwareCpp();
 
     /**
      * \brief Generate build of the net device container C++ code.
@@ -142,7 +142,7 @@ class Ap : public Link
      * \brief Generate link python code.
      * \return link code
      */
-    virtual std::vector<std::string> GenerateLinkPython();
+    virtual std::vector<std::string> GenerateNetworkHardwarePython();
 
     /**
      * \brief Generate net device container python code.

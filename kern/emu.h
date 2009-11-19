@@ -28,7 +28,7 @@
 #ifndef EMU_H
 #define EMU_H
 
-#include "link.h"
+#include "network-hardware.h"
 
 #include <iostream>
 #include <string>
@@ -67,7 +67,7 @@
  *    - Create an emu link with generator object.
  *    - Install nodes with install method.
  */
-class Emu : public Link
+class Emu : public NetworkHardware
 {
   private:
     /**
@@ -128,7 +128,7 @@ class Emu : public Link
      * \brief Generate build link C++ code.
      * \return build link code
      */
-    virtual std::vector<std::string> GenerateLinkCpp();
+    virtual std::vector<std::string> GenerateNetworkHardwareCpp();
 
     /**
      * \brief Generate build of the net device container C++ code.
@@ -160,7 +160,7 @@ class Emu : public Link
      * \brief Generate build link python code.
      * \return build link code
      */
-    virtual std::vector<std::string> GenerateLinkPython();
+    virtual std::vector<std::string> GenerateNetworkHardwarePython();
 
     /**
      * \brief Generate build of the net device container python code.

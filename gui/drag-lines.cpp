@@ -53,13 +53,13 @@ std::string DragLines::GetSecond() const
   return this->m_second;
 }
 
-void DragLines::SetLinkType(const std::string& linkType)
+void DragLines::SetNetworkHardwareType(const std::string& linkType)
 {
-  this->m_linkType = linkType;
+  this->m_networkHardwareType = linkType;
 }
 
-std::string DragLines::GetLinkType() const
+std::string DragLines::GetNetworkHardwareType() const
 {
-  return this->m_linkType;
+  return this->m_networkHardwareType;
 }
 

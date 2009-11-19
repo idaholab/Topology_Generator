@@ -27,11 +27,11 @@
 
 #include "point-to-point.h"
 
-PointToPoint::PointToPoint(const size_t &indice) : Link(indice)
+PointToPoint::PointToPoint(const size_t &indice) : NetworkHardware(indice)
 {
-  this->SetLinkName(std::string("p2p_" + this->GetIndice()));
-  this->SetNdcName(std::string("ndc_" + this->GetLinkName()));
-  this->SetAllNodeContainer(std::string("all_" + this->GetLinkName()));
+  this->SetNetworkHardwareName(std::string("p2p_" + this->GetIndice()));
+  this->SetNdcName(std::string("ndc_" + this->GetNetworkHardwareName()));
+  this->SetAllNodeContainer(std::string("all_" + this->GetNetworkHardwareName()));
 }
 
 PointToPoint::~PointToPoint()
@@ -46,12 +46,12 @@ std::vector<std::string> PointToPoint::GenerateHeader()
   return headers;
 }
 
-std::vector<std::string> PointToPoint::GenerateLinkCpp()
+std::vector<std::string> PointToPoint::GenerateNetworkHardwareCpp()
 {
   std::vector<std::string> generatedLink;
-  generatedLink.push_back("PointToPointHelper p2p_" + this->GetLinkName() + ";");
-  generatedLink.push_back("p2p_" + this->GetLinkName() + ".SetDeviceAttribute (\"DataRate\", DataRateValue (" + this->GetDataRate() + "));");
-  generatedLink.push_back("p2p_" + this->GetLinkName() + ".SetChannelAttribute (\"Delay\", TimeValue (MilliSeconds (" + this->GetLinkDelay() + ")));");
+  generatedLink.push_back("PointToPointHelper p2p_" + this->GetNetworkHardwareName() + ";");
+  generatedLink.push_back("p2p_" + this->GetNetworkHardwareName() + ".SetDeviceAttribute (\"DataRate\", DataRateValue (" + this->GetDataRate() + "));");
+  generatedLink.push_back("p2p_" + this->GetNetworkHardwareName() + ".SetChannelAttribute (\"Delay\", TimeValue (MilliSeconds (" + this->GetNetworkHardwareDelay() + ")));");
 
   return generatedLink;
 }
@@ -64,7 +64,7 @@ std::vector<std::string> PointToPoint::GenerateNetDeviceCpp()
   {
     ndc.push_back(allNodes.at(i));
   }
-  ndc.push_back("NetDeviceContainer " + this->GetNdcName() + " = p2p_" + this->GetLinkName() + ".Install (" + this->GetAllNodeContainer() + ");");
+  ndc.push_back("NetDeviceContainer " + this->GetNdcName() + " = p2p_" + this->GetNetworkHardwareName() + ".Install (" + this->GetAllNodeContainer() + ");");
 
   return ndc;
 }
@@ -75,19 +75,19 @@ std::vector<std::string> PointToPoint::GenerateTraceCpp()
 
   if(this->GetTrace())
   {
-    trace.push_back("PointToPointHelper::EnablePcapAll (\"" + this->GetLinkName() + "\");");
+    trace.push_back("PointToPointHelper::EnablePcapAll (\"" + this->GetNetworkHardwareName() + "\");");
   }
 
   return trace;
 }
 
-std::vector<std::string> PointToPoint::GenerateLinkPython()
+std::vector<std::string> PointToPoint::GenerateNetworkHardwarePython()
 {
   std::vector<std::string> generatedLink;
   
-  generatedLink.push_back("p2p_" + this->GetLinkName() + " = ns3.PointToPointHelper()");
-  generatedLink.push_back("p2p_" + this->GetLinkName() + ".SetDeviceAttribute(\"DataRate\", ns3.DataRateValue(ns3.DataRate(" + this->GetDataRate() + ")))");
-  generatedLink.push_back("p2p_" + this->GetLinkName() + ".SetChannelAttribute(\"Delay\", ns3.TimeValue(ns3.MilliSeconds(" + this->GetLinkDelay() + ")))");
+  generatedLink.push_back("p2p_" + this->GetNetworkHardwareName() + " = ns3.PointToPointHelper()");
+  generatedLink.push_back("p2p_" + this->GetNetworkHardwareName() + ".SetDeviceAttribute(\"DataRate\", ns3.DataRateValue(ns3.DataRate(" + this->GetDataRate() + ")))");
+  generatedLink.push_back("p2p_" + this->GetNetworkHardwareName() + ".SetChannelAttribute(\"Delay\", ns3.TimeValue(ns3.MilliSeconds(" + this->GetNetworkHardwareDelay() + ")))");
   return generatedLink;
 }
 
@@ -101,7 +101,7 @@ std::vector<std::string> PointToPoint::GenerateNetDevicePython()
     ndc.push_back(allNodes.at(i));
   }
   
-  ndc.push_back(this->GetNdcName() + " = p2p_" + this->GetLinkName() + ".Install(" + this->GetAllNodeContainer() + ")");
+  ndc.push_back(this->GetNdcName() + " = p2p_" + this->GetNetworkHardwareName() + ".Install(" + this->GetAllNodeContainer() + ")");
 
   return ndc;
 }
@@ -112,7 +112,7 @@ std::vector<std::string> PointToPoint::GenerateTracePython()
   
   if(this->GetTrace())
   {
-    trace.push_back("PointToPointHelper.EnablePcapAll(\"" + this->GetLinkName() + "\")");
+    trace.push_back("PointToPointHelper.EnablePcapAll(\"" + this->GetNetworkHardwareName() + "\")");
   }
   
   return trace;

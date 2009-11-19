@@ -143,17 +143,17 @@ MainWindow::MainWindow(const std::string &simulationName)
   QIcon linkIcon(":/Ico/WiredLink.png");
   QString linkString("Wired Link");  
   QAction *linkAction = toolBarFichier->addAction(linkIcon, linkString);
-  connect(linkAction, SIGNAL(triggered()), this, SLOT(CreateWiredLink()));
+  connect(linkAction, SIGNAL(triggered()), this, SLOT(CreateWiredNetworkHardware()));
   // Station link
   QIcon stasLinkIcon(":/Ico/Link.png");
   QString stasLinkString("Station Link");  
   QAction *stasLinkAction = toolBarFichier->addAction(stasLinkIcon, stasLinkString);
-  connect(stasLinkAction, SIGNAL(triggered()), this, SLOT(CreateStationLink()));
+  connect(stasLinkAction, SIGNAL(triggered()), this, SLOT(CreateStationNetworkHardware()));
   //P2P link
   QIcon p2pLinkIcon(":/Ico/P2pLink.png");
   QString p2pLinkString("P2P Link");  
   QAction *p2pLinkAction = toolBarFichier->addAction(p2pLinkIcon, p2pLinkString);
-  connect(p2pLinkAction, SIGNAL(triggered()), this, SLOT(CreateP2pLink()));
+  connect(p2pLinkAction, SIGNAL(triggered()), this, SLOT(CreateP2pNetworkHardware()));
   //separator
   toolBarFichier->addSeparator();
   QIcon appsLinkIcon("");
@@ -256,8 +256,8 @@ void MainWindow::CreateEmu()
   }
 
   this->m_gen->AddNode("Emu");
-  this->m_gen->AddLink("Emu", this->m_gen->GetNode(this->m_gen->GetNNodes() - 1)->GetNodeName(), text.toStdString());
-  this->m_dw->CreateObject("Emu",this->m_gen->GetLink(this->m_gen->GetNLinks() - 1)->GetLinkName());
+  this->m_gen->AddNetworkHardware("Emu", this->m_gen->GetNode(this->m_gen->GetNNodes() - 1)->GetNodeName(), text.toStdString());
+  this->m_dw->CreateObject("Emu",this->m_gen->GetNetworkHardware(this->m_gen->GetNNetworkHardwares() - 1)->GetNetworkHardwareName());
 }
 
 void MainWindow::CreateTap()
@@ -288,8 +288,8 @@ void MainWindow::CreateTap()
   }
 
   this->m_gen->AddNode("Tap");
-  this->m_gen->AddLink("Tap", this->m_gen->GetNode(this->m_gen->GetNNodes() - 1)->GetNodeName(), text.toStdString());
-  this->m_dw->CreateObject("Tap",this->m_gen->GetLink(this->m_gen->GetNLinks() - 1)->GetLinkName());
+  this->m_gen->AddNetworkHardware("Tap", this->m_gen->GetNode(this->m_gen->GetNNodes() - 1)->GetNodeName(), text.toStdString());
+  this->m_dw->CreateObject("Tap",this->m_gen->GetNetworkHardware(this->m_gen->GetNNetworkHardwares() - 1)->GetNetworkHardwareName());
 }
 
 void MainWindow::CleanIface()
@@ -299,19 +299,19 @@ void MainWindow::CleanIface()
   for(size_t i = 0; i < this->m_listIface.size(); i++)
   {
     used = false;
-    for(size_t j = 0; j < this->m_gen->GetNLinks(); j++)
+    for(size_t j = 0; j < this->m_gen->GetNNetworkHardwares(); j++)
     {
-      if( (this->m_gen->GetLink(j)->GetLinkName()).find("tap_") == 0)
+      if( (this->m_gen->GetNetworkHardware(j)->GetNetworkHardwareName()).find("tap_") == 0)
       {
-        if( this->m_listIface.at(i) == static_cast<Tap*>(this->m_gen->GetLink(j))->GetIfaceName())
+        if( this->m_listIface.at(i) == static_cast<Tap*>(this->m_gen->GetNetworkHardware(j))->GetIfaceName())
         {
           used = true;
           break;
         }
       }
-      if( (this->m_gen->GetLink(j)->GetLinkName()).find("emu_") == 0 ) 
+      if( (this->m_gen->GetNetworkHardware(j)->GetNetworkHardwareName()).find("emu_") == 0 ) 
       {
-        if( this->m_listIface.at(i) == static_cast<Emu*>(this->m_gen->GetLink(j))->GetIfaceName())
+        if( this->m_listIface.at(i) == static_cast<Emu*>(this->m_gen->GetNetworkHardware(j))->GetIfaceName())
         {
           used = true;
           break;
@@ -328,8 +328,8 @@ void MainWindow::CleanIface()
 void MainWindow::CreateAp()
 {  
   this->m_gen->AddNode("Ap");
-  this->m_gen->AddLink("Ap", this->m_gen->GetNode(this->m_gen->GetNNodes() - 1)->GetNodeName());
-  this->m_dw->CreateObject("Ap", this->m_gen->GetLink(this->m_gen->GetNLinks() - 1)->GetLinkName() );
+  this->m_gen->AddNetworkHardware("Ap", this->m_gen->GetNode(this->m_gen->GetNNodes() - 1)->GetNodeName());
+  this->m_dw->CreateObject("Ap", this->m_gen->GetNetworkHardware(this->m_gen->GetNNetworkHardwares() - 1)->GetNetworkHardwareName() );
 }
 
 void MainWindow::CreateStation()
@@ -340,15 +340,15 @@ void MainWindow::CreateStation()
 
 void MainWindow::CreateHub()
 {
-  this->m_gen->AddLink("Hub");
-  this->m_dw->CreateObject("Hub", this->m_gen->GetLink(this->m_gen->GetNLinks() - 1)->GetLinkName());
+  this->m_gen->AddNetworkHardware("Hub");
+  this->m_dw->CreateObject("Hub", this->m_gen->GetNetworkHardware(this->m_gen->GetNNetworkHardwares() - 1)->GetNetworkHardwareName());
 }
 
 void MainWindow::CreateSwitch()
 {
   this->m_gen->AddNode("Bridge");
-  this->m_gen->AddLink("Bridge", this->m_gen->GetNode(this->m_gen->GetNNodes() - 1)->GetNodeName());
-  this->m_dw->CreateObject("Switch",this->m_gen->GetLink(this->m_gen->GetNLinks() - 1)->GetLinkName());
+  this->m_gen->AddNetworkHardware("Bridge", this->m_gen->GetNode(this->m_gen->GetNNodes() - 1)->GetNodeName());
+  this->m_dw->CreateObject("Switch",this->m_gen->GetNetworkHardware(this->m_gen->GetNNetworkHardwares() - 1)->GetNetworkHardwareName());
 }
 
 void MainWindow::CreateRouter()
@@ -357,7 +357,7 @@ void MainWindow::CreateRouter()
   this->m_dw->CreateObject("Router", this->m_gen->GetNode(this->m_gen->GetNNodes() - 1)->GetNodeName());
 }
 
-void MainWindow::CreateWiredLink()
+void MainWindow::CreateWiredNetworkHardware()
 {
   /*
    * The differents link :
@@ -372,21 +372,21 @@ void MainWindow::CreateWiredLink()
    *  - Pc to emu
    *  - Pc to Tap
    */
-  if(this->m_dw->GetTraceLink())
+  if(this->m_dw->GetTraceNetworkHardware())
   {
-    this->m_dw->SetTraceLink(false);
+    this->m_dw->SetTraceNetworkHardware(false);
     this->m_dw->ResetSelected();
     return;
   }
-  this->m_dw->SetTraceLink(true);
-  this->m_dw->SetLinkType("WiredLink");
+  this->m_dw->SetTraceNetworkHardware(true);
+  this->m_dw->SetNetworkHardwareType("WiredLink");
 }
 
-void MainWindow::ValidLink()
+void MainWindow::ValidNetworkHardware()
 {
   /* function called when the two equipement are selected. */
   /* get the selected equipement. */
-  this->m_dw->SetTraceLink(false);
+  this->m_dw->SetTraceNetworkHardware(false);
 
   std::vector<std::string> equi = this->m_dw->GetLastSelected();
   size_t indic = 0;
@@ -449,9 +449,9 @@ void MainWindow::ValidLink()
       (equi.at(0)).find("emu_") == 0 || (equi.at(0).find("tap_") == 0 ))
   {
     indic = 0;
-    for(size_t i = 0; i < this->m_gen->GetNLinks(); i++)
+    for(size_t i = 0; i < this->m_gen->GetNNetworkHardwares(); i++)
     { 
-      if( this->m_gen->GetLink(i)->GetLinkName() == equi.at(0))
+      if( this->m_gen->GetNetworkHardware(i)->GetNetworkHardwareName() == equi.at(0))
       {
         indic = i;
       }
@@ -462,9 +462,9 @@ void MainWindow::ValidLink()
       (equi.at(1)).find("emu_") == 0 || (equi.at(1).find("tap_") == 0 ))
   {
     indic = 0;
-    for(size_t i = 0; i < this->m_gen->GetNLinks(); i++)
+    for(size_t i = 0; i < this->m_gen->GetNNetworkHardwares(); i++)
     { 
-      if( this->m_gen->GetLink(i)->GetLinkName() == equi.at(1))
+      if( this->m_gen->GetNetworkHardware(i)->GetNetworkHardwareName() == equi.at(1))
       {
         indic = i;
       }
@@ -476,14 +476,14 @@ void MainWindow::ValidLink()
     size_t number = -1;
     size_t number2 = -1;
 
-    for(size_t i = 0; i < this->m_gen->GetNLinks(); i++)
+    for(size_t i = 0; i < this->m_gen->GetNNetworkHardwares(); i++)
     {
-      if(equi.at(0) == this->m_gen->GetLink(i)->GetLinkName())
+      if(equi.at(0) == this->m_gen->GetNetworkHardware(i)->GetNetworkHardwareName())
       {
         number = i;
         break;
       }
-      if(equi.at(1) == this->m_gen->GetLink(i)->GetLinkName())
+      if(equi.at(1) == this->m_gen->GetNetworkHardware(i)->GetNetworkHardwareName())
       {
         number2 = i;
         break;
@@ -502,15 +502,15 @@ void MainWindow::ValidLink()
       /* you can't connect for example two terminals without an csma network so ... */
       if(equi.at(2) == "WiredLink")
       {
-        this->m_gen->AddLink("Hub");
-        this->ConnectNode((this->m_gen->GetNLinks() - 1), equi.at(0));
-        this->ConnectNode((this->m_gen->GetNLinks() - 1), equi.at(1));
+        this->m_gen->AddNetworkHardware("Hub");
+        this->ConnectNode((this->m_gen->GetNNetworkHardwares() - 1), equi.at(0));
+        this->ConnectNode((this->m_gen->GetNNetworkHardwares() - 1), equi.at(1));
       }
       else if(equi.at(2) == "P2pLink")
       {
-        this->m_gen->AddLink("PointToPoint");
-        this->ConnectNode((this->m_gen->GetNLinks() - 1), equi.at(0));
-        this->ConnectNode((this->m_gen->GetNLinks() - 1), equi.at(1));
+        this->m_gen->AddNetworkHardware("PointToPoint");
+        this->ConnectNode((this->m_gen->GetNNetworkHardwares() - 1), equi.at(0));
+        this->ConnectNode((this->m_gen->GetNNetworkHardwares() - 1), equi.at(1));
       }
       else
       {
@@ -532,28 +532,28 @@ void MainWindow::ValidLink()
   this->m_dw->ResetSelected();
 }
 
-void MainWindow::CreateStationLink()
+void MainWindow::CreateStationNetworkHardware()
 {
-  if(this->m_dw->GetTraceLink())
+  if(this->m_dw->GetTraceNetworkHardware())
   {
-    this->m_dw->SetTraceLink(false);
+    this->m_dw->SetTraceNetworkHardware(false);
     this->m_dw->ResetSelected();
     return;
   }
-  this->m_dw->SetTraceLink(true);
-  this->m_dw->SetLinkType("WifiLink");
+  this->m_dw->SetTraceNetworkHardware(true);
+  this->m_dw->SetNetworkHardwareType("WifiLink");
 }
 
-void MainWindow::CreateP2pLink()
+void MainWindow::CreateP2pNetworkHardware()
 {
-  if(this->m_dw->GetTraceLink())
+  if(this->m_dw->GetTraceNetworkHardware())
   {
-    this->m_dw->SetTraceLink(false);
+    this->m_dw->SetTraceNetworkHardware(false);
     this->m_dw->ResetSelected();
     return;
   }
-  this->m_dw->SetTraceLink(true);
-  this->m_dw->SetLinkType("P2pLink");
+  this->m_dw->SetTraceNetworkHardware(true);
+  this->m_dw->SetNetworkHardwareType("P2pLink");
 }
 
 void MainWindow::ConfigurationMenu()
@@ -594,15 +594,15 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
   /* test if the link exist. */
   try
   {
-    this->m_gen->GetLink(linkNumber);
+    this->m_gen->GetNetworkHardware(linkNumber);
   }
   catch(const std::out_of_range &e)
   {
     QMessageBox::about(this, "Error", "This link doesn't exist.");
     for(size_t i = 0; i < this->m_dw->GetDrawLines().size(); i++)
     {
-      if( (nodeName == this->m_dw->GetDrawLine(i).GetFirst() && this->m_gen->GetLink(linkNumber)->GetLinkName() == this->m_dw->GetDrawLine(i).GetSecond()) ||
-          (this->m_gen->GetLink(linkNumber)->GetLinkName() == this->m_dw->GetDrawLine(i).GetFirst() && nodeName == this->m_dw->GetDrawLine(i).GetSecond()) )
+      if( (nodeName == this->m_dw->GetDrawLine(i).GetFirst() && this->m_gen->GetNetworkHardware(linkNumber)->GetNetworkHardwareName() == this->m_dw->GetDrawLine(i).GetSecond()) ||
+          (this->m_gen->GetNetworkHardware(linkNumber)->GetNetworkHardwareName() == this->m_dw->GetDrawLine(i).GetFirst() && nodeName == this->m_dw->GetDrawLine(i).GetSecond()) )
       {
         this->m_dw->EraseDrawLine(i);
       }
@@ -628,7 +628,7 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
   }
 
   /* get the number of machines also connected. */
-  std::vector<std::string> nodes = this->m_gen->GetLink(linkNumber)->GetInstalledNodes();
+  std::vector<std::string> nodes = this->m_gen->GetNetworkHardware(linkNumber)->GetInstalledNodes();
   for(size_t i = 0; i < nodes.size(); i++)
   {
     for(size_t j = 0; j < this->m_gen->GetNNodes(); j++)
@@ -644,15 +644,15 @@ void MainWindow::ConnectNode(const size_t &linkNumber, const std::string &nodeNa
     QMessageBox::about(this, "Error", "Limit of machines exceeded.");
     for(size_t i = 0; i < this->m_dw->GetDrawLines().size(); i++)
     {
-      if( (nodeName == this->m_dw->GetDrawLine(i).GetFirst() && this->m_gen->GetLink(linkNumber)->GetLinkName() == this->m_dw->GetDrawLine(i).GetSecond()) ||
-          (this->m_gen->GetLink(linkNumber)->GetLinkName() == this->m_dw->GetDrawLine(i).GetFirst() && nodeName == this->m_dw->GetDrawLine(i).GetSecond()) )
+      if( (nodeName == this->m_dw->GetDrawLine(i).GetFirst() && this->m_gen->GetNetworkHardware(linkNumber)->GetNetworkHardwareName() == this->m_dw->GetDrawLine(i).GetSecond()) ||
+          (this->m_gen->GetNetworkHardware(linkNumber)->GetNetworkHardwareName() == this->m_dw->GetDrawLine(i).GetFirst() && nodeName == this->m_dw->GetDrawLine(i).GetSecond()) )
       {
         this->m_dw->EraseDrawLine(i);
       }
     }
     return;
   }
-  this->m_gen->GetLink(linkNumber)->Install(nodeName);
+  this->m_gen->GetNetworkHardware(linkNumber)->Install(nodeName);
 }
 
 void MainWindow::GenerateCpp()
@@ -903,7 +903,7 @@ void MainWindow::SaveXml()
   //
   bool hidden = true;
   writer.writeStartElement("NetworkHardwares");
-  for(size_t i = 0; i < this->m_gen->GetNLinks(); i++)
+  for(size_t i = 0; i < this->m_gen->GetNNetworkHardwares(); i++)
   {
     hidden = true;
     writer.writeStartElement("networkHardware");
@@ -913,7 +913,7 @@ void MainWindow::SaveXml()
       DragObject *child = dynamic_cast<DragObject*>(this->m_dw->children().at(j));
       if(child)
       {
-        if(child->GetName() == this->m_gen->GetLink(i)->GetLinkName())
+        if(child->GetName() == this->m_gen->GetNetworkHardware(i)->GetNetworkHardwareName())
         {
           hidden = false;
           break;
@@ -928,10 +928,10 @@ void MainWindow::SaveXml()
     {
       writer.writeTextElement("hidden", "false");
     }
-    writer.writeTextElement("name", QString((this->m_gen->GetLink(i)->GetLinkName()).c_str()));     
-    writer.writeTextElement("dataRate", QString((this->m_gen->GetLink(i)->GetDataRate()).c_str()));
-    writer.writeTextElement("linkDelay", QString((this->m_gen->GetLink(i)->GetLinkDelay()).c_str()));
-    if(this->m_gen->GetLink(i)->GetTrace())
+    writer.writeTextElement("name", QString((this->m_gen->GetNetworkHardware(i)->GetNetworkHardwareName()).c_str()));     
+    writer.writeTextElement("dataRate", QString((this->m_gen->GetNetworkHardware(i)->GetDataRate()).c_str()));
+    writer.writeTextElement("linkDelay", QString((this->m_gen->GetNetworkHardware(i)->GetNetworkHardwareDelay()).c_str()));
+    if(this->m_gen->GetNetworkHardware(i)->GetTrace())
     {
       writer.writeTextElement("enableTrace", "true");
     }
@@ -939,7 +939,7 @@ void MainWindow::SaveXml()
     {
       writer.writeTextElement("enableTrace", "false");
     }
-    if(this->m_gen->GetLink(i)->GetPromisc())
+    if(this->m_gen->GetNetworkHardware(i)->GetPromisc())
     {
       writer.writeTextElement("tracePromisc", "true");
     }
@@ -948,17 +948,17 @@ void MainWindow::SaveXml()
       writer.writeTextElement("tracePromisc", "false");
     } 
     writer.writeStartElement("connectedNodes");  
-    for(size_t j = 0; j < this->m_gen->GetLink(i)->GetInstalledNodes().size(); j++)
+    for(size_t j = 0; j < this->m_gen->GetNetworkHardware(i)->GetInstalledNodes().size(); j++)
     {
-      writer.writeTextElement("name", QString((this->m_gen->GetLink(i)->GetInstalledNode(j)).c_str()));
+      writer.writeTextElement("name", QString((this->m_gen->GetNetworkHardware(i)->GetInstalledNode(j)).c_str()));
     }
     writer.writeEndElement();
     
     // for each link, put his own spécial configs
     writer.writeStartElement("special");
-    if(this->m_gen->GetLink(i)->GetLinkName().find("ap_") == 0)
+    if(this->m_gen->GetNetworkHardware(i)->GetNetworkHardwareName().find("ap_") == 0)
     {
-      Ap *ap = dynamic_cast<Ap*>(this->m_gen->GetLink(i));
+      Ap *ap = dynamic_cast<Ap*>(this->m_gen->GetNetworkHardware(i));
       if(ap->GetMobility())
       {
         writer.writeTextElement("mobility", "true");
@@ -969,15 +969,15 @@ void MainWindow::SaveXml()
       }
       //delete ap;
     }
-    else if(this->m_gen->GetLink(i)->GetLinkName().find("emu_") == 0)
+    else if(this->m_gen->GetNetworkHardware(i)->GetNetworkHardwareName().find("emu_") == 0)
     {
-      Emu *emu = dynamic_cast<Emu*>(this->m_gen->GetLink(i));
+      Emu *emu = dynamic_cast<Emu*>(this->m_gen->GetNetworkHardware(i));
       writer.writeTextElement("iface", QString((emu->GetIfaceName()).c_str()));
       //delete emu;
     }
-    else if(this->m_gen->GetLink(i)->GetLinkName().find("tap_") == 0)
+    else if(this->m_gen->GetNetworkHardware(i)->GetNetworkHardwareName().find("tap_") == 0)
     {
-      Tap *tap = dynamic_cast<Tap*>(this->m_gen->GetLink(i));
+      Tap *tap = dynamic_cast<Tap*>(this->m_gen->GetNetworkHardware(i));
       writer.writeTextElement("iface", QString((tap->GetIfaceName()).c_str()));
       //delete tap;
     }
