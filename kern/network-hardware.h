@@ -19,14 +19,14 @@
  */
 
 /**
- * \file link.h
+ * \file network-hardware.h
  * \brief Link Base Class.
  * \author Pierre Weiss
  * \date 2009
  */
 
-#ifndef LINK_H
-#define LINK_H
+#ifndef NETWORKHARDWARE_H
+#define NETWORKHARDWARE_H
 
 #include <iostream>
 #include <string>
@@ -49,16 +49,16 @@
  *  To add a new link, please see the subclass for example.
  *  example of .h file :
  *
- *  include "link.h"
- *  class LinkImpl : public Link
+ *  include "network-hardware.h"
+ *  class LinkImpl : public NetworkHardware
  *  {
  *    LinkImpl(...);
  *    ~LinkImpl();
  *
  *    virtual std::vector<std::string> GenerateHeader();
- *    virtual std::vector<std::string> GenerateLinkCpp();
+ *    virtual std::vector<std::string> GenerateNetworkHardwareCpp();
  *    virtual std::vector<std::string> GenerateNetdeviceCpp();
- *    virtual std::vector<std::string> GenerateLinkPython();
+ *    virtual std::vector<std::string> GenerateNetworkHardwarePython();
  *    virtual std::vector<std::string> GenerateNetdevicePython();
  *    # and if you need
  *    virtual std::vector<std::string> GenerateTraceCpp();
@@ -71,7 +71,7 @@
  *    virtual std::vector<std::string> GenerateCmdLinePython();
  *  }
  */
-class Link
+class NetworkHardware
 {
   private:
     /**
@@ -82,7 +82,7 @@ class Link
     /**
      * \brief Link name.
      */
-    std::string m_linkName;
+    std::string m_networkHardwareName;
 
     /**
      * \brief Data rate.
@@ -92,7 +92,7 @@ class Link
     /**
      * \brief Link delay.
      */
-    std::string m_linkDelay;
+    std::string m_networkHardwareDelay;
 
     /**
      * \brief Node device container name.
@@ -124,12 +124,12 @@ class Link
      * \brief Constructor.
      * \param indice number of the link
      */
-    Link(const size_t &indice);
+    NetworkHardware(const size_t &indice);
 
     /**
      * \brief Destructor.
      */
-    virtual ~Link();
+    virtual ~NetworkHardware();
 
     /**
      * \brief Generate the headers code.
@@ -141,7 +141,7 @@ class Link
      * \brief Generate link C++ code.
      * \return link code
      */
-    virtual std::vector<std::string> GenerateLinkCpp() = 0;
+    virtual std::vector<std::string> GenerateNetworkHardwareCpp() = 0;
 
     /**
      * \brief Generate net device container C++ code.
@@ -179,7 +179,7 @@ class Link
      * \brief Generate link python code.
      * \return link code
      */
-    virtual std::vector<std::string> GenerateLinkPython() = 0;
+    virtual std::vector<std::string> GenerateNetworkHardwarePython() = 0;
 
     /**
      * \brief Generate net device container python code.
@@ -229,7 +229,7 @@ class Link
      * \brief Get link name.
      * \return link name
      */
-    std::string GetLinkName();
+    std::string GetNetworkHardwareName();
 
     /**
      * \brief Get link data rate.
@@ -241,7 +241,7 @@ class Link
      * \brief Get link delay (in ms).
      * \return link delay
      */
-    std::string GetLinkDelay();
+    std::string GetNetworkHardwareDelay();
 
     /**
      * \brief Get net device container name.
@@ -271,7 +271,7 @@ class Link
      * \brief Set link rate.
      * \param linkName new link name
      */
-    void SetLinkName(const std::string &linkName);
+    void SetNetworkHardwareName(const std::string &linkName);
 
     /**
      * \brief Set data rate in bps.
@@ -283,7 +283,7 @@ class Link
      * \brief Set link delay in millisecond.
      * \param linkDelay new link delay
      */
-    void SetLinkDelay(const std::string &linkDelay);
+    void SetNetworkHardwareDelay(const std::string &linkDelay);
 
     /**
      * \brief Set net device container name.
@@ -346,5 +346,5 @@ class Link
     bool GetPromisc();
 };
 
-#endif /* LINK_H */
+#endif /* NETWORKHARDWARE_H */
 

@@ -40,6 +40,7 @@
 #include "udp-echo.h"
 
 #include "utils.h"
+#include "gui-utils.h"
 
 MainWindow::MainWindow(const std::string &simulationName)
 {
@@ -866,163 +867,10 @@ void MainWindow::SaveXml()
   //QString fileName = "test.xml";
   QFile file(fileName);
   file.open(QFile::WriteOnly | QFile::Text);
-  QXmlStreamWriter writer(&file);
-  writer.setAutoFormatting(true);
-  writer.writeStartDocument();
-
-  writer.writeStartElement("Gen");
-    
-  //
-  // Dump Node list
-  //
-  writer.writeStartElement("Nodes");
-  for(size_t i = 0; i < this->m_gen->GetNNodes(); i++)
-  { 
-    for(size_t j = 0; j < (size_t)this->m_dw->children().size(); j++)
-    {
-      DragObject *child = dynamic_cast<DragObject*>(this->m_dw->children().at(j));
-      if(child)
-      {
-        if(child->GetName() == this->m_gen->GetNode(i)->GetNodeName() && child->GetName() != "" && child->GetName() != "deleted")
-        {
-          writer.writeStartElement("node");
-          writer.writeTextElement("name", QString((this->m_gen->GetNode(i)->GetNodeName()).c_str()));
-          writer.writeTextElement("nsc", QString((this->m_gen->GetNode(i)->GetNsc()).c_str()));
-          writer.writeTextElement("nodeNbr", QString((utils::integerToString(this->m_gen->GetNode(i)->GetMachinesNumber())).c_str()));
-          writer.writeTextElement("x", QString((utils::integerToString(child->pos().x())).c_str()));
-          writer.writeTextElement("y", QString((utils::integerToString(child->pos().y())).c_str())); 
-          writer.writeEndElement();//</node>
-        }
-      }
-    }
-  }
-  writer.writeEndElement();//</Nodes>
-
-  //
-  // Dump Link list
-  //
-  bool hidden = true;
-  writer.writeStartElement("NetworkHardwares");
-  for(size_t i = 0; i < this->m_gen->GetNNetworkHardwares(); i++)
-  {
-    hidden = true;
-    writer.writeStartElement("networkHardware");
-    // check if link is hidden or not.
-    for(size_t j = 0; j < (size_t)this->m_dw->children().size(); j++)
-    {
-      DragObject *child = dynamic_cast<DragObject*>(this->m_dw->children().at(j));
-      if(child)
-      {
-        if(child->GetName() == this->m_gen->GetNetworkHardware(i)->GetNetworkHardwareName())
-        {
-          hidden = false;
-          break;
-        }
-      }
-    }
-    if(hidden)
-    {
-      writer.writeTextElement("hidden", "true");
-    }
-    else
-    {
-      writer.writeTextElement("hidden", "false");
-    }
-    writer.writeTextElement("name", QString((this->m_gen->GetNetworkHardware(i)->GetNetworkHardwareName()).c_str()));     
-    writer.writeTextElement("dataRate", QString((this->m_gen->GetNetworkHardware(i)->GetDataRate()).c_str()));
-    writer.writeTextElement("linkDelay", QString((this->m_gen->GetNetworkHardware(i)->GetNetworkHardwareDelay()).c_str()));
-    if(this->m_gen->GetNetworkHardware(i)->GetTrace())
-    {
-      writer.writeTextElement("enableTrace", "true");
-    }
-    else
-    {
-      writer.writeTextElement("enableTrace", "false");
-    }
-    if(this->m_gen->GetNetworkHardware(i)->GetPromisc())
-    {
-      writer.writeTextElement("tracePromisc", "true");
-    }
-    else
-    {
-      writer.writeTextElement("tracePromisc", "false");
-    } 
-    writer.writeStartElement("connectedNodes");  
-    for(size_t j = 0; j < this->m_gen->GetNetworkHardware(i)->GetInstalledNodes().size(); j++)
-    {
-      writer.writeTextElement("name", QString((this->m_gen->GetNetworkHardware(i)->GetInstalledNode(j)).c_str()));
-    }
-    writer.writeEndElement();
-    
-    // for each link, put his own spécial configs
-    writer.writeStartElement("special");
-    if(this->m_gen->GetNetworkHardware(i)->GetNetworkHardwareName().find("ap_") == 0)
-    {
-      Ap *ap = dynamic_cast<Ap*>(this->m_gen->GetNetworkHardware(i));
-      if(ap->GetMobility())
-      {
-        writer.writeTextElement("mobility", "true");
-      }
-      else
-      {
-        writer.writeTextElement("mobility", "false");
-      }
-      //delete ap;
-    }
-    else if(this->m_gen->GetNetworkHardware(i)->GetNetworkHardwareName().find("emu_") == 0)
-    {
-      Emu *emu = dynamic_cast<Emu*>(this->m_gen->GetNetworkHardware(i));
-      writer.writeTextElement("iface", QString((emu->GetIfaceName()).c_str()));
-      //delete emu;
-    }
-    else if(this->m_gen->GetNetworkHardware(i)->GetNetworkHardwareName().find("tap_") == 0)
-    {
-      Tap *tap = dynamic_cast<Tap*>(this->m_gen->GetNetworkHardware(i));
-      writer.writeTextElement("iface", QString((tap->GetIfaceName()).c_str()));
-      //delete tap;
-    }
-    writer.writeEndElement();//</special>
-    writer.writeEndElement();//</networkHardware>
-  }
-  writer.writeEndElement();//</NetworkHardwares>
-    
-  //
-  // Dump Application List
-  //
-  writer.writeStartElement("Applications");
-  for(size_t i = 0; i < this->m_gen->GetNApplications(); i++)
-  {
-    writer.writeStartElement("application");
-    
-    writer.writeTextElement("name", QString((this->m_gen->GetApplication(i)->GetAppName()).c_str()));
-    writer.writeTextElement("sender", QString((this->m_gen->GetApplication(i)->GetSenderNode()).c_str()));
-    writer.writeTextElement("receiver", QString((this->m_gen->GetApplication(i)->GetReceiverNode()).c_str()));
-    writer.writeTextElement("startTime", QString((this->m_gen->GetApplication(i)->GetStartTime()).c_str()));
-    writer.writeTextElement("endTime", QString((this->m_gen->GetApplication(i)->GetEndTime()).c_str()));
-
-    writer.writeStartElement("special");
-    if(this->m_gen->GetApplication(i)->GetAppName().find("tcp_") == 0)
-    {
-      TcpLargeTransfer *tcp = dynamic_cast<TcpLargeTransfer*>(this->m_gen->GetApplication(i));
-      writer.writeTextElement("port", QString((uint)tcp->GetPort()));
-      //delete tcp;
-    } 
-    else if(this->m_gen->GetApplication(i)->GetAppName().find("udpEcho_") == 0)
-    {
-      UdpEcho *udp = dynamic_cast<UdpEcho*>(this->m_gen->GetApplication(i));
-      writer.writeTextElement("port", QString((uint)udp->GetPort()));
-      writer.writeTextElement("packetSize", QString((uint)udp->GetPacketSize()));
-      writer.writeTextElement("maxPacketCount", QString((uint)udp->GetMaxPacketCount()));
-      writer.writeTextElement("packetIntervalTime", QString((udp->GetPacketIntervalTime()).c_str()));
-      //delete udp;
-    }
-
-    writer.writeEndElement();//</special>
-    writer.writeEndElement();//</application>
-  }
-  writer.writeEndElement();//</Applications>
-
-  writer.writeEndDocument();//</Gen>
+  QXmlStreamWriter *writer = new QXmlStreamWriter(&file);
+  
+  guiUtils::saveXml(writer, this->m_gen, this->m_dw);
+  
   file.close();
 
   QMessageBox(QMessageBox::Information, "Save Simulation", "Simulation saved at " + fileName).exec();
