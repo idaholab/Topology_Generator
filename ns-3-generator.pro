@@ -12,6 +12,7 @@ HEADERS += gui/drag-lines.h \
            gui/drag-object.h \
            gui/drag-widget.h \
            gui/main-window.h \
+           gui/gui-utils.h \
            kern/ap.h \
            kern/application.h \
            kern/bridge.h \
@@ -31,6 +32,7 @@ SOURCES += main.cpp \
            gui/drag-object.cpp \
            gui/drag-widget.cpp \
            gui/main-window.cpp \
+           gui/gui-utils.cpp \
            kern/ap.cpp \
            kern/application.cpp \
            kern/bridge.cpp \

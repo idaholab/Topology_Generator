@@ -19,73 +19,73 @@
  */
 
 /**
- * \file link.cpp
+ * \file network-harware.cpp
  * \brief Link base class.
  * \author Pierre Weiss
  * \date 2009
  */
 
-#include "link.h"
+#include "network-hardware.h"
 #include "generator.h"
 #include <stdexcept>
 
 #include "utils.h"
 
-Link::Link(const size_t &indice)
+NetworkHardware::NetworkHardware(const size_t &indice)
 {
   this->m_indice = indice;
   this->m_dataRate = std::string("100000000"); /* 100 Mbps */
-  this->m_linkDelay = std::string("10000"); /* 10 ms */
+  this->m_networkHardwareDelay = std::string("10000"); /* 10 ms */
 
   this->m_enableTrace = false;
   this->m_tracePromisc = false;
 }
 
-Link::~Link()
+NetworkHardware::~NetworkHardware()
 {
 }
 
-std::string Link::GetIndice()
+std::string NetworkHardware::GetIndice()
 {
   return utils::integerToString(this->m_indice);
 }
 
-void Link::SetIndice(const size_t &indice)
+void NetworkHardware::SetIndice(const size_t &indice)
 {
   this->m_indice = indice;
 }
 
-std::string Link::GetLinkName()
+std::string NetworkHardware::GetNetworkHardwareName()
 {
-  return this->m_linkName;
+  return this->m_networkHardwareName;
 }
 
-std::string Link::GetDataRate()
+std::string NetworkHardware::GetDataRate()
 {
   return this->m_dataRate;
 }
 
-std::string Link::GetLinkDelay()
+std::string NetworkHardware::GetNetworkHardwareDelay()
 {
-  return this->m_linkDelay;
+  return this->m_networkHardwareDelay;
 }
 
-std::string Link::GetNdcName()
+std::string NetworkHardware::GetNdcName()
 {
   return this->m_ndcName;
 }
 
-std::vector<std::string> Link::GetInstalledNodes()
+std::vector<std::string> NetworkHardware::GetInstalledNodes()
 {
   return this->m_nodes;
 }
 
-std::string Link::GetInstalledNode(const size_t &i)
+std::string NetworkHardware::GetInstalledNode(const size_t &i)
 {
   return this->m_nodes.at(i);
 }
 
-void Link::removeInstalledNode(const size_t &nb)
+void NetworkHardware::removeInstalledNode(const size_t &nb)
 {
   try
   {
@@ -98,27 +98,27 @@ void Link::removeInstalledNode(const size_t &nb)
   }
 }
 
-void Link::SetLinkName(const std::string &linkName)
+void NetworkHardware::SetNetworkHardwareName(const std::string &linkName)
 {
-  this->m_linkName = linkName;
+  this->m_networkHardwareName = linkName;
 }
 
-void Link::SetDataRate(const std::string &dataRate)
+void NetworkHardware::SetDataRate(const std::string &dataRate)
 {
   this->m_dataRate = dataRate;
 }
 
-void Link::SetLinkDelay(const std::string &linkDelay)
+void NetworkHardware::SetNetworkHardwareDelay(const std::string &linkDelay)
 {
-  this->m_linkDelay = linkDelay;
+  this->m_networkHardwareDelay = linkDelay;
 }
 
-void Link::SetNdcName(const std::string &ndcName)
+void NetworkHardware::SetNdcName(const std::string &ndcName)
 {
   this->m_ndcName = ndcName;
 }
 
-void Link::Install(const std::string &node)
+void NetworkHardware::Install(const std::string &node)
 {
   this->m_nodes.push_back(node);
   std::vector<std::string> trans;
@@ -141,17 +141,17 @@ void Link::Install(const std::string &node)
   this->m_nodes = trans;
 }
 
-std::string Link::GetAllNodeContainer()
+std::string NetworkHardware::GetAllNodeContainer()
 {
   return this->m_allNodeContainer;
 }
 
-void Link::SetAllNodeContainer(const std::string &allNodeContainer)
+void NetworkHardware::SetAllNodeContainer(const std::string &allNodeContainer)
 {
   this->m_allNodeContainer = allNodeContainer;
 }
 
-std::vector<std::string> Link::GroupAsNodeContainerCpp()
+std::vector<std::string> NetworkHardware::GroupAsNodeContainerCpp()
 {
   std::vector<std::string> res;
   res.push_back("NodeContainer " + this->m_allNodeContainer + ";");
@@ -166,7 +166,7 @@ std::vector<std::string> Link::GroupAsNodeContainerCpp()
   return res;
 }
 
-std::vector<std::string> Link::GroupAsNodeContainerPython()
+std::vector<std::string> NetworkHardware::GroupAsNodeContainerPython()
 {
   std::vector<std::string> res;
 
@@ -181,70 +181,70 @@ std::vector<std::string> Link::GroupAsNodeContainerPython()
   return res;
 }
 
-void Link::SetTrace(const bool &state)
+void NetworkHardware::SetTrace(const bool &state)
 {
   this->m_enableTrace = state;
 }
 
-bool Link::GetTrace()
+bool NetworkHardware::GetTrace()
 {
   return this->m_enableTrace;
 }
 
-void Link::SetPromisc(const bool &state)
+void NetworkHardware::SetPromisc(const bool &state)
 {
   this->m_tracePromisc = state;
 }
 
-bool Link::GetPromisc()
+bool NetworkHardware::GetPromisc()
 {
   return this->m_tracePromisc;
 }
 
-std::vector<std::string> Link::GenerateTapBridgeCpp()
+std::vector<std::string> NetworkHardware::GenerateTapBridgeCpp()
 {
   std::vector<std::string> res;
   return res;
 }
 
-std::vector<std::string> Link::GenerateVarsCpp()
+std::vector<std::string> NetworkHardware::GenerateVarsCpp()
 {
   std::vector<std::string> res;
   return res;
 }
 
-std::vector<std::string> Link::GenerateCmdLineCpp()
+std::vector<std::string> NetworkHardware::GenerateCmdLineCpp()
 {
   std::vector<std::string> res;
   return res;
 }
 
-std::vector<std::string> Link::GenerateTraceCpp()
+std::vector<std::string> NetworkHardware::GenerateTraceCpp()
 {
   std::vector<std::string> res;
   return res;
 }
 
 /* XXX to move elsewhere */
-std::vector<std::string> Link::GenerateTapBridgePython()
+std::vector<std::string> NetworkHardware::GenerateTapBridgePython()
 {
   std::vector<std::string> res;
   return res;
 }
 
-std::vector<std::string> Link::GenerateVarsPython()
+std::vector<std::string> NetworkHardware::GenerateVarsPython()
 {
   std::vector<std::string> res;
   return res;
 }
 
-std::vector<std::string> Link::GenerateCmdLinePython()
+std::vector<std::string> NetworkHardware::GenerateCmdLinePython()
 {
   std::vector<std::string> res;
   return res;
 }
 
-std::vector<std::string> Link::GenerateTracePython()
+std::vector<std::string> NetworkHardware::GenerateTracePython()
 {
   std::vector<std::string> res;
   return res;
