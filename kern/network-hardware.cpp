@@ -19,7 +19,7 @@
  */
 
 /**
- * \file network-harware.cpp
+ * \file network-hardware.cpp
  * \brief Link base class.
  * \author Pierre Weiss
  * \date 2009
@@ -31,8 +31,9 @@
 
 #include "utils.h"
 
-NetworkHardware::NetworkHardware(const size_t &indice)
+NetworkHardware::NetworkHardware(const std::string &type, const size_t &indice)
 {
+  this->m_type = type;
   this->m_indice = indice;
   this->m_dataRate = std::string("100000000"); /* 100 Mbps */
   this->m_networkHardwareDelay = std::string("10000"); /* 10 ms */
@@ -248,5 +249,10 @@ std::vector<std::string> NetworkHardware::GenerateTracePython()
 {
   std::vector<std::string> res;
   return res;
+}
+
+std::string NetworkHardware::GetLinkType()
+{
+  return this->m_type;
 }
 

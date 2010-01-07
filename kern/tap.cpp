@@ -27,7 +27,7 @@
 
 #include "tap.h"
 
-Tap::Tap(const size_t &indice, const std::string &tapNode, const std::string &ifaceName) : NetworkHardware(indice)
+Tap::Tap(const std::string &type, const size_t &indice, const std::string &tapNode, const std::string &ifaceName) : NetworkHardware(type, indice)
 {
   this->Install(tapNode);
   this->m_tapNode = tapNode;

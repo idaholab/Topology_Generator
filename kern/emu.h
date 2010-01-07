@@ -86,8 +86,9 @@ class Emu : public NetworkHardware
      * \param indice tap number
      * \param emuNode link node name
      * \param ifaceName iface name
+     * \param type link type
      */
-    Emu(const size_t &indice, const std::string &emuNode, const std::string &ifaceName);
+    Emu(const std::string &type, const size_t &indice, const std::string &emuNode, const std::string &ifaceName);
 
     /**
      * \brief Destructor.

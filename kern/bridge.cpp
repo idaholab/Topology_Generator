@@ -30,7 +30,7 @@
 
 #include "utils.h"
 
-Bridge::Bridge(const size_t &indice, const std::string &nodeBridge) : NetworkHardware(indice)
+Bridge::Bridge(const std::string &type, const size_t &indice, const std::string &nodeBridge) : NetworkHardware(type, indice)
 {
   this->SetNetworkHardwareName(std::string("bridge_" + this->GetIndice()));
   this->SetNdcName(std::string("ndc_" + this->GetNetworkHardwareName()));

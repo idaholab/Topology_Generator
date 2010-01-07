@@ -64,6 +64,8 @@ MainWindow::MainWindow(const std::string &simulationName)
   /* menuSavePix->setDisabled(true); */  
   QAction *menuXml = menuFichier->addAction("Save as XML");
   connect(menuXml, SIGNAL(triggered()), this, SLOT(SaveXml()));
+  QAction *menuXmlLoad = menuFichier->addAction("Load Xml file");
+  connect(menuXmlLoad, SIGNAL(triggered()), this, SLOT(LoadXml()));
 
   QAction *actionQuit = menuFichier->addAction("Quit");
   connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
@@ -224,7 +226,7 @@ void MainWindow::CreatePcGroup()
     return;
   }
 
-  this->m_gen->AddNode("Pc",number);
+  this->m_gen->AddNode("Pc-group",number);
   this->m_dw->CreateObject("Pc-group", this->m_gen->GetNode(this->m_gen->GetNNodes() - 1)->GetNodeName());
 }
 
@@ -349,7 +351,7 @@ void MainWindow::CreateSwitch()
 {
   this->m_gen->AddNode("Bridge");
   this->m_gen->AddNetworkHardware("Bridge", this->m_gen->GetNode(this->m_gen->GetNNodes() - 1)->GetNodeName());
-  this->m_dw->CreateObject("Switch",this->m_gen->GetNetworkHardware(this->m_gen->GetNNetworkHardwares() - 1)->GetNetworkHardwareName());
+  this->m_dw->CreateObject("Bridge",this->m_gen->GetNetworkHardware(this->m_gen->GetNNetworkHardwares() - 1)->GetNetworkHardwareName());
 }
 
 void MainWindow::CreateRouter()
@@ -875,3 +877,33 @@ void MainWindow::SaveXml()
 
   QMessageBox(QMessageBox::Information, "Save Simulation", "Simulation saved at " + fileName).exec();
 }
+
+void MainWindow::LoadXml()
+{
+  QString fileName = "";
+  QFileDialog dlg(this, tr("Load XML"));
+
+  dlg.setFileMode(QFileDialog::AnyFile);
+ 
+  if(dlg.exec())
+  {
+    fileName = dlg.selectedFiles().at(0);
+
+    if(!QFile(fileName).exists())
+    {
+      QMessageBox(QMessageBox::Information, "File don't exists", "File don't exists.").exec();
+      return;
+    }
+  }
+
+  QFile file(fileName);
+  file.open(QFile::ReadOnly | QFile::Text);
+  QXmlStreamReader *reader = new QXmlStreamReader(&file);
+  
+  guiUtils::loadXml(reader, this->m_gen, this->m_dw);
+  
+  file.close();
+
+  QMessageBox(QMessageBox::Information, "Load Simulation", "Simulation loaded.").exec();
+}
+

@@ -78,8 +78,9 @@ class Tap : public NetworkHardware
      * \param indice tap number
      * \param tapNode external linux host
      * \param ifaceName iface name
+     * \param type link type
      */
-    Tap(const size_t &indice, const std::string &tapNode, const std::string &ifaceName);
+    Tap(const std::string &type, const size_t &indice, const std::string &tapNode, const std::string &ifaceName);
 
     /**
      * \brief Destructor.

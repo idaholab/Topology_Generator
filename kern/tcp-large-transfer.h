@@ -57,6 +57,7 @@ class TcpLargeTransfer : public Application
   public:
     /**
      * \brief Constructor.
+     * \param type application type
      * \param indice number of the application on the generator applicaiton vector
      * \param senderNode sender node
      * \param receiverNode receiver node
@@ -64,7 +65,7 @@ class TcpLargeTransfer : public Application
      * \param endTime application end time
      * \param port port which are sended the traffic
      */
-    TcpLargeTransfer(const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime, const size_t &port);
+    TcpLargeTransfer(const std::string &type, const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime, const size_t &port);
 
     /**
      * \brief Destructor.

@@ -27,7 +27,7 @@
 
 #include "hub.h"
 
-Hub::Hub(const size_t &indice) : NetworkHardware(indice)
+Hub::Hub(const std::string &type, const size_t &indice) : NetworkHardware(type, indice)
 {
   this->SetNetworkHardwareName(std::string("hub_" + this->GetIndice()));
   this->SetNdcName(std::string("ndc_" + this->GetNetworkHardwareName()));

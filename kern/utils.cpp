@@ -22,7 +22,6 @@
  */
 
 #include <stdint.h>
-
 #include <sstream>
 
 #include "utils.h"

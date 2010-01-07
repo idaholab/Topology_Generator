@@ -30,7 +30,7 @@
 
 #include "utils.h"
 
-UdpEcho::UdpEcho(const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime, const size_t &port) : Application(indice, senderNode, receiverNode, startTime, endTime)
+UdpEcho::UdpEcho(const std::string &type, const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime, const size_t &port) : Application(type, indice, senderNode, receiverNode, startTime, endTime)
 {
   this->m_port = port;
   this->SetAppName(std::string("udpEcho_" + this->GetIndice()));

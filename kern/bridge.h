@@ -60,8 +60,9 @@ class Bridge : public NetworkHardware
      * \brief Constructor.
      * \param indice bridge number
      * \param nodeBridge node name
+     * \param type link type
      */
-    Bridge(const size_t &indice, const std::string &nodeBridge);
+    Bridge(const std::string &type, const size_t &indice, const std::string &nodeBridge);
 
     /**
      * \brief Destructor.

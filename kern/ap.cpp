@@ -27,7 +27,7 @@
 
 #include "ap.h"
 
-Ap::Ap(const size_t &indice, const std::string &apNode) : NetworkHardware(indice)
+Ap::Ap(const std::string &type, const size_t &indice, const std::string &apNode) : NetworkHardware(type, indice)
 {
   this->Install(apNode);
   this->SetNetworkHardwareName(std::string("ap_" + this->GetIndice()));

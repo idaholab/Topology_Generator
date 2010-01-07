@@ -77,14 +77,20 @@ class Node
      */
     size_t m_machinesNumber;
 
+    /**
+     * \brief Node type.
+     */
+    std::string m_type;
+
   public:
     /**
      * \brief Constructor.
      * \param indice number of the node
      * \param type type of the node (pc, router, ...)
+     * \param namePrefix the prefix name of the node
      * \param machinesNumber number of machine to create
      */
-    Node(const size_t &indice, const std::string &type, const size_t &machinesNumber);
+    Node(const size_t &indice, const std::string &type, const std::string &namePrefix, const size_t &machinesNumber);
 
     /**
      * \brief Destructor.
@@ -195,6 +201,12 @@ class Node
      * \param machinesNumber new machines number
      */
     void SetMachinesNumber(const size_t machinesNumber);
+
+    /**
+     * \brief Get node type.
+     * \return type the node type
+     */
+    std::string GetNodeType();
 };
 
 #endif /* NODE_H */

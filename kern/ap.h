@@ -70,8 +70,9 @@ class Ap : public NetworkHardware
      * \brief Constructor.
      * \param indice the Ap number
      * \param apNode the node which is the ap name
+     * \param type the link type
      */
-    Ap(const size_t &indice, const std::string &apNode);
+    Ap(const std::string &type, const size_t &indice, const std::string &apNode);
 
     /**
      * \brief Destructor.

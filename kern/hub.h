@@ -53,8 +53,9 @@ class Hub : public NetworkHardware
     /**
      * \brief Constructor.
      * \param indice hub number
+     * \param type link type
      */
-    Hub(const size_t &indice);
+    Hub(const std::string &type, const size_t &indice);
 
     /**
      * \brief Destructor.

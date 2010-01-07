@@ -71,6 +71,15 @@ class DragWidget : public QWidget
      * \param name his name
      */
     void CreateObject(const std::string &type, const std::string &name);
+    
+    /**
+     * \brief Create object which are on the tool bar.
+     * \param type the type of the object to create
+     * \param name his name
+     * \param x position
+     * \param y position
+     */
+    void CreateObject(const std::string &type, const std::string &name, const size_t &x, const size_t &y);
 
     /**
      * \brief Delete the last selected element.
