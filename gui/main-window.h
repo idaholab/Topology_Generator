@@ -265,6 +265,11 @@ class MainWindow : public QMainWindow
      * \brief Save Simulation into xml file.
      */
     void SaveXml();
+
+    /**
+     * \brief Load xml simulation file.
+     */
+    void LoadXml();
 };
 
 #endif /* MAIN_WINDOW_H */

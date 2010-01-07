@@ -41,12 +41,26 @@ namespace guiUtils
 {
 
 /**
- * \bried Generate and write xml into save file.
+ * \brief Generate and write xml into save file.
  * \param writer the xml writter
  * \param gen the generator object
- * \param dw the drad widget object
+ * \param dw the drag widget object
  */
 void saveXml(QXmlStreamWriter *writer, Generator *gen, DragWidget *dw);
+
+/**
+ * \brief Load an xml file into the generator.
+ * \param reader the xml reader
+ * \param gen the generator object
+ * \param dw the drag widget object
+ */
+void loadXml(QXmlStreamReader *reader, Generator *gen, DragWidget *dw);
+
+/**
+ * \brief Procedure used to parse xml file.
+ * \param reader the qt xml reader object
+ */
+void jumpToNextStartElement(QXmlStreamReader *reader);
 
 } /* namespace guiUtils */
 

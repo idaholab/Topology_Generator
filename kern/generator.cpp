@@ -119,39 +119,39 @@ void Generator::AddNode(const std::string &type)
   Node *equi = NULL;
 
   // call to the right type constructor. 
-  if(type == "Pc")
+  if(type == "Pc" || type == "Pc-group")
   {
-    equi = new Node(this->m_indiceNodePc, std::string("term_"), number);
+    equi = new Node(this->m_indiceNodePc, type, std::string("term_"), number);
     this->m_indiceNodePc += 1;
   } 
   else if(type == "Router")
   {
-    equi = new Node(this->m_indiceNodeRouter, std::string("router_"), number);
+    equi = new Node(this->m_indiceNodeRouter, type, std::string("router_"), number);
     this->m_indiceNodeRouter += 1;
   } 
   else if(type == "Ap")
   {
-    equi = new Node(this->m_indiceNodeAp, std::string("ap_"), number);
+    equi = new Node(this->m_indiceNodeAp, type, std::string("ap_"), number);
     this->m_indiceNodeAp += 1;
   } 
   else if(type == "Station")
   {
-    equi = new Node(this->m_indiceNodeStation, std::string("station_"), number);
+    equi = new Node(this->m_indiceNodeStation, type, std::string("station_"), number);
     this->m_indiceNodeStation += 1;
   } 
   else if(type == "Bridge")
   {
-    equi = new Node(this->m_indiceNodeBridge, std::string("bridge_"), number);
+    equi = new Node(this->m_indiceNodeBridge, type, std::string("bridge_"), number);
     this->m_indiceNodeBridge += 1;
   } 
   else if(type == "Tap")
   {
-    equi = new Node(this->m_indiceNodeTap, std::string("tap_"), number);
+    equi = new Node(this->m_indiceNodeTap, type, std::string("tap_"), number);
     this->m_indiceNodeTap += 1;
   } 
   else if(type == "Emu")
   {
-    equi = new Node(this->m_indiceNodeEmu, std::string("emu_"), number);
+    equi = new Node(this->m_indiceNodeEmu, type, std::string("emu_"), number);
     this->m_indiceNodeEmu += 1;
   }
 
@@ -170,39 +170,39 @@ void Generator::AddNode(const std::string &type, const size_t number)
   Node *equi = NULL;
 
   // call to the right type constructor. 
-  if(type == "Pc")
+  if(type == "Pc" || type == "Pc-group")
   {
-    equi = new Node(this->m_indiceNodePc, std::string("term_"), number);
+    equi = new Node(this->m_indiceNodePc, type, std::string("term_"), number);
     this->m_indiceNodePc += 1;
   } 
   else if(type == "Router")
   {
-    equi = new Node(this->m_indiceNodeRouter, std::string("router_"), number);
+    equi = new Node(this->m_indiceNodeRouter, type, std::string("router_"), number);
     this->m_indiceNodeRouter += 1;
   } 
   else if(type == "Ap")
   {
-    equi = new Node(this->m_indiceNodeAp, std::string("ap_"), number);
+    equi = new Node(this->m_indiceNodeAp, type, std::string("ap_"), number);
     this->m_indiceNodeAp += 1;
   } 
   else if(type == "Station")
   {
-    equi = new Node(this->m_indiceNodeStation, std::string("station_"), number);
+    equi = new Node(this->m_indiceNodeStation, type, std::string("station_"), number);
     this->m_indiceNodeStation += 1;
   } 
   else if(type == "Bridge")
   {
-    equi = new Node(this->m_indiceNodeBridge, std::string("bridge_"), number);
+    equi = new Node(this->m_indiceNodeBridge, type, std::string("bridge_"), number);
     this->m_indiceNodeBridge += 1;
   } 
   else if(type == "Tap")
   {
-    equi = new Node(this->m_indiceNodeTap, std::string("tap_"), number);
+    equi = new Node(this->m_indiceNodeTap, type, std::string("tap_"), number);
     this->m_indiceNodeTap += 1;
   }
   else if(type == "Emu")
   {
-    equi = new Node(this->m_indiceNodeEmu, std::string("emu_"), number);
+    equi = new Node(this->m_indiceNodeEmu, type, std::string("emu_"), number);
     this->m_indiceNodeEmu += 1;
   }
 
@@ -274,13 +274,13 @@ void Generator::AddApplication(const std::string &type, const std::string &sende
 {
   if(type == "UdpEcho")
   {
-    UdpEcho *app = new UdpEcho(this->m_indiceApplicationUdpEcho, senderNode, receiverNode, startTime, endTime, port);
+    UdpEcho *app = new UdpEcho(type, this->m_indiceApplicationUdpEcho, senderNode, receiverNode, startTime, endTime, port);
     this->m_indiceApplicationUdpEcho += 1;
     this->m_listApplication.push_back(app);
   }
   else if(type == "TcpLargeTransfer")
   {
-    TcpLargeTransfer *app = new TcpLargeTransfer(this->m_indiceApplicationTcpLargeTransfer, senderNode, receiverNode, startTime, endTime, port);
+    TcpLargeTransfer *app = new TcpLargeTransfer(type, this->m_indiceApplicationTcpLargeTransfer, senderNode, receiverNode, startTime, endTime, port);
     this->m_indiceApplicationTcpLargeTransfer += 1;
     this->m_listApplication.push_back(app);
   }
@@ -296,7 +296,7 @@ void Generator::AddApplication(const std::string &type, const std::string &sende
 {
   if(type == "Ping")
   {
-    Ping *app = new Ping(this->m_indiceApplicationPing, senderNode, receiverNode, startTime, endTime);
+    Ping *app = new Ping(type, this->m_indiceApplicationPing, senderNode, receiverNode, startTime, endTime);
     this->m_indiceApplicationPing += 1;
     this->m_listApplication.push_back(app);
   }
@@ -349,13 +349,13 @@ void Generator::AddNetworkHardware(const std::string &type)
   // call to the right type constructor. 
   if(type == "Hub")
   {
-    Hub *link = new Hub(this->m_indiceNetworkHardwareHub);
+    Hub *link = new Hub(type, this->m_indiceNetworkHardwareHub);
     this->m_indiceNetworkHardwareHub += 1;
     this->m_listNetworkHardware.push_back(link);
   } 
   else if(type == "PointToPoint")
   {
-    PointToPoint *link = new PointToPoint(this->m_indiceNetworkHardwarePointToPoint);
+    PointToPoint *link = new PointToPoint(type, this->m_indiceNetworkHardwarePointToPoint);
     this->m_indiceNetworkHardwarePointToPoint += 1;
     this->m_listNetworkHardware.push_back(link);
   } 
@@ -369,13 +369,13 @@ void Generator::AddNetworkHardware(const std::string &type, const std::string &l
 {
   if(type == "Bridge")
   {
-    Bridge *link = new Bridge(this->m_indiceNetworkHardwareBridge, linkNode);
+    Bridge *link = new Bridge(type, this->m_indiceNetworkHardwareBridge, linkNode);
     this->m_indiceNetworkHardwareBridge += 1;
     this->m_listNetworkHardware.push_back(link);
   } 
   else if(type == "Ap")
   {
-    Ap *link = new Ap(this->m_indiceNetworkHardwareAp, linkNode);
+    Ap *link = new Ap(type, this->m_indiceNetworkHardwareAp, linkNode);
     this->m_indiceNetworkHardwareAp += 1;
     this->m_listNetworkHardware.push_back(link);
   } 
@@ -389,13 +389,13 @@ void Generator::AddNetworkHardware(const std::string &type, const std::string &l
 { 
   if(type == "Emu")
   {
-    Emu *link = new Emu(this->m_indiceNetworkHardwareEmu, linkNode, ifaceName);
+    Emu *link = new Emu(type, this->m_indiceNetworkHardwareEmu, linkNode, ifaceName);
     this->m_indiceNetworkHardwareEmu += 1;
     this->m_listNetworkHardware.push_back(link);
   } 
   else if(type == "Tap")
   {
-    Tap *link = new Tap(this->m_indiceNetworkHardwareTap, linkNode, ifaceName);
+    Tap *link = new Tap(type, this->m_indiceNetworkHardwareTap, linkNode, ifaceName);
     this->m_indiceNetworkHardwareTap += 1;
     this->m_listNetworkHardware.push_back(link);
   } 

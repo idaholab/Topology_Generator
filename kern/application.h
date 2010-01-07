@@ -90,16 +90,22 @@ class Application
      */
     size_t m_endTime;
 
+    /**
+     * \brief Application type.
+     */
+    std::string m_applicationType;
+
   public:
     /**
      * \brief Constructor.
+     * \param type application type
      * \param indice application number
      * \param senderNode sender node
      * \param receiverNode receiver node
      * \param startTime application start time
      * \param endTime application end time
      */
-    Application(const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime);
+    Application(const std::string &type, const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime);
 
     /**
      * \brief Destructor.
@@ -207,6 +213,12 @@ class Application
      * \param m_endTime application end time
      */
     void SetEndTime(const size_t &m_endTime);
+
+    /**
+     * \brief Get application type.
+     * \return application type
+     */
+    std::string GetApplicationType();
 };
 
 #endif /* APPLICATION_H */

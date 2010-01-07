@@ -53,13 +53,14 @@ class Ping : public Application
   public:
     /**
      * \brief Constructor.
+     * \param type application type
      * \param indice indice in the generator vector
      * \param senderNode sender node
      * \param receiverNode receiver node
      * \param startTime application start time
      * \param endTime application end time
      */
-    Ping(const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime);
+    Ping(const std::string &type, const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime);
 
     /**
      * \brief Destructor.

@@ -30,10 +30,11 @@
 
 #include "utils.h"
 
-Node::Node(const size_t &indice, const std::string &type, const size_t &machinesNumber)
+Node::Node(const size_t &indice, const std::string &type, const std::string &namePrefix, const size_t &machinesNumber)
 {
   this->m_indice = indice;
-  this->m_nodeName = std::string(type + utils::integerToString(indice));
+  this->m_type = type;
+  this->m_nodeName = std::string(namePrefix + utils::integerToString(indice));
   this->m_ipInterfaceName = std::string("iface_" + this->m_nodeName);
   this->m_nsc = std::string("");	
   this->m_machinesNumber = machinesNumber;
@@ -148,5 +149,10 @@ std::vector<std::string> Node::GenerateIpStackPython()
   stack.push_back("internetStackH.Install (" + this->m_nodeName + ")");
 
   return stack; 
+}
+
+std::string Node::GetNodeType()
+{
+  return this->m_type;
 }
 

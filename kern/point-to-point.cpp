@@ -27,7 +27,7 @@
 
 #include "point-to-point.h"
 
-PointToPoint::PointToPoint(const size_t &indice) : NetworkHardware(indice)
+PointToPoint::PointToPoint(const std::string &type, const size_t &indice) : NetworkHardware(type, indice)
 {
   this->SetNetworkHardwareName(std::string("p2p_" + this->GetIndice()));
   this->SetNdcName(std::string("ndc_" + this->GetNetworkHardwareName()));

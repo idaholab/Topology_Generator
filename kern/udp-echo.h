@@ -73,6 +73,7 @@ class UdpEcho : public Application
   public:
     /**
      * \brief Constructor.
+     * \param type application type
      * \param indice application number
      * \param senderNode sender node
      * \param receiverNode receiver node
@@ -80,7 +81,7 @@ class UdpEcho : public Application
      * \param endTime end time
      * \param port port
      */
-    UdpEcho(const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime, const size_t &port);
+    UdpEcho(const std::string &type, const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime, const size_t &port);
 
     /**
      * \brief Destructor.

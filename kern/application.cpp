@@ -30,8 +30,9 @@
 
 #include "utils.h"
 
-Application::Application(const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime)
+Application::Application(const std::string &type, const size_t &indice, const std::string &senderNode, const std::string &receiverNode, const size_t &startTime, const size_t &endTime)
 {
+  this->m_applicationType = type;
   this->m_indice = indice;
   this->m_senderNode = senderNode;
   this->m_receiverNode = receiverNode;
@@ -106,5 +107,10 @@ size_t Application::GetEndTimeNumber()
 void Application::SetEndTime(const size_t &endTime)
 {
   this->m_endTime = endTime;
+}
+
+std::string Application::GetApplicationType()
+{
+  return this->m_applicationType;
 }
 

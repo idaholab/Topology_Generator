@@ -109,7 +109,7 @@ void DragWidget::CreateObject(const std::string &type, const std::string &name)
   {
     label->setPixmap(QPixmap(":/Ico/Hub.png"));
   }
-  else if(type == "Switch")
+  else if(type == "Bridge")
   {
     label->setPixmap(QPixmap(":/Ico/Switch.png"));
   }
@@ -119,6 +119,60 @@ void DragWidget::CreateObject(const std::string &type, const std::string &name)
   } 
   
   label->move(10, 10);
+  label->show();
+  label->setAttribute(Qt::WA_DeleteOnClose);
+
+  this->m_timer = new QTimer();
+  this->m_timer->start(100);
+  connect(this->m_timer, SIGNAL(timeout()), this, SLOT(update()));
+}
+
+void DragWidget::CreateObject(const std::string &type, const std::string &name, const size_t &x, const size_t &y)
+{
+  DragObject *label = new DragObject(this);
+  label->SetName(name);
+  std::string new_toolTip = this->UpdateToolTip(name);
+  label->SetToolTipText(QString(new_toolTip.c_str()));
+  label->setToolTip(QString(new_toolTip.c_str()));
+
+  if(type == "Pc")
+  {
+    label->setPixmap(QPixmap(":/Ico/Pc.png"));
+  }
+  else if(type == "Pc-group")
+  {
+    label->setPixmap(QPixmap(":/Ico/Pc-group.png"));
+  }
+  else if(type == "Emu")
+  {
+    label->setPixmap(QPixmap(":/Ico/Emu.png"));
+  }
+  else if(type == "Tap")
+  {
+    label->setPixmap(QPixmap(":/Ico/Tap.png"));
+  }
+  else if(type == "Ap")
+  {
+    label->setPixmap(QPixmap(":/Ico/Ap-Wifi.png"));
+  }
+  else if(type == "Station")
+  {
+    label->setPixmap(QPixmap(":/Ico/StationWifi.png"));
+  }
+  else if(type == "Hub")
+  {
+    label->setPixmap(QPixmap(":/Ico/Hub.png"));
+  }
+  else if(type == "Bridge")
+  {
+    label->setPixmap(QPixmap(":/Ico/Switch.png"));
+  }
+  else if(type == "Router")
+  {
+    label->setPixmap(QPixmap(":/Ico/Router.png"));
+  } 
+  
+  label->move(x, y);
   label->show();
   label->setAttribute(Qt::WA_DeleteOnClose);
 

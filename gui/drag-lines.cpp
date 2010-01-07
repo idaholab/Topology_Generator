@@ -31,6 +31,7 @@ DragLines::DragLines()
 {
   this->m_first = "";
   this->m_second = "";
+  this->m_networkHardwareType = "";
 }
 
 void DragLines::SetFirst(const std::string& name)

@@ -27,7 +27,7 @@
 
 #include "emu.h"
 
-Emu::Emu(const size_t &indice, const std::string &emuNode, const std::string &ifaceName) : NetworkHardware(indice)
+Emu::Emu(const std::string &type, const size_t &indice, const std::string &emuNode, const std::string &ifaceName) : NetworkHardware(type, indice)
 {
   this->Install(emuNode);
   this->m_emuNode = emuNode;

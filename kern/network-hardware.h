@@ -75,6 +75,11 @@ class NetworkHardware
 {
   private:
     /**
+     * \brief Type of the link.
+     */
+    std::string m_type;
+
+    /**
      * \brief Number of the link.
      */
     size_t m_indice;
@@ -123,8 +128,9 @@ class NetworkHardware
     /**
      * \brief Constructor.
      * \param indice number of the link
+     * \param type link type
      */
-    NetworkHardware(const size_t &indice);
+    NetworkHardware(const std::string &type, const size_t &indice);
 
     /**
      * \brief Destructor.
@@ -344,6 +350,12 @@ class NetworkHardware
      * \return promisc mod
      */
     bool GetPromisc();
+
+    /**
+     * \brief Get the link type
+     * \return link type
+     */
+    std::string GetLinkType();
 };
 
 #endif /* NETWORKHARDWARE_H */

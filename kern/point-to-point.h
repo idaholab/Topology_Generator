@@ -53,8 +53,9 @@ class PointToPoint : public NetworkHardware
     /**
      * \brief Constructor.
      * \param indice point-to-point number into the link generator vector
+     * \param type link type
      */
-    PointToPoint(const size_t &indice);
+    PointToPoint(const std::string &type, const size_t &indice);
 
     /**
      * \brief Destructor.
