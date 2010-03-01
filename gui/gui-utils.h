@@ -62,6 +62,12 @@ void loadXml(QXmlStreamReader *reader, Generator *gen, DragWidget *dw);
  */
 void jumpToNextStartElement(QXmlStreamReader *reader);
 
+/**
+ * \brief Function used to test if an equipement is an NetworkHardware member.
+ * \param equipement the equipement to test
+ */
+bool isNetworkHardware(const std::string &equipement);
+
 } /* namespace guiUtils */
 
 #endif /* GUIUTILS_H */

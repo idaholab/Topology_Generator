@@ -5,23 +5,17 @@ GUI
 ---
 - Window size (take care on out from zone object);
 - Add multi-selection of object with ctrl or mouse cursor;
-- Trace with good link;
 - On link use, icon from link must be pressed;
 - Fix the superimposed link;
-- Possibility to delete link (currently need to delete a node to remove it);
 - Implement keyboard shortcut (del key to remove nodes/links, ...);
-- Display more information in the tooltip (installed apps, interface + IPv4, ...);
 - Implementation of menu;
 - Implement right click on object (show menu with "remove", "configure" (for link), "add application" (for node));
 - Show the selected object (different border);
 - Add status bar (show generation time, ...);
 - Help UI;
-- Separate application UI from DragWidget;
 - Summary of simulation (treeview with a lot of information).
 
 Core
 -----
 - IPv6 support;
-- XML generation => save/load simulation from XML files;
-- Add configuration of objects (application, links, ...).
 
