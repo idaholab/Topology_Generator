@@ -47,16 +47,6 @@ void saveXml(QXmlStreamWriter *writer, Generator *gen, DragWidget *dw)
   //
   // Dump Node list
   //
-  /*
-  if(gen->GetNNodes() > 0)
-  {
-    writer->writeDTD("<!ELEMENT Nodes (ANY)>");
-  }
-  else
-  {
-    writer->writeDTD("<!ELEMENT Nodes (EMPTY)>");
-  }
-  */
   writer->writeStartElement("Nodes");//<Nodes>
   for(size_t i = 0; i < gen->GetNNodes(); i++)
   { 
@@ -84,16 +74,6 @@ void saveXml(QXmlStreamWriter *writer, Generator *gen, DragWidget *dw)
   //
   // Dump Link list
   //
-  /*
-  if(gen->GetNNetworkHardwares() > 0)
-  {
-    writer->writeDTD("<!ELEMENT NetworkHardwares (ANY)>"); 
-  }
-  else
-  {
-    writer->writeDTD("<!ELEMENT NetworkHardwares (EMPTY)>");
-  }
-  */
   bool hidden = true;
   writer->writeStartElement("NetworkHardwares");//<NetworkHardwares>
   for(size_t i = 0; i < gen->GetNNetworkHardwares(); i++)
@@ -198,16 +178,6 @@ void saveXml(QXmlStreamWriter *writer, Generator *gen, DragWidget *dw)
   //
   // Dump Application List
   //
-  /*
-  if(gen->GetNApplications() > 0)
-  {
-    writer->writeDTD("<!ELEMENT Applications (ANY)>");
-  }
-  else
-  {
-    writer->writeDTD("<!ELEMENT Applications (EMPTY)>");
-  }
-  */
   //<Applications>
   writer->writeStartElement("Applications");
   for(size_t i = 0; i < gen->GetNApplications(); i++)
@@ -379,8 +349,6 @@ void loadXml(QXmlStreamReader *reader, Generator *gen, DragWidget *dw)
               dw->CreateObject(type, name);
             }
           }
-          
-          //guiUtils::jumpToNextStartElement(reader);
         }
       }
       if(reader->name() == "Applications")
@@ -481,7 +449,6 @@ void loadXml(QXmlStreamReader *reader, Generator *gen, DragWidget *dw)
     }
     reader->readNext();
   }
-
 }
 
 void jumpToNextStartElement(QXmlStreamReader *reader)
@@ -491,6 +458,19 @@ void jumpToNextStartElement(QXmlStreamReader *reader)
   {
     reader->readNext();
   }
+}
+
+bool isNetworkHardware(const std::string &equipement)
+{
+  bool res = false;
+  if( equipement.find("wifi_") == 0 || 
+      equipement.find("hub_") == 0  || 
+      equipement.find("bridge_") == 0 || 
+      equipement.find("emu_") == 0 ||  
+      equipement.find("tap_") == 0 ){
+    res = true;
+  }
+  return res;
 }
 
 } /* namespace guiUtils */

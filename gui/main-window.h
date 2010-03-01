@@ -53,30 +53,7 @@ class MainWindow : public QMainWindow
      * \brief Destructor.
      */
     ~MainWindow();
-
-    /**
-     * \brief Valid links.
-     */
-    void ValidNetworkHardware();
-
-    /**
-     * \brief Valid applications install.
-     */
-    void ValidApps();
-
-    /**
-     * \brief Procedure to erase the unused iface. 
-     */
-    void CleanIface();
-
-    /**
-     * \brief Procedure to connect node to linkNumber.
-     * This procedure prevent mask overflow.
-     * \param linkNumber the number of the link
-     * \param nodeName the node name tu be added
-     */
-    void ConnectNode(const size_t &linkNumber, const std::string &nodeName);
-
+  
     /**
      * \brief Set generator object.
      * \param gen new generator object
@@ -88,67 +65,31 @@ class MainWindow : public QMainWindow
      * \return generator object
      */
     Generator* GetGenerator();
-    
-    /**
-     * \brief Set delete qaction button.
-     * \param delAction new qaction object
-     */
-    void SetDelQAction(QAction *delAction);
-    
-    /**
-     * \brief Get delete qaction button.
-     * \return qaction object
-     */
-    QAction* GetDelQAction();
-    
-    /**
-     * \brief Set the drag widget object.
-     * \param dw new drag widget
-     */
-    void SetDragWidget(DragWidget *dw);
 
     /**
-     * \brief Get the drag widget object.
-     * \return drag widget object
+     * \brief Procedure to erase the unused iface. 
      */
-    DragWidget* GetDragWidget();
-  
-    /**
-     * \brief Add an element to the iface list.
-     * \param str the element to be added
-     */
-    void AddIfaceList(const std::string &str);
-
-    /**
-     * \brief Get the iface list.
-     * \return iface list
-     */
-    std::vector<std::string> GetIfaceLists();
-    
-    /**
-     * \brief Get the N element from the iface list.
-     * \param index the n element index
-     * \return the n element
-     */
-    std::string GetIfaceList(const size_t &index);
-
-    /**
-     * \brief Erase the N element from iface list.
-     * \param index the n element index
-     */
-    void EraseIfaceList(const size_t &index);
-
-  private:
-    /**
-     * \brief Generator.
-     */
-    Generator *m_gen;
+    void CleanIface();
 
     /**
      * \brief Action to delete object.
      * Is attribute to setDisable ...
      */
     QAction *m_delAction;
+
+    /**
+     * \brief Procedure to connect node to linkNumber.
+     * This procedure prevent mask overflow.
+     * \param linkName the destination link name
+     * \param nodeName the node name tu be added
+     */
+    void ConnectNode(const std::string &linkName, const std::string &nodeName);
+
+  private:
+    /**
+     * \brief Generator.
+     */
+    Generator *m_gen;
 
     /**
      * \brief The drag'n'drop zone.
@@ -209,37 +150,22 @@ class MainWindow : public QMainWindow
     /**
      * \brief Create a wired link from equipement to equipement.
      */
-    void CreateWiredNetworkHardware();
+    void CreateWiredLink();
 
     /**
      * \brief Create a link from station to AP.
      */
-    void CreateStationNetworkHardware();
+    void CreateWifiLink();
 
     /**
      * \brief Procedure to create a p2p link from equipement to equipement.
      */
-    void CreateP2pNetworkHardware();
+    void CreateP2pLink();
 
     /**
-     * \brief Procedure called by the tool bar to delete an object.
+     * \brief Create applications.
      */
-    void DeleteObject();
-
-    /**
-     * \brief Procedure called by the tool bar to get the configuration pop up.
-     */
-    void ConfigurationMenu();
-
-    /**
-     * \brief Show about UI.
-     */
-    void About();
-
-    /**
-     * \brief Show help UI.
-     */
-    void Help();
+    void CreateApplication();
 
     /**
      * \brief Generate the C++ code.
@@ -252,10 +178,15 @@ class MainWindow : public QMainWindow
     void GeneratePython();
 
     /**
-     * \brief Create an application for a simulation node.
+     * \brief Procedure called by the tool bar to delete an object.
      */
-    void CreateApps();
-    
+    void DeleteObject();
+
+    /**
+     * \brief Show about UI.
+     */
+    void About();
+
     /**
      * \brief Save simulation as a picture.
      */
@@ -270,6 +201,7 @@ class MainWindow : public QMainWindow
      * \brief Load xml simulation file.
      */
     void LoadXml();
+
 };
 
 #endif /* MAIN_WINDOW_H */

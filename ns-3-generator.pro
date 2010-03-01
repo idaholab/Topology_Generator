@@ -26,7 +26,8 @@ HEADERS += gui/drag-lines.h \
            kern/tap.h \
            kern/tcp-large-transfer.h \
            kern/udp-echo.h \
-           kern/utils.h
+           kern/utils.h \
+           kern/array-utils.h
 SOURCES += main.cpp \
            gui/drag-lines.cpp \
            gui/drag-object.cpp \
