@@ -71,7 +71,7 @@ MainWindow::MainWindow(const std::string &simulationName)
   QAction *menuXml = menuFichier->addAction("Save as XML");
   connect(menuXml, SIGNAL(triggered()), this, SLOT(SaveXml()));
   
-  QAction *menuXmlLoad = menuFichier->addAction("Load Xml file");
+  QAction *menuXmlLoad = menuFichier->addAction("Load XML file");
   connect(menuXmlLoad, SIGNAL(triggered()), this, SLOT(LoadXml()));
 
   QAction *actionQuit = menuFichier->addAction("Quit");
@@ -490,7 +490,7 @@ void MainWindow::About()
         "<h2>The ns-3 topology generator"
         "</h2>"
         "</p><br />"
-        "Copyright (c) 2009 University of Strasbourg<br /><br />"
+        "Copyright (c) 2009-2010 University of Strasbourg<br /><br />"
         "This program is free software; you can redistribute it and/or<br />"
         "modify it under the terms of the GNU General Public License<br />"
         "as published by the Free Software Foundation; either version 2<br />"
