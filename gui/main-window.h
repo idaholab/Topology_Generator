@@ -32,6 +32,7 @@
 
 #include "drag-widget.h"
 #include "generator.h"
+#include "application-dialog.h"
 
 /**
  * \ingroup generator
@@ -84,6 +85,11 @@ class MainWindow : public QMainWindow
      * \param nodeName the node name tu be added
      */
     void ConnectNode(const std::string &linkName, const std::string &nodeName);
+    
+    /**
+     * \brief Application dialog object
+     */
+    ApplicationDialog *m_appsDialog;
 
   private:
     /**
@@ -100,7 +106,8 @@ class MainWindow : public QMainWindow
      * \brief interface which are used.
      */ 
     std::vector<std::string> m_listIface;
-
+    
+   
   private slots:
     /**
      * \brief Create PC.

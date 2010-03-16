@@ -56,6 +56,14 @@ DragWidget::DragWidget(QWidget *parent) : QWidget(parent)
   this->m_networkHardwareEnd = "";
   this->m_networkHardwareType = "";
   this->m_isDrawLine = false;
+
+  // object used for application creation
+  this->m_appsPing = false;
+  this->m_appsUdpEcho = false;
+  this->m_appsTcp = false;
+  // the right and left application node
+  this->m_appsClient = "";
+  this->m_appsServer = "";
 }
 
 DragWidget::~DragWidget()
@@ -365,36 +373,62 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
   }
 
   /* application. */
-  /*if(this->m_appsEnable)
+  if(this->m_appsPing || this->m_appsUdpEcho || this->m_appsTcp)
   {
     if(this->m_appsServer == "")
     {
+      // choose left node
       this->m_appsServer = child->GetName();
+      if(this->m_appsPing)
+      {
+        this->m_mw->m_appsDialog->m_ping->m_leftNode = child->GetName();
+      }
+      if(this->m_appsUdpEcho)
+      {
+        this->m_mw->m_appsDialog->m_udpEcho->m_leftNode = child->GetName();
+      }
+      if(this->m_appsTcp)
+      {
+        this->m_mw->m_appsDialog->m_tcp->m_leftNode = child->GetName();
+      }
+
     }
     else
     {
       if(this->m_appsClient == "" && child->GetName() != this->m_appsServer)
       {
+        // choose right node
         this->m_appsClient = child->GetName();
+        if(this->m_appsPing)
+        {
+          this->m_mw->m_appsDialog->m_ping->m_rightNode = child->GetName();
+        }
+        if(this->m_appsUdpEcho)
+        {
+          this->m_mw->m_appsDialog->m_udpEcho->m_rightNode = child->GetName();
+        }
+        if(this->m_appsTcp)
+        {
+          this->m_mw->m_appsDialog->m_tcp->m_rightNode = child->GetName();
+        }
       }
     }
+    //show back application gui
+    this->m_mw->m_appsDialog->show();
+    if(this->m_appsPing)
+    {
+      this->m_mw->m_appsDialog->m_ping->Refresh();
+    }
+    if(this->m_appsUdpEcho)
+    {
+      this->m_mw->m_appsDialog->m_udpEcho->Refresh();
+    }
+    if(this->m_appsTcp)
+    {
+      this->m_mw->m_appsDialog->m_tcp->Refresh();
+    }
+
   }
-
-  if(this->m_appsPing)
-  {
-    ShowGuiPing();
-  }
-
-  if(this->m_appsUdpEcho)
-  {
-    ShowGuiUdpEcho();
-  }
-
-  if(this->m_appsTcp)
-  {
-    ShowGuiTcp();
-  }*/
-
 }
 
 void DragWidget::mouseMoveEvent(QMouseEvent * /*event*/)
@@ -870,3 +904,4 @@ std::string DragWidget::GetNetworkHardwareType() const
 {
   return this->m_networkHardwareType;
 }
+

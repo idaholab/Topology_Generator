@@ -43,6 +43,8 @@
 #include "gui-utils.h"
 #include "array-utils.h"
 
+#include "application-dialog.h"
+
 MainWindow::MainWindow(const std::string &simulationName)
 {
   this->m_dw = NULL;
@@ -400,6 +402,11 @@ void MainWindow::CreateP2pLink()
 
 void MainWindow::CreateApplication()
 {
+  if(!this->m_dw->m_appsPing && !this->m_dw->m_appsUdpEcho && !this->m_dw->m_appsTcp)
+  {
+    this->m_appsDialog = new ApplicationDialog(this->m_dw);
+    this->m_appsDialog->exec();
+  }
 }
 
 void MainWindow::ConnectNode(const std::string &linkName, const std::string &nodeName)

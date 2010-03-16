@@ -13,6 +13,8 @@ HEADERS += gui/drag-lines.h \
            gui/drag-widget.h \
            gui/main-window.h \
            gui/gui-utils.h \
+           gui/application-dialog.h \
+           gui/application-pages.h \
            kern/ap.h \
            kern/application.h \
            kern/bridge.h \
@@ -34,6 +36,8 @@ SOURCES += main.cpp \
            gui/drag-widget.cpp \
            gui/main-window.cpp \
            gui/gui-utils.cpp \
+           gui/application-dialog.cpp \
+           gui/application-pages.cpp \
            kern/ap.cpp \
            kern/application.cpp \
            kern/bridge.cpp \
