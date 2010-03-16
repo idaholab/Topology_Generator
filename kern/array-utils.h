@@ -31,8 +31,10 @@
 #include <iostream>
 #include <vector>
 
-using namespace std;
-
+/**
+ * \ingroup utils
+ * \brief Provide associative array in Cpp
+ */
 template <class T>
 class Array 
 {
@@ -55,7 +57,7 @@ class Array
     /**
      * \brief vector wich contain all datas
      */
-    vector <ItemStruct> stack;
+  std::vector <ItemStruct> stack;
 
   public:
 

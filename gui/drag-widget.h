@@ -185,6 +185,37 @@ class DragWidget : public QWidget
      */
     void UpdateToolTips();
 
+     /**
+     * \brief Application server node name.
+     */
+    std::string m_appsServer;
+
+    /**
+     * \brief Application client node name.
+     */
+    std::string m_appsClient;
+
+    /**
+     * \brief Application type ping.
+     */
+    bool m_appsPing;
+
+    /**
+     * \brief Application type udp-echo.
+     */
+    bool m_appsUdpEcho;
+
+    /**
+     * \brief Application type tcp-large-transfer. 
+     */
+    bool m_appsTcp;
+
+    /**
+     * \brief Main window.
+     */
+    MainWindow *m_mw;
+
+
   private:
     /**
      * \brief last position of last object which moved.
@@ -205,11 +236,6 @@ class DragWidget : public QWidget
      * \brief Timer to refresh a line draw.
      */
     QTimer *m_timer;
-
-    /**
-     * \brief Main window.
-     */
-    MainWindow *m_mw;
 
     /**
      * \brief If we trace link or not.
