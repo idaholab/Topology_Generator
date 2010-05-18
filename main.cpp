@@ -33,6 +33,8 @@ using namespace std;
 #include <limits>
 #include <stdexcept>
 
+#include <getopt.h>
+
 #include <QApplication>
 #include <QtGui>
 #include <QHBoxLayout>
@@ -204,5 +206,6 @@ int main(int argc, char *argv[])
   delete gen;
 #endif
 
+  return EXIT_SUCCESS;
 }
 
