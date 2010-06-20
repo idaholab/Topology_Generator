@@ -36,7 +36,6 @@
 #include "point-to-point.h"
 #include "bridge.h"
 #include "ap.h"
-#include "link.h"
 #include "ping.h"
 #include "udp-echo.h"
 #include "tcp-large-transfer.h"
