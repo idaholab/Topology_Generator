@@ -27,6 +27,7 @@
 
 #include <cstdlib> 
 #include <iostream>
+#include <fstream>
 #include <stdexcept>
 
 #include "generator.h"
@@ -457,31 +458,33 @@ size_t Generator::GetNNetworkHardwares() const
 // This part is looking about the code to write.
 //
 
-void Generator::GenerateCodeCpp() 
-{	
-  /* In first time we just print it to stdout, at the end, we will use the write cpp function */
+void Generator::GenerateCodeCpp(std::string fileName) 
+{
+  if(fileName != ""){
+    this->m_cppFile.open(fileName.c_str());
+  }
 
   //
   // Generate headers 
   //
-  std::cout << "#include \"ns3/simulator-module.h\"" << std::endl;
-  std::cout << "#include \"ns3/node-module.h\"" << std::endl;
-  std::cout << "#include \"ns3/core-module.h\"" << std::endl;
-  std::cout << "#include \"ns3/common-module.h\""<< std::endl;
-  std::cout << "#include \"ns3/global-route-manager.h\"" << std::endl;
+  this->WriteCpp("#include \"ns3/simulator-module.h\"");
+  this->WriteCpp("#include \"ns3/node-module.h\"");
+  this->WriteCpp("#include \"ns3/core-module.h\"");
+  this->WriteCpp("#include \"ns3/common-module.h\"");
+  this->WriteCpp("#include \"ns3/global-route-manager.h\"");
 
   std::vector<std::string> allHeaders = GenerateHeader();
   for(size_t i = 0; i <  allHeaders.size(); i++)
   {
-    std::cout << "" << allHeaders.at(i) << std::endl;
+    this->WriteCpp("" + allHeaders.at(i));
   }
 
-  std::cout << "" << std::endl;
-  std::cout << "using namespace ns3;" << std::endl;
-  std::cout << "" << std::endl;
+  this->WriteCpp("");
+  this->WriteCpp("using namespace ns3;");
+  this->WriteCpp("");
 
-  std::cout << "int main(int argc, char *argv[])" << std::endl;
-  std::cout << "{" << std::endl;
+  this->WriteCpp("int main(int argc, char *argv[])");
+  this->WriteCpp("{");
 
   //
   // Tap/Emu variables
@@ -489,87 +492,87 @@ void Generator::GenerateCodeCpp()
   std::vector<std::string> allVars = GenerateVarsCpp();
   for(size_t i = 0; i <  allVars.size(); i++)
   {
-    std::cout << "  " << allVars.at(i) << std::endl;
-    std::cout << "" << std::endl;
+    this->WriteCpp("  " + allVars.at(i));
+    this->WriteCpp("");
   }
 
   //
   // Generate Command Line 
   //
-  std::cout << "  CommandLine cmd;" << std::endl;
+  this->WriteCpp("  CommandLine cmd;");
 
   std::vector<std::string> allCmdLine = GenerateCmdLineCpp();
   for(size_t i = 0; i <  allCmdLine.size(); i++)
   {
-    std::cout << "  " << allCmdLine.at(i) << std::endl;
+    this->WriteCpp("  " + allCmdLine.at(i));
   } 
 
-  std::cout << "  cmd.Parse (argc, argv);" << std::endl;
+  this->WriteCpp("  cmd.Parse (argc, argv);");
 
   //
   // Generate Optional configuration
   // 
-  std::cout << "" << std::endl;
-  std::cout << "  /* Configuration. */" << std::endl;
+  this->WriteCpp("");
+  this->WriteCpp("  /* Configuration. */");
   std::vector<std::string> conf = GenerateConfigCpp();
   for(size_t i = 0; i <  conf.size(); i++)
   {
-    std::cout << "  " << conf.at(i) << std::endl;
+    this->WriteCpp("  " + conf.at(i));
   }
 
   //
   // Generate Nodes. 
   //
-  std::cout << "" << std::endl;
-  std::cout << "  /* Build nodes. */" << std::endl;
+  this->WriteCpp("");
+  this->WriteCpp("  /* Build nodes. */");
   std::vector<std::string> nodeBuild = GenerateNodeCpp();
   for(size_t i = 0; i <  nodeBuild.size(); i++)
   {
-    std::cout << "  " << nodeBuild.at(i) << std::endl;
+    this->WriteCpp("  " + nodeBuild.at(i));
   }
 
   //
   // Generate Link.
   //
-  std::cout << "" << std::endl;
-  std::cout << "  /* Build link. */" << std::endl;
+  this->WriteCpp("");
+  this->WriteCpp("  /* Build link. */");
   std::vector<std::string> linkBuild = GenerateNetworkHardwareCpp(); 
   for(size_t i = 0; i <  linkBuild.size(); i++)
   {
-    std::cout << "  " << linkBuild.at(i) << std::endl;
+    this->WriteCpp("  " + linkBuild.at(i));
   }
 
   //
   // Generate link net device container.
   //
-  std::cout << "" << std::endl;
-  std::cout << "  /* Build link net device container. */" << std::endl;
+  this->WriteCpp("");
+  this->WriteCpp("  /* Build link net device container. */");
   std::vector<std::string> linkNdcBuild = GenerateNetDeviceCpp(); 
   for(size_t i = 0; i <  linkNdcBuild.size(); i++)
   {
-    std::cout << "  " << linkNdcBuild.at(i) << std::endl;
+    this->WriteCpp("  " + linkNdcBuild.at(i));
   }
 
   //
   // Generate Ip Stack. 
   //
-  std::cout << "" << std::endl;
-  std::cout << "  /* Install the IP stack. */" << std::endl;
+  this->WriteCpp("");
+  this->WriteCpp("  /* Install the IP stack. */");
   std::vector<std::string> allStacks = GenerateIpStackCpp();
   for(size_t i = 0; i <  allStacks.size(); i++)
   {
-    std::cout << "  " << allStacks.at(i) << std::endl;
+    this->WriteCpp("  " + allStacks.at(i));
   }
 
   //
   // Generate IP assignation.
   // 
-  std::cout << "" << std::endl;
-  std::cout << "  /* IP assign. */" << std::endl;
+  this->WriteCpp("");
+  this->WriteCpp("  /* IP assign. */");
   std::vector<std::string> allAssign = GenerateIpAssignCpp();
   for(size_t i = 0; i <  allAssign.size(); i++)
   {
-    std::cout << "  " << allAssign.at(i) << std::endl;
+    this->WriteCpp("  " + allAssign.at(i));
   } 
 
   //
@@ -578,48 +581,47 @@ void Generator::GenerateCodeCpp()
   std::vector<std::string> allTapBridge = GenerateTapBridgeCpp();
   if(allTapBridge.size() > 0)
   {
-    std::cout << "" << std::endl;
-    std::cout << "  /* Tap Bridge. */" << std::endl;
+    this->WriteCpp("");
+    this->WriteCpp("  /* Tap Bridge. */");
   }
   for(size_t i = 0; i <  allTapBridge.size(); i++)
   {
-    std::cout << "  " << allTapBridge.at(i) << std::endl;
+    this->WriteCpp("  " + allTapBridge.at(i));
   } 
 
   //
   // Generate Route.
   //
-  std::cout << "" << std::endl;
-  std::cout << "  /* Generate Route. */" << std::endl;
+  this->WriteCpp("");
+  this->WriteCpp("  /* Generate Route. */");
   std::vector<std::string> allRoutes = GenerateRouteCpp();
   for(size_t i = 0; i <  allRoutes.size(); i++)
   {
-    std::cout << "  " << allRoutes.at(i) << std::endl;
+    this->WriteCpp("  " + allRoutes.at(i));
   } 
 
   //
   // Generate Application.
   //
-  std::cout << "" << std::endl;
-  std::cout << "  /* Generate Application. */" << std::endl;
+  this->WriteCpp("");
+  this->WriteCpp("  /* Generate Application. */");
   std::vector<std::string> allApps = GenerateApplicationCpp();
   for(size_t i = 0; i <  allApps.size(); i++)
   {
-    std::cout << "  " << allApps.at(i) << std::endl;
+    this->WriteCpp("  " + allApps.at(i));
   } 
 
   //
   // Others
   //
-  std::cout << "" << std::endl;
-  std::cout << "  /* Simulation. */" << std::endl;
+  this->WriteCpp("");
+  this->WriteCpp("  /* Simulation. */");
 
-
-  std::cout << "  /* Pcap output. */" << std::endl;
+  this->WriteCpp("  /* Pcap output. */");
   std::vector<std::string> allTrace = GenerateTraceCpp();
   for(size_t i = 0; i <  allTrace.size(); i++)
   {
-    std::cout << "  " << allTrace.at(i) << std::endl;
+    this->WriteCpp("  " + allTrace.at(i));
   } 
 
   /* Set stop time. */
@@ -633,15 +635,19 @@ void Generator::GenerateCodeCpp()
   }
   stopTime += 1;
 
-  std::cout << "  /* Stop the simulation after x seconds. */" << std::endl;
-  std::cout << "  uint32_t stopTime = "<< stopTime << ";" << std::endl; 
-  std::cout << "  Simulator::Stop (Seconds (stopTime));" << std::endl;
+  this->WriteCpp("  /* Stop the simulation after x seconds. */");
+  this->WriteCpp("  uint32_t stopTime = "+ utils::integerToString(stopTime) +";"); 
+  this->WriteCpp("  Simulator::Stop (Seconds (stopTime));");
 
-  std::cout << "  /* Start and clean simulation. */" << std::endl;
-  std::cout << "  Simulator::Run ();" << std::endl;
-  std::cout << "  Simulator::Destroy ();" << std::endl;
+  this->WriteCpp("  /* Start and clean simulation. */");
+  this->WriteCpp("  Simulator::Run ();");
+  this->WriteCpp("  Simulator::Destroy ();");
 
-  std::cout << "}" << std::endl; 
+  this->WriteCpp("}"); 
+  
+  if(fileName != ""){
+    this->m_cppFile.close();
+  }
 }
 
 std::vector<std::string> Generator::GenerateHeader() 
@@ -996,16 +1002,19 @@ std::vector<std::string> Generator::GenerateTraceCpp()
 // Part around the C++ code Generation.
 // This part is looking about the code to write.
 
-void Generator::GenerateCodePython()
+void Generator::GenerateCodePython(std::string fileName)
 {
-  /* In first time we just print it to stdout, at the end, we will use the write cpp function */
+  if(fileName != ""){
+    this->m_pyFile.open(fileName.c_str());
+  }
   
   //
   // Generate headers 
   //
-  std::cout << "import ns3" << std::endl << std::endl;
-
-  std::cout << "def main(argv):" << std::endl << std::endl;
+  this->WritePython("import ns3");
+  this->WritePython("");
+  this->WritePython("def main(argv):");
+  this->WritePython("");
 
   //
   // Tap/Emu variables
@@ -1013,87 +1022,87 @@ void Generator::GenerateCodePython()
   std::vector<std::string> allVars = GenerateVarsPython();
   for(size_t i = 0; i <  allVars.size(); i++)
   {
-    std::cout << "    " << allVars.at(i) << std::endl;
-    std::cout << "" << std::endl;
+    this->WritePython("    " + allVars.at(i));
+    this->WritePython("");
   }
 
   //
   // Generate Command Line 
   //
-  std::cout << "    cmd = ns3.CommandLine()" << std::endl;
+  this->WritePython("    cmd = ns3.CommandLine()");
 
   std::vector<std::string> allCmdLine = GenerateCmdLinePython();
   for(size_t i = 0; i <  allCmdLine.size(); i++)
   {
-    std::cout << "    " << allCmdLine.at(i) << std::endl;
+    this->WritePython("    " + allCmdLine.at(i));
   } 
 
-  std::cout << "    cmd.Parse (argv)" << std::endl;
+  this->WritePython("    cmd.Parse (argv)");
 
   //
   // Generate Optional configuration
   // 
-  std::cout << "" << std::endl;
-  std::cout << "    # Configuration." << std::endl;
+  this->WritePython("");
+  this->WritePython("    # Configuration.");
   std::vector<std::string> conf = GenerateConfigPython();
   for(size_t i = 0; i <  conf.size(); i++)
   {
-    std::cout << "    " << conf.at(i) << std::endl;
+    this->WritePython("    " + conf.at(i));
   }
 
   //
   // Generate Nodes. 
   //
-  std::cout << "" << std::endl;
-  std::cout << "    # Build nodes" << std::endl;
+  this->WritePython("");
+  this->WritePython("    # Build nodes");
   std::vector<std::string> nodeBuild = GenerateNodePython();
   for(size_t i = 0; i <  nodeBuild.size(); i++)
   {
-    std::cout << "    " << nodeBuild.at(i) << std::endl;
+    this->WritePython("    " + nodeBuild.at(i));
   }
 
   //
   // Generate Link.
   //
-  std::cout << "" << std::endl;
-  std::cout << "    # Build link." << std::endl;
+  this->WritePython("");
+  this->WritePython("    # Build link.");
   std::vector<std::string> linkBuild = GenerateNetworkHardwarePython();
   for(size_t i = 0; i <  linkBuild.size(); i++)
   {
-    std::cout << "    " << linkBuild.at(i) << std::endl;
+    this->WritePython("    " + linkBuild.at(i));
   }
 
   //
   // Generate link net device container.
   //
-  std::cout << "" << std::endl;
-  std::cout << "    # Build link net device container." << std::endl;
+  this->WritePython("");
+  this->WritePython("    # Build link net device container.");
   std::vector<std::string> linkNdcBuild = GenerateNetDevicePython(); 
   for(size_t i = 0; i <  linkNdcBuild.size(); i++)
   {
-    std::cout << "    " << linkNdcBuild.at(i) << std::endl;
+    this->WritePython("    " + linkNdcBuild.at(i));
   }
 
   //
   // Generate IP Stack. 
   //
-  std::cout << "" << std::endl;
-  std::cout << "    # Install the IP stack." << std::endl;
+  this->WritePython("");
+  this->WritePython("    # Install the IP stack.");
   std::vector<std::string> allStacks = GenerateIpStackPython();
   for(size_t i = 0; i <  allStacks.size(); i++)
   {
-    std::cout << "    " << allStacks.at(i) << std::endl;
+    this->WritePython("    " + allStacks.at(i));
   }
 
   //
   // Generate IP assignation.
   // 
-  std::cout << "" << std::endl;
-  std::cout << "    # IP assign." << std::endl;
+  this->WritePython("");
+  this->WritePython("    # IP assign.");
   std::vector<std::string> allAssign = GenerateIpAssignPython();
   for(size_t i = 0; i <  allAssign.size(); i++)
   {
-    std::cout << "    " << allAssign.at(i) << std::endl;
+    this->WritePython("    " + allAssign.at(i));
   } 
 
   //
@@ -1102,48 +1111,48 @@ void Generator::GenerateCodePython()
   std::vector<std::string> allTapBridge = GenerateTapBridgePython();
   if(allTapBridge.size() > 0)
   {
-    std::cout << "" << std::endl;
-    std::cout << "    # Tap Bridge." << std::endl;
+    this->WritePython("");
+    this->WritePython("    # Tap Bridge.");
   }
   for(size_t i = 0; i <  allTapBridge.size(); i++)
   {
-    std::cout << "    " << allTapBridge.at(i) << std::endl;
+    this->WritePython("    " + allTapBridge.at(i));
   } 
 
   //
   // Generate Route.
   //
-  std::cout << "" << std::endl;
-  std::cout << "    # Generate Route." << std::endl;
+  this->WritePython("");
+  this->WritePython("    # Generate Route.");
   std::vector<std::string> allRoutes = GenerateRoutePython();
   for(size_t i = 0; i <  allRoutes.size(); i++)
   {
-    std::cout << "    " << allRoutes.at(i) << std::endl;
+    this->WritePython("    " + allRoutes.at(i));
   } 
 
   //
   // Generate Application.
   //
-  std::cout << "" << std::endl;
-  std::cout << "    # Generate Application." << std::endl;
+  this->WritePython("");
+  this->WritePython("    # Generate Application.");
   std::vector<std::string> allApps = GenerateApplicationPython();
   for(size_t i = 0; i <  allApps.size(); i++)
   {
-    std::cout << "    " << allApps.at(i) << std::endl;
+    this->WritePython("    " + allApps.at(i));
   } 
 
   //
   // Others
   //
-  std::cout << "" << std::endl;
-  std::cout << "    # Simulation." << std::endl;
+  this->WritePython("");
+  this->WritePython("    # Simulation.");
 
 
-  std::cout << "    # Pcap output." << std::endl;
+  this->WritePython("    # Pcap output.");
   std::vector<std::string> allTrace = GenerateTracePython();
   for(size_t i = 0; i <  allTrace.size(); i++)
   {
-    std::cout << "    " << allTrace.at(i) << std::endl;
+    this->WritePython("    " + allTrace.at(i));
   } 
 
   /* Set stop time. */
@@ -1157,18 +1166,22 @@ void Generator::GenerateCodePython()
   }
   stopTime += 1;
 
-  std::cout << "    # Stop the simulation after x seconds." << std::endl;
-  std::cout << "    stopTime = "<< stopTime << std::endl; 
-  std::cout << "    ns3.Simulator.Stop (ns3.Seconds(stopTime))" << std::endl;
+  this->WritePython("    # Stop the simulation after x seconds.");
+  this->WritePython("    stopTime = "+ utils::integerToString(stopTime) ); 
+  this->WritePython("    ns3.Simulator.Stop (ns3.Seconds(stopTime))");
 
-  std::cout << "    # Start and clean simulation." << std::endl;
-  std::cout << "    ns3.Simulator.Run()" << std::endl;
-  std::cout << "    ns3.Simulator.Destroy()" << std::endl;
+  this->WritePython("    # Start and clean simulation.");
+  this->WritePython("    ns3.Simulator.Run()");
+  this->WritePython("    ns3.Simulator.Destroy()");
 
-  std::cout << std::endl;
-  std::cout << "if __name__ == '__main__':" << std::endl;;
-  std::cout << "    import sys" << std::endl;
-  std::cout << "    main(sys.argv)" << std::endl;
+  this->WritePython("");
+  this->WritePython("if __name__ == '__main__':");
+  this->WritePython("    import sys");
+  this->WritePython("    main(sys.argv)");
+  
+  if(fileName != ""){
+    this->m_pyFile.close();
+  }
 }
 
 
@@ -1448,45 +1461,16 @@ std::vector<std::string> Generator::GenerateTracePython()
 }
 
 //
-// XML generation operation part.
-//
-
-void Generator::OpenXml() 
-{
-}
-
-std::string Generator::GetXmlFileName() 
-{
-  return this->m_xmlFileName;
-}
-
-void Generator::WriteXml(const std::string &line) 
-{
-  std::cout << line << std::endl;
-}
-
-void Generator::SetXmlFileName(const std::string &xmlFileName) 
-{
-  this->m_xmlFileName = xmlFileName;
-}
-
-//
 // Cpp generation operation part.
 //
-
-std::string Generator::GetCppFileName() 
-{
-  return this->m_cppFileName;
-}
-
-void Generator::SetCppFileName(const std::string &cppFileName ) 
-{
-  this->m_cppFileName = cppFileName;
-}
 
 void Generator::WriteCpp(const std::string &line) 
 {
   std::cout << line << std::endl;
+  if(this->m_cppFile.is_open())
+  {
+    this->m_cppFile << line + '\n';
+  }
 }
 
 //
@@ -1496,15 +1480,9 @@ void Generator::WriteCpp(const std::string &line)
 void Generator::WritePython(const std::string &line)
 {
   std::cout << line << std::endl;
-}
-
-std::string Generator::GetPyFileName() 
-{
-  return this->m_pyFileName;
-}
-
-void Generator::SetPyFileName(const std::string &pyFileName ) 
-{
-  this->m_pyFileName = pyFileName;
+  if(this->m_pyFile.is_open())
+  {
+    this->m_pyFile << line + '\n';
+  }
 }
 

@@ -477,12 +477,62 @@ void MainWindow::ConnectNode(const std::string &linkName, const std::string &nod
 
 void MainWindow::GenerateCpp()
 {
-  this->m_gen->GenerateCodeCpp();
+  QString fileName = "";
+  QFileDialog dlg(this, tr("Generate Cpp"));
+
+  dlg.setFileMode(QFileDialog::AnyFile);
+ 
+  if(dlg.exec())
+  {
+    fileName = dlg.selectedFiles().at(0);
+
+    /* check if file exists and notificate the user */
+    if(QFile(fileName).exists())
+    {
+      if(QMessageBox(QMessageBox::Question, "File exists", "File already exists. Overwrite ?", 
+            QMessageBox::Ok | QMessageBox::No).exec() != QMessageBox::Ok)
+      {
+        return;
+      }
+    }
+  }
+  
+  this->m_gen->GenerateCodeCpp(fileName.toStdString());
+  
+  if(fileName != "")
+  {
+    QMessageBox(QMessageBox::Information, "Generatie Cpp", "Code saved at " + fileName).exec();
+  }
 }
 
 void MainWindow::GeneratePython()
 {
-  this->m_gen->GenerateCodePython();
+  QString fileName = "";
+  QFileDialog dlg(this, tr("Generate Python"));
+
+  dlg.setFileMode(QFileDialog::AnyFile);
+ 
+  if(dlg.exec())
+  {
+    fileName = dlg.selectedFiles().at(0);
+
+    /* check if file exists and notificate the user */
+    if(QFile(fileName).exists())
+    {
+      if(QMessageBox(QMessageBox::Question, "File exists", "File already exists. Overwrite ?", 
+            QMessageBox::Ok | QMessageBox::No).exec() != QMessageBox::Ok)
+      {
+        return;
+      }
+    }
+  }
+  
+  this->m_gen->GenerateCodePython(fileName.toStdString());
+  
+  if(fileName != "")
+  {
+    QMessageBox(QMessageBox::Information, "Generatie Python", "Code saved at " + fileName).exec();
+  }
 }
 
 void MainWindow::DeleteObject()

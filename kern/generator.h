@@ -32,8 +32,8 @@
 #include "network-hardware.h"
 #include "application.h"
 
-
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 
@@ -230,7 +230,7 @@ class Generator
      * This procedure is the main procedure to generate the code from the simulation.
      * It also go to use all the procedure on the bottom like generate all headers, ...
      */
-    void GenerateCodeCpp();
+    void GenerateCodeCpp(std::string fileName = "");
 
     /**
      * \brief Generate ns-3 python code.
@@ -238,7 +238,7 @@ class Generator
      * This procedure is the main procedure to generate the code from the simulation.
      * It also go to use all the procedure on the bottom like generate all headers, ...
      */
-    void GenerateCodePython();
+    void GenerateCodePython(std::string fileName = "");
 
   private:
     /**
@@ -519,59 +519,13 @@ class Generator
     std::vector<std::string> GenerateTracePython();
 
     //
-    // XML generation operation part.
-    //
-
-    /**
-     * \brief XML file name atribute.
-     * 
-     * This file name is used to export the current simulation into XML to save it.
-     */
-    std::string m_xmlFileName;
-
-    /**
-     * \brief Get XML file name.
-     * \return xml file name
-     */
-    std::string GetXmlFileName();
-
-    /**
-     * \brief Set xml file name.
-     * \param xmlFileName the new XML file name
-     */
-    void SetXmlFileName(const std::string &xmlFileName );
-
-    /**
-     * \brief Write simulation into XML file.
-     * \param line the line to add to the XML file
-     */
-    void WriteXml(const std::string &line);
-
-    /**
-     * \brief Open and print graphicaly the XML file.
-     */
-    void OpenXml();
-
-    //
     // C++ generation operation part.
     //
 
     /**
      * \brief Name of the C++ output file name.
      */  
-    std::string m_cppFileName;
-
-    /**
-     * \brief Get the C++ output file name.
-     * \return C++ file name
-     */
-    std::string GetCppFileName();
-
-    /**
-     * \brief Set C++ output file name.
-     * \param cppFileName the new C++ file name
-     */
-    void SetCppFileName(const std::string &cppFileName);
+    std::ofstream m_cppFile;
 
     /**
      * \brief Write C++ code into the attribute file name.
@@ -586,19 +540,7 @@ class Generator
     /**
      * \brief Name of the python output file name.
      */
-    std::string m_pyFileName;
-
-    /**
-     * \brief Get python output file name.
-     * \return python file name
-     */
-    std::string GetPyFileName();
-
-    /**
-     * \brief Set the python output file name.
-     * \param pyFileName the new python file name
-     */
-    void SetPyFileName(const std::string &pyFileName);
+    std::ofstream m_pyFile;
 
     /**
      * \brief Write python code into the output file name.
