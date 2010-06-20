@@ -1,0 +1,21 @@
+TODO
+====
+
+GUI
+---
+- Window size (take care on out from zone object);
+- Add multi-selection of object with ctrl or mouse cursor;
+- On link use, icon from link must be pressed;
+- Fix the superimposed link;
+- Implement keyboard shortcut (del key to remove nodes/links, ...);
+- Implementation of menu;
+- Implement right click on object (show menu with "remove", "configure" (for link), "add application" (for node));
+- Show the selected object (different border);
+- Add status bar (show generation time, ...);
+- Help UI;
+- Summary of simulation (treeview with a lot of information).
+
+Core
+-----
+- IPv6 support;
+
