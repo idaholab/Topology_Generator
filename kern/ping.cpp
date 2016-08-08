@@ -18,6 +18,36 @@
  * Author: Pierre Weiss <3weissp@gmail.com>
  */
 
+/*
+ * © 2015 Battelle Energy Alliance, LLC. ALL RIGHTS RESERVED
+ *
+ * Prepared by Battelle Energy Alliance, LLC.
+ * Under Contract No. DE-AC07-05ID14517
+ * With the U. S. Department of Energy
+ *
+ * NOTICE:  This computer software was prepared by Battelle Energy
+ * Alliance, LLC, hereinafter the Contractor, under Contract
+ * No. AC07-05ID14517 with the United States (U. S.) Department of
+ * Energy (DOE).  The Government is granted for itself and others acting on
+ * its behalf a nonexclusive, paid-up, irrevocable worldwide license in this
+ * data to reproduce, prepare derivative works, and perform publicly and
+ * display publicly, by or on behalf of the Government. There is provision for
+ * the possible extension of the term of this license.  Subsequent to that
+ * period or any extension granted, the Government is granted for itself and
+ * others acting on its behalf a nonexclusive, paid-up, irrevocable worldwide
+ * license in this data to reproduce, prepare derivative works, distribute
+ * copies to the public, perform publicly and display publicly, and to permit
+ * others to do so.  The specific term of the license can be identified by
+ * inquiry made to Contractor or DOE.  NEITHER THE UNITED STATES NOR THE UNITED
+ * STATES DEPARTMENT OF ENERGY, NOR CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR
+ * IMPLIED, OR ASSUMES ANY LIABILITY OR RESPONSIBILITY FOR THE USE, ACCURACY,
+ * COMPLETENESS, OR USEFULNESS OR ANY INFORMATION, APPARATUS, PRODUCT, OR
+ * PROCESS DISCLOSED, OR REPRESENTS THAT ITS USE WOULD NOT INFRINGE PRIVATELY
+ * OWNED RIGHTS.
+ * 
+ * Modified by: Jeffrey M. Young <jeffrey.young@inl.gov>
+ */
+
 /**
  * \file ping.cpp
  * \brief Ping Class.
@@ -42,7 +72,7 @@ Ping::~Ping()
 std::vector<std::string> Ping::GenerateHeader()
 {
   std::vector<std::string> headers;
-  headers.push_back("#include \"ns3/helper-module.h\"");
+  headers.push_back("#include \"ns3/applications-module.h\"");
 
   return headers;
 }
@@ -53,8 +83,8 @@ std::vector<std::string> Ping::GenerateApplicationCpp(std::string netDeviceConta
 
   apps.push_back("InetSocketAddress dst_" + this->GetAppName() + " = InetSocketAddress (iface_" + netDeviceContainer + ".GetAddress(" + utils::integerToString(numberIntoNetDevice) + "));");
   apps.push_back("OnOffHelper onoff_" + this->GetAppName() + " = OnOffHelper (\"ns3::Ipv4RawSocketFactory\", dst_" + this->GetAppName() + ");");
-  apps.push_back("onoff_" + this->GetAppName() + ".SetAttribute (\"OnTime\", RandomVariableValue (ConstantVariable (1.0)));");
-  apps.push_back("onoff_" + this->GetAppName() + ".SetAttribute (\"OffTime\", RandomVariableValue (ConstantVariable (0.0)));");
+  apps.push_back("onoff_" + this->GetAppName() + ".SetAttribute (\"OnTime\", StringValue (\"ns3::ConstantRandomVariable[Constant=1]\"));");
+  apps.push_back("onoff_" + this->GetAppName() + ".SetAttribute (\"OffTime\", StringValue (\"ns3::ConstantRandomVariable[Constant=0]\"));");
 
   apps.push_back("ApplicationContainer apps_" + this->GetAppName() + " = onoff_" + this->GetAppName() + ".Install(" + this->GetSenderNode() + ".Get(0));");
   apps.push_back("apps_" + this->GetAppName() + ".Start (Seconds (" + this->GetStartTime() + ".1));");
@@ -79,8 +109,8 @@ std::vector<std::string> Ping::GenerateApplicationPython(std::string netDeviceCo
 
   apps.push_back("dst_" + this->GetAppName() + " = ns3.InetSocketAddress(iface_" + netDeviceContainer + ".GetAddress(" + utils::integerToString(numberIntoNetDevice) + "))");
   apps.push_back("onoff_" + this->GetAppName() + " = ns3.OnOffHelper(\"ns3::Ipv4RawSocketFactory\", dst_" + this->GetAppName() + ")");
-  apps.push_back("onoff_" + this->GetAppName() + ".SetAttribute(\"OnTime\", ns3.RandomVariableValue(ns3.ConstantVariable (1.0)))");
-  apps.push_back("onoff_" + this->GetAppName() + ".SetAttribute(\"OffTime\", ns3.RandomVariableValue(ns3.ConstantVariable (0.0)))");
+  apps.push_back("onoff_" + this->GetAppName() + ".SetAttribute(\"OnTime\", ns3.StringValue (\"ns3::ConstantRandomVariable[Constant=1]\"))");
+  apps.push_back("onoff_" + this->GetAppName() + ".SetAttribute(\"OffTime\", ns3.StringValue (\"ns3::ConstantRandomVariable[Constant=0]\"))");
 
   apps.push_back("apps_" + this->GetAppName() + " = onoff_" + this->GetAppName() + ".Install(" + this->GetSenderNode() + ".Get(0))");
   apps.push_back("apps_" + this->GetAppName() + ".Start(ns3.Seconds (" + this->GetStartTime() + ".1))");
@@ -97,4 +127,3 @@ std::vector<std::string> Ping::GenerateApplicationPython(std::string netDeviceCo
   apps.push_back("apps_" + this->GetAppName() + ".Stop (ns3.Seconds(" + this->GetEndTime() + ".0))");
   return apps;
 }
-
