@@ -18,6 +18,36 @@
  * Author: Pierre Weiss <3weissp@gmail.com>
  */
 
+/*
+ * © 2015 Battelle Energy Alliance, LLC. ALL RIGHTS RESERVED
+ *
+ * Prepared by Battelle Energy Alliance, LLC.
+ * Under Contract No. DE-AC07-05ID14517
+ * With the U. S. Department of Energy
+ *
+ * NOTICE:  This computer software was prepared by Battelle Energy
+ * Alliance, LLC, hereinafter the Contractor, under Contract
+ * No. AC07-05ID14517 with the United States (U. S.) Department of
+ * Energy (DOE).  The Government is granted for itself and others acting on
+ * its behalf a nonexclusive, paid-up, irrevocable worldwide license in this
+ * data to reproduce, prepare derivative works, and perform publicly and
+ * display publicly, by or on behalf of the Government. There is provision for
+ * the possible extension of the term of this license.  Subsequent to that
+ * period or any extension granted, the Government is granted for itself and
+ * others acting on its behalf a nonexclusive, paid-up, irrevocable worldwide
+ * license in this data to reproduce, prepare derivative works, distribute
+ * copies to the public, perform publicly and display publicly, and to permit
+ * others to do so.  The specific term of the license can be identified by
+ * inquiry made to Contractor or DOE.  NEITHER THE UNITED STATES NOR THE UNITED
+ * STATES DEPARTMENT OF ENERGY, NOR CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR
+ * IMPLIED, OR ASSUMES ANY LIABILITY OR RESPONSIBILITY FOR THE USE, ACCURACY,
+ * COMPLETENESS, OR USEFULNESS OR ANY INFORMATION, APPARATUS, PRODUCT, OR
+ * PROCESS DISCLOSED, OR REPRESENTS THAT ITS USE WOULD NOT INFRINGE PRIVATELY
+ * OWNED RIGHTS.
+ * 
+ * Modified by: Jeffrey M. Young <jeffrey.young@inl.gov>
+ */
+
 /**
  * \file ap.cpp
  * \brief Ap link subclass.
@@ -77,7 +107,6 @@ std::vector<std::string> Ap::GenerateHeader()
   std::vector<std::string> headers;
   headers.push_back("#include \"ns3/wifi-module.h\"");
   headers.push_back("#include \"ns3/mobility-module.h\"");
-  headers.push_back("#include \"ns3/contrib-module.h\"");
 
   return headers;
 }
@@ -108,13 +137,13 @@ std::vector<std::string> Ap::GenerateNetDeviceCpp()
   ndc.push_back("NqosWifiMacHelper wifiMac_" + this->GetNetworkHardwareName() + " = NqosWifiMacHelper::Default ();");
   ndc.push_back("wifi_" + this->GetNetworkHardwareName() + ".SetRemoteStationManager (\"ns3::ArfWifiManager\");");
 
-  ndc.push_back("wifiMac_" + this->GetNetworkHardwareName() + ".SetType (\"ns3::NqapWifiMac\", ");
+  ndc.push_back("wifiMac_" + this->GetNetworkHardwareName() + ".SetType (\"ns3::ApWifiMac\", ");
   ndc.push_back("   \"Ssid\", SsidValue (ssid_" + this->GetNetworkHardwareName() + "), ");
   ndc.push_back("   \"BeaconGeneration\", BooleanValue (true),"); 
   ndc.push_back("   \"BeaconInterval\", TimeValue (Seconds (2.5)));");
   ndc.push_back(this->GetNdcName() + ".Add (wifi_" + this->GetNetworkHardwareName() + ".Install (wifiPhy_" + this->GetNetworkHardwareName() + ", wifiMac_" + this->GetNetworkHardwareName() + ", " + this->m_apNode + "));");
 
-  ndc.push_back("wifiMac_" + this->GetNetworkHardwareName() + ".SetType (\"ns3::NqstaWifiMac\",");
+  ndc.push_back("wifiMac_" + this->GetNetworkHardwareName() + ".SetType (\"ns3::StaWifiMac\",");
   ndc.push_back("   \"Ssid\", SsidValue (ssid_" + this->GetNetworkHardwareName() + "), ");
   ndc.push_back("   \"ActiveProbing\", BooleanValue (false));");
   ndc.push_back(this->GetNdcName() + ".Add (wifi_" + this->GetNetworkHardwareName() + ".Install (wifiPhy_" + this->GetNetworkHardwareName() + ", wifiMac_" + this->GetNetworkHardwareName() + ", " + this->GetAllNodeContainer() + " ));");
@@ -171,13 +200,13 @@ std::vector<std::string> Ap::GenerateNetDevicePython()
   ndc.push_back("wifiMac_" + this->GetNetworkHardwareName() + " = ns3.NqosWifiMacHelper.Default()");
   ndc.push_back("wifi_" + this->GetNetworkHardwareName() + ".SetRemoteStationManager(\"ns3::ArfWifiManager\")");
 
-  ndc.push_back("wifiMac_" + this->GetNetworkHardwareName() + ".SetType (\"ns3::NqapWifiMac\", ");
+  ndc.push_back("wifiMac_" + this->GetNetworkHardwareName() + ".SetType (\"ns3::ApWifiMac\", ");
   ndc.push_back("   \"Ssid\", ns3.SsidValue(ssid_" + this->GetNetworkHardwareName() + "), ");
   ndc.push_back("   \"BeaconGeneration\", ns3.BooleanValue(True),");
   ndc.push_back("   \"BeaconInterval\", ns3.TimeValue(ns3.Seconds(2.5)))");
   ndc.push_back(this->GetNdcName() + ".Add(wifi_" + this->GetNetworkHardwareName() + ".Install(wifiPhy_" + this->GetNetworkHardwareName() + ", wifiMac_" + this->GetNetworkHardwareName() + ", " + this->m_apNode + "))");
 
-  ndc.push_back("wifiMac_" + this->GetNetworkHardwareName() + ".SetType(\"ns3::NqstaWifiMac\",");
+  ndc.push_back("wifiMac_" + this->GetNetworkHardwareName() + ".SetType(\"ns3::StaWifiMac\",");
   ndc.push_back("   \"Ssid\", ns3.SsidValue(ssid_" + this->GetNetworkHardwareName() + "), ");
   ndc.push_back("   \"ActiveProbing\", ns3.BooleanValue(False))");
   ndc.push_back(this->GetNdcName() + ".Add(wifi_" + this->GetNetworkHardwareName() + ".Install(wifiPhy_" + this->GetNetworkHardwareName() + ", wifiMac_" + this->GetNetworkHardwareName() + ", " + this->GetAllNodeContainer() + " ))");
@@ -206,4 +235,3 @@ std::vector<std::string> Ap::GenerateTracePython()
 
   return trace;
 }
-
