@@ -73,6 +73,8 @@ std::vector<std::string> Ping::GenerateHeader()
 {
   std::vector<std::string> headers;
   headers.push_back("#include \"ns3/applications-module.h\"");
+  headers.push_back("#include \"ns3/v4ping-helper.h\"");
+  headers.push_back("#include \"ns3/v4ping.h\"");
 
   return headers;
 }
