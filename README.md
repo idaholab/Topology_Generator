@@ -22,6 +22,12 @@ $ doxygen Doxyfile
 
 The HTML generated documentation is located in doc/html/ directory of sources.
 
+Configurations may be saved to an XML file and later loaded.
+
+2) Example screenshot
+------------------
+![alt text](Ns-3-generator-test.png "Screenshot of Topology Generator")
+
 License
 ------------------
 
