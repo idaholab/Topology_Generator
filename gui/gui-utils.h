@@ -28,7 +28,7 @@
 #ifndef GUIUTILS_H
 #define GUIUTILS_H
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "generator.h"
 #include "drag-widget.h"

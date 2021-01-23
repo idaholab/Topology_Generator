@@ -30,7 +30,7 @@
 
 #include <QFrame>
 #include <vector>
-#include <QtGui>
+#include <QtWidgets>
 
 class DragObject;
 class MainWindow;

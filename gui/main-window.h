@@ -28,7 +28,7 @@
 #ifndef MAIN_WINDOW_H
 #define MAIN_WINDOW_H
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "drag-widget.h"
 #include "generator.h"

@@ -8,7 +8,7 @@ code for ns-3.
 1) Build / install
 ------------------
 
-You need Qt 4 librarie to compile and use ns-3 topology generator.
+You need Qt 5 libraries to compile and use ns-3 topology generator.
 
 To build the project:
  $ qmake

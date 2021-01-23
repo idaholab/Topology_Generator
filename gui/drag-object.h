@@ -29,7 +29,7 @@
 #define DRAG_OBJECT_H
 
 #include <vector>
-#include <QtGui>
+#include <QtWidgets>
 
 #include "drag-widget.h"
 

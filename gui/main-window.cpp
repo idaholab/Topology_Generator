@@ -481,6 +481,8 @@ void MainWindow::GenerateCpp()
   QFileDialog dlg(this, tr("Generate Cpp"));
 
   dlg.setFileMode(QFileDialog::AnyFile);
+  dlg.setAcceptMode(QFileDialog::AcceptSave);
+  dlg.setDefaultSuffix(".cc");
  
   if(dlg.exec())
   {
@@ -501,7 +503,7 @@ void MainWindow::GenerateCpp()
   
   if(fileName != "")
   {
-    QMessageBox(QMessageBox::Information, "Generatie Cpp", "Code saved at " + fileName).exec();
+    QMessageBox(QMessageBox::Information, "Generated Cpp", "Code saved at " + fileName).exec();
   }
 }
 
@@ -511,6 +513,8 @@ void MainWindow::GeneratePython()
   QFileDialog dlg(this, tr("Generate Python"));
 
   dlg.setFileMode(QFileDialog::AnyFile);
+  dlg.setAcceptMode(QFileDialog::AcceptSave);
+  dlg.setDefaultSuffix(".py");
  
   if(dlg.exec())
   {
@@ -519,7 +523,7 @@ void MainWindow::GeneratePython()
     /* check if file exists and notificate the user */
     if(QFile(fileName).exists())
     {
-      if(QMessageBox(QMessageBox::Question, "File exists", "File already exists. Overwrite ?", 
+      if(QMessageBox(QMessageBox::Question, "File exists", "File already exists. Overwrite?",
             QMessageBox::Ok | QMessageBox::No).exec() != QMessageBox::Ok)
       {
         return;
@@ -531,7 +535,7 @@ void MainWindow::GeneratePython()
   
   if(fileName != "")
   {
-    QMessageBox(QMessageBox::Information, "Generatie Python", "Code saved at " + fileName).exec();
+    QMessageBox(QMessageBox::Information, "Generated Python", "Code saved at " + fileName).exec();
   }
 }
 
@@ -561,19 +565,20 @@ void MainWindow::About()
 
 void MainWindow::SavePicture()
 {
-  QFileDialog dlg(this, tr("Save image"));
-
+  QFileDialog dlg(this, tr("Save image (*.png)"));
   dlg.setFileMode(QFileDialog::AnyFile);
+  dlg.setAcceptMode(QFileDialog::AcceptSave);
+  dlg.setDefaultSuffix(".png");
  
   if(dlg.exec())
   {
-    QImage img = QPixmap::grabWidget(this->m_dw).toImage();
+    QImage img = this->m_dw->grab().toImage();
     QString fileName = dlg.selectedFiles().at(0);
 
     /* check if file exists and notificate the user */
     if(QFile(fileName).exists())
     {
-      if(QMessageBox(QMessageBox::Question, "File exists", "File already exists. Overwrite ?", 
+      if(QMessageBox(QMessageBox::Question, "File exists", "File already exists. Overwrite?",
             QMessageBox::Ok | QMessageBox::No).exec() != QMessageBox::Ok)
       {
         return;
@@ -595,8 +600,9 @@ void MainWindow::SaveXml()
 {
   QString fileName = "";
   QFileDialog dlg(this, tr("Save XML"));
-
   dlg.setFileMode(QFileDialog::AnyFile);
+  dlg.setAcceptMode(QFileDialog::AcceptSave);
+  dlg.setDefaultSuffix(".xml");
  
   if(dlg.exec())
   {
@@ -605,7 +611,7 @@ void MainWindow::SaveXml()
     /* check if file exists and notificate the user */
     if(QFile(fileName).exists())
     {
-      if(QMessageBox(QMessageBox::Question, "File exists", "File already exists. Overwrite ?", 
+      if(QMessageBox(QMessageBox::Question, "File exists", "File already exists. Overwrite?",
             QMessageBox::Ok | QMessageBox::No).exec() != QMessageBox::Ok)
       {
         return;
@@ -629,9 +635,8 @@ void MainWindow::LoadXml()
 {
   QString fileName = "";
   QFileDialog dlg(this, tr("Load XML"));
-
   dlg.setFileMode(QFileDialog::AnyFile);
- 
+
   if(dlg.exec())
   {
     fileName = dlg.selectedFiles().at(0);

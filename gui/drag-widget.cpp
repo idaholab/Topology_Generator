@@ -25,7 +25,7 @@
  * \date 2009
  */
 
-#include <QtGui>
+#include <QtWidgets>
 #include <iostream>
 #include <stdexcept>
 
