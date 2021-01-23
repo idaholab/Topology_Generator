@@ -77,12 +77,12 @@ class Array
      */
     void add(std::string indexName, T data) 
     {
-      for(long i = 0; i < stack.size(); i++) 
+      for(long i = 0; i < stack.size(); i++)
         if(stack[i].indexName == indexName)
         {
           stack[i].data = data;
           return;
-        }                  
+        }
         ItemStruct obj;
         obj.indexName = indexName;
         obj.data = data;

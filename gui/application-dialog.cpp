@@ -25,7 +25,7 @@
  * \date 2009
  */
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "application-dialog.h"
 #include "application-pages.h"

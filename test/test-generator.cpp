@@ -117,10 +117,11 @@ namespace tests
      */
     void testAddLink()
     {
-      size_t initSize = gen->GetNLinks();
+      /*size_t initSize = gen->GetNLinks();
       this->gen->AddLink("Hub");
       size_t finalSize = gen->GetNLinks();
-      CPPUNIT_ASSERT(initSize == (finalSize - 1));
+      CPPUNIT_ASSERT(initSize == (finalSize - 1));*/
+      CPPUNIT_FAIL("testAddLink not implemented");
     }
 
     /**
@@ -128,11 +129,12 @@ namespace tests
      */
     void testRemoveLink()
     {
-      size_t initSize = gen->GetNLinks();
+      /*size_t initSize = gen->GetNLinks();
       this->gen->AddLink("Hub");
       this->gen->RemoveLink(gen->GetNLinks() - 1);
       size_t finalSize = gen->GetNLinks();
-      CPPUNIT_ASSERT(initSize == finalSize);
+      CPPUNIT_ASSERT(initSize == finalSize);*/
+      CPPUNIT_FAIL("testAddLink not implemented");
     }
 
     /**
@@ -140,7 +142,7 @@ namespace tests
      */
     void addWrongLink()
     {
-      this->gen->AddLink("");
+      //this->gen->AddLink("");
     }
 
     /**
@@ -148,7 +150,7 @@ namespace tests
      */
     void getWrongLink()
     {
-      this->gen->GetLink(-1);
+      //this->gen->GetLink(-1);
     }
   };
 } 

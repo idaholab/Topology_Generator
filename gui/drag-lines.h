@@ -29,7 +29,7 @@
 #define DRAG_LINES_H
 
 #include <vector>
-#include <QtGui>
+#include <QtWidgets>
 
 /**
  * \ingroup generator

@@ -36,7 +36,7 @@ using namespace std;
 #include <getopt.h>
 
 #include <QApplication>
-#include <QtGui>
+#include <QtWidgets>
 #include <QHBoxLayout>
 
 #include "kern/generator.h"

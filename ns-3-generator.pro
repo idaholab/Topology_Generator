@@ -3,9 +3,11 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = 
+TARGET = ns-3-generator
 DEPENDPATH += . gui kern test kern/examples
 INCLUDEPATH += . kern gui
+
+QT += widgets
 
 # Input
 HEADERS += gui/drag-lines.h \
